@@ -86,11 +86,13 @@ class AuthController extends ApiController {
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+       
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['user'] = $user;
 
         $lastId = $user->id;
-        $selectClientRole = Role::where('name', 'App-Users')->first();
+        
+        $selectClientRole = Role::where('name', 'Customer')->first();
         $assignRole = DB::table('role_user')->insert(
                 ['user_id' => $lastId, 'role_id' => $selectClientRole->id]
         );
@@ -102,6 +104,60 @@ class AuthController extends ApiController {
         }
         return parent::success($success, $this->successStatus);
     }
+    
+    
+    public function service_provider(Request $request) {
+        $rules = ['name' => 'required', 'email' => 'required|email|unique:users', 'password' => 'required', 'c_password' => 'required|same:password'];
+        $rules = array_merge($this->requiredParams, $rules);
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $errors = self::formatValidator($validator);
+            return parent::error($errors, 200);
+        }
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+       
+        $success['token'] = $user->createToken('MyApp')->accessToken;
+        $success['user'] = $user;
+
+        $lastId = $user->id;
+        
+        $selectClientRole = Role::where('name', 'Service-provider')->first();
+        $assignRole = DB::table('role_user')->insert(
+                ['user_id' => $lastId, 'role_id' => $selectClientRole->id]
+        );
+
+        // Add user device details for firbase
+        parent::addUserDeviceData($user, $request);
+        if ($user->status != 1) {
+            return parent::error('Please contact admin to activate your account', 200);
+        }
+        return parent::success($success, $this->successStatus);
+    }
+    
+    
+     public function changePassword(Request $request) {
+        $rules = ['old_password' => 'required', 'password' => 'required', 'password_confirmation' => 'required|same:password'];
+       
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+            if (\Hash::check($request->old_password, \Auth::User()->password)):
+                $model = \App\User::find(\Auth::id());
+                $model->password = \Hash::make($request->password);
+                $model->save();
+                return parent::success('Password Changed Successfully');
+            else:
+                return parent::error('Please use valid old password');
+            endif;
+        } catch (\Exception $ex) {
+            return parent::error($ex->getMessage());
+        }
+    }
+    
 
     public function getDirectories(Request $request) {
         $model = new App\Directory;

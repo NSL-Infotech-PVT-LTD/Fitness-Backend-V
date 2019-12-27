@@ -40,7 +40,7 @@
 
                             <div class="header_top">
                                 <div class="top_right">
-                                    <img style = "width:10%" src = "{{ asset('template/images/logo.png') }}">
+                                    <img style = "width: 138px;" src = "{{ asset('template/images/new_logo.png') }}">
                                 </div>
                                 <div class="top_left">
 
@@ -95,10 +95,10 @@
                     <ul id="menu" >
                         <li><a href="{{ url('admin/home')}}"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
                         <li><a href="{{ url('admin/users')}}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-                        <li><a href="{{ url('admin/roles')}}"><i class="fa fa-rocket"></i> <span>Roles</span></a></li>
-                        <li><a href="{{ url('admin/permissions')}}"><i class="fa fa-rocket"></i> <span>Permissions</span></a></li>
-                        <li><a href="{{ url('admin/product-category')}}"><i class="fa fa-rocket"></i> <span>Product Category</span></a></li>
-                        <li class=""><a href="{{ url('admin/products')}}"><i class="fa fa-rocket"></i> <span>Products</span></a></li>
+<!--                        <li><a href="{{ url('admin/roles')}}"><i class="fa fa-rocket"></i> <span>Roles</span></a></li>-->
+<!--                        <li><a href="{{ url('admin/permissions')}}"><i class="fa fa-rocket"></i> <span>Permissions</span></a></li>-->
+<!--                        <li><a href="{{ url('admin/product-category')}}"><i class="fa fa-rocket"></i> <span>Product Category</span></a></li>-->
+<!--                        <li class=""><a href="{{ url('admin/products')}}"><i class="fa fa-rocket"></i> <span>Products</span></a></li>-->
 
                         <li><a href="{{ url('admin/generator')}}"><i class="fa fa-bars"></i> <span>Generator</span></a></li>
 

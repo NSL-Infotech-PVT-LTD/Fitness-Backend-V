@@ -19,8 +19,14 @@ class RolesTableSeeder extends Seeder {
               'updated_at' => \Carbon\Carbon::now(),
             ],
            [
-              'name' => 'App-Users',
-              'label' => 'App-Users',
+              'name' => 'Customer',
+              'label' => 'customer',
+              'created_at' => \Carbon\Carbon::now(),
+              'updated_at' => \Carbon\Carbon::now(),
+            ],
+           [
+              'name' => 'Service-provider',
+              'label' => 'service-provider',
               'created_at' => \Carbon\Carbon::now(),
               'updated_at' => \Carbon\Carbon::now(),
             ],
