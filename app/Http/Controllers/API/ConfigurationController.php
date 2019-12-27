@@ -30,7 +30,7 @@ class ConfigurationController extends ApiController
             $model = new MyModel();
             $model = $model->first();
             $var = $column . $key;
-//            dd($var);
+//            dd($var);   
             return parent::success($model->$var, 200, 'data');
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
