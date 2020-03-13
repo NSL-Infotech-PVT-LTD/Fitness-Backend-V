@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder {
     public function run() {
       $data = [
           'name' => 'admin',
-          'email' => 'admin@wrect.com',
+          'email' => 'admin@fishing.com',
           'password' => Hash::make('12345678'),
           // 'phone' => '98166422',
 
