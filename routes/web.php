@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => ['Super-Admin']], function () {
     Route::get('home', 'HomeController@index')->name('home');
-
+    Route::resource('tournament', 'Admin\TournamentsController');
     Route::get('/', 'Admin\AdminController@index');
     Route::resource('roles', 'Admin\RolesController');
     Route::resource('permissions', 'Admin\PermissionsController');
@@ -39,8 +39,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
 
     Route::get('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
     Route::post('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
-
 });
 
 Route::resource('admin/products', 'Admin\\ProductsController');
-Route::resource('admin/product-category', 'Admin\\ProductCategoryController');

@@ -27,6 +27,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'stripe_default_currency' => 'gbp',
 
     /*
     |--------------------------------------------------------------------------

@@ -7,13 +7,13 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Productcategory</div>
+                    <div class="card-header">Tournament</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/product-category/create') }}" class="btn btn-success btn-sm" title="Add New ProductCategory">
+                        <a href="{{ url('/admin/tournament/create') }}" class="btn btn-success btn-sm" title="Add New Tournament">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/admin/product-category', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'url' => '/admin/tournament', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                             <span class="input-group-append">
@@ -34,33 +34,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($productcategory as $item)
+                                @foreach($tournament as $item)
                                     <tr>
                                         <td>{{  $item->id }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td><img src="{{ url(\App\Http\Controllers\Admin\ProductCategoryController::$_mediaBasePath
+                                        <td><img src="{{ url(\App\Http\Controllers\Admin\TournamentsController::$_mediaBasePath
                                         .$item->image) }}" width="150"/></td>
                                         <td>
-                                            <a href="{{ url('/admin/product-category/' . $item->id) }}" title="View ProductCategory"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                                            <a href="{{ url('/admin/product-category/' . $item->id . '/edit') }}" title="Edit ProductCategory"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/tournament/' . $item->id) }}" title="View Tournament"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                            <a href="{{ url('/admin/tournament/' . $item->id . '/edit') }}" title="Edit Tournament"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'url' => ['/admin/product-category', $item->id],
+                                                'url' => ['/admin/tournament', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                         'type' => 'submit',
                                                         'class' => 'btn btn-danger btn-sm',
-                                                        'title' => 'Delete ProductCategory',
+                                                        'title' => 'Delete Tournament',
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
                                         </td>
+                                        <td>{{ $item->description }}</td>
+                                        <td>{{ $item->price }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $productcategory->appends(['search' => Request::get('search')])->render() !!} </div>
+                            <div class="pagination-wrapper"> {!! $tournament->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
                     </div>

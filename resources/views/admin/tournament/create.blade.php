@@ -7,9 +7,9 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Edit ProductCategory #{{ $productcategory->id }}</div>
+                    <div class="card-header">Create New Tournament</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/product-category') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/tournament') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -21,14 +21,9 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($productcategory, [
-                            'method' => 'PATCH',
-                            'url' => ['/admin/product-category', $productcategory->id],
-                            'class' => 'form-horizontal',
-                            'files' => true
-                        ]) !!}
+                        {!! Form::open(['url' => '/admin/tournament', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                        @include ('admin.product-category.form', ['formMode' => 'edit'])
+                        @include ('admin.tournament.form', ['formMode' => 'create'])
 
                         {!! Form::close() !!}
 

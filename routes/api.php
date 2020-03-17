@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-    
 });
 Route::post('login', 'API\AuthController@Login');
 Route::post('register', 'API\AuthController@Register');
@@ -30,11 +29,12 @@ Route::post('forget-password', 'API\AuthController@resetPassword');
 Route::group(['middleware' => ['auth:api', 'roles'], 'namespace' => 'API'], function() {
 //    Route::group(['middleware' => ['auth:api', 'roles'], 'roles' => ['App-Users'],'namespace' => 'API'], function() {
 //    Route::post('getDirectories', 'AuthController@getDirectories');
-    
 });
 
 Route::group(['middleware' => 'auth:api'], function() {
-    Route::post('customer/change-password', 'API\AuthController@changePassword');
-    Route::post('service-provider/change-password', 'API\AuthController@changePassword');
-    Route::get('configuration/{column}', 'API\ConfigurationController@getConfigurationColumn');
+    Route::post('tournaments/list', 'API\AuthController@getitems');
+    Route::post('tournament/detail','API\AuthController@getitem');
+    Route::post('enroll', 'API\AuthController@enroll');
+    Route::post('enrollments/list', 'API\AuthController@getMyenroll');
+    Route::post('all/enrollments','API\AuthController@getAllenrollUsers');
 });
