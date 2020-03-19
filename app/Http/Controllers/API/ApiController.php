@@ -141,23 +141,19 @@ class ApiController extends \App\Http\Controllers\Controller {
 //        dd($params);
         $validator = Validator::make($params, $attributeValidate);
         if ($validator->fails()) {
-            $errors = [];
+//            $errors = [];
             $messages = $validator->getMessageBag();
             foreach ($messages->keys() as $key) {
-                $errors[] = $messages->get($key)['0'];
+                $errors = $messages->get($key)['0'];
             }
             return self::error($errors, 422, false);
         }
         return false;
     }
 
-    public static function error($validatorMessage, $errorCode = 422, $messageIndex = true) {
-        if ($messageIndex === true):
-            $validatorMessage = ['message' => [$validatorMessage]];
-        else:
-            $validatorMessage = ['message' => $validatorMessage];
-        endif;
-        return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => ['error_message' => $validatorMessage]], $errorCode);
+ public static function error($message, $errorCode = 422, $messageIndex = false) {
+
+        return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], $errorCode);
     }
 
     public static function success($data, $code = 200, $returnType = 'object') {

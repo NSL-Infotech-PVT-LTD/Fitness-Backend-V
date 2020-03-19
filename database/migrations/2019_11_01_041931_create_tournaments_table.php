@@ -15,6 +15,7 @@ class CreateTournamentsTable extends Migration {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->text('image')->nullable();
+            $table->string('location')->nullable();
             $table->string('price')->nullable();
             $table->text('description')->nullable();
             \App\Helpers\DbExtender::defaultParams($table);

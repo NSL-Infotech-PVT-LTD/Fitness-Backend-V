@@ -29,7 +29,7 @@ class Tournament extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'image','price','description'];
+    protected $fillable = ['name', 'image','price','description','location'];
 
     
 

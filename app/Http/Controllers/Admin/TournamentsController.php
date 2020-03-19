@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tournament;
 use Illuminate\Http\Request;
+use DataTables;
+use DB;
 
 class TournamentsController extends Controller {
 
@@ -16,8 +18,37 @@ class TournamentsController extends Controller {
      * @return \Illuminate\View\View
      */
     public static $_mediaBasePath = 'uploads/tournament/';
+    protected $__rulesforindex = ['name' => 'required', 'price' => 'required'];
 
     public function index(Request $request) {
+        if ($request->ajax()) {
+            $tournament = Tournament::all();
+            return Datatables::of($tournament)
+                            ->addIndexColumn()
+                            ->addColumn('enrollments', function($item) {
+                         $return = "<a href=" . url('/admin/mydata/'. $item->id) . " title='View Enrollments'>View Enrollments</a>";
+                         return $return;    
+                                       
+                            })
+                            ->addColumn('action', function($item) {
+                                $return = '';
+//
+                                if ($item->state == '0'):
+                                    $return .= "<button class='btn btn-danger btn-sm changeStatus' title='UnBlock'  data-id=" . $item->id . " data-status='UnBlock'>UnBlock / Active</button>";
+                                else:
+                                    $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
+                                endif;
+                                $return .= " <a href=" . url('/admin/tournament/' . $item->id) . " title='View Tournament'><button class='btn btn-info btn-sm'><i class='fa fa-eye' aria-hidden='true'></i></button></a>"
+                                         . " <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/tournament/' . $item->id) . "'><i class='fa fa-trash-o' aria-hidden='true'></i></button>";
+                                return $return;
+                            })
+                            ->rawColumns(['action','enrollments'])
+                            ->make(true);
+        }
+        return view('admin.tournament.index', ['rules' => array_keys($this->__rulesforindex)]);
+    }
+
+    public function indexxx(Request $request) {
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -117,6 +148,14 @@ class TournamentsController extends Controller {
         Tournament::destroy($id);
 
         return redirect('admin/tournament')->with('flash_message', 'Tournament deleted!');
+    }
+
+    public function changeStatus(Request $request) {
+//        dd('ss');
+        $tournament = Tournament::findOrFail($request->id);
+        $tournament->state = $request->status == 'Block' ? '0' : '1';
+        $tournament->save();
+        return response()->json(["success" => true, 'message' => 'Tournament updated!']);
     }
 
 }

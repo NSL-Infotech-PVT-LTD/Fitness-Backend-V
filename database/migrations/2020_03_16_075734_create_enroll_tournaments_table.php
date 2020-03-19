@@ -17,6 +17,7 @@ class CreateEnrollTournamentsTable extends Migration {
             $table->enum('type', ['fishing']);
             $table->string('token');
             $table->string('size');
+            $table->string('price');
             $table->integer('tournament_id')->unsigned()->index();
             $table->foreign('tournament_id')->references('id')->on
                     ('tournaments')->onDelete('cascade');
@@ -25,6 +26,7 @@ class CreateEnrollTournamentsTable extends Migration {
                     ('users')->onDelete('cascade');
             $table->text('payment_details')->nullable();
             $table->string('payment_id')->nullable();
+            $table->enum('status', ['0','1'])->default('0');
             \App\Helpers\DbExtender::defaultParams($table);
         });
     }

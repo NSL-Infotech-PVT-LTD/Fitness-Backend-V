@@ -60,6 +60,8 @@ class User extends Authenticatable {
             return [];
         }
     }
+    
+   
 
     public static function usersIdByPermissionName($name){
 

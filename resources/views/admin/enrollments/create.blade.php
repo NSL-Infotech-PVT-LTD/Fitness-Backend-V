@@ -7,9 +7,9 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Create New User</div>
+                    <div class="card-header">Create New Enrollments</div>
                     <div class="card-body">
-                        <a href="{{ url(url()->previous()) }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/enrollments') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -21,9 +21,9 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/admin/users', 'class' => 'form-horizontal']) !!}
+                        {!! Form::open(['url' => '/admin/enrollments', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                        @include ('admin.users.form', ['formMode' => 'create'])
+                        @include ('admin.enrollments.form', ['formMode' => 'create'])
 
                         {!! Form::close() !!}
 

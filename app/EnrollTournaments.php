@@ -4,17 +4,27 @@ namespace App;
 
 use App\Tournament;
 use App\User;
+use App\Image;
 use Illuminate\Database\Eloquent\Model;
 
 class EnrollTournaments extends Model {
 
-    protected $fillable = ['type', 'size', 'token', 'tournament_id', 'customer_id'];
+    protected $fillable = ['type', 'size','price','token','status','tournament_id', 'customer_id'];
 
-     protected $appends = array('images');
+     protected $appends = array('images','tournament_name');
+     public function getTournamentNameAttribute($value) 
+     {
+         $name = Tournament::where('id', $this->tournament_id)->value('name');
+        return $name;
+     }
      
     public function userdetails() {
         return $this->hasOne(User::class, 'id', 'customer_id')->select('id', 'name');
     }
+    
+     public function allImages(){
+         return $this->hasMany(Image::class,'enrollment_id',$this->id);
+     }
 
     public function tournament() {
         return $this->hasOne(Tournament::class, 'id', 'tournament_id')->select('id', 'name', 'image', 'price', 'description');
@@ -27,7 +37,7 @@ class EnrollTournaments extends Model {
         foreach ($LatestImage as $img) {
             $FinalImage[] = $img->images;
         }
-        return json_encode($FinalImage);
+        return $FinalImage;
     }
 
 }

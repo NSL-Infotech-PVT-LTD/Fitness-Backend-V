@@ -30,12 +30,12 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $tournament->id }}</td>
-                                    </tr>
-                                    <tr><th> Name </th><td> {{ $tournament->name }} </td></tr><tr><th> Image </th><td> {{ $tournament->image }} </td>
-                                    <td> {{ $tournament->price }} </td>
-                                    <td> {{ $tournament->description }} </td></tr>
+                                    <tr><th>ID</th><td>{{ $tournament->id }}</td></tr>
+                                    <tr><th> Name </th><td> {{ $tournament->name }} </td></tr>
+                                    <tr><th> Image </th><td> {{ $tournament->image }} </td></tr>
+                                    <tr><th> Price </th><td> {{ $tournament->price }} </td></tr>
+                                    <tr><th> Description </th><td> {{ $tournament->description }} </td></tr>
+                                    
                                 </tbody>
                             </table>
                         </div>

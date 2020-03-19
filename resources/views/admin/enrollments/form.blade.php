@@ -1,13 +1,14 @@
-<div class="form-group{{ $errors->has('name') ? 'has-error' : ''}}">
-    {!! Form::label('name', 'Name', ['class' => 'control-label']) !!}
-    {!! Form::text('name', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+<div class="form-group{{ $errors->has('type') ? 'has-error' : ''}}">
+    {!! Form::label('type', 'Type', ['class' => 'control-label']) !!}
+    {!! Form::text('type', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
-    {!! Form::label('image', 'Image', ['class' => 'control-label']) !!}
-    {!! Form::file('image', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-    {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+<div class="form-group{{ $errors->has('size') ? 'has-error' : ''}}">
+    {!! Form::label('size', 'Size', ['class' => 'control-label']) !!}
+    {!! Form::text('size', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! $errors->first('size', '<p class="help-block">:message</p>') !!}
 </div>
+
 <div class="form-group{{ $errors->has('description') ? 'has-error' : ''}}">
     {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
     {!! Form::textarea('description', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}

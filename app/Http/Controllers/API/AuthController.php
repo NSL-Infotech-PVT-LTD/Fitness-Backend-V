@@ -20,8 +20,8 @@ use Stripe;
 class AuthController extends ApiController {
 
     public static function imageUpload($file, $tournament_id, $enrollment_id) {
-        
-       
+
+
         $path = public_path('uploads/images');
         $name = time() . rand(1, 10) . $file->getClientOriginalName();
         $file->move($path, $name);
@@ -107,7 +107,7 @@ class AuthController extends ApiController {
         try {
             $user = \App\User::findOrFail(\Auth::id());
             $model = new \App\Tournament();
-            $model = $model->select('id', 'name', 'image', 'price', 'description');
+            $model = $model->select('id', 'name', 'image', 'location', 'price', 'description');
 //            $model = $model->where('state','1');
             $perPage = isset($request->limit) ? $request->limit : 20;
             return parent::success($model->paginate($perPage));
@@ -135,7 +135,7 @@ class AuthController extends ApiController {
     }
 
     public function enroll(Request $request) {
-        $rules = ['type' => 'required', 'token' => 'required', 'tournament_id' => 'required', 'size' => 'required', 'images' => 'required'];
+        $rules = ['type' => 'required', 'price' => 'required', 'token' => 'required', 'tournament_id' => 'required|exists:tournaments,id', 'size' => 'required', 'images' => 'required'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -157,11 +157,11 @@ class AuthController extends ApiController {
 //             dd('ss');
             $enroll = EnrollTournaments::create($input);
 //            dd($enroll);
-           
+
             if ($files = $request->file('images')) {
                 foreach ($files as $file) {
-                    $img = self::imageUpload($file, $request->tournament_id,$enroll->id);
-                  
+                    $img = self::imageUpload($file, $request->tournament_id, $enroll->id);
+
                     \App\Image::create($img);
                 }
             }
@@ -170,60 +170,44 @@ class AuthController extends ApiController {
             $enroll->payment_id = $stripe->id;
             $enroll->save();
 
-            return parent::successCreated(['message' => 'Created Successfully', 'enroll' => $enroll]);
+            return parent::successCreated(['message' => 'Enrolled Successfully', 'enroll' => $enroll]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
     }
 
     public function getMyenroll(Request $request) {
-        //Validating attributes
-        $rules = ['limit' => '', 'search' => ''];
-        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
-        if ($validateAttributes):
-            return $validateAttributes;
-        endif;
-        try {
-            $model = new EnrollTournaments();
-            $model = $model->orderBy('created_at', 'desc');
-            $model = $model->where('customer_id', \Auth::id())->select('id', 'type', 'size', 'tournament_id', 'payment_id', 'created_at')->with('tournament')->with('userdetails');
-            $perPage = isset($request->limit) ? $request->limit : 20;
-            if (isset($request->search)):
-//                dd($request->search);
-                $model = $model->whereHas('userdetails', function ($query)use($request) {
-                    $query->Where('name', 'LIKE', "%$request->search%")->orWhere('email', 'LIKE', "%$request->search%");
-                });
-            endif;
-            $model = $model->orderBy('created_at', 'desc');
-            return parent::success($model->paginate($perPage));
-        } catch (\Exception $ex) {
-            return parent::error($ex->getMessage());
+        
+        
+        $getMyTournamnents = EnrollTournaments::where('customer_id',Auth::id())->distinct('tournament_id')->pluck('tournament_id');
+        $getTuornament = Tournament::whereIn('id',$getMyTournamnents)->get();
+        if($getTuornament){
+             return parent::success(['tournaments' => $getTuornament]);
+        }else{
+              return parent::error('No Tournaments Found');
         }
+       
+        
     }
     
-     public function getAllenrollUsers(Request $request) {
-        //Validating attributes
-        $rules = ['tournament_id'=>'required','limit' => '', 'search' => ''];
+    public function getTournamentDetails(Request $request){
+        $rules = ['tournament_id' => 'required'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
-        try {
-            $model = new EnrollTournaments();
-            $model = $model->orderBy('created_at', 'desc');
-            $model = $model->where('tournament_id',$request->tournament_id)->select('id', 'type', 'size', 'tournament_id','customer_id', 'payment_id', 'created_at')->with(['tournament','userdetails']);
-            $perPage = isset($request->limit) ? $request->limit : 20;
-            if (isset($request->search)):
-//                dd($request->search);
-                $model = $model->whereHas('userdetails', function ($query)use($request) {
-                    $query->Where('name', 'LIKE', "%$request->search%")->orWhere('email', 'LIKE', "%$request->search%");
-                });
-            endif;
-            $model = $model->orderBy('created_at', 'desc');
-            return parent::success($model->paginate($perPage));
-        } catch (\Exception $ex) {
-            return parent::error($ex->getMessage());
-        }
+        
+        
+        $mySubmittedEnrollments = EnrollTournaments::where('customer_id',Auth::id())->where('tournament_id',$request->tournament_id)->with('userdetails')->get();
+        
+     $worldWideEnrollments = EnrollTournaments::where('customer_id','!=',Auth::id())->where('tournament_id',$request->tournament_id)->with('userdetails')->get();
+     
+     
+    
+      return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments]);
+     
     }
+
+   
 
 }

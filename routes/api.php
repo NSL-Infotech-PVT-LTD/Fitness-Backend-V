@@ -37,4 +37,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('enroll', 'API\AuthController@enroll');
     Route::post('enrollments/list', 'API\AuthController@getMyenroll');
     Route::post('all/enrollments','API\AuthController@getAllenrollUsers');
+    Route::post('getTournamentDetails','API\AuthController@getTournamentDetails');
+    
 });
