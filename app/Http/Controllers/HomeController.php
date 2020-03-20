@@ -25,12 +25,25 @@ class HomeController extends Controller {
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
+ $users = [];
+        foreach (\App\Role::all() as $role):
+            if ($role->name == 'super admin')
+                continue;
+            $users[$role->name]['role_id'] = $role->id;
+            $users[$role->name]['count'] = User::wherein('id', DB::table('role_user')->where('role_id', $role->id)->pluck('user_id'))->get()->count();
+        endforeach;
 
-//        $get_role = DB::table('roles')->pluck('id')->toArray();
-//      dd($get_role);
-        $customer = DB::table('role_user')->where('role_id',2)->count();
-        $service_provider = DB::table('role_user')->where('role_id',3)->count();
-        return view('home', compact('customer','service_provider'));
+
+        $roleusersDe = \DB::table('role_user')->where('role_id', \App\Role::where('name', 'Customer')->first()->id)->pluck('user_id');
+        dd($roleusersDe);
+        $customer = \App\User::where('id', $roleusersDe)->first()->id;
+      
+        dd($customer);
+        
+        
+//        dd($dealer);
+          $tournament = Tournament::all();
+        return view('home', compact('users', 'customer','tournament'));
     }
 
 }

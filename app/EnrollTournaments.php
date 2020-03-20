@@ -11,11 +11,19 @@ class EnrollTournaments extends Model {
 
     protected $fillable = ['type', 'size','price','token','status','tournament_id', 'customer_id'];
 
-     protected $appends = array('images','tournament_name');
+     protected $appends = array('images','tournament_name','tournament_image');
      public function getTournamentNameAttribute($value) 
      {
          $name = Tournament::where('id', $this->tournament_id)->value('name');
         return $name;
+     }
+     
+      public function getTournamentImageAttribute($value) 
+     {
+         $image = Tournament::where('id', $this->tournament_id)->value('image');
+        return $image;
+        
+        
      }
      
     public function userdetails() {
