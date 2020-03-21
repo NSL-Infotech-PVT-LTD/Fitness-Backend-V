@@ -7,6 +7,8 @@ use Auth;
 use DB;
 use App\Role;
 use App\User;
+use App\Tournament;
+Use ConsoleTVs\Charts;
 
 class HomeController extends Controller {
 
@@ -25,7 +27,8 @@ class HomeController extends Controller {
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
- $users = [];
+
+        $users = [];
         foreach (\App\Role::all() as $role):
             if ($role->name == 'super admin')
                 continue;
@@ -35,15 +38,30 @@ class HomeController extends Controller {
 
 
         $roleusersDe = \DB::table('role_user')->where('role_id', \App\Role::where('name', 'Customer')->first()->id)->pluck('user_id');
-        dd($roleusersDe);
+//        dd($roleusersDe);
         $customer = \App\User::where('id', $roleusersDe)->first()->id;
-      
-        dd($customer);
-        
-        
+
+//        dd($customer);
 //        dd($dealer);
-          $tournament = Tournament::all();
-        return view('home', compact('users', 'customer','tournament'));
+        $tournament = Tournament::all();
+        return view('home', compact('users', 'customer', 'tournament'));
+    }
+
+    public function makeChart($type) {
+       
+       
+                $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"), date('Y'))
+                        ->get();
+                $chart = Charts::database($users, 'bar', 'highcharts')
+                        ->title("Monthly new Register Users")
+                        ->elementLabel("Total Users")
+                        ->dimensions(1000, 500)
+                        ->responsive(true)
+                        ->groupByMonth(date('Y'), true);
+              
+                
+        
+        return view('home', compact('chart'));
     }
 
 }

@@ -18,7 +18,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 10px;
-        background-color: #b52e31;
+        background-color: #476B9E;
         text-decoration: none;
     }
     .overviewcard__icon {
@@ -50,6 +50,7 @@
                             <div class="overviewcard__icon">Total {{ucfirst($name)}}&nbsp;&nbsp;</div>
                             <div class="overviewcard__info">
                                 {{$user['count']}}
+                              
                             </div>
                         </div>
                     </div>
@@ -60,89 +61,35 @@
 </div> 
 <hr class="new4">
 <div class="container">
-    <h3>Tournament</h3>
+    <h3>Tournaments</h3>
     <div class="row">
         <div class="col-sm-4">
-            <a href="{{url('admin/tournaments')}}">
+            <a href="{{url('admin/tournament')}}">
                 <div class="main-overview active">
                     <div class="overviewcard">
                         <div class="overviewcard__icon">Total Tournaments&nbsp;&nbsp;</div>
                         <div class="overviewcard__info">
-                            {{$tournament['count']}}
+                            {{$tournament->count()}}
                         </div>
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-sm-4">
-            <a href="{{url('admin/products')}}">
-                <div class="main-overview active">
-                    <div class="overviewcard">
-                        <div class="overviewcard__icon">Total Approved Products&nbsp;&nbsp</div>
-                        <div class="overviewcard__info">
-                            {{$products->where('id')->where('created_by',$dealer)->where('state','1')->count()}}
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-4">
-            <a href="{{url('admin/products')}}">
-                <div class="main-overview active">
-                    <div class="overviewcard">
-                        <div class="overviewcard__icon">Total Pending Products&nbsp;&nbsp</div>
-                        <div class="overviewcard__info">
-                            {{$products->where('id')->where('created_by',$dealer)->where('state','0')->count()}}
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+       
+       
     </div>
 </div>
 
 <hr class="new4">
 <div class="container">
-    <h3>Warehouse's Products</h3>
+    <h3>Weekly Revenue</h3>
     <div class="row">
-        <div class="col-sm-4">
-            <a href="{{url('admin/products')}}">
-                <div class="main-overview active">
-                    <div class="overviewcard">
-                        <div class="overviewcard__icon">Total Subadmin's Products&nbsp;&nbsp;</div>
-                        <div class="overviewcard__info">
-                            {{$products->where('id')->where('created_by',$subadmin)->count()}}
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-4">
-            <a href="{{url('admin/products')}}">
-                <div class="main-overview active">
-                    <div class="overviewcard">
-                        <div class="overviewcard__icon">Total Approved Products&nbsp;&nbsp</div>
-                        <div class="overviewcard__info">
-                            {{$products->where('id')->where('created_by',$subadmin)->where('state','1')->count()}}
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-         <div class="col-sm-4">
-            <a href="{{url('admin/products')}}">
-                <div class="main-overview active">
-                    <div class="overviewcard">
-                        <div class="overviewcard__icon">Total Pending Products&nbsp;&nbsp</div>
-                        <div class="overviewcard__info">
-                            {{$products->where('id')->where('created_by',$subadmin)->where('created_by','0')->count()}}
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+       
+       
+       
     </div>
 </div>
+
 
 
 @endsection
