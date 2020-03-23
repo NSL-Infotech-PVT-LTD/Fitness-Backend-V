@@ -1,6 +1,23 @@
 @extends('layouts.backend')
 
 @section('content')
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" rel="stylesheet">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js'/></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'/></script>
+
+<!--mycode-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery.ui.datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/themes/sunny/jquery-ui.min.css"></link>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"></link>
+
 <style>
     .main-overview {
         height: 99px;
@@ -36,7 +53,11 @@
   border: 1px solid red;
 }
 
+
+
 </style>
+
+
 
 <div class="container">
     <h3>Users</h3>
@@ -82,13 +103,20 @@
 
 <hr class="new4">
 <div class="container">
-    <h3>Weekly Revenue</h3>
+    <h3>Monthly Revenue</h3>
     <div class="row">
-       
+        <div class="col-sm-4">
+        {{  $revenueData }}
+        
+        </div>
        
        
     </div>
+   
 </div>
+
+
+
 
 
 

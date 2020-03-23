@@ -135,7 +135,7 @@ class AuthController extends ApiController {
     }
 
     public function enroll(Request $request) {
-        $rules = ['type' => 'required', 'price' => 'required', 'token' => 'required', 'tournament_id' => 'required|exists:tournaments,id', 'size' => 'required', 'images' => 'required'];
+        $rules = ['type' => 'required', 'price' => 'required', 'token' => '', 'tournament_id' => 'required|exists:tournaments,id', 'size' => 'required', 'images' => 'required'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -146,68 +146,91 @@ class AuthController extends ApiController {
             $input = $request->all();
             $input['customer_id'] = \Auth::id();
 
+            //start and end date check starts//
+            if ($model->whereDate('start_date', '>=', \Carbon\Carbon::now())->get()->isEmpty() != true)
+                return parent::error('Sorry, You cant Enroll before start date');
+            if ($model->whereDate('end_date', '<=', \Carbon\Carbon::now())->get()->isEmpty() != true)
+                return parent::error('Sorry, You cant Enroll after end date');
+            //start and end date check ends//
 
-            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-            $stripe = \Stripe\Charge::create([
-                        "amount" => $model->price * 100,
-                        "currency" => config('app.stripe_default_currency'),
-                        "source" => $request->token, // obtained with Stripe.js
-                        "description" => "Charge for the enrollments of tournamnets in fishing project"
-            ]);
+
+            $oldenroll = \App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->value('id');
+//            dd($oldenroll);
+            if (\App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->get()->isEmpty() === false) {
+
+                if ($files = $request->file('images')) {
+                    foreach ($files as $file) {
+                        $img = self::imageUpload($file, $request->tournament_id, $oldenroll);
+
+                        \App\Image::create($img);
+                    }
+                }
+                return parent::successCreated(['message' => 'Images added Successfully', 'images' => $img]);
+            } else {
+                $enroll = EnrollTournaments::create($input);
+                \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+                $stripe = \Stripe\Charge::create([
+                            "amount" => $model->price * 100,
+                            "currency" => config('app.stripe_default_currency'),
+                            "source" => $request->token, // obtained with Stripe.js
+                            "description" => "Charge for the enrollments of tournamnets in fishing project"
+                ]);
 //             dd('ss');
-            $enroll = EnrollTournaments::create($input);
 //            dd($enroll);
 
-            if ($files = $request->file('images')) {
-                foreach ($files as $file) {
-                    $img = self::imageUpload($file, $request->tournament_id, $enroll->id);
+                if ($files = $request->file('images')) {
+                    foreach ($files as $file) {
+                        $img = self::imageUpload($file, $request->tournament_id, $enroll->id);
 
-                    \App\Image::create($img);
+                        \App\Image::create($img);
+                    }
                 }
+
+                $enroll->payment_details = json_encode($stripe);
+                $enroll->payment_id = $stripe->id;
+                $enroll->save();
+                return parent::successCreated(['message' => 'Enrolled Successfully', 'enroll' => $enroll]);
             }
 
-            $enroll->payment_details = json_encode($stripe);
-            $enroll->payment_id = $stripe->id;
-            $enroll->save();
 
-            return parent::successCreated(['message' => 'Enrolled Successfully', 'enroll' => $enroll]);
+
+
+
+
+
+           
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
     }
 
     public function getMyenroll(Request $request) {
-        
-        
-        $getMyTournamnents = EnrollTournaments::where('customer_id',Auth::id())->distinct('tournament_id')->pluck('tournament_id');
-        $getTuornament = Tournament::whereIn('id',$getMyTournamnents)->get();
-        if($getTuornament){
-             return parent::success(['tournaments' => $getTuornament]);
-        }else{
-              return parent::error('No Tournaments Found');
+
+
+        $getMyTournamnents = EnrollTournaments::where('customer_id', Auth::id())->distinct('tournament_id')->pluck('tournament_id');
+        $getTuornament = Tournament::whereIn('id', $getMyTournamnents)->get();
+        if ($getTuornament) {
+            return parent::success(['tournaments' => $getTuornament]);
+        } else {
+            return parent::error('No Tournaments Found');
         }
-       
-        
     }
-    
-    public function getTournamentDetails(Request $request){
+
+    public function getTournamentDetails(Request $request) {
         $rules = ['tournament_id' => 'required'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
-        
-        
-        $mySubmittedEnrollments = EnrollTournaments::where('customer_id',Auth::id())->where('tournament_id',$request->tournament_id)->with('userdetails')->get();
-        
-     $worldWideEnrollments = EnrollTournaments::where('customer_id','!=',Auth::id())->where('tournament_id',$request->tournament_id)->with('userdetails')->get();
-     
-     
-    
-      return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments]);
-     
-    }
 
-   
+
+        $mySubmittedEnrollments = EnrollTournaments::where('customer_id', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
+
+        $worldWideEnrollments = EnrollTournaments::where('customer_id', '!=', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
+
+
+
+        return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments]);
+    }
 
 }

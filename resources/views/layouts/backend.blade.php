@@ -42,6 +42,9 @@
 {{--        <script src="{{ asset('template/js/jquery-1.10.2.min.js') }} "></script>--}}
 <!--pie-chart--->
 {{--        <script src="{{ asset('template/js/pie-chart.js') }} " type="text/javascript"></script>--}}
+
+
+
 </head>
 <body>
     <div class="page-container">

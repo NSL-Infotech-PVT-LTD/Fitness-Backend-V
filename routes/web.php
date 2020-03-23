@@ -24,7 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => ['Super-Admin']], function () {
-     Route::get('charts', 'HomeController@makeChart')->name('charts');
+  
     Route::get('users/role/{role_id}', 'Admin\UsersController@indexByRoleId')->name('users-role');
     Route::get('home', 'HomeController@index')->name('home');
     Route::resource('tournament', 'Admin\TournamentsController');
@@ -37,6 +37,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
     Route::resource('activitylogs', 'Admin\ActivityLogsController')->only([
         'index', 'show', 'destroy'
     ]);
+    
+    Route::get('chart-line-ajax', 'HomeController@chartLineAjax');
 
 
    
