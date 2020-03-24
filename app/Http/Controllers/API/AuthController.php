@@ -135,7 +135,7 @@ class AuthController extends ApiController {
     }
 
     public function enroll(Request $request) {
-        $rules = ['type' => 'required', 'price' => 'required', 'token' => '', 'tournament_id' => 'required|exists:tournaments,id', 'size' => 'required', 'images' => 'required'];
+        $rules = ['type' => 'required', 'price' => '', 'token' => '', 'tournament_id' => 'required|exists:tournaments,id', 'size' => 'required', 'images' => 'required'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;

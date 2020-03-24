@@ -8,9 +8,8 @@ use DB;
 use App\Role;
 use App\User;
 use App\Tournament;
-use App\Charts;
-use App\Charts\UserLineChart;
-use ConsoleTVs\Charts\Classes\Chartjs\Chart;
+use Carbon\Carbon;
+
 
 class HomeController extends Controller {
 
@@ -46,37 +45,7 @@ class HomeController extends Controller {
 //        return $chart->api();
 //    }
 
-    public function indexold() {
-
-        $users = [];
-        foreach (\App\Role::all() as $role):
-            if ($role->name == 'super admin')
-                continue;
-            $users[$role->name]['role_id'] = $role->id;
-            $users[$role->name]['count'] = User::wherein('id', DB::table('role_user')->where('role_id', $role->id)->pluck('user_id'))->get()->count();
-        endforeach;
-
-
-        $roleusersDe = \DB::table('role_user')->where('role_id', \App\Role::where('name', 'Customer')->first()->id)->pluck('user_id');
-//        dd($roleusersDe);
-        $customer = \App\User::where('id', $roleusersDe)->first()->id;
-
-//        dd($customer);
-//        dd($dealer);
-        $tournament = Tournament::all();
-
-
-
-        $api = url('/chart-line-ajax');
-//dd($api);
-        $chart = new UserLineChart;
-        $chart->labels(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])->load($api);
-//        dd($chart);
-
-
-
-        return view('home', compact('users', 'customer', 'tournament', 'chart'));
-    }
+   
 
     public function index() {
 
@@ -96,15 +65,40 @@ class HomeController extends Controller {
 //        dd($customer);
 //        dd($dealer);
         $tournament = Tournament::all();
+        
+        
+        
+        
+        //graph code starts//
+        $now = Carbon::now('Asia/Kolkata');
+        $present_month = $now->month;
+        $present_year = $now->year;
 
 
+//        $ending_date = $now;
+        $monthlyAmountArray = [];
+        $amt = 0;
+        for ($i = 1; $i <= $present_month; $i++) {
+            $starting_date = $present_year . '-' . $i . '-01 00:00:01';
+            $ending_date = $present_year . '-' . $i . '-31 23:59:59';
 
+            $transactionsArray = \App\EnrollTournaments::whereBetween('created_at', [$starting_date, $ending_date])->get();
+
+            foreach ($transactionsArray as $array) {
+                $amt = $amt + $array['amount'];
+            }
+            array_push($monthlyAmountArray, $amt);
+            $amt = 0;
+        }
+
+        $revenueData = implode(',', $monthlyAmountArray);
+//        dd($revenueData);
+       //graph code ends//
        
-       $revenueData = User::select(\DB::raw("COUNT(*) as count"))
-                    ->whereYear('created_at', date('Y'))
-                    ->groupBy(\DB::raw("Month(created_at)"))
-                    ->pluck('count');
-//       dd($revenueData);
+        
+        
+        
+      
 
         return view('home', compact('users', 'customer', 'tournament', 'revenueData'));
     }

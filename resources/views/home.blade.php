@@ -50,8 +50,8 @@
         background-color: #2b303a;
     }
     hr.new4 {
-  border: 1px solid red;
-}
+        border: 1px solid red;
+    }
 
 
 
@@ -62,7 +62,7 @@
 <div class="container">
     <h3>Users</h3>
     <div class="row">
-        
+
         <?php foreach ($users as $name => $user): ?>
             <div class="col-sm-4">
                 <a href="{{url('admin/users/role/'.$user['role_id'])}}">
@@ -71,7 +71,7 @@
                             <div class="overviewcard__icon">Total {{ucfirst($name)}}&nbsp;&nbsp;</div>
                             <div class="overviewcard__info">
                                 {{$user['count']}}
-                              
+
                             </div>
                         </div>
                     </div>
@@ -96,24 +96,52 @@
                 </div>
             </a>
         </div>
-       
-       
+
+
     </div>
 </div>
 
 <hr class="new4">
 <div class="container">
     <h3>Monthly Revenue</h3>
-    <div class="row">
-        <div class="col-sm-4">
-        {{  $revenueData }}
-        
-        </div>
-       
-       
-    </div>
-   
+    <canvas id="myChart">
+
+    </canvas>
+
 </div>
+
+<script>
+let myChart = document.getElementById('myChart').getContext('2d');
+
+let massPopChart = new Chart(myChart,{
+    type:'bar',//bar, horizontalBar, pie, line, doughnut, radar, polarArea
+    data:{
+        labels:['January','February','March','April','May','June','July','August','September','October','November','December'],
+        datasets:[{
+                label:'Population',
+                data:[
+                    234,
+                    876,
+                    345,
+                    567,
+                    234,
+                    233,
+                    567,
+                    346,
+                    346,
+                    243,
+                    244,
+                    244
+                    
+                ]
+                
+        }],
+    },
+    options:{}
+});
+</script>
+
+
 
 
 

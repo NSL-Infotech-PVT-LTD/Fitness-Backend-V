@@ -44,6 +44,15 @@
 {{--        <script src="{{ asset('template/js/pie-chart.js') }} " type="text/javascript"></script>--}}
 
 
+<!--charts js starts-->
+
+<script src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
+<link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</script>
+
+<!--charts js ends-->
+
+
 
 </head>
 <body>
@@ -65,7 +74,7 @@
 
                                 <a class="#" style ="Color:White" href="{{ url('/logout') }}"
                                    onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();">
+                                                   document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
 
@@ -113,15 +122,15 @@
                 <ul id="menu" >
 
                     <li><a href="{{ url('admin/home')}}"><i class="fa fa-tachometer"></i> <span>Home</span></a></li>
-                   <li>
+                    <li>
                         <a href="{{ url('admin/users/role/1') }}"  data-toggle="collapse" data-target="#demo"><i class="fa fa-user nav_icon"></i>Users<span class=""></span></a>     
 
                         <ul>
-                            <?php foreach (\App\Role::all() as $role): ?>
+<?php foreach (\App\Role::all() as $role): ?>
                                 <li  id='demo'>
                                     <a href="{{ url('admin/users/role/'.$role->id) }}">{{$role->name}}<span class=""></span></a>
                                 </li>  
-                            <?php endforeach; ?>
+<?php endforeach; ?>
                         </ul>
                     </li>
                     <li><a href="{{ url('admin/tournament')}}"><i class="fa fa-rocket"></i> <span>Tournaments</span></a></li>
