@@ -24,6 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => ['Super-Admin']], function () {
+    
+     Route::post('home/filter', 'HomeController@index')->name('admin-filter');
   
     Route::get('users/role/{role_id}', 'Admin\UsersController@indexByRoleId')->name('users-role');
     Route::get('home', 'HomeController@index')->name('home');
@@ -38,7 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
         'index', 'show', 'destroy'
     ]);
     
-    Route::get('chart-line-ajax', 'HomeController@chartLineAjax');
+   
 
 
    

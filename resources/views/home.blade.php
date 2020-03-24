@@ -112,32 +112,53 @@
 
 <script>
 let myChart = document.getElementById('myChart').getContext('2d');
+let massPopChart = new Chart(myChart, {
+type:'bar', //bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data:{
+        labels:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets:[{
+                label:'Enrollments',
+                        data:[
+                                234,
+                                876,
+                                345,
+                                567,
+                                234,
+                                233,
+                                567,
+                                346,
+                                346,
+                                243,
+                                244,
+                                244
 
-let massPopChart = new Chart(myChart,{
-    type:'bar',//bar, horizontalBar, pie, line, doughnut, radar, polarArea
-    data:{
-        labels:['January','February','March','April','May','June','July','August','September','October','November','December'],
-        datasets:[{
-                label:'Population',
-                data:[
-                    234,
-                    876,
-                    345,
-                    567,
-                    234,
-                    233,
-                    567,
-                    346,
-                    346,
-                    243,
-                    244,
-                    244
-                    
-                ]
-                
-        }],
-    },
-    options:{}
+                        ],
+//                backgroundColor:'green',
+                        backgroundColor:[
+                                'rgba(255,99,132, 0.6)',
+                                'rgba(54,162,235,0.6)',
+                                'rgba(255,206,86,0.6)',
+                                'rgba(75,192,192,0.6)',
+                                'rgba(153,102,255,0.6)',
+                                'rgba(255,206,86,0.6)',
+                                'rgba(75,192,192,0.6)',
+                                'rgba(255,99,132, 0.6)',
+                                'rgba(54,162,235,0.6)',
+                                'rgba(255,206,86,0.6)',
+                                'rgba(75,192,192,0.6)',
+                                'rgba(153,102,255,0.6)',
+                        ],
+                        borderWidth:1,
+                        borderColor:'#777',
+                        hoverBorderWidth:3,
+                        hoverBorderColor:'#000'
+                        
+
+                }],
+        },
+        options:{}
+
+
 });
 </script>
 
