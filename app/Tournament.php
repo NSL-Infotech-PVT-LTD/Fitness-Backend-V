@@ -45,16 +45,16 @@ class Tournament extends Model
         return __CLASS__ . " model has been {$eventName}";
     }
     
-//    protected $appends = array('IsEnrolled');
+    protected $appends = array('IsEnrolled');
     
-//    public function getIsEnrolledAttribute()
-//    {
-//        $model= EnrollTournaments::where('tournament_id',$this->id)->where('customer_id',\Auth::id())->get();
-//        if($model->isEmpty() !== true):
-//            return 'true';
-//            else:  
-//            return 'false';
-//        endif;
-//        
-//    }
+    public function getIsEnrolledAttribute()
+    {
+        $model= EnrollTournaments::where('tournament_id',$this->id)->where('customer_id',\Auth::id())->get();
+        if($model->isEmpty() !== true):
+            return 'true';
+            else:  
+            return 'false';
+        endif;
+        
+    }
 }
