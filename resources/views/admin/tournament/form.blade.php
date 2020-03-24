@@ -34,6 +34,18 @@
     {!! $errors->first('end_at', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="form-group{{ $errors->has('rules') ? 'has-error' : ''}}">
+    {!! Form::label('rules', 'Rules', ['class' => 'control-label']) !!}
+    {!! Form::textarea('rules', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! $errors->first('rules', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group{{$errors->has('privacy_policy') ? 'has-error' : ''}}">
+    {!! Form::label('privacy_policy', 'Privacy Policy',['class' => 'control-label']) !!}
+    {!! Form::textarea('privacy_policy', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! $errors->first('rules', '<p class="help-block">:message</p>') !!}
+</div>
+
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>

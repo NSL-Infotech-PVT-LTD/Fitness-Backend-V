@@ -29,7 +29,7 @@ class Tournament extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'image','price','description','location','start_date','end_date'];
+    protected $fillable = ['name', 'image','price','description','location','start_date','end_date','rules','privacy_policy'];
 
     
 
@@ -44,4 +44,17 @@ class Tournament extends Model
     {
         return __CLASS__ . " model has been {$eventName}";
     }
+    
+//    protected $appends = array('IsEnrolled');
+    
+//    public function getIsEnrolledAttribute()
+//    {
+//        $model= EnrollTournaments::where('tournament_id',$this->id)->where('customer_id',\Auth::id())->get();
+//        if($model->isEmpty() !== true):
+//            return 'true';
+//            else:  
+//            return 'false';
+//        endif;
+//        
+//    }
 }

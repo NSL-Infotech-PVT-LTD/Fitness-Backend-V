@@ -37,6 +37,8 @@
                                     <tr><th> Description </th><td> {{ $tournament->description }} </td></tr>
                                     <tr><th> Start Date </th><td> {{ $tournament->start_date }} </td></tr>
                                     <tr><th> End Date </th><td> {{ $tournament->end_date }} </td></tr>
+                                    <tr><th> Rules </th><td> {{ $tournament->rules }} </td></tr>
+                                    <tr><th> Privacy Policy </th><td> {{ $tournament->privacy_policy }} </td></tr>
                                     
                                 </tbody>
                             </table>
