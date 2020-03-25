@@ -24,11 +24,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' => ['Super-Admin']], function () {
-    
-     Route::post('home/filter', 'HomeController@index')->name('admin-filter');
-  
+
+
+
     Route::get('users/role/{role_id}', 'Admin\UsersController@indexByRoleId')->name('users-role');
     Route::get('home', 'HomeController@index')->name('home');
+    Route::post('myfun', 'HomeController@myfun')->name('home.revenue');
     Route::resource('tournament', 'Admin\TournamentsController');
     Route::get('mydata/{id}', 'Admin\EnrollmentsController@enrollmentByid');
     Route::get('/', 'Admin\AdminController@index');
@@ -39,11 +40,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
     Route::resource('activitylogs', 'Admin\ActivityLogsController')->only([
         'index', 'show', 'destroy'
     ]);
-    
-   
 
 
-   
+
+
+
+
     Route::resource('settings', 'Admin\SettingsController');
     Route::post('user/change-status', 'Admin\UsersController@changeStatus')->name('user.changeStatus');
     Route::post('tournament/change-status', 'Admin\TournamentsController@changeStatus')->name('tournament.changeStatus');

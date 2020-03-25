@@ -82,8 +82,8 @@ class HomeController extends Controller {
             $starting_date = $present_year . '-' . $i . '-01 00:00:01';
             $ending_date = $present_year . '-' . $i . '-31 23:59:59';
 
-            $transactionsArray = \App\EnrollTournaments::whereBetween('created_at', [$starting_date, $ending_date])->get();
-
+            $transactionsArray = \App\EnrollTournaments::whereBetween('created_at', [$starting_date, $ending_date])->toSql();
+dd($transactionsArray);
             foreach ($transactionsArray as $array) {
                 $amt = $amt + $array['amount'];
             }
@@ -102,5 +102,6 @@ class HomeController extends Controller {
 
         return view('home', compact('users', 'customer', 'tournament', 'revenueData'));
     }
-
+    
+  
 }
