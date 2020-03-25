@@ -83,7 +83,7 @@ class HomeController extends Controller {
             $ending_date = $present_year . '-' . $i . '-31 23:59:59';
 
             $transactionsArray = \App\EnrollTournaments::whereBetween('created_at', [$starting_date, $ending_date])->toSql();
-dd($transactionsArray);
+//dd($transactionsArray);
             foreach ($transactionsArray as $array) {
                 $amt = $amt + $array['amount'];
             }
