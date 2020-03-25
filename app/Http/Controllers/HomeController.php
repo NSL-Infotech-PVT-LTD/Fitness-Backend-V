@@ -98,9 +98,9 @@ class HomeController extends Controller {
         
         
         
-      
+      $data=[21,121,12,232,121,121,334,542,434,234,24,34];
 
-        return view('home', compact('users', 'customer', 'tournament', 'revenueData'));
+        return view('home', compact('users', 'customer', 'tournament', 'revenueData','data'));
     }
     
   

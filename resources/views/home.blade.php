@@ -124,21 +124,7 @@ data:{
 labels:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets:[{
         label:'Enrollments',
-                data:[
-                        234,
-                        876,
-                        345,
-                        567,
-                        234,
-                        233,
-                        567,
-                        346,
-                        346,
-                        243,
-                        244,
-                        244
-
-                ],
+                data:{{json_encode($data)}},
 //                backgroundColor:'green',
                 backgroundColor:[
                         'rgba(255,99,132, 0.6)',
