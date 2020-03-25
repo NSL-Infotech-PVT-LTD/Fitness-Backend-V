@@ -103,7 +103,7 @@
 
 <hr class="new4">
 <div class="container">
-    <h3>Monthly Revenue</h3>
+   
     <canvas id="myChart">
 
     </canvas>
@@ -124,7 +124,7 @@ data:{
 labels:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets:[{
         label:'Enrollments',
-                data:{{json_encode($data)}},
+                data:[<?php echo $revenueData; ?>],
 //                backgroundColor:'green',
                 backgroundColor:[
                         'rgba(255,99,132, 0.6)',
@@ -152,7 +152,7 @@ labels:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'
         options:{
         title:{
         display:true,
-                text:'Maximum Revenue',
+                text:'Monthly Average Revenue',
                 fontSize:25
         },
                 legend:{
