@@ -64,7 +64,7 @@ class UsersController extends Controller {
 
                                 $return .= " <a href=" . url('/admin/users/' . $item->id) . " title='View User'><button class='btn btn-info btn-sm'><i class='fa fa-eye' aria-hidden='true'></i></button></a>"
                                         . " <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/users/' . $item->id) . "'><i class='fa fa-trash-o' aria-hidden='true'></i></button>"
-                                        . " <a href=" . url('/admin/enrollments?customer_id=' . $item->id) . " title='Transaction'><button class='btn btn-info btn-sm'><i class='fa fa-eye' aria-hidden='true'></i></button></a>";
+                                        . " <a href=" . url('/admin/enrollments?customer_id=' . $item->id) . " title='Transactions'><button class='btn btn-info btn-sm'><i class='fa fa-usd' aria-hidden='true'></i></button></a>";
 
                                 return $return;
                             })
