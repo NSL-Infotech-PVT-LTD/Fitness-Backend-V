@@ -93,17 +93,17 @@ class HomeController extends Controller {
             
             foreach ($avgArray as $array) {
                 $amt = $amt + $array['price'];
-                $fAmt = $amt / $count;
+//                $fAmt = $amt / $count;
 //                dd($amt);
                 
             }
 //            
 //            $monthlyAmountArray = [];
 //            print_r($fAmt);
-            array_push($monthlyAmountArray, $fAmt);
+            array_push($monthlyAmountArray, $amt);
 //            print_r($monthlyAmountArray);
             $amt = 0;
-            $fAmt = 0;
+//            $fAmt = 0;
             
 //        echo "<pre>";
 //        print_r($revenueData); 
