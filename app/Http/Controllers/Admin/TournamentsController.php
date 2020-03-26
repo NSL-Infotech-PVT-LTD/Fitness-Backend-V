@@ -25,10 +25,12 @@ class TournamentsController extends Controller {
             $tournament = Tournament::all();
             return Datatables::of($tournament)
                             ->addIndexColumn()
+                            ->editColumn('price', function($item) {
+                                return ' <i class="fa fa-' . config('app.stripe_default_currency') . '" aria-hidden="true"></i> ' . $item->price;
+                            })
                             ->addColumn('enrollments', function($item) {
-                         $return = "<a href=" . url('/admin/mydata/'. $item->id) . " title='View Enrollments'>View Enrollments</a>";
-                         return $return;    
-                                       
+                                $return = "<a href=" . url('/admin/mydata/' . $item->id) . " title='View Enrollments'>View Enrollments</a>";
+                                return $return;
                             })
                             ->addColumn('action', function($item) {
                                 $return = '';
@@ -39,10 +41,10 @@ class TournamentsController extends Controller {
                                     $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
                                 endif;
                                 $return .= " <a href=" . url('/admin/tournament/' . $item->id) . " title='View Tournament'><button class='btn btn-info btn-sm'><i class='fa fa-eye' aria-hidden='true'></i></button></a>"
-                                         . " <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/tournament/' . $item->id) . "'><i class='fa fa-trash-o' aria-hidden='true'></i></button>";
+                                        . " <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/tournament/' . $item->id) . "'><i class='fa fa-trash-o' aria-hidden='true'></i></button>";
                                 return $return;
                             })
-                            ->rawColumns(['action','enrollments'])
+                            ->rawColumns(['action', 'enrollments','price'])
                             ->make(true);
         }
         return view('admin.tournament.index', ['rules' => array_keys($this->__rulesforindex)]);

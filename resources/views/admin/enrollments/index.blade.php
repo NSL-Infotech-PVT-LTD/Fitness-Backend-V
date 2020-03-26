@@ -27,7 +27,7 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->type }}</td>
-                                    <td>{{ $item->price }}</td>
+                                    <td>${{ $item->price }}</td>
                                    
                                     <td>{{ $item->payment_id }}</td>
                                   

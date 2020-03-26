@@ -25,7 +25,7 @@ return [
       |
      */
     'env' => env('APP_ENV', 'production'),
-    'stripe_default_currency' => 'gbp',
+    'stripe_default_currency' => 'usd',
     /*
       |--------------------------------------------------------------------------
       | Application Debug Mode

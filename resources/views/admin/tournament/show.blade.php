@@ -33,7 +33,7 @@
                                     <tr><th>ID</th><td>{{ $tournament->id }}</td></tr>
                                     <tr><th> Name </th><td> {{ $tournament->name }} </td></tr>
                                     <tr><th> Image </th><td><img width="150" src="{{url('uploads/tournament/'.$tournament->image)}}"></td></tr>
-                                    <tr><th> Price </th><td> {{ $tournament->price }} </td></tr>
+                                    <tr><th> Price </th><td> ${{ $tournament->price }} </td></tr>
                                     <tr><th> Description </th><td> {{ $tournament->description }} </td></tr>
                                     <tr><th> Start Date </th><td> {{ $tournament->start_date }} </td></tr>
                                     <tr><th> End Date </th><td> {{ $tournament->end_date }} </td></tr>

@@ -27,7 +27,7 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->type }}</td>
-                                    <td>{{ $item->price }}</td>
+                                    <td>${{ $item->price }}</td>
                                     <td>{{ $item->size }}</td>
                                     @foreach($item->allImages as $img)
                                     <td><img width="150" src="{{url('uploads/tournament/'.$img->images)}}"></td>
