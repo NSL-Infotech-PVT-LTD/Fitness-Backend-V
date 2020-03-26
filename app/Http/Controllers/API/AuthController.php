@@ -108,7 +108,7 @@ class AuthController extends ApiController {
             $user = \App\User::findOrFail(\Auth::id());
             $model = new \App\Tournament();
             $model = $model->select('id', 'name', 'image', 'location', 'price', 'description','start_date','end_date','rules','privacy_policy');
-            $model = $model->where('state','1');
+            $model = $model->where('state',1);
             $perPage = isset($request->limit) ? $request->limit : 20;
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
