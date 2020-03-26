@@ -28,10 +28,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
 
 
     Route::get('users/role/{role_id}', 'Admin\UsersController@indexByRoleId')->name('users-role');
+
     Route::get('home', 'HomeController@index')->name('home');
     Route::post('myfun', 'HomeController@myfun')->name('home.revenue');
     Route::resource('tournament', 'Admin\TournamentsController');
     Route::get('mydata/{id}', 'Admin\EnrollmentsController@enrollmentByid');
+    Route::resource('enrollments', 'Admin\EnrollmentsController');
     Route::get('/', 'Admin\AdminController@index');
     Route::resource('roles', 'Admin\RolesController');
     Route::resource('permissions', 'Admin\PermissionsController');

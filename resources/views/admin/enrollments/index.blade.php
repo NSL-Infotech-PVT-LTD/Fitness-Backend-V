@@ -7,7 +7,7 @@
 
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Enrollment</div>
+                <div class="card-header">Enrollments</div>
                 <div class="card-body">
                     <!--                        <a href="{{ url('/admin/enrollments/create') }}" class="btn btn-success btn-sm" title="Add New Enrollment">
                                                 <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -19,46 +19,19 @@
                         <table class="table table-borderless">
                             <thead>
                                 <tr>
-                                    <th>Id</th><th>Type</th><th>Price</th><th>Size</th><th>Images</th><th>Payment Id</th><th>customer Name</th><th>Winning Status</th>
+                                    <th>Id</th><th>Type</th><th>Price</th><th>Payment Id</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($enrollment as $item)
+                                @foreach($enrollments as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->type }}</td>
                                     <td>{{ $item->price }}</td>
-                                    <td>{{ $item->size }}</td>
-                                    @foreach($item->allImages as $img)
-                                    <td><img width="150" src="{{url('uploads/tournament/'.$img->images)}}"></td>
-                                    @endforeach
-
+                                   
                                     <td>{{ $item->payment_id }}</td>
-                                    <td>{{ $item->userdetails->name }}</td>
-                                    @if($item->status == 1)
-                                    <td><button class="btn btn-success coupan" data-status="winner" data-id="{{$item->id}}">Winner</button></td>
-                                    @elseif($item->status == 0)
-                                    <td><button class="btn btn-danger coupan" data-status="loser" data-id="{{$item->id}}">Loser</button></td>
-                                    @endif
-                                    <!--<td>-->
-<!--                                        <a href="{{ url('/admin/enrollments/' . $item->id) }}" title="View Enrollment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>-->
-<!--                                            <a href="{{ url('/admin/enrollments/' . $item->id . '/edit') }}" title="Edit Enrollment"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>-->
-                                    <!--                                        {!! Form::open([
-                                                                            'method' => 'DELETE',
-                                                                            'url' => ['/admin/enrollments', $item->id],
-                                                                            'style' => 'display:inline'
-                                                                            ]) !!}
-                                                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
-                                                                            'type' => 'submit',
-                                                                            'class' => 'btn btn-danger btn-sm',
-                                                                            'title' => 'Delete Tournament',
-                                                                            'onclick'=>'return confirm("Confirm delete?")'
-                                                                            )) !!}
-                                                                            {!! Form::close() !!}-->
-                                    <!--</td>-->
-<!--                                        <td>{{ $item->description }}</td>
-                                    <td>{{ $item->price }}</td>
-                                    <td>{{ $item->location }}</td>-->
+                                  
+                             
                                 </tr>
                                 @endforeach
                             </tbody>

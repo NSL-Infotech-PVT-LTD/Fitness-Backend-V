@@ -17,13 +17,26 @@ class EnrollmentsController extends Controller {
      *
      * @return \Illuminate\View\View
      */
+    public function index(Request $request) {
+        $enrollments = new EnrollTournaments;
+        if (isset($request->customer_id))
+            if ($request->customer_id != "null")
+                $enrollments = $enrollments->where('customer_id', $request->customer_id);
+        $enrollments = $enrollments->get();
+
+//dd('ss');
+        return view('admin.enrollments.index', compact('enrollments'));
+    }
+
     public function enrollmentByid(Request $request, $id) {
 
         $perPage = 25;
 
+      
 
-        $enrollment = EnrollTournaments::where('tournament_id', $id)->with(['userdetails','allImages'])->get();
-        
+
+        $enrollment = EnrollTournaments::where('tournament_id', $id)->with(['userdetails', 'allImages'])->get();
+
 
 //       dd($enrollment->toArray());  
 //           $customer = User::where('id',$enrollment->customer_id)->value('name');
@@ -31,7 +44,7 @@ class EnrollmentsController extends Controller {
 
 
 
-        return view('admin.enrollments.index', compact('enrollment'));
+        return view('admin.enrollments.enroll_index', compact('enrollment'));
     }
 
     /**
@@ -67,7 +80,10 @@ class EnrollmentsController extends Controller {
      * @return \Illuminate\View\View
      */
     public function show($id) {
+
+//        dd('ss');
         $enrollment = EnrollTournaments::findOrFail($id);
+
 
         return view('admin.enrollments.show', compact('enrollment'));
     }
@@ -132,6 +148,5 @@ class EnrollmentsController extends Controller {
         $status->save();
         return response()->json(["success" => true, 'message' => 'Enrollment updated!']);
     }
-    
-    
+
 }
