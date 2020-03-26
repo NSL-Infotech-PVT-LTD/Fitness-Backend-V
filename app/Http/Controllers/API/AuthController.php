@@ -147,11 +147,11 @@ class AuthController extends ApiController {
             $input['customer_id'] = \Auth::id();
 
             //start and end date check starts//
-//            if ($model->whereDate("start_date", '>','2020-03-23')->get()->isEmpty() != true)
-//                return parent::error('Sorry, You cant Enroll before start date');
-//            if ($model->whereDate("end_date", '<=', \Carbon\Carbon::now())->get()->isEmpty() != true)
-//                return parent::error('Sorry, You cant Enroll after end date');
-            //start and end date check ends//
+            if ($model->whereDate('start_date', '>',\Carbon\Carbon::now())->get()->isEmpty() != true)
+                return parent::error('Sorry, You cant Enroll before start date');
+            if ($model->whereDate('end_date', '<=', \Carbon\Carbon::now())->get()->isEmpty() != true)
+                return parent::error('Sorry, You cant Enroll after end date');
+           // start and end date check ends//
 
 
             $oldenroll = \App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->value('id');
