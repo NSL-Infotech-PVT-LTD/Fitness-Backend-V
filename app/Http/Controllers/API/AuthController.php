@@ -153,7 +153,7 @@ class AuthController extends ApiController {
 //                return parent::error('Sorry, You cant Enroll after end date');
             // start and end date check ends//
 
-
+ dd(env('STRIPE_SECRET'));
             $oldenroll = \App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->value('id');
 //            dd($oldenroll);
             if (\App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->get()->isEmpty() === false) {
@@ -169,6 +169,7 @@ class AuthController extends ApiController {
             } else {
 
                 \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+               
                 $stripe = \Stripe\Charge::create([
                             "amount" => $model->price * 100,
                             "currency" => config('app.stripe_default_currency'),
