@@ -29,38 +29,21 @@
                                     <td>{{ $item->type }}</td>
                                     <td>${{ $item->price }}</td>
                                     <td>{{ $item->size }}</td>
+                                    <td>
                                     @foreach($item->allImages as $img)
-                                    <td><img width="150" src="{{url('uploads/tournament/'.$img->images)}}"></td>
-                                    @endforeach
-
-                                    <td>{{ $item->payment_id }}</td>
-                                    <td>{{ $item->userdetails->name }}</td>
-                                    @if($item->status == 1)
-                                    <td><button class="btn btn-success coupan" data-status="winner" data-id="{{$item->id}}">Winner</button></td>
-                                    @elseif($item->status == 0)
-                                    <td><button class="btn btn-danger coupan" data-status="loser" data-id="{{$item->id}}">Loser</button></td>
-                                    @endif
-                                    <!--<td>-->
-<!--                                        <a href="{{ url('/admin/enrollments/' . $item->id) }}" title="View Enrollment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>-->
-<!--                                            <a href="{{ url('/admin/enrollments/' . $item->id . '/edit') }}" title="Edit Enrollment"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>-->
-                                    <!--                                        {!! Form::open([
-                                                                            'method' => 'DELETE',
-                                                                            'url' => ['/admin/enrollments', $item->id],
-                                                                            'style' => 'display:inline'
-                                                                            ]) !!}
-                                                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
-                                                                            'type' => 'submit',
-                                                                            'class' => 'btn btn-danger btn-sm',
-                                                                            'title' => 'Delete Tournament',
-                                                                            'onclick'=>'return confirm("Confirm delete?")'
-                                                                            )) !!}
-                                                                            {!! Form::close() !!}-->
-                                    <!--</td>-->
-<!--                                        <td>{{ $item->description }}</td>
-                                    <td>{{ $item->price }}</td>
-                                    <td>{{ $item->location }}</td>-->
-                                </tr>
-                                @endforeach
+                                    <img width="30" src="{{url('uploads/images/'.$img->images)}}"><br>
+                            @endforeach
+                            </td>
+                            <td>{{ $item->payment_id }}</td>
+                            <td>{{ $item->userdetails->name }}</td>
+                            @if($item->status == 1)
+                            <td><button class="btn btn-success coupan" data-status="winner" data-id="{{$item->id}}">Winner</button></td>
+                            @elseif($item->status == 0)
+                            <td><button class="btn btn-danger coupan" data-status="loser" data-id="{{$item->id}}">Loser</button></td>
+                            @endif
+                           
+                            </tr>
+                            @endforeach
                             </tbody>
                         </table>
 
