@@ -107,8 +107,8 @@ class AuthController extends ApiController {
         try {
             $user = \App\User::findOrFail(\Auth::id());
             $model = new \App\Tournament();
-            $model = $model->select('id', 'name', 'image', 'location', 'price', 'description','start_date','end_date','rules','privacy_policy');
-            $model = $model->where('state','1');
+            $model = $model->select('id', 'name', 'image', 'location', 'price', 'description', 'start_date', 'end_date', 'rules', 'privacy_policy');
+            $model = $model->where('state', '1');
             $perPage = isset($request->limit) ? $request->limit : 20;
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
@@ -151,7 +151,7 @@ class AuthController extends ApiController {
 //                return parent::error('Sorry, You cant Enroll before start date');
 //            if ($model->whereDate("end_date", '<', \Carbon\Carbon::now())->get()->isEmpty() != true)
 //                return parent::error('Sorry, You cant Enroll after end date');
-           // start and end date check ends//
+            // start and end date check ends//
 
 
             $oldenroll = \App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->value('id');
@@ -167,7 +167,7 @@ class AuthController extends ApiController {
                 }
                 return parent::successCreated(['message' => 'Images added Successfully', 'images' => $img]);
             } else {
-                $enroll = EnrollTournaments::create($input);
+
                 \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
                 $stripe = \Stripe\Charge::create([
                             "amount" => $model->price * 100,
@@ -178,6 +178,11 @@ class AuthController extends ApiController {
 //             dd('ss');
 //            dd($enroll);
 
+                $enroll = EnrollTournaments::create($input);
+                $enroll->payment_details = json_encode($stripe);
+                $enroll->payment_id = $stripe->id;
+                $enroll->save();
+                
                 if ($files = $request->file('images')) {
                     foreach ($files as $file) {
                         $img = self::imageUpload($file, $request->tournament_id, $enroll->id);
@@ -186,19 +191,8 @@ class AuthController extends ApiController {
                     }
                 }
 
-                $enroll->payment_details = json_encode($stripe);
-                $enroll->payment_id = $stripe->id;
-                $enroll->save();
                 return parent::successCreated(['message' => 'Enrolled Successfully', 'enroll' => $enroll]);
             }
-
-
-
-
-
-
-
-           
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
