@@ -169,20 +169,19 @@ class AuthController extends ApiController {
             } else {
 
                 \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-                if (\App\Tournament::where('id', $request->tournament_id)->where('price', '!=', '0')->get()->isEmpty() === false)
-                {
+                if (\App\Tournament::where('id', $request->tournament_id)->where('price', '!=', '0')->get()->isEmpty() === false) {
                     $stripe = \Stripe\Charge::create([
                                 "amount" => $model->price * 100,
                                 "currency" => config('app.stripe_default_currency'),
                                 "source" => $request->token, // obtained with Stripe.js
                                 "description" => "Charge for the enrollments of tournamnets in fishing project"
                     ]);
-                $enroll = EnrollTournaments::create($input);
-                $enroll->payment_details = json_encode($stripe);
-                $enroll->payment_id = $stripe->id;
-                $enroll->save();
+                    $enroll = EnrollTournaments::create($input);
+                    $enroll->payment_details = json_encode($stripe);
+                    $enroll->payment_id = $stripe->id;
+                    $enroll->save();
                 }
-
+                $enroll = EnrollTournaments::create($input);
                 if ($files = $request->file('images')) {
                     foreach ($files as $file) {
                         $img = self::imageUpload($file, $request->tournament_id, $enroll->id);
