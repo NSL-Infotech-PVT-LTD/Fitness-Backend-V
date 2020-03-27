@@ -153,7 +153,7 @@ class AuthController extends ApiController {
 //                return parent::error('Sorry, You cant Enroll after end date');
             // start and end date check ends//
 
- 
+
             $oldenroll = \App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->value('id');
 //            dd($oldenroll);
             if (\App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->get()->isEmpty() === false) {
@@ -169,21 +169,20 @@ class AuthController extends ApiController {
             } else {
 
                 \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-               
-                $stripe = \Stripe\Charge::create([
-                            "amount" => $model->price * 100,
-                            "currency" => config('app.stripe_default_currency'),
-                            "source" => $request->token, // obtained with Stripe.js
-                            "description" => "Charge for the enrollments of tournamnets in fishing project"
-                ]);
-//             dd('ss');
-//            dd($enroll);
-
+                if (\App\Tournament::where('id', $request->tournament_id)->where('price', '!=', '0')->get()->isEmpty() === false)
+                {
+                    $stripe = \Stripe\Charge::create([
+                                "amount" => $model->price * 100,
+                                "currency" => config('app.stripe_default_currency'),
+                                "source" => $request->token, // obtained with Stripe.js
+                                "description" => "Charge for the enrollments of tournamnets in fishing project"
+                    ]);
                 $enroll = EnrollTournaments::create($input);
                 $enroll->payment_details = json_encode($stripe);
                 $enroll->payment_id = $stripe->id;
                 $enroll->save();
-                
+                }
+
                 if ($files = $request->file('images')) {
                     foreach ($files as $file) {
                         $img = self::imageUpload($file, $request->tournament_id, $enroll->id);

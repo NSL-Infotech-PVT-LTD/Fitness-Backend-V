@@ -2,6 +2,10 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/I:/NetScape-Labs/Xampp/htdocs/tourney/config/app.php</file>
+            <file>file:/I:/NetScape-Labs/Xampp/htdocs/tourney/resources/views/admin/enrollments/enroll_index.blade.php</file>
+            <file>file:/I:/NetScape-Labs/Xampp/htdocs/tourney/app/Http/Controllers/Admin/TournamentsController.php</file>
+        </group>
     </open-files>
 </project-private>
