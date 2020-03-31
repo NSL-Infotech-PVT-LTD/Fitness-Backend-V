@@ -110,6 +110,15 @@ class AuthController extends ApiController {
             $model = $model->select('id', 'name', 'image', 'location', 'price', 'description', 'start_date', 'end_date', 'rules', 'privacy_policy');
             $model = $model->where('state', '1');
             $perPage = isset($request->limit) ? $request->limit : 20;
+            
+            if (isset($request->search)) {
+                $model = $model->where(function($query) use ($request) {
+                    $query->where('name', 'LIKE', "%$request->search%")
+                            ->orWhere('description', 'LIKE', "%$request->search%");
+                });
+            }
+            
+            
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
