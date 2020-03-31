@@ -226,4 +226,41 @@ class AuthController extends ApiController {
         return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments]);
     }
 
+    public function resetPassword(Request $request, Factory $view) {
+
+
+        //Validating attributes
+        $rules = ['email' => 'required'];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), true);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        $view->composer('emails.auth.password', function($view) {
+            $view->with([
+                'title' => trans('front/password.email-title'),
+                'intro' => trans('front/password.email-intro'),
+                'link' => trans('front/password.email-link'),
+                'expire' => trans('front/password.email-expire'),
+                'minutes' => trans('front/password.minutes'),
+            ]);
+        });
+//        dd($request->only('email'));
+        $response = Password::sendResetLink($request->only('email'), function (Message $message) {
+                    $message->subject(trans('front/password.reset'));
+                });
+
+//        dd($response);
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+                return parent::successCreated('Password reset link sent, please check inbox');
+            case Password::INVALID_USER:
+                return parent::error(trans($response));
+            default :
+                return parent::error(trans($response));
+                break;
+        }
+
+        return parent::error('Something Went');
+    }
+
 }

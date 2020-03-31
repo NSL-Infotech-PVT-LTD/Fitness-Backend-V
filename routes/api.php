@@ -24,7 +24,7 @@ Route::post('service-provider/login', 'API\AuthController@login');
 Route::post('customer/register', 'API\AuthController@register');
 Route::post('service_provider/register', 'API\AuthController@service_provider');
 
-Route::post('forget-password', 'API\AuthController@resetPassword');
+
 
 Route::group(['middleware' => ['auth:api', 'roles'], 'namespace' => 'API'], function() {
 //    Route::group(['middleware' => ['auth:api', 'roles'], 'roles' => ['App-Users'],'namespace' => 'API'], function() {
@@ -40,3 +40,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('getTournamentDetails','API\AuthController@getTournamentDetails');
     
 });
+
+
+ Route::post('reset-password', 'API\AuthController@resetPassword');

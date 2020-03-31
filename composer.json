@@ -19,6 +19,7 @@
         "stripe/stripe-php": "^7.27",
         "symfony/translation": "4.3.8",
         "yajra/laravel-datatables-oracle": "~9.0",
+        "webup/laravel-sendinblue": "^2.0",
          "symfony/translation": "4.3.8"
     },
     "require-dev": {
