@@ -229,10 +229,12 @@ class AuthController extends ApiController {
         $mySubmittedEnrollments = EnrollTournaments::where('customer_id', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
 
         $worldWideEnrollments = EnrollTournaments::where('customer_id', '!=', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
+        
+        $winner = EnrollTournaments::where('customer_id', Auth::id())->where('tournament_id', $request->tournament_id)->where('status', '1')->with('userdetails')->get();
 
 
 
-        return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments]);
+        return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments,'winner'=> $winner]);
     }
 
     public function resetPassword(Request $request, Factory $view) {
