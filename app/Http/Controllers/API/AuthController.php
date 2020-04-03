@@ -31,14 +31,14 @@ class AuthController extends ApiController {
         $inputNew['enrollment_id'] = $enrollment_id;
         $inputNew['type'] = $type;
         $inputNew['size'] = $size;
-        
+
 
         return $inputNew;
     }
 
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['name' => 'required', 'email' => 'required|email|unique:users', 'password' => 'required', 'mobile' => 'required|unique:users', 'location' => 'required', 'dob' => 'required'];
+        $rules = ['name' => 'required', 'email' => 'required|email|unique:users', 'password' => 'required', 'mobile' => 'required|unique:users', 'location' => 'required', 'dob' => 'required','image'=>'required'];
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
@@ -47,6 +47,7 @@ class AuthController extends ApiController {
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
+            $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
 //            $input['is_notify'] = '1';
 //            $input['is_login'] = '1';
             $user = \App\User::create($input);
@@ -172,7 +173,7 @@ class AuthController extends ApiController {
 
                 if ($files = $request->file('images')) {
                     foreach ($files as $file) {
-                        $img = self::imageUpload($file, $request->tournament_id, $oldenroll,$request->type, $request->size);
+                        $img = self::imageUpload($file, $request->tournament_id, $oldenroll, $request->type, $request->size);
 
                         \App\Image::create($img);
                     }
@@ -233,8 +234,8 @@ class AuthController extends ApiController {
         $worldWideEnrollments = EnrollTournaments::where('customer_id', '!=', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
 
 //        $winner = EnrollTournaments::where('tournament_id', $request->tournament_id)->where('status', '1')->with('userdetails')->get();
-        
-           $winner = EnrollTournaments::where('tournament_id', $request->tournament_id)->where('status', '1')->with('allImages')->with('userdetails')->first();
+
+        $winner = EnrollTournaments::where('tournament_id', $request->tournament_id)->where('status', '1')->with('allImages')->with('userdetails')->first();
 
 
 
