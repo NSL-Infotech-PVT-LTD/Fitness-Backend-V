@@ -43,9 +43,9 @@ class EnrollTournaments extends Model {
 //        dd($LatestImage);
         $FinalImage = [];
         foreach ($LatestImage as $img) {
-            $FinalImage[] = $img->select('images','size','type')->get();
+            $FinalImage[] = $img->images;
         }
-        return json_encode($FinalImage);
+        return $FinalImage;
     }
 
 }
