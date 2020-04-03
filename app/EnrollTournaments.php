@@ -11,7 +11,7 @@ class EnrollTournaments extends Model {
 
     protected $fillable = ['type', 'size','price','token','status','tournament_id', 'customer_id'];
 
-     protected $appends = array('tournament_name','tournament_image');
+     protected $appends = array('images','tournament_name','tournament_image');
      public function getTournamentNameAttribute($value) 
      {
          $name = Tournament::where('id', $this->tournament_id)->value('name');
@@ -38,14 +38,14 @@ class EnrollTournaments extends Model {
         return $this->hasOne(Tournament::class, 'id', 'tournament_id')->select('id', 'name', 'image', 'price', 'description');
     }
 
-//    public function getImagesAttribute($value) {
-//        $LatestImage = Image::where('enrollment_id', $this->id)->orderBy('id', 'desc')->get();
-////        dd($LatestImage);
-//        $FinalImage = [];
-//        foreach ($LatestImage as $img) {
-//            $FinalImage[] = $img->images;
-//        }
-//        return $FinalImage;
-//    }
+    public function getImagesAttribute($value) {
+        $LatestImage = Image::where('enrollment_id', $this->id)->orderBy('id', 'desc')->get();
+//        dd($LatestImage);
+        $FinalImage = [];
+        foreach ($LatestImage as $img) {
+            $FinalImage[] = $img->images;
+        }
+        return $FinalImage;
+    }
 
 }
