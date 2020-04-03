@@ -230,7 +230,7 @@ class AuthController extends ApiController {
 
         $worldWideEnrollments = EnrollTournaments::where('customer_id', '!=', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
         
-        $winner = EnrollTournaments::where('customer_id', Auth::id())->where('tournament_id', $request->tournament_id)->where('status', '1')->with('userdetails')->get();
+        $winner = EnrollTournaments::where('tournament_id', $request->tournament_id)->where('status', '1')->with('userdetails')->get();
 
 
 
