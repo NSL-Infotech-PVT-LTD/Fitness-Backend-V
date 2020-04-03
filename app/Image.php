@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\EnrollTournaments;
 class Image extends Model
 {
-    protected $fillable = ['tournament_id','enrollment_id', 'customer_id','images'];
+    protected $fillable = ['tournament_id','enrollment_id', 'customer_id','images','type','size'];
     
     
     

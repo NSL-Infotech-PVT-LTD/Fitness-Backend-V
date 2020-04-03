@@ -39,13 +39,13 @@ class EnrollTournaments extends Model {
     }
 
     public function getImagesAttribute($value) {
-        $LatestImage = Image::where('enrollment_id', $this->id)->orderBy('id', 'desc')->take(3)->get();
+        $LatestImage = Image::where('enrollment_id', $this->id)->orderBy('id', 'desc')->get();
 //        dd($LatestImage);
         $FinalImage = [];
         foreach ($LatestImage as $img) {
-            $FinalImage[] = $img->images;
+            $FinalImage[] = $img->select('images','size','type')->get();
         }
-        return $FinalImage;
+        return json_encode($FinalImage);
     }
 
 }

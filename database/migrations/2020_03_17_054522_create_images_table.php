@@ -24,6 +24,8 @@ class CreateImagesTable extends Migration {
             $table->foreign('customer_id')->references('id')->on
                     ('users')->onDelete('cascade');
             $table->string('images');
+            $table->string('size');
+            $table->enum('type', ['fishing']);
             \App\Helpers\DbExtender::defaultParams($table);
         });
     }

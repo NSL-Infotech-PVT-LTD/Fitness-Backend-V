@@ -19,7 +19,7 @@ use Stripe;
 
 class AuthController extends ApiController {
 
-    public static function imageUpload($file, $tournament_id, $enrollment_id) {
+    public static function imageUpload($file, $tournament_id, $enrollment_id, $type, $size) {
 
 
         $path = public_path('uploads/images');
@@ -29,6 +29,9 @@ class AuthController extends ApiController {
         $inputNew['customer_id'] = \Auth::id();
         $inputNew['tournament_id'] = $tournament_id;
         $inputNew['enrollment_id'] = $enrollment_id;
+        $inputNew['type'] = $type;
+        $inputNew['size'] = $size;
+        
 
         return $inputNew;
     }
@@ -110,15 +113,15 @@ class AuthController extends ApiController {
             $model = $model->select('id', 'name', 'image', 'location', 'price', 'description', 'start_date', 'end_date', 'rules', 'privacy_policy');
             $model = $model->where('state', '1');
             $perPage = isset($request->limit) ? $request->limit : 20;
-            
+
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
                     $query->where('name', 'LIKE', "%$request->search%")
                             ->orWhere('description', 'LIKE', "%$request->search%");
                 });
             }
-            
-            
+
+
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
@@ -169,7 +172,7 @@ class AuthController extends ApiController {
 
                 if ($files = $request->file('images')) {
                     foreach ($files as $file) {
-                        $img = self::imageUpload($file, $request->tournament_id, $oldenroll);
+                        $img = self::imageUpload($file, $request->tournament_id, $oldenroll,$request->type, $request->size);
 
                         \App\Image::create($img);
                     }
@@ -193,8 +196,7 @@ class AuthController extends ApiController {
                 $enroll = EnrollTournaments::create($input);
                 if ($files = $request->file('images')) {
                     foreach ($files as $file) {
-                        $img = self::imageUpload($file, $request->tournament_id, $enroll->id);
-
+                        $img = self::imageUpload($file, $request->tournament_id, $enroll->id, $request->type, $request->size);
                         \App\Image::create($img);
                     }
                 }
@@ -229,12 +231,12 @@ class AuthController extends ApiController {
         $mySubmittedEnrollments = EnrollTournaments::where('customer_id', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
 
         $worldWideEnrollments = EnrollTournaments::where('customer_id', '!=', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
-        
+
         $winner = EnrollTournaments::where('tournament_id', $request->tournament_id)->where('status', '1')->with('userdetails')->get();
 
 
 
-        return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments,'winner'=> $winner]);
+        return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments, 'winner' => $winner]);
     }
 
     public function resetPassword(Request $request, Factory $view) {
