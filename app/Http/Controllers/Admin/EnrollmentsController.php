@@ -137,14 +137,22 @@ class EnrollmentsController extends Controller {
 
     public function winnerstatus(Request $request) {
 //dd($request->value);
+        
+       
         $status = EnrollTournaments::findOrFail($request->status);
 //dd($request->value);
+        
+//           $id = EnrollTournaments::findOrFail($request->id);
+           
         if ($request->value == 'winner') {
             $status->status = $request->value == 'winner' ? '0' : '1';
         } else if ($request->value == 'make_winner') {
             $status->status = $request->value == 'make_winner' ? '1' : '0';
+            
+//            $id = EnrollTournaments::findOrFail($request->id);
+            
+            
         }
-//        dd($status);
         $status->save();
         return response()->json(["success" => true, 'message' => 'Enrollment updated!']);
     }
