@@ -39,7 +39,7 @@
                             @if($item->status == 1)
                             <td><button class="btn btn-success coupan" data-status="winner" data-id="{{$item->id}}">Winner</button></td>
                             @elseif($item->status == 0)
-                            <td><button class="btn btn-danger coupan" data-status="loser" data-id="{{$item->id}}">Loser</button></td>
+                            <td><button class="btn btn-danger coupan" data-status="make_winner" data-id="{{$item->id}}">Make winner</button></td>
                             @endif
                            
                             </tr>

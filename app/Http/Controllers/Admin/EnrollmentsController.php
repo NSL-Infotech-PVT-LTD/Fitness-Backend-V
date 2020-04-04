@@ -141,8 +141,8 @@ class EnrollmentsController extends Controller {
 //dd($request->value);
         if ($request->value == 'winner') {
             $status->status = $request->value == 'winner' ? '0' : '1';
-        } else if ($request->value == 'loser') {
-            $status->status = $request->value == 'loser' ? '1' : '0';
+        } else if ($request->value == 'make_winner') {
+            $status->status = $request->value == 'make_winner' ? '1' : '0';
         }
 //        dd($status);
         $status->save();

@@ -31,12 +31,13 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID.</th> <th>Name</th><th>Email</th>
+                                        <th>ID.</th> <th>Name</th><th>Email</th><th>Location</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ $user->id }}</td> <td> {{ $user->name }} </td><td> {{ $user->email }} </td>
+                                        <td>{{ $user->id }}</td> <td> {{ $user->name }} </td><td> {{ $user->email }} </td><td> {{ $user->location }} </td>
+                    
                                     </tr>
                                 </tbody>
                             </table>
