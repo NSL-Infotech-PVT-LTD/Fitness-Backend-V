@@ -148,7 +148,7 @@ class AuthController extends ApiController {
     }
 
     public function enroll(Request $request) {
-        $rules = ['type' => 'required', 'price' => '', 'token' => '', 'tournament_id' => 'required|exists:tournaments,id', 'size' => 'required', 'images' => 'required'];
+        $rules = ['type' => '', 'price' => '', 'token' => '', 'tournament_id' => 'required|exists:tournaments,id', 'size' => '', 'images' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -195,12 +195,12 @@ class AuthController extends ApiController {
                     $enroll->save();
                 }
                 $enroll = EnrollTournaments::create($input);
-                if ($files = $request->file('images')) {
-                    foreach ($files as $file) {
-                        $img = self::imageUpload($file, $request->tournament_id, $enroll->id, $request->type, $request->size);
-                        \App\Image::create($img);
-                    }
-                }
+//                if ($files = $request->file('images')) {
+//                    foreach ($files as $file) {
+//                        $img = self::imageUpload($file, $request->tournament_id, $enroll->id, $request->type, $request->size);
+//                        \App\Image::create($img);
+//                    }
+//                }
 
                 return parent::successCreated(['message' => 'Enrolled Successfully', 'enroll' => $enroll]);
             }
@@ -246,7 +246,7 @@ class AuthController extends ApiController {
 
 
         //Validating attributes
-        $rules = ['email' => 'required'];
+        $rules = ['email' => 'required|exists:users,email'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), true);
         if ($validateAttributes):
             return $validateAttributes;
@@ -277,6 +277,29 @@ class AuthController extends ApiController {
         }
 
         return parent::error('Something Went');
+    }
+    
+    public function logout(Request $request) {
+        $rules = [];
+
+        $validateAttributes = parent::validateAttributes($request, 'GET', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+
+            $user = \App\User::findOrFail(\Auth::id());
+//            $user->is_login = '0';
+//            $user->save();
+            $device = \App\UserDevice::where('user_id', \Auth::id())->get();
+//            dd($device);
+            if ($device->isEmpty() === false)
+                \App\UserDevice::destroy($device->first()->id);
+
+            return parent::successCreated('Logout Successfully');
+        } catch (\Exception $ex) {
+            return parent::error($ex->getMessage());
+        }
     }
 
 }

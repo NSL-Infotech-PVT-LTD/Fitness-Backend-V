@@ -14,7 +14,7 @@ class CreateEnrollTournamentsTable extends Migration {
     public function up() {
         Schema::create('enroll_tournaments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('type', ['fishing']);
+            $table->string('type');
             $table->string('token');
             $table->string('size');
             $table->string('price');

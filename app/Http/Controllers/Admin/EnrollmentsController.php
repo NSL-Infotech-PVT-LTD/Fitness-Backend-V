@@ -140,9 +140,8 @@ class EnrollmentsController extends Controller {
         
        
         $status = EnrollTournaments::findOrFail($request->status);
-//dd($request->value);
         
-//           $id = EnrollTournaments::findOrFail($request->id);
+        
            
         if ($request->value == 'winner') {
             $status->status = $request->value == 'winner' ? '0' : '1';
