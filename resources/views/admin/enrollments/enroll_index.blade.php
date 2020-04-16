@@ -1,5 +1,21 @@
 @extends('layouts.backend')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ asset('template/js/jquery.imageviewer.min.js') }} "></script>
 
+
+<style>
+    #imageviewer-wrapper {
+  position:        'fixed',
+  top:             '0',
+  left:            '0',
+  zIndex:          '99999',
+  display:         'flex',
+  justifyContent:  'center',
+  alignItems:      'center',
+  width:           '100%',
+  height:          '100vh',
+}
+</style>
 @section('content')
 <div class="container">
     <div class="row">
@@ -31,7 +47,7 @@
                                     <td>{{ $item->size }}</td>
                                     <td>
                                     @foreach($item->allImages as $img)
-                                    <img width="30" src="{{url('uploads/images/'.$img->images)}}"><br>
+                                    <img onclick = "imageviewer();" width="50" src="{{url('uploads/images/'.$img->images)}}"><br>
                             @endforeach
                             </td>
                             <td>{{ $item->payment_id }}</td>
