@@ -69,7 +69,7 @@ class AuthController extends ApiController {
      public function Update(Request $request) {
         $user = \App\User::findOrFail(\Auth::id());
       
-        $rules = ['name' => '', 'mobile' => 'unique:users,mobile,' . $user->id, 'location' => '', 'image' => '','dob'=>''];
+        $rules = ['name' => '', 'location' => '', 'image' => '','dob'=>''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
