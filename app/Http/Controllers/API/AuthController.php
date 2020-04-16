@@ -38,7 +38,7 @@ class AuthController extends ApiController {
 
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['name' => 'required', 'email' => 'required|email|unique:users', 'password' => 'required', 'mobile' => 'required|unique:users', 'location' => 'required', 'dob' => 'required','image'=>'required'];
+        $rules = ['name' => 'required', 'email' => 'required|email|unique:users', 'password' => 'required', 'mobile' => 'required|unique:users', 'location' => 'required', 'dob' => 'required','image'=>''];
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
@@ -60,6 +60,31 @@ class AuthController extends ApiController {
             // Add user device details for firbase
             parent::addUserDeviceData($user, $request);
             return parent::successCreated(['message' => 'Created Successfully', 'token' => $token, 'user' => $user]);
+        } catch (\Exception $ex) {
+            return parent::error($ex->getMessage());
+        }
+    }
+    
+    
+     public function Update(Request $request) {
+        $user = \App\User::findOrFail(\Auth::id());
+      
+        $rules = ['name' => '', 'mobile' => 'unique:users,mobile,' . $user->id, 'location' => '', 'image' => '','dob'=>''];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+            $input = $request->all();
+//            $input['sport_id']= json_encode($request->sport_id);
+            if (isset($request->image))
+                $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
+
+            $user->fill($input);
+            $user->save();
+
+            $user = \App\User::whereId($user->id)->select('id', 'name', 'email', 'mobile', 'location','dob','image')->first();
+            return parent::successCreated(['message' => 'Updated Successfully', 'user' => $user]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
