@@ -219,7 +219,7 @@ class AuthController extends ApiController {
                     $enroll->payment_id = $stripe->id;
                     $enroll->save();
                 }
-                $enroll = EnrollTournaments::create($input);
+//                $enroll = EnrollTournaments::create($input);
 //                if ($files = $request->file('images')) {
 //                    foreach ($files as $file) {
 //                        $img = self::imageUpload($file, $request->tournament_id, $enroll->id, $request->type, $request->size);
