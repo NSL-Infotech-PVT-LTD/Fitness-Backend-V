@@ -47,6 +47,7 @@ class AuthController extends ApiController {
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
+              if (isset($request->image))
             $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
 //            $input['is_notify'] = '1';
 //            $input['is_login'] = '1';
