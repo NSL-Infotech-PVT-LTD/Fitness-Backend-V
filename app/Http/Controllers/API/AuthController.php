@@ -38,7 +38,7 @@ class AuthController extends ApiController {
 
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['name' => 'required', 'email' => 'required|email|unique:users', 'password' => 'required', 'mobile' => 'required|unique:users', 'location' => 'required', 'dob' => 'required','image'=>''];
+        $rules = ['name' => 'required', 'email' => 'required|email|unique:users', 'password' => 'required', 'mobile' => 'required|unique:users', 'location' => 'required', 'dob' => 'required', 'image' => ''];
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
@@ -47,8 +47,8 @@ class AuthController extends ApiController {
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
-              if (isset($request->image))
-            $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
+            if (isset($request->image))
+                $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
 //            $input['is_notify'] = '1';
 //            $input['is_login'] = '1';
             $user = \App\User::create($input);
@@ -65,12 +65,11 @@ class AuthController extends ApiController {
             return parent::error($ex->getMessage());
         }
     }
-    
-    
-     public function Update(Request $request) {
+
+    public function Update(Request $request) {
         $user = \App\User::findOrFail(\Auth::id());
-      
-        $rules = ['name' => '', 'location' => '', 'image' => '','dob'=>''];
+
+        $rules = ['name' => '', 'location' => '', 'image' => '', 'dob' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -84,7 +83,7 @@ class AuthController extends ApiController {
             $user->fill($input);
             $user->save();
 
-            $user = \App\User::whereId($user->id)->select('id', 'name', 'email', 'mobile', 'location','dob','image')->first();
+            $user = \App\User::whereId($user->id)->select('id', 'name', 'email', 'mobile', 'location', 'dob', 'image')->first();
             return parent::successCreated(['message' => 'Updated Successfully', 'user' => $user]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
@@ -220,13 +219,12 @@ class AuthController extends ApiController {
                     $enroll->payment_id = $stripe->id;
                     $enroll->save();
                 }
-//                $enroll = EnrollTournaments::create($input);
-//                if ($files = $request->file('images')) {
-//                    foreach ($files as $file) {
-//                        $img = self::imageUpload($file, $request->tournament_id, $enroll->id, $request->type, $request->size);
-//                        \App\Image::create($img);
-//                    }
-//                }
+
+
+                if (\App\Tournament::where('id', $request->tournament_id)->where('price', '=', '0')->get()->isEmpty() === false) {
+                    $enroll = EnrollTournaments::create($input);
+                }
+//                
 
                 return parent::successCreated(['message' => 'Enrolled Successfully', 'enroll' => $enroll]);
             }
@@ -304,7 +302,7 @@ class AuthController extends ApiController {
 
         return parent::error('Something Went');
     }
-    
+
     public function logout(Request $request) {
         $rules = [];
 
