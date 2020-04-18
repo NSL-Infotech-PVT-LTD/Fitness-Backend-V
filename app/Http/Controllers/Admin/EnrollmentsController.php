@@ -24,6 +24,7 @@ class EnrollmentsController extends Controller {
                 $enrollments = $enrollments->where('customer_id', $request->customer_id);
         $enrollments = $enrollments->get();
 
+
 //dd('ss');
         return view('admin.enrollments.index', compact('enrollments'));
     }
@@ -32,19 +33,22 @@ class EnrollmentsController extends Controller {
 
         $perPage = 25;
 
-      
+
 
 
         $enrollment = EnrollTournaments::where('tournament_id', $id)->with(['userdetails', 'allImages'])->get();
 
-
+        $enroll_id =  EnrollTournaments::where('tournament_id', $id)->value('id');
+//        dd($enroll_id);
+        $size = \App\Image::where('enrollment_id', $enroll_id)->value('size');
+//        dd($size);
 //       dd($enrollment->toArray());  
 //           $customer = User::where('id',$enrollment->customer_id)->value('name');
 
 
 
 
-        return view('admin.enrollments.enroll_index', compact('enrollment'));
+        return view('admin.enrollments.enroll_index', compact('enrollment', 'size'));
     }
 
     /**
@@ -83,6 +87,7 @@ class EnrollmentsController extends Controller {
 
 //        dd('ss');
         $enrollment = EnrollTournaments::findOrFail($id);
+
 
 
         return view('admin.enrollments.show', compact('enrollment'));
@@ -137,20 +142,18 @@ class EnrollmentsController extends Controller {
 
     public function winnerstatus(Request $request) {
 //dd($request->value);
-        
-       
+
+
         $status = EnrollTournaments::findOrFail($request->status);
-        
-        
-           
+
+
+
         if ($request->value == 'winner') {
             $status->status = $request->value == 'winner' ? '0' : '1';
         } else if ($request->value == 'make_winner') {
             $status->status = $request->value == 'make_winner' ? '1' : '0';
-            
+
 //            $id = EnrollTournaments::findOrFail($request->id);
-            
-            
         }
         $status->save();
         return response()->json(["success" => true, 'message' => 'Enrollment updated!']);
