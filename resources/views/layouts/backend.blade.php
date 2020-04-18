@@ -39,8 +39,7 @@
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 <!--datatable ends-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-<!--{{--        <script src="{{ asset('template/js/jquery-1.10.2.min.js') }} "></script>--}}-->
+{{--        <script src="{{ asset('template/js/jquery-1.10.2.min.js') }} "></script>--}}
 <!--pie-chart--->
 {{--        <script src="{{ asset('template/js/pie-chart.js') }} " type="text/javascript"></script>--}}
 
