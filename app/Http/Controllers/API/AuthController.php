@@ -138,6 +138,7 @@ class AuthController extends ApiController {
             $model = new \App\Tournament();
             $model = $model->select('id', 'name', 'image', 'location', 'price', 'description', 'start_date', 'end_date', 'rules', 'privacy_policy');
             $model = $model->where('state', '1');
+            $model = $model->where('end_date','>',\Carbon\Carbon::now());
             $perPage = isset($request->limit) ? $request->limit : 20;
 
             if (isset($request->search)) {
