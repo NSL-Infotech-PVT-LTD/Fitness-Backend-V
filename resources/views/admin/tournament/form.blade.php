@@ -46,6 +46,20 @@
     {!! $errors->first('rules', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="form-group{{ $errors->has('prize_name') ? 'has-error' : ''}}">
+    {!! Form::label('prize_name', 'Prize Name', ['class' => 'control-label']) !!}
+    {!! Form::text('prize_name', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! $errors->first('prize_name', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group{{ $errors->has('prize_image') ? 'has-error' : ''}}">
+    {!! Form::label('prize_image', 'Prize Image', ['class' => 'control-label']) !!}
+    {!! Form::file('prize_image', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! $errors->first('prize_image', '<p class="help-block">:message</p>') !!}
+</div>
+
+
+
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>

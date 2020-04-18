@@ -45,13 +45,12 @@
                                     <td>{{ $item->type }}</td>
                                     <td>${{ $item->price }}</td>
                                     <td>{{ $size }} inches</td>
-                                    <td>
-                                        @foreach($item->allImages as $img)
-                                        <img  onclick = "imageviewer();" width="50" src="{{url('uploads/images/'.$img->images)}}"  style="margin-top:10px;"><br>
-                                        @endforeach
+                                        <td>
+                                            @foreach($item->allImages as $img)
+                                            <img  onclick = "imageviewer();" width="50" src="{{url('uploads/images/'.$img->images)}}"  style="margin-top:10px;"><br>
+                                            @endforeach
 
-                                    </td>
-                                    
+                                        </td>
                                     <?php if (!empty($item->payment_id)) { ?>
                                         <td>{{ $item->payment_id }}</td>
                                     <?php } else { ?>

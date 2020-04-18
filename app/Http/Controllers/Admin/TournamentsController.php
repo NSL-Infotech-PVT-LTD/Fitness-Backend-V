@@ -87,6 +87,7 @@ class TournamentsController extends Controller {
 
         $requestData = $request->all();
         $requestData['image'] = ApiController::__uploadImage($request->file('image'), public_path(self::$_mediaBasePath));
+        $requestData['prize_image'] = ApiController::__uploadImage($request->file('prize_image'), public_path(self::$_mediaBasePath));
         Tournament::create($requestData);
 
         return redirect('admin/tournament')->with('flash_message', 'Tournament added!');

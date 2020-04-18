@@ -39,6 +39,8 @@
                                     <tr><th> End Date </th><td> {{ $tournament->end_date }} </td></tr>
                                     <tr><th> Rules </th><td> {{ $tournament->rules }} </td></tr>
                                     <tr><th> Privacy Policy </th><td> {{ $tournament->privacy_policy }} </td></tr>
+                                    <tr><th> Prize Name </th><td> {{ $tournament->prize_name }} </td></tr>
+                                    <tr><th> Prize Image </th><td> <img width="150" src="{{url('uploads/tournament/'.$tournament->prize_image)}}"> </td></tr>
                                     
                                 </tbody>
                             </table>
