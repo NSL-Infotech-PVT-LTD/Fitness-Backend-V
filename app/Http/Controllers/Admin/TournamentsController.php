@@ -147,10 +147,15 @@ class TournamentsController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy($id) {
-        Tournament::destroy($id);
-
-        return redirect('admin/tournament')->with('flash_message', 'Tournament deleted!');
+    
+    
+      public function destroy($id) {
+        if (Tournament::destroy($id)) {
+            $data = 'Success';
+        } else {
+            $data = 'Failed';
+        }
+        return response()->json($data);
     }
 
     public function changeStatus(Request $request) {

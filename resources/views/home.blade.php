@@ -152,7 +152,7 @@ labels:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'
         options:{
         title:{
         display:true,
-                text:'Monthly Average Revenue',
+                text:'Monthly  Revenue',
                 fontSize:25
         },
                 legend:{
