@@ -90,37 +90,28 @@ class AuthController extends ApiController {
         }
     }
 
-    public function Login(Request $request) {
+     public function Login(Request $request) {
         try {
-            $rules = ['email' => 'required', 'password' => 'required'];
-            $rules = array_merge($this->requiredParams, $rules);
-            $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), true);
-            if ($validateAttributes):
-                return $validateAttributes;
-            endif;
 
-            //parent::addUserDeviceData($user, $request);
-            if (Auth::attempt(['email' => request('email'), 'password' => request('password')])):
+//parent::addUserDeviceData($user, $request);
+            $email = $request->email;
+// dd($email);
 
+            if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
                 $user = \App\User::find(Auth::user()->id);
-
                 $user->save();
                 $token = $user->createToken('netscape')->accessToken;
-
-
                 parent::addUserDeviceData($user, $request);
-
-
-//                $user = $user->with('roles');
-                // Add user device details for firbase
-
-
-
-
                 return parent::successCreated(['message' => 'Login Successfully', 'token' => $token, 'user' => $user]);
-            else:
+            } elseif (Auth::attempt(['name' => request('email'), 'password' => request('password')])) {
+                $user = \App\User::find(Auth::user()->id);
+                $user->save();
+                $token = $user->createToken('netscape')->accessToken;
+                parent::addUserDeviceData($user, $request);
+                return parent::successCreated(['message' => 'Login Successfully', 'token' => $token, 'user' => $user]);
+            } else {
                 return parent::error("User credentials doesn't matched");
-            endif;
+            }
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
