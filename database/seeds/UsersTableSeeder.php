@@ -12,8 +12,8 @@ class UsersTableSeeder extends Seeder {
      */
     public function run() {
       $data = [
-          'name' => 'admin',
-          'email' => 'admin@fishing.com',
+          'first_name' => 'admin',
+          'email' => 'admin@volt.com',
           'password' => Hash::make('12345678'),
           // 'phone' => '98166422',
 

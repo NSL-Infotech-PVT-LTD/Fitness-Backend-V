@@ -58,3 +58,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
 });
 
 Route::resource('admin/products', 'Admin\\ProductsController');
+
+Route::resource('admin/service', 'Admin\\ServiceController');
+Route::post('admin/service/change-status', 'Admin\ServiceController@changeStatus')->name('service.changeStatus');
+Route::resource('admin/class', 'Admin\\ClassController');
+Route::post('admin/class/change-status', 'Admin\ClassController@changeStatus')->name('class.changeStatus');
+Route::resource('admin/training-detail', 'Admin\\TrainingDetailController');
+Route::post('admin/training-detail/change-status', 'Admin\TrainingDetailController@changeStatus')->name('training-detail.changeStatus');
+Route::resource('admin/activity-plan', 'Admin\\ActivityPlanController');
+Route::post('admin/activity-plan/change-status', 'Admin\ActivityPlanController@changeStatus')->name('activity-plan.changeStatus');
+Route::resource('admin/events', 'Admin\\EventsController');
+Route::post('admin/events/change-status', 'Admin\EventsController@changeStatus')->name('events.changeStatus');
+Route::resource('admin/special-events', 'Admin\\SpecialEventsController');
+Route::post('admin/special-events/change-status', 'Admin\SpecialEventsController@changeStatus')->name('special-events.changeStatus');
+

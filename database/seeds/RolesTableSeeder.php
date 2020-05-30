@@ -18,6 +18,12 @@ class RolesTableSeeder extends Seeder {
               'created_at' => \Carbon\Carbon::now(),
               'updated_at' => \Carbon\Carbon::now(),
             ],
+            [
+              'name' => 'Personal-Trainer',
+              'label' => 'Personal-Trainer',
+              'created_at' => \Carbon\Carbon::now(),
+              'updated_at' => \Carbon\Carbon::now(),
+            ],
            [
               'name' => 'Customer',
               'label' => 'customer',

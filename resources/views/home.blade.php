@@ -3,190 +3,151 @@
 @section('content')
 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" rel="stylesheet">
-<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js'/></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'/></script>
-
-<!--mycode-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery.ui.datepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/themes/sunny/jquery-ui.min.css"></link>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"></link>
-
-<style>
-    .main-overview {
-        height: 99px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); /* Where the magic happens */
-        grid-auto-rows: 24px;
-        grid-gap: 10px;
-        margin: 10px;
-    }
-
-    .overviewcard {
-        height: 99px;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        background-color: #476B9E;
-        text-decoration: none;
-    }
-    .overviewcard__icon {
-        font-size: 20px;
-        text-decoration: none;
-    }
-    .overviewcard__info {
-        font-size: 35px;
-        text-decoration: none;
-    }
-    .overviewcard:hover {
-        background-color: #2b303a;
-    }
-    hr.new4 {
-        border: 1px solid red;
-    }
 
 
-
-</style>
-
-
-
-<div class="container">
-    <h3>Users</h3>
-    <div class="row">
-
-        <?php foreach ($users as $name => $user): ?>
-            <div class="col-sm-4">
-                <a href="{{url('admin/users/role/'.$user['role_id'])}}">
-                    <div class="main-overview active">
-                        <div class="overviewcard">
-                            <div class="overviewcard__icon">Total {{ucfirst($name)}}&nbsp;&nbsp;</div>
-                            <div class="overviewcard__info">
-                                {{$user['count']}}
-
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        <?php endforeach; ?>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Dashboard</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
-</div> 
-<hr class="new4">
-<div class="container">
-    <h3>Tournaments</h3>
-    <div class="row">
-        <div class="col-sm-4">
-            <a href="{{url('admin/tournament')}}">
-                <div class="main-overview active">
-                    <div class="overviewcard">
-                        <div class="overviewcard__icon">Total Tournaments&nbsp;&nbsp;</div>
-                        <div class="overviewcard__info">
-                            {{$tournament->count()}}
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{$trainer = DB::table('role_user')->where('role_id', 2)->count()}}</h3>
+
+                            <p>Personal Trainers Registrations</p>
                         </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="{{ url('admin/users/role/2') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-            </a>
-        </div>
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{$customer = DB::table('role_user')->where('role_id', 3)->count()}}</h3>
 
+                            <p>Customers Registrations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="{{ url('admin/users/role/3') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{$service = DB::table('services')->count()}}</h3>
 
-    </div>
+                            <p>Total Services</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="{{ url('admin/service') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>{{$activity = DB::table('activity_plans')->count()}}</h3>
+
+                            <p>Total Activity Plan</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="{{ url('admin/activity-plan') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{$class = DB::table('classes')->count()}}</h3>
+
+                            <p>Total Classes</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="{{ url('admin/class') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>{{$training = DB::table('training_details')->count()}}</h3>
+                            <p>Total Training Details</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="{{ url('admin/training-detail') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{$events = DB::table('events')->count()}}</h3>
+                            <p>Total Events</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="{{ url('admin/events') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{$special = DB::table('special_events')->count()}}</h3>
+                            <p>Total Special Events</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="{{ url('admin/special-events') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
 </div>
-
-<hr class="new4">
-<div class="container">
-   
-    <canvas id="myChart">
-
-    </canvas>
-
-</div>
-
-<script>
-let myChart = document.getElementById('myChart').getContext('2d');
-//global options
-Chart.defaults.global.defaultFontFamily = 'Lato';
-Chart.defaults.global.defaultFontSize = 18;
-Chart.defaults.global.defaultFontColor = '#777';
-let massPopChart = new Chart(myChart, {
-type:'bar', //bar, horizontalBar, pie, line, doughnut, radar, polarArea
-
-        
-data:{
-labels:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        datasets:[{
-        label:'Enrollments',
-                data:[<?php echo $revenueData; ?>],
-//                backgroundColor:'green',
-                backgroundColor:[
-                        'rgba(255,99,132, 0.6)',
-                        'rgba(54,162,235,0.6)',
-                        'rgba(255,206,86,0.6)',
-                        'rgba(75,192,192,0.6)',
-                        'rgba(153,102,255,0.6)',
-                        'rgba(255,206,86,0.6)',
-                        'rgba(75,192,192,0.6)',
-                        'rgba(255,99,132, 0.6)',
-                        'rgba(54,162,235,0.6)',
-                        'rgba(255,206,86,0.6)',
-                        'rgba(75,192,192,0.6)',
-                        'rgba(153,102,255,0.6)',
-                ],
-                borderWidth:1,
-                borderColor:'#777',
-                hoverBorderWidth:3,
-                hoverBorderColor:'#000'
-
-
-
-        }],
-        },
-        options:{
-        title:{
-        display:true,
-                text:'Monthly  Revenue',
-                fontSize:25
-        },
-                legend:{
-                display:false,
-                        position:'right',
-                        labels:{
-                        fontColor:'#000'
-                        }
-                },
-                layout:{
-                padding:{
-                left:50,
-                        right:0,
-                        bottom:0,
-                        top:0,
-                }
-                },
-                tooltips:{
-                enabled:true
-
-                }
-        }
-
-
-});
-</script>
-
-
-
-
-
-
-
-
 
 
 @endsection
