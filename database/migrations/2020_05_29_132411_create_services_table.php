@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->string('default_price')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
+            $table->enum('status', [0, 1])->default(1)->comment('0->Unactive, 1->Active');
             });
     }
 

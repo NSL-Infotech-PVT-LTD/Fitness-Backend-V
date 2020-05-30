@@ -185,7 +185,7 @@
                             <img src="{{ asset('person.jpg') }}">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">Admin</a>
+                            <a href="{{ url('admin/users/role/1') }}" class="d-block">Super Admin</a>
                         </div>
                     </div>
 
