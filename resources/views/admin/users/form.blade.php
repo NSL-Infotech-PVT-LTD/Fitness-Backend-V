@@ -5,7 +5,7 @@
 </div>
 <div class="form-group{{ $errors->has('middle_name') ? ' has-error' : ''}}">
     {!! Form::label('middle_name', 'Middle Name: ', ['class' => 'control-label']) !!}
-    {!! Form::text('middle_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! Form::text('middle_name', null, ['class' => 'form-control']) !!}
     {!! $errors->first('middle_name', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('last_name') ? ' has-error' : ''}}">
@@ -17,7 +17,7 @@
     {!! Form::label('child', 'Child: ', ['class' => 'control-label']) !!}
     {!! Form::radio('child','1_child' ,['class' => 'form-control', 'required' => 'required']) !!} One Child
     {!! Form::radio('child','2_child' ,['class' => 'form-control', 'required' => 'required']) !!} Two Children
-    {!! Form::radio('child','0_child' ,['class' => 'form-control', 'required' => 'required']) !!} None
+    {!! Form::radio('child','none' ,['class' => 'form-control', 'required' => 'required']) !!} None
     {!! $errors->first('child', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('mobile') ? ' has-error' : ''}}">
