@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\ApiController;
 use App\Service;
 use Illuminate\Http\Request;
 use DataTables;
@@ -22,7 +23,9 @@ class ServiceController extends Controller {
      *
      * @return \Illuminate\View\View
      */
-     protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
+    public static $_mediaBasePath = 'uploads/services/';
+    protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
+
     public function index(Request $request) {
         if ($request->ajax()) {
             $service = Service::all();
@@ -73,7 +76,11 @@ class ServiceController extends Controller {
             'image' => 'required',
             'description' => 'required'
         ]);
+
         $requestData = $request->all();
+        $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(base_path() . '/public/uploads/services/', $imageName);
+        $requestData['image'] = $imageName;
 
         Service::create($requestData);
 
@@ -102,6 +109,7 @@ class ServiceController extends Controller {
      */
     public function edit($id) {
         $service = Service::findOrFail($id);
+        $service = Service::select('id', 'name', 'default_price', 'image', 'description')->findOrFail($id);
 
         return view('admin.service.edit', compact('service'));
     }
@@ -118,12 +126,17 @@ class ServiceController extends Controller {
         $this->validate($request, [
             'name' => 'required',
             'default_price' => 'required',
-            'image' => 'required',
+//            'image' => 'required',
             'description' => 'required'
         ]);
         $requestData = $request->all();
 
         $service = Service::findOrFail($id);
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/services/', $imageName);
+            $requestData['image'] = $imageName;
+        }
         $service->update($requestData);
 
         return redirect('admin/service')->with('flash_message', 'Service updated!');

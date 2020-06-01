@@ -38,8 +38,8 @@
                             <tbody>
                                 <tr><th>ID</th><td>{{ $service->id }}</td></tr>
                                 <tr><th>Name </th><td>{{ $service->name }} </td></tr>
-                                <tr><th>Default Price </th><td>{{ $service->default_price }} </td></tr>
-                                <tr><th>Image </th><td>{{ $service->image }} </td></tr>
+                                <tr><th>Default Price </th><td>{{ $service->default_price }}AED</td></tr>
+                                <tr><th>Image</th><td><img width="150" src="{{url('uploads/services/'.$service->image)}}"> </td></tr>
 
                             </tbody>
                         </table>

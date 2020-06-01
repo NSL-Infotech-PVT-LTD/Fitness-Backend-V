@@ -49,7 +49,15 @@
                                 <tr><th>Designation</th><td> {{ $user->designation }} </td></tr>
                                 <tr><th>Emirates Id</th><td> {{ $user->emirates_id }} </td></tr>
                                 <tr><th>Address</th><td> {{ $user->address }} </td></tr>
-                                <tr><th>Status</th><td> {{ $user->status }} </td></tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <?php if(!empty($user->status== '1')) {?>
+                                    <td> Active </td>
+                                     <?php } else { ?>
+                                    <td> Inactive</td>
+                                    <?php } ?>
+                                </tr>
+                                 
                                 <tr><th>Created At</th><td> {{ $user->created_at }} </td></tr>
                             </tbody>
                         </table>
