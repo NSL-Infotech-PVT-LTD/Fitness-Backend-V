@@ -41,7 +41,7 @@
                                 <tr><th>Image</th><td><img width="150" src="{{url('uploads/events/'.$event->image)}}"> </td></tr>
                                 <tr><th>Start Date </th><td>{{ $event->start_date }} </td></tr>
                                 <tr><th>End Date</th><td>{{ $event->end_date }} </td></tr>
-                                <tr><th>Description </th><td>{{ $trainingdetail->description }} </td></tr>
+                                <tr><th>Description </th><td>{{ $event->description }} </td></tr>
 
 
                             </tbody>
