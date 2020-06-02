@@ -104,6 +104,7 @@ class UsersController extends Controller {
             'email' => 'required|string|max:255|email|unique:users',
             'password' => 'required',
             'mobile' => 'required|numeric',
+            'birth_date' => 'required|date_format:Y-m-d|before:today',
             'emergency_contact_no' => 'required|numeric',
             'roles' => 'required'
                 ]
