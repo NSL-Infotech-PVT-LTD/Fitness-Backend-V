@@ -17,7 +17,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'email' => 'required'];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'email' => 'required'];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -109,7 +109,12 @@ class UsersController extends Controller {
             $user->assignRole($role);
         }
 
-        return redirect(url()->previous())->with('flash_message', 'User added!');
+        if ($request->roles[0] == 'Super-Admin')
+            return redirect('admin/users/role/1')->with('flash_message', 'User added!');
+        if ($request->roles[0] == 'Personal-Trainer')
+            return redirect('admin/users/role/2')->with('flash_message', 'User added!');
+        if ($request->roles[0] == 'Customer')
+            return redirect('admin/users/role/3')->with('flash_message', 'User added!');
     }
 
     /**
@@ -142,7 +147,7 @@ class UsersController extends Controller {
         $roles = Role::select('id', 'name', 'label')->get();
         $roles = $roles->pluck('label', 'name');
 
-        $user = User::with('roles')->select('id','first_name','middle_name','last_name','child','mobile','emergency_contact_no','email','password','birth_date','marital_status','designation','emirates_id','address','status')->findOrFail($id);
+        $user = User::with('roles')->select('id', 'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status')->findOrFail($id);
         $user_roles = [];
         foreach ($user->roles as $role) {
             $user_roles[] = $role->name;
@@ -186,7 +191,12 @@ class UsersController extends Controller {
 //            $user->assignRole($role);
 //        }
 //dd('aa');
-        return redirect(url()->previous())->with('flash_message', 'User updated!');
+        if ($request->roles[0] == 'Super-Admin')
+            return redirect('admin/users/role/1')->with('flash_message', 'User updated!');
+        if ($request->roles[0] == 'Personal-Trainer')
+            return redirect('admin/users/role/2')->with('flash_message', 'User updated!');
+        if ($request->roles[0] == 'Customer')
+            return redirect('admin/users/role/3')->with('flash_message', 'User updated!');
     }
 
     /**

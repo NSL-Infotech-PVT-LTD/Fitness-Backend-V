@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
                         <li class="breadcrumb-item active">Details</li>
                     </ol>
                 </div>
@@ -38,8 +38,10 @@
                             <tbody>
                                 <tr><th>ID</th><td>{{ $event->id }}</td></tr>
                                 <tr><th>Name </th><td>{{ $event->name }} </td></tr>
-                                <tr><th>Default Price </th><td>{{ $event->default_price }} </td></tr>
-                                <tr><th>Image </th><td>{{ $event->image }} </td></tr>
+                                <tr><th>Image</th><td><img width="150" src="{{url('uploads/events/'.$event->image)}}"> </td></tr>
+                                <tr><th>Start Date </th><td>{{ $event->start_date }} </td></tr>
+                                <tr><th>End Date</th><td>{{ $event->end_date }} </td></tr>
+
 
                             </tbody>
                         </table>

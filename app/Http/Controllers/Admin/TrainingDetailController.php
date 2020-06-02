@@ -4,22 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\TrainingDetail;
 use Illuminate\Http\Request;
 use DataTables;
 use DB;
 
-class TrainingDetailController extends Controller
-{
+class TrainingDetailController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
-    
-    
-     protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
+    protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
 
     /**
      * Display a listing of the resource.
@@ -31,11 +28,14 @@ class TrainingDetailController extends Controller
             $trainingdetail = TrainingDetail::all();
             return Datatables::of($trainingdetail)
                             ->addIndexColumn()
+                            ->editColumn('image', function($item) {
+                                return "<img width='50' src=" . url('uploads/trainingdetail/' . $item->image) . ">";
+                            })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
                                 $return = '';
 
-                               if ($item->status == '0'):
+                                if ($item->status == '0'):
                                     $return .= "<button class='btn btn-danger btn-sm changeStatus' title='UnBlock'  data-id=" . $item->id . " data-status='UnBlock'>UnBlock / Active</button>";
                                 else:
                                     $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
@@ -47,7 +47,7 @@ class TrainingDetailController extends Controller
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/training-detail/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action','image'])
                             ->make(true);
         }
         return view('admin.training-detail.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -58,8 +58,7 @@ class TrainingDetailController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
-    {
+    public function create() {
         return view('admin.training-detail.create');
     }
 
@@ -70,16 +69,18 @@ class TrainingDetailController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $this->validate($request, [
-			'name' => 'required',
-			'default_price' => 'required',
-			'image' => 'required',
-			'description' => 'required'
-		]);
+            'name' => 'required',
+            'price' => 'required',
+            'image' => 'required',
+            'description' => 'required'
+        ]);
         $requestData = $request->all();
-        
+        $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(base_path() . '/public/uploads/trainingdetail/', $imageName);
+        $requestData['image'] = $imageName;
+
         TrainingDetail::create($requestData);
 
         return redirect('admin/training-detail')->with('flash_message', 'TrainingDetail added!');
@@ -92,8 +93,7 @@ class TrainingDetailController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show($id)
-    {
+    public function show($id) {
         $trainingdetail = TrainingDetail::findOrFail($id);
 
         return view('admin.training-detail.show', compact('trainingdetail'));
@@ -106,8 +106,7 @@ class TrainingDetailController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $trainingdetail = TrainingDetail::findOrFail($id);
 
         return view('admin.training-detail.edit', compact('trainingdetail'));
@@ -121,17 +120,21 @@ class TrainingDetailController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $this->validate($request, [
-			'name' => 'required',
-			'default_price' => 'required',
-			'image' => 'required',
-			'description' => 'required'
-		]);
+            'name' => 'required',
+            'price' => 'required',
+//            'image' => 'required',
+            'description' => 'required'
+        ]);
         $requestData = $request->all();
-        
+
         $trainingdetail = TrainingDetail::findOrFail($id);
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/trainingdetail/', $imageName);
+            $requestData['image'] = $imageName;
+        }
         $trainingdetail->update($requestData);
 
         return redirect('admin/training-detail')->with('flash_message', 'TrainingDetail updated!');
@@ -143,8 +146,8 @@ class TrainingDetailController extends Controller
      * @param  int  $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-        */
-   public function destroy($id) {
+     */
+    public function destroy($id) {
         if (TrainingDetail::destroy($id)) {
             $data = 'Success';
         } else {
@@ -152,7 +155,7 @@ class TrainingDetailController extends Controller
         }
         return response()->json($data);
     }
-    
+
     public function changeStatus(Request $request) {
 //        dd('dd');
         $trainingdetail = TrainingDetail::findOrFail($request->id);
@@ -160,4 +163,5 @@ class TrainingDetailController extends Controller
         $trainingdetail->save();
         return response()->json(["success" => true, 'message' => 'TrainingDetail updated!']);
     }
+
 }

@@ -15,9 +15,10 @@ class CreateEventsTable extends Migration {
             $table->increments('id');
             $table->timestamps();
             $table->string('name')->nullable();
-            $table->string('default_price')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->enum('status', [0, 1])->default(1)->comment('0->Unactive, 1->Active');
         });
     }

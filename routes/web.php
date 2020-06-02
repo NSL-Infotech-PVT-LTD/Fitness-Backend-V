@@ -29,12 +29,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
 
     Route::get('users/role/{role_id}', 'Admin\UsersController@indexByRoleId')->name('users-role');
 
+
     Route::get('home', 'HomeController@index')->name('home');
     Route::post('myfun', 'HomeController@myfun')->name('home.revenue');
     Route::resource('tournament', 'Admin\TournamentsController');
     Route::get('mydata/{id}', 'Admin\EnrollmentsController@enrollmentByid');
     Route::resource('enrollments', 'Admin\EnrollmentsController');
-    Route::get('/', 'Admin\AdminController@index');
+    Route::get('/', 'HomeController@index')->name('home');;
     Route::resource('roles', 'Admin\RolesController');
     Route::resource('permissions', 'Admin\PermissionsController');
     Route::resource('users', 'Admin\UsersController');
@@ -43,8 +44,30 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'roles'], 'roles' =>
         'index', 'show', 'destroy'
     ]);
 
+    //do here
+    
+    Route::get('admin/users/index/customer', 'Admin\UsersController@routeToCustomer');
+    Route::get('admin/users/index/trainer', 'Admin\UsersController@routeToTrainer');
+    
+    
+    
+    
+    
+    //here
 
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 

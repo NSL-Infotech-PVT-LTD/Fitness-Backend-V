@@ -4,28 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Event;
 use Illuminate\Http\Request;
 use DataTables;
 use DB;
 
-class EventsController extends Controller
-{
+class EventsController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
-
-    
-     protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
+    protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
 
     public function index(Request $request) {
         if ($request->ajax()) {
             $events = Event::all();
             return Datatables::of($events)
                             ->addIndexColumn()
+                            ->editColumn('image', function($item) {
+                                return "<img width='50' src=" . url('uploads/events/' . $item->image) . ">";
+                            })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
                                 $return = '';
@@ -42,7 +42,7 @@ class EventsController extends Controller
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/events/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action','image'])
                             ->make(true);
         }
         return view('admin.events.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -53,8 +53,7 @@ class EventsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
-    {
+    public function create() {
         return view('admin.events.create');
     }
 
@@ -65,16 +64,20 @@ class EventsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $this->validate($request, [
-			'name' => 'required',
-			'default_price' => 'required',
-			'image' => 'required',
-			'description' => 'required'
-		]);
+            'name' => 'required',
+            'image' => 'required',
+            'description' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
         $requestData = $request->all();
-        
+        $requestData = $request->all();
+        $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(base_path() . '/public/uploads/events/', $imageName);
+        $requestData['image'] = $imageName;
+
         Event::create($requestData);
 
         return redirect('admin/events')->with('flash_message', 'Event added!');
@@ -87,8 +90,7 @@ class EventsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show($id)
-    {
+    public function show($id) {
         $event = Event::findOrFail($id);
 
         return view('admin.events.show', compact('event'));
@@ -101,8 +103,7 @@ class EventsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $event = Event::findOrFail($id);
 
         return view('admin.events.edit', compact('event'));
@@ -116,17 +117,22 @@ class EventsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $this->validate($request, [
-			'name' => 'required',
-			'default_price' => 'required',
-			'image' => 'required',
-			'description' => 'required'
-		]);
+            'name' => 'required',
+//            'image' => 'required',
+            'description' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
         $requestData = $request->all();
-        
+
         $event = Event::findOrFail($id);
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/events/', $imageName);
+            $requestData['image'] = $imageName;
+        }
         $event->update($requestData);
 
         return redirect('admin/events')->with('flash_message', 'Event updated!');
@@ -139,7 +145,7 @@ class EventsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-     public function destroy($id) {
+    public function destroy($id) {
         if (Event::destroy($id)) {
             $data = 'Success';
         } else {
@@ -155,4 +161,5 @@ class EventsController extends Controller
         $event->save();
         return response()->json(["success" => true, 'message' => 'Event updated!']);
     }
+
 }

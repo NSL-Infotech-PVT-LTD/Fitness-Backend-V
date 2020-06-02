@@ -16,8 +16,7 @@ class ActivityPlanController extends Controller {
      *
      * @return \Illuminate\View\View
      */
-   
-    protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
+    protected $__rulesforindex = ['name' => 'required', 'image' => 'required'];
 
     /**
      * Display a listing of the resource.
@@ -29,11 +28,14 @@ class ActivityPlanController extends Controller {
             $activityplan = ActivityPlan::all();
             return Datatables::of($activityplan)
                             ->addIndexColumn()
+                            ->editColumn('image', function($item) {
+                                return "<img width='50' src=" . url('uploads/activity/' . $item->image) . ">";
+                            })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
                                 $return = '';
 
-                               if ($item->status == '0'):
+                                if ($item->status == '0'):
                                     $return .= "<button class='btn btn-danger btn-sm changeStatus' title='UnBlock'  data-id=" . $item->id . " data-status='UnBlock'>UnBlock / Active</button>";
                                 else:
                                     $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
@@ -45,7 +47,7 @@ class ActivityPlanController extends Controller {
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/activity-plan/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action','image'])
                             ->make(true);
         }
         return view('admin.activity-plan.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -70,11 +72,14 @@ class ActivityPlanController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'default_price' => 'required',
+            'price' => 'required',
             'image' => 'required',
             'description' => 'required'
         ]);
         $requestData = $request->all();
+        $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(base_path() . '/public/uploads/activity/', $imageName);
+        $requestData['image'] = $imageName;
 
         ActivityPlan::create($requestData);
 
@@ -118,13 +123,17 @@ class ActivityPlanController extends Controller {
     public function update(Request $request, $id) {
         $this->validate($request, [
             'name' => 'required',
-            'default_price' => 'required',
-            'image' => 'required',
+            'price' => 'required',
+//            'image' => 'required',
             'description' => 'required'
         ]);
         $requestData = $request->all();
-
         $activityplan = ActivityPlan::findOrFail($id);
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/activity/', $imageName);
+            $requestData['image'] = $imageName;
+        }
         $activityplan->update($requestData);
 
         return redirect('admin/activity-plan')->with('flash_message', 'ActivityPlan updated!');
@@ -137,7 +146,7 @@ class ActivityPlanController extends Controller {
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-   public function destroy($id) {
+    public function destroy($id) {
         if (ActivityPlan::destroy($id)) {
             $data = 'Success';
         } else {
@@ -145,7 +154,7 @@ class ActivityPlanController extends Controller {
         }
         return response()->json($data);
     }
-    
+
     public function changeStatus(Request $request) {
 //        dd('dd');
         $activityplan = ActivityPlan::findOrFail($request->id);

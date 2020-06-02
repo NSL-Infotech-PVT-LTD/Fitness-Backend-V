@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Registration Form</h1>
+                    <h1>Activity Plan</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Registration Form</li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Activity Plan</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="card card-default">
 
                 <div class="card">
-                    <div class="card-header">Create New ActivityPlan</div>
+                    <div class="card-header">Create New Activity Plan</div>
                     <div class="card-body">
                         <a href="{{ url(url()->previous()) }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />

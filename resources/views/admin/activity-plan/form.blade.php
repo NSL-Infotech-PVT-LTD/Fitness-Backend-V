@@ -3,11 +3,15 @@
     {!! Form::text('name', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('default_price') ? 'has-error' : ''}}">
-    {!! Form::label('default_price', 'Default Price', ['class' => 'control-label']) !!}
-    {!! Form::text('default_price', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-    {!! $errors->first('default_price', '<p class="help-block">:message</p>') !!}
+<div class="form-group{{ $errors->has('price') ? 'has-error' : ''}}">
+    {!! Form::label('price', 'Price', ['class' => 'control-label']) !!}
+    {!! Form::text('price', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
 </div>
+<?php
+if (isset($activityplan->image))
+    echo "<img width='100' src=" . url('uploads/activity/' . $activityplan->image) . ">";
+?>
 <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
     {!! Form::label('image', 'Image', ['class' => 'control-label']) !!}
     {!! Form::file('image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}

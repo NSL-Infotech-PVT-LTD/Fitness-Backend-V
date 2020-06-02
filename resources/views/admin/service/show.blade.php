@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
                         <li class="breadcrumb-item active">Details</li>
                     </ol>
                 </div>
@@ -38,7 +38,7 @@
                             <tbody>
                                 <tr><th>ID</th><td>{{ $service->id }}</td></tr>
                                 <tr><th>Name </th><td>{{ $service->name }} </td></tr>
-                                <tr><th>Default Price </th><td>{{ $service->default_price }}AED</td></tr>
+                                <tr><th>Price </th><td>{{ $service->price }}AED</td></tr>
                                 <tr><th>Image</th><td><img width="150" src="{{url('uploads/services/'.$service->image)}}"> </td></tr>
 
                             </tbody>

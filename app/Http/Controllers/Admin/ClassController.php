@@ -16,13 +16,16 @@ class ClassController extends Controller {
      *
      * @return \Illuminate\View\View
      */
-    protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
+    protected $__rulesforindex = ['name' => 'required', 'image' => 'required'];
 
     public function index(Request $request) {
         if ($request->ajax()) {
             $class = Classes::all();
             return Datatables::of($class)
                             ->addIndexColumn()
+                            ->editColumn('image', function($item) {
+                                return "<img width='50' src=" . url('uploads/class/' . $item->image) . ">";
+                            })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
                                 $return = '';
@@ -39,7 +42,7 @@ class ClassController extends Controller {
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/class/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action','image'])
                             ->make(true);
         }
         return view('admin.class.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -64,11 +67,14 @@ class ClassController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'default_price' => 'required',
+            'price' => 'required',
             'image' => 'required',
             'description' => 'required'
         ]);
         $requestData = $request->all();
+        $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(base_path() . '/public/uploads/class/', $imageName);
+        $requestData['image'] = $imageName;
 
         Classes::create($requestData);
 
@@ -112,13 +118,18 @@ class ClassController extends Controller {
     public function update(Request $request, $id) {
         $this->validate($request, [
             'name' => 'required',
-            'default_price' => 'required',
-            'image' => 'required',
+            'price' => 'required',
+//            'image' => 'required',
             'description' => 'required'
         ]);
         $requestData = $request->all();
 
         $class = Classes::findOrFail($id);
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/class/', $imageName);
+            $requestData['image'] = $imageName;
+        }
         $class->update($requestData);
 
         return redirect('admin/class')->with('flash_message', 'Class updated!');

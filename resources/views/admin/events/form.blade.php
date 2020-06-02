@@ -3,11 +3,11 @@
     {!! Form::text('name', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('default_price') ? 'has-error' : ''}}">
-    {!! Form::label('default_price', 'Default Price', ['class' => 'control-label']) !!}
-    {!! Form::text('default_price', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-    {!! $errors->first('default_price', '<p class="help-block">:message</p>') !!}
-</div>
+
+<?php
+if (isset($events->image))
+    echo "<img width='100' src=" . url('uploads/events/' . $events->image) . ">";
+?>
 <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
     {!! Form::label('image', 'Image', ['class' => 'control-label']) !!}
     {!! Form::file('image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
@@ -17,6 +17,16 @@
     {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
     {!! Form::text('description', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group{{ $errors->has('start_date') ? ' has-error' : ''}}">
+    {!! Form::label('start_date', 'Start Date: ', ['class' => 'control-label']) !!}
+    {!! Form::date('start_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('start_date', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group{{ $errors->has('end_date') ? ' has-error' : ''}}">
+    {!! Form::label('end_date', 'End Date: ', ['class' => 'control-label']) !!}
+    {!! Form::date('end_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('end_date', '<p class="help-block">:message</p>') !!}
 </div>
 
 
