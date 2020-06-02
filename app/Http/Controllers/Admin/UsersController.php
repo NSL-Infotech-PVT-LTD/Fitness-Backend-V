@@ -98,9 +98,13 @@ class UsersController extends Controller {
     public function store(Request $request) {
         $this->validate(
                 $request, [
-            'first_name' => 'required',
+            'first_name' => 'required|alpha',
+            'middle_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
             'email' => 'required|string|max:255|email|unique:users',
             'password' => 'required',
+            'mobile' => 'required|numeric',
+            'emergency_contact_no' => 'required|numeric',
             'roles' => 'required'
                 ]
         );

@@ -40,6 +40,8 @@
                                 <tr><th>Name </th><td>{{ $trainingdetail->name }} </td></tr>
                                 <tr><th>Default Price </th><td>{{ $trainingdetail->price }}AED </td></tr>
                                 <tr><th>Image</th><td><img width="150" src="{{url('uploads/trainingdetail/'.$trainingdetail->image)}}"> </td></tr>
+                                <tr><th>Description </th><td>{{ $trainingdetail->description }} </td></tr>
+
 
                             </tbody>
                         </table>

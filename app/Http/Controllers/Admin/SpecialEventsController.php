@@ -42,7 +42,7 @@ class SpecialEventsController extends Controller {
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/special-events/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action','image'])
+                            ->rawColumns(['action', 'image'])
                             ->make(true);
         }
         return view('admin.special-events.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -69,8 +69,8 @@ class SpecialEventsController extends Controller {
             'name' => 'required',
             'image' => 'required',
             'description' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required'
+            'start_date' => 'required|date_format:Y-m-d|after:today',
+            'end_date' => 'required|date_format:Y-m-d|after:today'
         ]);
         $requestData = $request->all();
         $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();

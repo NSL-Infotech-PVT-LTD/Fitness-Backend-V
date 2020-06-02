@@ -69,8 +69,8 @@ class EventsController extends Controller {
             'name' => 'required',
             'image' => 'required',
             'description' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required'
+            'start_date' => 'required|date_format:Y-m-d|after:today',
+            'end_date' => 'required|date_format:Y-m-d|after:today'
         ]);
         $requestData = $request->all();
         $requestData = $request->all();

@@ -72,7 +72,7 @@ class ServiceController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'default_price' => 'required',
+            'price' => 'required|numeric',
             'image' => 'required',
             'description' => 'required'
         ]);

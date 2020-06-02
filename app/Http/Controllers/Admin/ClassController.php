@@ -67,7 +67,7 @@ class ClassController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'price' => 'required',
+            'price' => 'required|numeric',
             'image' => 'required',
             'description' => 'required'
         ]);

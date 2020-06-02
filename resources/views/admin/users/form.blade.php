@@ -17,7 +17,7 @@
     {!! Form::label('child', 'Child: ', ['class' => 'control-label']) !!}
     {!! Form::radio('child','1_child' ,['class' => 'form-control', 'required' => 'required']) !!} One Child
     {!! Form::radio('child','2_child' ,['class' => 'form-control', 'required' => 'required']) !!} Two Children
-    {!! Form::radio('child','none' ,['class' => 'form-control', 'required' => 'required']) !!} None
+    {!! Form::radio('child','none' ,['class' => 'form-control', 'required' => 'required','checked' => false]) !!} None
     {!! $errors->first('child', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('mobile') ? ' has-error' : ''}}">
