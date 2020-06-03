@@ -108,7 +108,7 @@
             data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
             success: function (data) {
             if (data == 'Success') {
-            swal.fire("Deleted!", "Specialevents has been deleted", "success");
+            swal.fire("Deleted!", "Special Events has been deleted", "success");
             table.ajax.reload(null, false);
             }
             }
@@ -150,7 +150,7 @@
                     {
                     Swal.fire(
                             status + ' !',
-                            'Specialevents has been ' + status + ' .',
+                            'Special Events has been ' + status + ' .',
                             'success'
                             ).then(() => {
                     table.ajax.reload(null, false);
