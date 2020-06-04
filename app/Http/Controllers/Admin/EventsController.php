@@ -16,7 +16,7 @@ class EventsController extends Controller {
      *
      * @return \Illuminate\View\View
      */
-    protected $__rulesforindex = ['name' => 'required', 'description' => 'required'];
+    protected $__rulesforindex = ['name' => 'required', 'description' => 'required','special'=>'required'];
 
     public function index(Request $request) {
         if ($request->ajax()) {
@@ -25,6 +25,15 @@ class EventsController extends Controller {
                             ->addIndexColumn()
                             ->editColumn('image', function($item) {
                                 return "<img width='50' src=" . url('uploads/events/' . $item->image) . ">";
+                            })
+                            ->addColumn('special', function($item) {
+                                $return = '';
+                                if ($item->special == '0'):
+                                    $return = "<button class='btn btn-danger btn-sm markspecial' title='UnBlock'  data-id=" . $item->id . " data-status='Special'>Special </button>";
+                                else:
+                                    $return = "<button class='btn btn-success btn-sm markspecial' title='Block' data-id=" . $item->id . " data-status='UnSpecial' >UnSpecial</button>";
+                                endif;
+                                return $return;
                             })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
@@ -42,7 +51,7 @@ class EventsController extends Controller {
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/events/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action','image'])
+                            ->rawColumns(['action', 'image','special'])
                             ->make(true);
         }
         return view('admin.events.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -158,6 +167,16 @@ class EventsController extends Controller {
 //        dd('dd');
         $event = Event::findOrFail($request->id);
         $event->status = $request->status == 'Block' ? '0' : '1';
+        $event->save();
+        return response()->json(["success" => true, 'message' => 'Event updated!']);
+    }
+
+    public function MarkSpecial(Request $request) {
+//        dd('dd');
+        $event = Event::findOrFail($request->id);
+//        dd($request->status);
+        $event->special = $request->status == 'Special' ? '1' : '0';
+//        dd($event->special);
         $event->save();
         return response()->json(["success" => true, 'message' => 'Event updated!']);
     }

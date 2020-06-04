@@ -160,6 +160,50 @@
     }
     });
     });
+   $('.data-table').on('click', '.markspecial', function (e) {
+//       alert('a');
+    e.preventDefault();
+            var id = $(this).attr('data-id');
+            var status = $(this).attr('data-status');
+            Swal.fire({
+            title: 'Are you sure you wanted to Mark it Special?',
+                    text: "",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Mark it ' + status + '!'
+            }).then((result) => {
+    Swal.showLoading();
+            if (result.value) {
+    var form_data = new FormData();
+            form_data.append("id", id);
+            form_data.append("status", status);
+            form_data.append("_token", $('meta[name="csrf-token"]').attr('content'));
+            $.ajax({
+            url: "{{route('event.markspecial')}}",
+                    method: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function () {
+//                        Swal.showLoading();
+                    },
+                    success: function (data)
+                    {
+                    Swal.fire(
+                            status + ' !',
+                            'Event has been Marked as ' + status + ' .',
+                            'success'
+                            ).then(() => {
+                    table.ajax.reload(null, false);
+                    });
+                    }
+            });
+    }
+    });
+    });
     });
 
 </script>

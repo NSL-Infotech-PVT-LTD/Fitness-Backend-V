@@ -13,12 +13,11 @@ class CreateActivityPlansTable extends Migration {
     public function up() {
         Schema::create('activity_plans', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('name')->nullable();
             $table->string('price')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
-            $table->enum('status', [0, 1])->default(1)->comment('0->Unactive, 1->Active');
+            \App\Helpers\DbExtender::defaultParams($table);
         });
     }
 

@@ -27,7 +27,7 @@
         <div class="card card-default">
       
           <div class="card">
-                    <div class="card-header">Edit SpecialEvent #{{ $specialevent->id }}</div>
+                    <div class="card-header">Edit User</div>
                     <div class="card-body">
                           <a href="{{url()->previous()}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -41,16 +41,16 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($specialevent, [
+                        {!! Form::model($adminuser, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/special-events', $specialevent->id],
-                            'class' => 'form-horizontal',
-                            'files' => true
+                            'url' => ['/admin/adminusers', $user->id],
+                            'class' => 'form-horizontal'
                         ]) !!}
 
-                        @include ('admin.special-events.form', ['formMode' => 'edit'])
+                        @include ('admin.adminusers.form', ['formMode' => 'edit'])
 
                         {!! Form::close() !!}
+
                     </div>
                 </div>
         
@@ -62,10 +62,3 @@
 
     
 @endsection
-
-
-
-
-
-
-

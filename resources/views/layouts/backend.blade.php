@@ -214,10 +214,10 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ url('admin/users/role/1') }}" class="nav-link">
+                                        <a href="{{ url('admin/adminusers') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Super Admin</p>
-                                            <span class="badge badge-info right">{{$admin = DB::table('role_user')->where('role_id', 1)->count()}}</span>
+                                            <span class="badge badge-info right">{{DB::table('admin_users')->count()}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -236,6 +236,16 @@
                                     </li>
 
                                 </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ url('admin/membership') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-play-circle"></i>
+                                    <p>
+                                        Memberships
+                                        <span class="badge badge-info right">{{$service = DB::table('memberships')->count()}}</span>
+                                    </p>
+                                </a>
                             </li>
 
                             <li class="nav-item">
@@ -280,15 +290,6 @@
                                     <p>
                                         Events
                                         <span class="badge badge-info right">{{$events = DB::table('events')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/special-events') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Special Events
-                                        <span class="badge badge-info right">{{$special = DB::table('special_events')->count()}}</span>
                                     </p>
                                 </a>
                             </li>

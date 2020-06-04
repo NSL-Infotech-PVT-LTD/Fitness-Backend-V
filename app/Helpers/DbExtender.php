@@ -16,7 +16,7 @@ class DbExtender {
     public static function defaultParams($table, $userParent = false) {
         //default variables
         $table->text('params')->nullable();
-        $table->enum('state', [0, 1])->default(0)->comment('0->Unactive, 1->Active');
+        $table->enum('status', [0, 1])->default(0)->comment('0->Unactive, 1->Active');
 //        $table->timestamps();
         $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));

@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SpecialEvent extends Model
+class MembershipDetail extends Model
 {
     use LogsActivity;
+    use SoftDeletes;
     
 
     /**
@@ -15,7 +17,7 @@ class SpecialEvent extends Model
      *
      * @var string
      */
-    protected $table = 'special_events';
+    protected $table = 'membership_details';
 
     /**
     * The database primary key value.
@@ -29,7 +31,7 @@ class SpecialEvent extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'image', 'description','status','start_date','end_date'];
+    protected $fillable = ['user_type', 'category', 'name', 'description', 'image'];
 
     
 

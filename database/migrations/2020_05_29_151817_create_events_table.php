@@ -13,13 +13,13 @@ class CreateEventsTable extends Migration {
     public function up() {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('name')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->enum('status', [0, 1])->default(1)->comment('0->Unactive, 1->Active');
+            $table->enum('special', [0, 1])->default(0)->comment('1->special');
+            \App\Helpers\DbExtender::defaultParams($table);
         });
     }
 

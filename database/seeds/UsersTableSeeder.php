@@ -12,14 +12,13 @@ class UsersTableSeeder extends Seeder {
      */
     public function run() {
         $data = [
-            'first_name' => 'super',
-            'last_name' => 'admin',
+            'name' => 'admin',
             'email' => 'admin@volt.com',
             'password' => Hash::make('12345678'),
                 // 'phone' => '98166422',
         ];
-        $user = \App\User::create($data);
-        $user->assignRole('Super-Admin');
+
+        \App\AdminUser::create($data);
     }
 
 }

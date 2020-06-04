@@ -7,13 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    
-                    <h1>Special Events</h1>
+                    <h1>Admin Users</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Special Events</li>
+                        <li class="breadcrumb-item active">Users</li>
                     </ol>
                 </div>
             </div>
@@ -27,15 +26,17 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                          
-                <div class="card-body">
-                  
-                            <a href="{{ url('/admin/special-events/create') }}" class="btn btn-success btn-sm" title="Add New Class">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
 
-                </div>
-                            
+                            <div class="card-body">
+                                    <a href="{{ url('/admin/adminusers/create') }}" class="btn btn-success btn-sm" title="Add New User">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                                    </a>
+
+
+
+
+                            </div>
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -47,6 +48,8 @@
                                             <th>{{ucfirst($rule)}}</th>
                                         <?php endforeach; ?>
                                         <th>Actions</th>
+
+
                                     </tr>
                                 </thead>
                             </table>
@@ -69,54 +72,51 @@
 
 <script type="text/javascript">
     $(function () {
-    var table = $('.data-table').DataTable({
-    processing: true,
-            serverSide: true,
-            ajax: "{{ route('special-events.index') }}",
-            columns: [
-            {data: 'id', name: 'id'},
+        var table = $('.data-table').DataTable({
+        processing: true,
+                serverSide: true,
+                ajax: "{{ route('adminusers.index') }}",
+                columns: [
+                {data: 'id', name: 'id'},
 <?php foreach ($rules as $rule): ?>
-    <?php if ($rule == 'email'): ?>
-                    {data: 'email', name: 'email', orderable: false, searchable: false},
-    <?php else: ?>
-                    {data: "{{$rule}}", name: "{{$rule}}"},
-    <?php endif; ?>
+                        {data: "{{$rule}}", name: "{{$rule}}"},
 <?php endforeach; ?>
-            {data: 'action', name: 'action', orderable: false, searchable: false}
-            ,
-            ]
+                {data: 'action', name: 'action', orderable: false, searchable: false
+                }
+                ,
+                ]
     });
 //deleting data
     $('.data-table').on('click', '.btnDelete[data-remove]', function (e) {
-    e.preventDefault();
-    var url = $(this).data('remove');
-    swal.fire({
-    title: "Are you sure want to remove this item?",
+        e.preventDefault();
+        var url = $(this).data('remove');
+        swal.fire({
+            title: "Are you sure want to remove this item?",
             text: "Data will be Temporary Deleted!",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-danger",
             confirmButtonText: "Confirm",
             cancelButtonText: "Cancel",
-    }).then((result) => {
-    Swal.showLoading();
-    if (result.value) {
-    $.ajax({
-    url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
-            success: function (data) {
-            if (data == 'Success') {
-            swal.fire("Deleted!", "Specialevents has been deleted", "success");
-            table.ajax.reload(null, false);
+        }).then((result) => {
+            Swal.showLoading();
+            if (result.value) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    dataType: 'json',
+                    data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
+                    success: function (data) {
+                        if (data == 'Success') {
+                            swal.fire("Deleted!", "User has been deleted", "success");
+                            table.ajax.reload(null, false);
+                        }
+                    }
+                });
             }
-            }
+        });
     });
-    }
-    });
-    });
-   $('.data-table').on('click', '.changeStatus', function (e) {
+    $('.data-table').on('click', '.changeStatus', function (e) {
 //       alert('a');
     e.preventDefault();
             var id = $(this).attr('data-id');
@@ -137,7 +137,7 @@
             form_data.append("status", status);
             form_data.append("_token", $('meta[name="csrf-token"]').attr('content'));
             $.ajax({
-            url: "{{route('special-events.changeStatus')}}",
+            url: "{{route('user.changeStatus')}}",
                     method: "POST",
                     data: form_data,
                     contentType: false,
@@ -150,7 +150,7 @@
                     {
                     Swal.fire(
                             status + ' !',
-                            'Specialevents has been ' + status + ' .',
+                            'User has been ' + status + ' .',
                             'success'
                             ).then(() => {
                     table.ajax.reload(null, false);
@@ -160,17 +160,8 @@
     }
     });
     });
-    });
+    }
+    );
 
 </script>
 @endsection
-
-
-
-
-
-
-
-
-
-

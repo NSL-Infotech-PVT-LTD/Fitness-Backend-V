@@ -36,14 +36,10 @@
 
                             </thead>
                             <tbody>
-                                <tr><th>ID</th><td>{{ $specialevent->id }}</td></tr>
-                                <tr><th>Name </th><td>{{ $specialevent->name }} </td></tr>
-                                <tr><th>Image</th><td><img width="150" src="{{url('uploads/specialevents/'.$specialevent->image)}}"> </td></tr>
-                                <tr><th>Start Date</th><td>{{ $specialevent->start_date }} </td></tr>
-                                <tr><th>End Date</th><td>{{ $specialevent->end_date }} </td></tr>
-                                <tr><th>Description </th><td>{{ $specialevent->description }} </td></tr>
-
-
+                                <tr><th>ID.</th><td>{{ $user->id }}</td></tr>
+                                <tr><th>Last Name</th><td> {{ $user->name }} </td></tr>
+                                <tr><th>Email</th><td> {{ $user->email }} </td></tr>
+                                <tr><th>Created At</th><td> {{ $user->created_at }} </td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -58,6 +54,3 @@
 </div>
 
 @endsection
-
-
-
