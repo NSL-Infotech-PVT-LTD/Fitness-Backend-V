@@ -1,3 +1,89 @@
+<style>
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+      margin-bottom: 20px;
+}
+
+/* Style the buttons inside the tab */
+ a.tablinks{
+    
+cursor: pointer;
+    padding: 11px 20px;
+    transition: 0.3s;
+    font-size: 14px;
+    background: #ffc107;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    letter-spacing: 1px;
+    text-transform: uppercase
+}
+.tab  a.active{
+  cursor: pointer;
+    padding: 11px 20px;
+    transition: 0.3s;
+    font-size: 14px;
+    background: #ffc107;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    letter-spacing: 1px;
+    text-transform: uppercase
+}  
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 10px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+    border: 1px solid #a99f9f;
+    margin-bottom: 13px;
+    border-bottom: 1px solid #000;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+.tabcontent h3 {
+   font-size: 15px;
+    margin-bottom: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.tabcontent input {
+    height: 40px;
+    text-indent: 10px;
+    width: 29%;
+    border: 1px solid #b1aaaa;
+    box-shadow: 1px 0px 6px #9e9898;
+    font-size: 14px;
+    font-weight: bold
+}
+</style>
+
 <div class="form-group{{ $errors->has('name') ? ' has-error' : ''}}">
     {!! Form::label('name', 'Name: ', ['class' => 'control-label']) !!}
     {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -13,11 +99,40 @@
     {!! Form::select('category', ['single'=>'Single', 'couple'=>'Couple', 'family_with_1'=>'Family With One Child', 'family_with_2'=>'Family With Two Child'], isset($role->category) ? $role->category : [], ['class' => 'form-control', 'multiple' => false]) !!}
     {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('price') ? ' has-error' : ''}}">
-    {!! Form::label('price', 'Price: ', ['class' => 'control-label']) !!}
-    {!! Form::text('price', null, ['class' => 'form-control']) !!}
-    {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
+
+
+<div class="prices">
+<div class="tab">
+
+  <a class="tablinks" onclick="price(event,'Quarterly')">Quarterly</a>
+    <a class="tablinks" onclick="price(event,'Monthly')">Monthly </a>
+
+<a class="tablinks" onclick="price(event, 'Half')">Half Yearly</a>
+<a class="tablinks" onclick="price(event, 'Yearly')">Yearly</a>
 </div>
+
+<div id="Quarterly" class="tabcontent">
+  <h3>Quarterly</h3>
+  <input type="text" id="quarterly" placeholder="Enter Your Amount" name="quarterly">
+</div>
+
+<div id="Monthly" class="tabcontent">
+  <h3>Monthly Yearly </h3>
+  <input type="text" id="Monthly" placeholder="Enter Your Amount" name="Monthly">
+</div>
+
+<div id="Half" class="tabcontent second">
+   <h3>Half Yearly</h3>
+  <input type="text" id="haff" placeholder="Enter Your Amount" name="half"> 
+</div>
+
+<div id="Yearly" class="tabcontent">
+  <h3>Yearly</h3>
+  <input type="text" id="yearly" placeholder="Enter Your Amount" name="yearly">
+</div>
+</div>
+
+
 <?php
 if (isset($role->image))
     echo "<img width='100' src=" . url('uploads/membership/' . $role->image) . ">";
@@ -35,3 +150,4 @@ if (isset($role->image))
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>
+ 

@@ -25,7 +25,8 @@
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('adminLte/plugins/summernote/summernote-bs4.css') }}">
         <!-- Google Font: Source Sans Pro -->
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;800&display=swap" rel="stylesheet">
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
         <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
@@ -38,7 +39,9 @@
 
 
 
-
+<style>
+body{font-family: 'Montserrat', sans-serif !important}
+    </style>
 
 
 
@@ -328,6 +331,7 @@
                 }
             });
         </script>
+
         <!-- jQuery -->
         <script src="{{ asset('adminLte/plugins/jquery/jquery.min.js') }}"></script>
         <!-- jQuery UI 1.11.4 -->
@@ -369,6 +373,22 @@
         <script src="{{ asset('adminLte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('adminLte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('adminLte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+
+        <script>
+
+function price(evt, allprice) {
+    
+  var i, tabcontent, tablinks;
+  evt.currentTarget.className ="active";
+  if(document.getElementById(allprice).style.display=='block'){
+  document.getElementById(allprice).style.display = "none";
+  }else{
+  document.getElementById(allprice).style.display = "block";
+  }
+  
+  
+}
+</script>
 
     </body>
 </html>
