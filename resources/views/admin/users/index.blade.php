@@ -7,19 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                     <?php
-                $user = '';
-                if ($role_id == '1') {
-                    $user = 'Admin User';
-                }
-                if ($role_id == '2') {
-                    $user = 'Personal Trainers';
-                }
-                if ($role_id == '3') {
-                    $user = 'Customers';
-                }
-                ?>
-                    <h1>{{$user}}</h1>
+                    <h1>{{\App\Role::whereId($role_id)->first()->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -41,7 +29,7 @@
                           
                 <div class="card-body">
                     <?php if (isset($role_id)): ?>
-                            <a href="{{ url('/admin/users/create') }}" class="btn btn-success btn-sm" title="Add New User">
+                            <a href="{{ route('user.create.withrole',$role_id) }}" class="btn btn-success btn-sm" title="Add New User">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Add New
                             </a>
                         <?php endif; ?>

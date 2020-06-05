@@ -30,7 +30,7 @@
                           
                 <div class="card-body">
                   
-                            <a href="{{ url('/admin/events/create') }}" class="btn btn-success btn-sm" title="Add New Class">
+                            <a href="{{ url('/admin/events/create') }}" class="btn btn-success btn-sm" title="Add New">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 

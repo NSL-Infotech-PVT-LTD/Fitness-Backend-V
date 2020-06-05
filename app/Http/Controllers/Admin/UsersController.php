@@ -89,6 +89,15 @@ class UsersController extends Controller {
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return void
+     */
+    public function createWithRole(Request $request, $role_id) {
+        return view('admin.users.create', compact('role_id'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -106,22 +115,22 @@ class UsersController extends Controller {
             'mobile' => 'required|numeric',
             'birth_date' => 'required|date_format:Y-m-d|before:today',
             'emergency_contact_no' => 'required|numeric',
-            'roles' => 'required'
                 ]
         );
         $data = $request->all();
+//        dd($data);
         $data['password'] = bcrypt($data['password']);
-        $user = User::create($data);
-        foreach ($request->roles as $role) {
-            $user->assignRole($role);
+        $data['trainer_services'] = json_encode($data['trainer_services']);
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/users/', $imageName);
+            $data['image'] = $imageName;
         }
-
-        if ($request->roles[0] == 'Super-Admin')
-            return redirect('admin/users/role/1')->with('flash_message', 'User added!');
-        if ($request->roles[0] == 'Personal-Trainer')
-            return redirect('admin/users/role/2')->with('flash_message', 'User added!');
-        if ($request->roles[0] == 'Customer')
-            return redirect('admin/users/role/3')->with('flash_message', 'User added!');
+//        dd($request->role_id);
+        $user = User::create($data);
+        $role = Role::whereId($request->role_id)->first()->name;
+        $user->assignRole($role);
+        return redirect('admin/users/role/' . $request->role_id)->with('flash_message', $role . ' User added!');
     }
 
     /**

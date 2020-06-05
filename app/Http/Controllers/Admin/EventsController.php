@@ -29,9 +29,10 @@ class EventsController extends Controller {
                             ->addColumn('special', function($item) {
                                 $return = '';
                                 if ($item->special == '0'):
-                                    $return = "<button class='btn btn-danger btn-sm markspecial' title='UnBlock'  data-id=" . $item->id . " data-status='Special'>Special </button>";
+                                    $return = "<button class='btn btn-danger btn-sm markspecial' title='UnBlock'  data-id=" . $item->id . " data-status='Special'><i class='fa fa-star-o fa-3' aria-hidden='true'></i>
+ </button>";
                                 else:
-                                    $return = "<button class='btn btn-success btn-sm markspecial' title='Block' data-id=" . $item->id . " data-status='UnSpecial' >UnSpecial</button>";
+                                    $return = "<button class='btn btn-success btn-sm markspecial' title='Block' data-id=" . $item->id . " data-status='UnSpecial' ><i class='fa fa-star fa-3' aria-hidden='true'></button>";
                                 endif;
                                 return $return;
                             })
