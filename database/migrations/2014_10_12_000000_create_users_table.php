@@ -28,6 +28,9 @@ class CreateUsersTable extends Migration {
             $table->string('designation')->nullable();
             $table->string('emirates_id')->nullable();
             $table->string('address')->nullable();
+            $table->string('image')->nullable();
+            $table->string('trainer_about')->nullable();
+            $table->string('trainer_services')->nullable();
             $table->enum('status', [0, 1])->default(0)->comment('0->Unactive, 1->Active');
             $table->rememberToken();
             $table->timestamps();

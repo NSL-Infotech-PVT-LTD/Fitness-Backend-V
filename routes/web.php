@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
 
 
     Route::get('users/role/{role_id}', 'Admin\UsersController@indexByRoleId')->name('users-role');
+    Route::get('users/create/{role_id}', 'Admin\UsersController@createWithRole')->name('user.create.withrole');
 
 
     Route::get('home', 'HomeController@index')->name('home');
@@ -75,6 +76,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
 
     Route::resource('settings', 'Admin\SettingsController');
     Route::post('user/change-status', 'Admin\UsersController@changeStatus')->name('user.changeStatus');
+    Route::post('role/change-status', 'Admin\RolesController@changeStatus')->name('role.changeStatus');
     Route::post('tournament/change-status', 'Admin\TournamentsController@changeStatus')->name('tournament.changeStatus');
     Route::post('enrollments/winnerstatus', 'Admin\EnrollmentsController@winnerstatus')->name('enrollment.winnerstatus');
 

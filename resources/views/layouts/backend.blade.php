@@ -201,10 +201,10 @@
 
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
-                            <li class="nav-item has-treeview menu-open">
+                            <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
                                     <i class="nav-icon fas fa-table"></i>
                                     <p>
@@ -220,20 +220,16 @@
                                             <span class="badge badge-info right">{{DB::table('admin_users')->count()}}</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('admin/users/role/2') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Personal Trainers</p>
-                                            <span class="badge badge-info right">{{$trainer = DB::table('role_user')->where('role_id', 2)->count()}}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('admin/users/role/3') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Customers</p>
-                                            <span class="badge badge-info right">{{$customer = DB::table('role_user')->where('role_id', 3)->count()}}</span>
-                                        </a>
-                                    </li>
+
+                                    <?php foreach (\App\Role::all() as $role): ?>
+                                        <li class="nav-item">
+                                            <a href="{{ url('admin/users/role/'.$role->id) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{$role->name}}</p>
+                                                <span class="badge badge-info right">{{$trainer = DB::table('role_user')->where('role_id', $role->id)->count()}}</span>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
 
                                 </ul>
                             </li>
@@ -247,43 +243,43 @@
                                     </p>
                                 </a>
                             </li>
-<!--
-                            <li class="nav-item">
-                                <a href="{{ url('admin/service') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Service
-                                        <span class="badge badge-info right">{{$service = DB::table('services')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/activity-plan') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Activity Plan
-                                        <span class="badge badge-info right">{{$activity = DB::table('activity_plans')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/class') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Class
-                                        <span class="badge badge-info right">{{$class = DB::table('classes')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/training-detail') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Training Detail
-                                        <span class="badge badge-info right">{{$training = DB::table('training_details')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>-->
+                            <!--
+                                                        <li class="nav-item">
+                                                            <a href="{{ url('admin/service') }}" class="nav-link">
+                                                                <i class="nav-icon fas fa-th"></i>
+                                                                <p>
+                                                                    Service
+                                                                    <span class="badge badge-info right">{{$service = DB::table('services')->count()}}</span>
+                                                                </p>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a href="{{ url('admin/activity-plan') }}" class="nav-link">
+                                                                <i class="nav-icon fas fa-th"></i>
+                                                                <p>
+                                                                    Activity Plan
+                                                                    <span class="badge badge-info right">{{$activity = DB::table('activity_plans')->count()}}</span>
+                                                                </p>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a href="{{ url('admin/class') }}" class="nav-link">
+                                                                <i class="nav-icon fas fa-th"></i>
+                                                                <p>
+                                                                    Class
+                                                                    <span class="badge badge-info right">{{$class = DB::table('classes')->count()}}</span>
+                                                                </p>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a href="{{ url('admin/training-detail') }}" class="nav-link">
+                                                                <i class="nav-icon fas fa-th"></i>
+                                                                <p>
+                                                                    Training Detail
+                                                                    <span class="badge badge-info right">{{$training = DB::table('training_details')->count()}}</span>
+                                                                </p>
+                                                            </a>
+                                                        </li>-->
                             <li class="nav-item">
                                 <a href="{{ url('admin/events') }}" class="nav-link">
                                     <i class="nav-icon fas fa-th"></i>
@@ -302,7 +298,7 @@
             </aside>
             @yield('content')
         </div>
-        <style type="text/css">
+        <style type="text/css" class='fa-star-o'>
             table tr th:first-child {width: 50px !important;}
         </style>
         <script>
@@ -324,8 +320,11 @@
                 toggle = !toggle;
             });
             $("#menu li a").each(function () {
-                if ((window.location.href.indexOf($(this).attr('href'))) > -1) {
-                    $(this).parent().addClass('active');
+                if ((window.location.href == $(this).attr('href'))) {
+                    $(this).addClass('active');
+                    if ($(this).parent().parent().parent().hasClass('has-treeview')) {
+                        $(this).parent().parent().parent().addClass('menu-open')
+                    }
                 }
             });
         </script>
