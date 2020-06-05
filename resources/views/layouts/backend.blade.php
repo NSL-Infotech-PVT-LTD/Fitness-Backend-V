@@ -247,7 +247,7 @@
                                     </p>
                                 </a>
                             </li>
-
+<!--
                             <li class="nav-item">
                                 <a href="{{ url('admin/service') }}" class="nav-link">
                                     <i class="nav-icon fas fa-th"></i>
@@ -283,7 +283,7 @@
                                         <span class="badge badge-info right">{{$training = DB::table('training_details')->count()}}</span>
                                     </p>
                                 </a>
-                            </li>
+                            </li>-->
                             <li class="nav-item">
                                 <a href="{{ url('admin/events') }}" class="nav-link">
                                     <i class="nav-icon fas fa-th"></i>
