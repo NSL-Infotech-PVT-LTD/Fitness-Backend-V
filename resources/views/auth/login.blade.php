@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="main_top">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">
+                <img src="volt/public/logo_black.png">
+                </div>
                 @if($errors->any())
                 <div class="alert alert-danger text-center">
                     {{$errors->first()}}
@@ -74,5 +77,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
