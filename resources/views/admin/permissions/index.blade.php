@@ -5,10 +5,10 @@
         <div class="row">
             @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
+                    <div class="content-wrapper">
                     <div class="card-header">Permissions</div>
-                    <div class="card-body">
                         <a href="{{ url('/admin/permissions/create') }}" class="btn btn-success btn-sm" title="Add New Permission">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>

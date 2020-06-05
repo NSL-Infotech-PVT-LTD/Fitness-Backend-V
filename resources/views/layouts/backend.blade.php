@@ -239,11 +239,11 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ url('admin/membership') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-play-circle"></i>
+                                <a href="{{ url('admin/roles') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-bars"></i>
                                     <p>
-                                        Memberships
-                                        <span class="badge badge-info right">{{$service = DB::table('memberships')->count()}}</span>
+                                        Roles
+                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
                                     </p>
                                 </a>
                             </li>

@@ -39,7 +39,7 @@
 
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="content-wrapper">
                             <table class="table table-bordered table-hover data-table">
                                 <thead>
                                     <tr>

@@ -49,9 +49,14 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required']);
-
-        $role = Role::create($request->all());
+        $this->validate($request, ['name' => 'required','category' => 'required']);
+        $requestData = $request->all();
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/roles/', $imageName);
+            $requestData['image'] = $imageName;
+        }
+        $role = Role::create($requestData);
         $role->permissions()->detach();
 
         if ($request->has('permissions')) {

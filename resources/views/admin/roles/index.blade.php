@@ -1,18 +1,15 @@
 @extends('layouts.backend')
-
 @section('content')
     <div class="container">
         <div class="row">
             @include('admin.sidebar')
-
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
+                    <div class="content-wrapper">
                     <div class="card-header">Roles</div>
-                    <div class="card-body">
                         <a href="{{ url('/admin/roles/create') }}" class="btn btn-success btn-sm" title="Add New Role">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
-
                         {!! Form::open(['method' => 'GET', 'url' => '/admin/roles', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search...">
@@ -23,10 +20,8 @@
                             </span>
                         </div>
                         {!! Form::close() !!}
-
                         <br/>
                         <br/>
-
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

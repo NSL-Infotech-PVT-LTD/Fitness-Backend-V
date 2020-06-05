@@ -5,10 +5,10 @@
         <div class="row">
             @include('admin.sidebar')
 
-            <div class="col-md-9">
+              <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Permission</div>
-                    <div class="card-body">
+                    <div class="content-wrapper">
+                    <div class="card-header">Permissions</div>
 
                         <a href="{{ url('/admin/permissions') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/admin/permissions/' . $permission->id . '/edit') }}" title="Edit Permission"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
