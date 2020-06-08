@@ -120,7 +120,8 @@ class UsersController extends Controller {
         $data = $request->all();
 //        dd($data);
         $data['password'] = bcrypt($data['password']);
-        $data['trainer_services'] = json_encode($data['trainer_services']);
+        if (isset($data['trainer_services']))
+            $data['trainer_services'] = json_encode($data['trainer_services']);
         if ($request->hasfile('image')) {
             $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->move(base_path() . '/public/uploads/users/', $imageName);
@@ -130,6 +131,9 @@ class UsersController extends Controller {
         $user = User::create($data);
         $role = Role::whereId($request->role_id)->first()->name;
         $user->assignRole($role);
+        if (isset($request->role_plan))
+            \DB::table('role_user')->where('role_id', $request->role_id)->update(['role_plan_id' => $request->role_plan]);
+
         return redirect('admin/users/role/' . $request->role_id)->with('flash_message', $role . ' User added!');
     }
 

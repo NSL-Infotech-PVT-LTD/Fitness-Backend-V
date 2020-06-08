@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Role extends Model
-{
+class Role extends Model {
+
     use LogsActivity;
 
     /**
@@ -14,15 +14,14 @@ class Role extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'label','category','image'];
+    protected $fillable = ['name', 'label', 'category', 'image'];
 
     /**
      * A role may be given various permissions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permissions()
-    {
+    public function permissions() {
         return $this->belongsToMany(Permission::class);
     }
 
@@ -31,9 +30,8 @@ class Role extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permission()
-    {
-        return $this->belongsToMany(Permission::class)->select('name','id');
+    public function permission() {
+        return $this->belongsToMany(Permission::class)->select('name', 'id');
     }
 
     /**
@@ -43,8 +41,7 @@ class Role extends Model
      *
      * @return mixed
      */
-    public function givePermissionTo(Permission $permission)
-    {
+    public function givePermissionTo(Permission $permission) {
         return $this->permissions()->save($permission);
     }
 
@@ -55,8 +52,26 @@ class Role extends Model
      *
      * @return string
      */
-    public function getDescriptionForEvent($eventName)
-    {
+    public function getDescriptionForEvent($eventName) {
         return __CLASS__ . " model has been {$eventName}";
     }
+
+    protected $appends = array('plans');
+
+    public function getPlansAttribute() {
+        try {
+            $model = RolePlans::where('role_id', $this->id)->get();
+            if ($model->isEmpty() !== true):
+                $a = [];
+                foreach ($model as $m):
+                    $a[$m->fee_type] = $m->fee;
+                endforeach;
+                return $a;
+            endif;
+            return [];
+        } catch (Exception $ex) {
+            return [];
+        }
+    }
+
 }

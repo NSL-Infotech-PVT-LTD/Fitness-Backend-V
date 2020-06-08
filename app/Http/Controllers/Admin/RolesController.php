@@ -67,9 +67,9 @@ class RolesController extends Controller {
             $request->file('image')->move(base_path() . '/public/uploads/roles/', $imageName);
             $requestData['image'] = $imageName;
         }
+//        dd($requestData);
         $role = Role::create($requestData);
         $role->permissions()->detach();
-
         if ($request->has('permissions')) {
             foreach ($request->permissions as $permission_name) {
                 $permission = Permission::whereName($permission_name)->first();
@@ -77,6 +77,11 @@ class RolesController extends Controller {
             }
         }
 
+        foreach (['monthly', 'quarterly', 'half_yearly', 'yearly'] as $feetype):
+            if ($request->$feetype == null || $request->$feetype == '')
+                continue;
+            \App\RolePlans::create(['role_id' => $role->id, 'fee_type' => $feetype, 'fee' => $request->$feetype]);
+        endforeach;
         return redirect('admin/roles')->with('flash_message', 'Role added!');
     }
 
@@ -89,7 +94,6 @@ class RolesController extends Controller {
      */
     public function show($id) {
         $role = Role::findOrFail($id);
-
         return view('admin.roles.show', compact('role'));
     }
 
@@ -103,7 +107,7 @@ class RolesController extends Controller {
     public function edit($id) {
         $role = Role::findOrFail($id);
         $permissions = Permission::select('id', 'name', 'label')->get()->pluck('label', 'name');
-
+//        dd($role->toArray());
         return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
@@ -116,19 +120,35 @@ class RolesController extends Controller {
      * @return void
      */
     public function update(Request $request, $id) {
-        $this->validate($request, ['name' => 'required']);
-
+        $this->validate($request, ['name' => 'required', 'category' => 'required']);
+        $requestData = $request->all();
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/roles/', $imageName);
+            $requestData['image'] = $imageName;
+        }
         $role = Role::findOrFail($id);
         $role->update($request->all());
         $role->permissions()->detach();
-
         if ($request->has('permissions')) {
             foreach ($request->permissions as $permission_name) {
                 $permission = Permission::whereName($permission_name)->first();
                 $role->givePermissionTo($permission);
             }
         }
-
+//        dd($request->all());
+        foreach (['monthly', 'quarterly', 'half_yearly', 'yearly'] as $feetype):
+            if ($request->$feetype == null || $request->$feetype == '')
+                continue;
+            $rolePlan = \App\RolePlans::where('role_id', $id)->where('fee_type', $feetype)->get();
+//            dd($rolePlan->isEmpty());
+            if ($rolePlan->isEmpty() == true):
+                \App\RolePlans::create(['role_id' => $id, 'fee_type' => $feetype, 'fee' => $request->$feetype]);
+            else:
+                $rolePlanUpdate = \App\RolePlans::findorfail($rolePlan->first()->id);
+                $rolePlanUpdate->update(['role_id' => $id, 'fee_type' => $feetype, 'fee' => $request->$feetype]);
+            endif;
+        endforeach;
         return redirect('admin/roles')->with('flash_message', 'Role updated!');
     }
 

@@ -73,11 +73,10 @@
     {!! Form::text('address', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('status') ? ' has-error' : ''}}">
-    {!! Form::label('status', 'Status: ', ['class' => 'control-label']) !!}
-    {!! Form::radio('status','0' ,['class' => 'form-control', 'required' => 'required']) !!} Unactive
-    {!! Form::radio('status','1' ,['class' => 'form-control', 'required' => 'required']) !!} Active
-    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
+
+<div class="form-group{{ $errors->has('role_plan') ? ' has-error' : ''}}">
+    {!! Form::label('role_plan', 'Role: ', ['class' => 'control-label']) !!}
+    {!! Form::select('role_plan', \App\RolePlans::where('role_id',$role_id)->get()->pluck('role_plan','id')->toArray(), isset($user_roles) ? $user_roles : [], ['class' => 'form-control', 'multiple' => false]) !!}
 </div>
 <div class="form-group">
     {!! Form::hidden('role_id', $role_id,['class' => 'form-control']) !!}

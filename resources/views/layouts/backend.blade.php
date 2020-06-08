@@ -39,9 +39,9 @@
 
 
 
-<style>
-body{font-family: 'Montserrat', sans-serif !important}
-    </style>
+        <style>
+            body{font-family: 'Montserrat', sans-serif !important}
+        </style>
 
 
 
@@ -376,19 +376,20 @@ body{font-family: 'Montserrat', sans-serif !important}
 
         <script>
 
-function price(evt, allprice) {
-    
-  var i, tabcontent, tablinks;
-  evt.currentTarget.className ="active";
-  if(document.getElementById(allprice).style.display=='block'){
-  document.getElementById(allprice).style.display = "none";
-  }else{
-  document.getElementById(allprice).style.display = "block";
-  }
-  
-  
-}
-</script>
+            function price(evt, allprice) {
+                var i, tabcontent, tablinks;
+//                evt.currentTarget.className = "active";
+//evt.attr('class');
+                evt.target.classList.toggle("active");
+                if (document.getElementById(allprice).style.display == 'block') {
+                    document.getElementById(allprice).style.display = "none";
+                } else {
+                    document.getElementById(allprice).style.display = "block";
+                }
+
+
+            }
+        </script>
 
     </body>
 </html>
