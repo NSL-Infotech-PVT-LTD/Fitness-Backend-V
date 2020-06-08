@@ -25,8 +25,10 @@
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('adminLte/plugins/summernote/summernote-bs4.css') }}">
         <!-- Google Font: Source Sans Pro -->
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
+
+        <link rel="stylesheet" href="{{ asset('/template/css/new_style.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
         <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
@@ -40,7 +42,7 @@
 
 
 <style>
-body{font-family: 'Montserrat', sans-serif !important}
+body{font-family: 'Roboto', sans-serif !important}
     </style>
 
 
@@ -55,10 +57,10 @@ body{font-family: 'Montserrat', sans-serif !important}
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                        <a class="nav-link btnmenu" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ url('admin/home')}}" class="nav-link">Home</a>
+                        <a href="{{ url('admin/home')}}" class="nav-link"> <i class="fas fa-house-user"></i></a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
                         <!--<a href="#" class="nav-link">Contact</a>-->
@@ -171,7 +173,7 @@ body{font-family: 'Montserrat', sans-serif !important}
                         <a class="nav-link" style ="Color:Black" href="{{ url('/logout') }}"
                            onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">
-                            Logout
+                            Logout <i class="fas fa-sign-out-alt"></i>
                         </a>
 
                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
@@ -187,7 +189,7 @@ body{font-family: 'Montserrat', sans-serif !important}
                 <!-- Brand Logo -->
                 <a href="#" class="brand-link">
 
-                    <span class="brand-text font-weight-light">Volt Fitness</span>
+                    <span class="brand-text font-weight-light"><img src="/volt/public/logo_black.png"></span>
                 </a>
 
                 <!-- Sidebar -->
@@ -209,7 +211,7 @@ body{font-family: 'Montserrat', sans-serif !important}
                                  with font-awesome or any other icon font library -->
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                    <i class="nav-icon fas fa-table"></i>
+                                <i class="fas fa-user"></i>
                                     <p>
                                         Users
                                         <i class="right fas fa-angle-left"></i>
@@ -218,7 +220,7 @@ body{font-family: 'Montserrat', sans-serif !important}
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{ url('admin/adminusers') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
+                                 <i class="fas fa-users-cog"></i>
                                             <p>Super Admin</p>
                                             <span class="badge badge-info right">{{DB::table('admin_users')->count()}}</span>
                                         </a>
@@ -227,7 +229,7 @@ body{font-family: 'Montserrat', sans-serif !important}
                                     <?php foreach (\App\Role::all() as $role): ?>
                                         <li class="nav-item">
                                             <a href="{{ url('admin/users/role/'.$role->id) }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
+                                           <i class="far fa-user"></i>
                                                 <p>{{$role->name}}</p>
                                                 <span class="badge badge-info right">{{$trainer = DB::table('role_user')->where('role_id', $role->id)->count()}}</span>
                                             </a>
@@ -239,7 +241,7 @@ body{font-family: 'Montserrat', sans-serif !important}
 
                             <li class="nav-item">
                                 <a href="{{ url('admin/roles') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-bars"></i>
+                                <i class="fas fa-users"></i>
                                     <p>
                                         Roles
                                         <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
@@ -285,7 +287,7 @@ body{font-family: 'Montserrat', sans-serif !important}
                                                         </li>-->
                             <li class="nav-item">
                                 <a href="{{ url('admin/events') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
+                                  <i class="fas fa-calendar-alt"></i>
                                     <p>
                                         Events
                                         <span class="badge badge-info right">{{$events = DB::table('events')->count()}}</span>
