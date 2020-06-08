@@ -1,0 +1,377 @@
+a.brand-link {
+    text-align: center;
+}
+
+.main-sidebar{
+    background-color: #ffffff;
+}
+
+[class*=sidebar-dark-] .sidebar a {
+    color: #000000;
+}
+a.nav-link:hover {
+    background: black !IMPORTANT;
+}
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: transparent;
+    color: #000;
+    box-shadow: none;
+}
+[class*=sidebar-dark-] .user-panel a:hover {
+    color: #000;
+ 
+}
+
+[class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item:hover>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item>.nav-link:focus {
+  
+    color: #000;
+}
+.has-treeview li.nav-item a:hover {
+    color: white !IMPORTANT;
+    transition: .5s;
+}
+
+ .badge-info {
+        color: #fff;
+    width: 22px;
+    height: 16px;
+    border-radius: 2px !IMPORTANT;
+    font-weight: 600;
+    background: #000;
+}
+
+.user-panel .image {
+    display: inline-block;
+    padding-left: 0;
+    border: 1px solid #000;
+}
+.os-content {
+    padding: 0px 2px!IMPORTANT;
+}
+.main-sidebar, .main-sidebar::before {
+    transition: margin-left .3s ease-in-out,width .3s ease-in-out;
+    width: 270px;
+}
+.content-wrapper {
+    background: #f4f6f9;
+    margin-left: 280px !IMPORTANT;
+}
+.navbar-light .navbar-nav .nav-link:focus{
+       background: transparent; !IMPORTANT;
+    opacity: 1 !IMPORTANT;
+    
+
+}
+.nav a:hover {
+    background: black !IMPORTANT;
+    color: #fff !IMPORTANT;
+}
+
+
+.navbar-light .navbar-nav .nav-link:hover {
+       color: #fdfdfd !IMPORTANT;
+    opacity: 1 !IMPORTANT;
+    
+
+}
+.reset {
+    text-align: center;
+    font-size: 23px;
+    font-weight: 900;
+}
+button.btn.res.btn-primary {
+    width: 100%;
+    background: #000;
+    border: 0;
+}
+
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+    margin-left: 260px;
+}
+
+.nav-sidebar .nav-link p {
+    font-size: 15px;
+ 
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
+    background-color:#000;
+    color: #ffffff;
+}
+.elevation-4 {
+    box-shadow: none !IMPORTANT;
+}
+a.nav-link.btnmenu {
+  
+    color: #000 !IMPORTANT;
+}
+button.swal2-confirm.swal2-styled {
+    background: #000 !IMPORTANT;
+}
+button.swal2-cancel.swal2-styled {
+    background: #000000 !IMPORTANT;
+}
+h2#swal2-title {
+    font-size: 19px;
+    color: #000;
+    font-weight: bold;
+}
+.prices {
+    overflow: hidden;
+}
+.swal2-icon.swal2-warning {
+    border-color: #000000 !IMPORTANT;
+    color: #000000 !IMPORTANT;
+}
+.btn {
+    background: #000;
+    border: 0;
+}
+.btn:hover {
+    background: #717171;
+}
+[class*=sidebar-dark] .brand-link {
+    border-bottom: 0;
+    color: rgba(255,255,255,.8);
+}
+[class*=sidebar-dark] .user-panel {
+    border-bottom: 0;
+}
+
+
+button.btn.btn-info.btn-sm{
+   background: transparent;
+    border: 1px solid #000;
+    color: #000;
+   margin-right: 10px;
+}
+
+button.btn.btn-danger.btn-sm.changeStatus {
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+        margin-right: 10px;
+}
+
+button.btn.btn-primary.btn-sm{background: transparent;
+    border: 1px solid #000;
+    color: #000;
+  margin-right: 10px;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #000;
+}
+
+    button.btn.btn-danger.btn-sm.btnDelete{
+    	    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+
+    }
+
+    button.btn.btn-success.btn-sm.markspecial{
+    	   	    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+
+    }
+a.btn.btn-success.btn-sm {
+    color: #676767;
+    background: transparent;
+    border: 1px solid #8a8989;
+}
+
+.pagination {
+     
+    float: right;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #000000;
+    border-color: #000000;
+}
+.small-box p {
+     font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+        color: #fff;
+}
+.inner h3 {
+    font-size: 55px !IMPORTANT;
+        color: #fff;
+}
+.info a {
+    font-weight: bold;
+   
+}
+.icon i {
+    font-size: 48px !IMPORTANT;
+}
+.nav-sidebar .nav-item>.nav-link {
+    position: relative;
+   
+    font-weight: 500;
+}
+a.small-box-footer {
+       background: black !IMPORTANT;
+    border-top: 1px solid #d6d3d3;
+    color: #fff !IMPORTANT;
+    padding: 7px 0px !IMPORTANT;
+}
+.nav-sidebar>.nav-item {
+    margin-bottom: 0;
+    padding: 11px 0;
+}
+
+.card-header:first-child {
+    background: white;
+    border: 0;
+}
+
+.card {
+    box-shadow: none !IMPORTANT;
+ 
+}
+.dataTables_filter {
+    float: right;
+}
+
+.breadcrumb a {
+    color: #000;
+}
+
+li.breadcrumb-item {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+button.btn.btn-warning.btn-sm {
+    background: #000 !IMPORTANT;
+    color: #fff !IMPORTANT;
+    border: 0;
+}
+ 
+
+.main_top button.btn.btn-primary {
+    width: 100%;
+    background: #000;
+    border: 0;
+    padding: 10px 0;
+    font-size: 18px;
+}
+.main_top input {
+   
+    border: 1px solid #d6cece;
+    height: 44px;
+}
+.login_text h2 {
+    font-size: 19px;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 38px;
+}
+
+.login_text p {
+    font-size: 19px;
+    padding-top: 18px;
+    margin: 0;
+    color: #7c7c7c;
+}
+input#remember {
+    height: auto !IMPORTANT;
+
+}
+
+.left_img {
+    background-image: url(/volt/public/login_img.jpg);
+    padding: 54% 30%;
+    background-size: cover;
+    background-position: center center;
+    margin-right: -30px;
+        border-radius: 5px 0px 5px 0;
+}
+.right_text {
+    padding: 30px 0px;
+    display: inline-block;
+    background: #efefef !IMPORTANT;
+    box-shadow: 1px 2px 12px 3px #cacaca;
+    border-radius: 0px 5px 5px 0px;
+}
+
+a.btn.btn-link {
+    color: black;
+    font-weight: bold;
+    line-height: 35px;
+    float: right;
+}
+p.bottom_text {
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.res {
+    padding: 60% 0;
+}
+
+
+.reset_email {
+    padding: 5% 0% 3% 0%;
+    background: #e2e2e2;
+    max-width: 50%;
+    margin: auto;
+    border: 1px solid #000;
+}
+button.btn.btn-primary i {
+    margin-left: 11px;
+}
+.small-box {
+    background: #000 !IMPORTANT;
+}
+.small-box .icon {
+    color: rgb(74, 70, 70);
+}
+
+@media(max-width:768px) and (max-width: 1024px){
+.left_img {
+    background-image: url(/volt/public/login_img.jpg);
+    padding: 79% 30%;
+    background-size: cover;
+    background-position: center center;
+    margin-right: -30px;
+    border-radius: 5px 0px 5px 0;
+}
+
+
+}
+@media(max-width: 767px){
+
+	.content-wrapper {
+    background: #f4f6f9;
+    margin-left: 0px !IMPORTANT;
+}
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+    margin-left: 0;
+    background: #dedede;
+    PADDING: 0px 30px;
+}
+.main-sidebar, .main-sidebar::before {
+    transition: margin-left .3s ease-in-out,width .3s ease-in-out;
+    width: auto;
+}
+.content-header h1 {
+    font-size: 18px;
+    margin: 3px 0;
+}
+.card-header {
+    padding: 0px 0px;
+}
+}
+
