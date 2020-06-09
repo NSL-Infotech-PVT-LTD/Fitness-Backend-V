@@ -99,7 +99,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('membership/change-status', 'Admin\MembershipController@changeStatus')->name('membership.changeStatus');
     Route::resource('membership', 'Admin\\MembershipController');
     Route::resource('class-schedule', 'Admin\\ClassScheduleController');
-
+    Route::post('class-schedule/change-status', 'Admin\ClassScheduleController@changeStatus')->name('class-schedule.changeStatus');
     Route::get('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
     Route::post('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
 });

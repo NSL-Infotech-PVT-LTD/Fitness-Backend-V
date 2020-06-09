@@ -13,7 +13,7 @@ class CreateClassSchedulesTable extends Migration {
     public function up() {
         Schema::create('class_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('class_type', ['recuring', 'one-time'])->nullable();
+            $table->enum('class_type', ['recurring', 'one-time'])->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('repeat_on')->nullable();

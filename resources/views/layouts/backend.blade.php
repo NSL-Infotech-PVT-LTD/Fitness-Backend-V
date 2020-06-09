@@ -288,6 +288,15 @@ Plans                                        <span class="badge badge-info right
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ url('admin/class-schedule') }}" class="nav-link">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <p>
+                                        Classes Schedule
+                                        <span class="badge badge-info right">{{$events = DB::table('class_schedules')->count()}}</span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('admin/service') }}" class="nav-link">
                                     <i class="fas fa-calendar-alt"></i>
                                     <p>

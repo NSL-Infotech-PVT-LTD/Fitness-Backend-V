@@ -45,7 +45,6 @@ class User extends Authenticatable {
     protected $appends = array('role');
 
     public function getTrainerServicesAttribute($value) {
-
         return ($value == null) ? null : json_decode($value);
     }
 

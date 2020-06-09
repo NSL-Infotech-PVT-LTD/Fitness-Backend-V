@@ -5,10 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class ClassSchedule extends Model
-{
+class ClassSchedule extends Model {
+
     use LogsActivity;
-    
 
     /**
      * The database table used by the model.
@@ -18,10 +17,10 @@ class ClassSchedule extends Model
     protected $table = 'class_schedules';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -31,8 +30,6 @@ class ClassSchedule extends Model
      */
     protected $fillable = ['class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity'];
 
-    
-
     /**
      * Change activity log event description
      *
@@ -40,8 +37,13 @@ class ClassSchedule extends Model
      *
      * @return string
      */
-    public function getDescriptionForEvent($eventName)
-    {
+    public function getDescriptionForEvent($eventName) {
         return __CLASS__ . " model has been {$eventName}";
     }
+
+
+    public function getRepeatOnAttribute($value) {
+        return ($value == null) ? null : json_decode($value);
+    }
+
 }
