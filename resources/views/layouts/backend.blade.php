@@ -237,8 +237,7 @@
                                 <a href="{{ url('admin/roles') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
-                                        Roles
-                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
+Plans                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
                                     </p>
                                 </a>
                             </li>

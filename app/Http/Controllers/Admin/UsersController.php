@@ -62,7 +62,8 @@ class UsersController extends Controller {
                             ->addColumn('subscription', function($item)use($role_id) {
                                 $model = \DB::table('role_user')->where('role_id', $role_id)->where('user_id', $item->id)->get();
                                 if ($model->isEmpty() != true)
-                                    return \App\RolePlans::whereId($model->first()->role_plan_id)->first()->fee_type;
+                                    if ($model->first()->role_plan_id != null)
+                                        return \App\RolePlans::whereId($model->first()->role_plan_id)->first()->fee_type;
                                 return 'nan';
                             })
                             ->addColumn('action', function($item)use($role_id) {
