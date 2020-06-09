@@ -8,8 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 
-
-
 class User extends Authenticatable {
 
     use HasApiTokens,
@@ -21,12 +19,10 @@ class User extends Authenticatable {
      *
      * @var array
      */
-    
-    
 //    protected $primaryKey = 'id';
-    
+
     protected $fillable = [
-       'first_name','middle_name','last_name','child','mobile','emergency_contact_no','email','password','birth_date','marital_status','designation','emirates_id','address','status','image','trainer_about','trainer_services'
+        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'trainer_about', 'trainer_services'
     ];
 
     /**
@@ -46,10 +42,12 @@ class User extends Authenticatable {
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
     protected $appends = array('role');
 
+    public function getTrainerServicesAttribute($value) {
+//        dd();
+        return ($value == null) ? null : json_decode($value);
+    }
 
     public function getRoleAttribute() {
         try {
@@ -57,24 +55,23 @@ class User extends Authenticatable {
             if ($rolesID->isEmpty() !== true):
                 $role = Role::whereIn('id', $rolesID);
                 if ($role->get()->isEmpty() !== true)
-                    return $role->select('name','id')->with('permission')->first();
+                    return $role->select('name', 'id')->with('permission')->first();
             endif;
             return [];
         } catch (Exception $ex) {
             return [];
         }
     }
-    
-   
 
-    public static function usersIdByPermissionName($name){
+    public static function usersIdByPermissionName($name) {
 
-        $permissions = \App\Permission::where('name','like','%'.$name.'%')->get();
-        if($permissions->isEmpty())
+        $permissions = \App\Permission::where('name', 'like', '%' . $name . '%')->get();
+        if ($permissions->isEmpty())
             return [];
-        $role = \DB::table('permission_role')->where('permission_id',$permissions->first()->id)->get();
-        if($role->isEmpty())
+        $role = \DB::table('permission_role')->where('permission_id', $permissions->first()->id)->get();
+        if ($role->isEmpty())
             return [];
-        return \DB::table('role_user')->whereIN('role_id',$role->pluck('role_id'))->pluck('user_id')->toArray();
+        return \DB::table('role_user')->whereIN('role_id', $role->pluck('role_id'))->pluck('user_id')->toArray();
     }
+
 }

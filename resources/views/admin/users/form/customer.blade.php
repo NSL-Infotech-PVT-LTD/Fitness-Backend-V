@@ -30,23 +30,28 @@
     {!! Form::text('emergency_contact_no', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('emergency_contact_no', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('email') ? ' has-error' : ''}}">
-    {!! Form::label('email', 'Email: ', ['class' => 'control-label']) !!}
-    {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
-    {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
-</div>
 
-<div class="form-group{{ $errors->has('password') ? ' has-error' : ''}}">
-    {!! Form::label('password', 'Password: ', ['class' => 'control-label']) !!}
-    @php
-    $passwordOptions = ['class' => 'form-control'];
-    if ($formMode === 'create') {
-    $passwordOptions = array_merge($passwordOptions, ['required' => 'required']);
-    }
-    @endphp
-    {!! Form::password('password', $passwordOptions) !!}
-    {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
-</div>
+<?php
+//dd($formMode);
+if ($formMode == 'create'):
+    ?>
+    <div class="form-group{{ $errors->has('email') ? ' has-error' : ''}}">
+        {!! Form::label('email', 'Email: ', ['class' => 'control-label']) !!}
+        {!! Form::email('email', '', ['class' => 'form-control', 'required' => 'required']) !!}
+        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="form-group{{ $errors->has('password') ? ' has-error' : ''}}">
+        {!! Form::label('password', 'Password: ', ['class' => 'control-label']) !!}
+        @php
+        $passwordOptions = ['class' => 'form-control'];
+        if ($formMode === 'create') {
+        $passwordOptions = array_merge($passwordOptions, ['required' => 'required']);
+        }
+        @endphp
+        {!! Form::password('password', $passwordOptions) !!}
+        {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
+    </div>
+<?php endif; ?>
 <div class="form-group{{ $errors->has('birth_date') ? ' has-error' : ''}}">
     {!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}
     {!! Form::date('birth_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -73,11 +78,12 @@
     {!! Form::text('address', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
 </div>
-
-<div class="form-group{{ $errors->has('role_plan') ? ' has-error' : ''}}">
-    {!! Form::label('role_plan', 'Role: ', ['class' => 'control-label']) !!}
-    {!! Form::select('role_plan', \App\RolePlans::where('role_id',$role_id)->get()->pluck('role_plan','id')->toArray(), isset($user_roles) ? $user_roles : [], ['class' => 'form-control', 'multiple' => false]) !!}
-</div>
+<?php if ($formMode == 'create'): ?>
+    <div class="form-group{{ $errors->has('role_plan') ? ' has-error' : ''}}">
+        {!! Form::label('role_plan', 'Role: ', ['class' => 'control-label']) !!}
+        {!! Form::select('role_plan', \App\RolePlans::where('role_id',$role_id)->get()->pluck('role_plan','id')->toArray(), isset($user_roles) ? $user_roles : [], ['class' => 'form-control', 'multiple' => false]) !!}
+    </div>
+<?php endif; ?>
 <div class="form-group">
     {!! Form::hidden('role_id', $role_id,['class' => 'form-control']) !!}
 </div>

@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration {
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->enum('child', ['1_child','2_child','none'])->nullable();
+            $table->enum('child', ['1_child', '2_child', 'none'])->nullable();
             $table->string('mobile')->nullable();
             $table->string('emergency_contact_no')->nullable();
             $table->string('email')->unique();
@@ -31,6 +31,8 @@ class CreateUsersTable extends Migration {
             $table->string('image')->nullable();
             $table->string('trainer_about')->nullable();
             $table->string('trainer_services')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->text('payment_params')->nullable();
             $table->enum('status', [0, 1])->default(0)->comment('0->Unactive, 1->Active');
             $table->rememberToken();
             $table->timestamps();
