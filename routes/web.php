@@ -98,6 +98,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('special-events/change-status', 'Admin\SpecialEventsController@changeStatus')->name('special-events.changeStatus');
     Route::post('membership/change-status', 'Admin\MembershipController@changeStatus')->name('membership.changeStatus');
     Route::resource('membership', 'Admin\\MembershipController');
+    Route::resource('class-schedule', 'Admin\\ClassScheduleController');
 
     Route::get('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
     Route::post('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);

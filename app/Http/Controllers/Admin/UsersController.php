@@ -53,7 +53,7 @@ class UsersController extends Controller {
             return Datatables::of($users)
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
-                                if ($item->status == 'accepted'):
+                                if ($item->payment_status == 'accepted'):
                                     return "Payment Transaction Date: 240920";
                                 else:
                                     return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
@@ -62,7 +62,8 @@ class UsersController extends Controller {
                             ->addColumn('subscription', function($item)use($role_id) {
                                 $model = \DB::table('role_user')->where('role_id', $role_id)->where('user_id', $item->id)->get();
                                 if ($model->isEmpty() != true)
-                                    return \App\RolePlans::whereId($model->first()->role_plan_id)->first()->fee_type;
+                                    if ($model->first()->role_plan_id != null)
+                                        return \App\RolePlans::whereId($model->first()->role_plan_id)->first()->fee_type;
                                 return 'nan';
                             })
                             ->addColumn('action', function($item)use($role_id) {
@@ -246,6 +247,8 @@ class UsersController extends Controller {
     public function changeStatus(Request $request) {
 //        dd('dd');
         $user = User::findOrFail($request->id);
+        if ($user->payment_status != 'accepted')
+            return response()->json(["success" => false, 'message' => 'Customer has not paid Subscription yet, Kindly send link again as customer not paid yet.']);
         $user->status = $request->status == 'Block' ? '0' : '1';
         $user->save();
         return response()->json(["success" => true, 'message' => 'User updated!']);
