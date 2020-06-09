@@ -38,7 +38,8 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <style>
-            body{font-family: 'Roboto', sans-serif !important}
+            body { font-family: Norms !IMPORTANT;
+}
         </style>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">

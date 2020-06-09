@@ -1,3 +1,18 @@
+@font-face {
+  font-family:Norms;
+  src: url(http://localhost/volt/public/template/fonts/Norms.otf);
+}
+@font-face {
+  font-family:Norms;
+  src: url(http://localhost/volt/public/template/fonts/Norms-bold.otf);
+}
+
+@font-face {
+  font-family:Norms;
+  src: url(http://localhost/volt/public/template/fonts/Norms-light.otf);
+}
+
+.nav-sidebar .nav-link p
 a.brand-link {
     text-align: center;
 }
@@ -21,8 +36,8 @@ a.nav-link:hover {
     font-weight: 500;
 }
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
-    background-color: transparent;
-    color: #000;
+    background-color: #000;
+    color: #fff;
     box-shadow: none;
 }
 [class*=sidebar-dark-] .user-panel a:hover {
@@ -98,8 +113,10 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
 }
 
 .nav-sidebar .nav-link p {
-    font-size: 15px;
- 
+      font-size: 16px;
+    font-weight: bold;
+    letter-spacing: .5px;
+    line-height: 35px;
 }
 [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
     background-color:#000;
@@ -220,15 +237,10 @@ a.btn.btn-success.btn-sm {
    
     font-weight: 500;
 }
-a.small-box-footer {
-       background: black !IMPORTANT;
-    border-top: 1px solid #d6d3d3;
-    color: #fff !IMPORTANT;
-    padding: 7px 0px !IMPORTANT;
-}
+ 
 .nav-sidebar>.nav-item {
     margin-bottom: 0;
-    padding: 11px 0;
+    padding: 8px 0;
 }
 
 .card-header:first-child {
@@ -332,9 +344,7 @@ p.bottom_text {
 button.btn.btn-primary i {
     margin-left: 11px;
 }
-.small-box {
-    background: #000 !IMPORTANT;
-}
+
 .small-box .icon {
     color: rgb(74, 70, 70);
 }
