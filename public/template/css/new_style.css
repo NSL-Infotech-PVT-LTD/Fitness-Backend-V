@@ -114,7 +114,7 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
 
 .nav-sidebar .nav-link p {
       font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: .5px;
     line-height: 35px;
 }
@@ -130,10 +130,14 @@ a.nav-link.btnmenu {
     color: #000 !IMPORTANT;
 }
 button.swal2-confirm.swal2-styled {
-    background: #000 !IMPORTANT;
+  background:#0055ff;
+    border: 1px solid #05f;
+    color: #fff;
+   
 }
 button.swal2-cancel.swal2-styled {
-    background: #000000 !IMPORTANT;
+      background: #d50100!IMPORTANT;
+    border: 1px solid #d5010
 }
 h2#swal2-title {
     font-size: 19px;
@@ -147,10 +151,7 @@ h2#swal2-title {
     border-color: #000000 !IMPORTANT;
     color: #000000 !IMPORTANT;
 }
-.btn {
-    background: #000;
-    border: 0;
-}
+ 
 .btn:hover {
     background: #717171;
 }
@@ -164,32 +165,42 @@ h2#swal2-title {
 
 
 button.btn.btn-info.btn-sm{
-   background: transparent;
-    border: 1px solid #000;
-    color: #000;
-   margin-right: 10px;
+      background: #0055ff;
+    border: 1px solid #05f;
+    color: #fff;
+    margin-right:6px;
+        margin-bottom: 6px;
+    
+   
 }
 
 button.btn.btn-danger.btn-sm.changeStatus {
-    background: transparent;
-    border: 1px solid #000;
-    color: #000;
-        margin-right: 10px;
+       background: #0055ff;
+    border: 1px solid #05f;
+    color: #fff;
+    margin-right: 6px;
+        margin-bottom: 6px;
+    
 }
 
-button.btn.btn-primary.btn-sm{background: transparent;
-    border: 1px solid #000;
-    color: #000;
-  margin-right: 10px;
+button.btn.btn-primary.btn-sm
+{  background:#0055ff;
+    border: 1px solid #05f;
+    color: #fff;
+    margin-right: 6px;
+        margin-bottom: 6px;
 }
 .navbar-light .navbar-nav .nav-link {
     color: #000;
 }
 
     button.btn.btn-danger.btn-sm.btnDelete{
-    	    background: transparent;
-    border: 1px solid #000;
-    color: #000;
+        background: #0055ff;
+    border: 1px solid #05f;
+    color: #fff;
+    margin-right: 0;
+    margin-left: 6px;
+        margin-bottom: 6px;
 
     }
 
@@ -200,9 +211,9 @@ button.btn.btn-primary.btn-sm{background: transparent;
 
     }
 a.btn.btn-success.btn-sm {
-    color: #676767;
-    background: transparent;
-    border: 1px solid #8a8989;
+       color: #ffffff;
+    background: #0055ff;
+    border: 1px solid #0055ff;
 }
 
 .pagination {
@@ -240,7 +251,7 @@ a.btn.btn-success.btn-sm {
  
 .nav-sidebar>.nav-item {
     margin-bottom: 0;
-    padding: 8px 0;
+    padding: 0px 0;
 }
 
 .card-header:first-child {
@@ -257,7 +268,7 @@ a.btn.btn-success.btn-sm {
 }
 
 .breadcrumb a {
-    color: #000;
+    color:#05f;
 }
 
 li.breadcrumb-item {
@@ -265,13 +276,22 @@ li.breadcrumb-item {
     font-weight: bold;
 }
 
+.right_text {
+    padding: 6% 40px;
+}
+
 button.btn.btn-warning.btn-sm {
-    background: #000 !IMPORTANT;
+    background:#05f !IMPORTANT;
     color: #fff !IMPORTANT;
     border: 0;
+    margin-right: 6px;
+    margin-bottom: 6px;
 }
  
-
+button.btn.btn-danger.btn-sm {
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
 .main_top button.btn.btn-primary {
     width: 100%;
     background: #000;
@@ -347,6 +367,12 @@ button.btn.btn-primary i {
 
 .small-box .icon {
     color: rgb(74, 70, 70);
+}
+
+.navbar-laravel{display:none !IMPORTANT;}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:hover {
+    background-color: #000;
+    color: #fff;
 }
 
 @media(max-width:768px) and (max-width: 1024px){
