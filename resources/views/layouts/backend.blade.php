@@ -279,6 +279,15 @@
                                                             </a>
                                                         </li>-->
                             <li class="nav-item">
+                                <a href="{{ url('admin/class') }}" class="nav-link">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <p>
+                                        Classes
+                                        <span class="badge badge-info right">{{$events = DB::table('classes')->count()}}</span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('admin/service') }}" class="nav-link">
                                     <i class="fas fa-calendar-alt"></i>
                                     <p>
