@@ -5,10 +5,11 @@
         <div class="row">
             @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create New ClassSchedule</div>
-                    <div class="card-body">
+                    
+                    <div class="content-wrapper">
+                        <div class="card-header"><h2>Create New Class Schedule</h2></div>
                         <a href="{{ url('/admin/class-schedule') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />

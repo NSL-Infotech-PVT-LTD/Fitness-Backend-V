@@ -375,6 +375,12 @@ button.btn.btn-primary i {
     color: #fff;
 }
 
+.checkbox {
+    float: left;
+    padding: 2px 9px;
+   
+    overflow: hidden;
+}
 @media(max-width:768px) and (max-width: 1024px){
 .left_img {
     background-image: url(/volt/public/login_img.jpg);
