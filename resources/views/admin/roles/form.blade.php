@@ -14,8 +14,8 @@
         padding: 11px 20px;
         transition: 0.3s;
         font-size: 14px;
-        background: #ffc107;
-        color: black;
+        background: #020202;
+    color: white;
         font-weight: bold;
         display: inline-block;
         letter-spacing: 1px;
