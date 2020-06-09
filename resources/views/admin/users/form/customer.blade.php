@@ -30,12 +30,16 @@
     {!! Form::text('emergency_contact_no', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('emergency_contact_no', '<p class="help-block">:message</p>') !!}
 </div>
+
+<?php
+//dd($user->dob);
+if (!isset($user->email)):
+    ?>
 <div class="form-group{{ $errors->has('email') ? ' has-error' : ''}}">
     {!! Form::label('email', 'Email: ', ['class' => 'control-label']) !!}
     {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
-
 <div class="form-group{{ $errors->has('password') ? ' has-error' : ''}}">
     {!! Form::label('password', 'Password: ', ['class' => 'control-label']) !!}
     @php
@@ -47,6 +51,7 @@
     {!! Form::password('password', $passwordOptions) !!}
     {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
 </div>
+<?php endif;?>
 <div class="form-group{{ $errors->has('birth_date') ? ' has-error' : ''}}">
     {!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}
     {!! Form::date('birth_date', null, ['class' => 'form-control', 'required' => 'required']) !!}

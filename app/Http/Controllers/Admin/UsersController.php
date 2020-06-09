@@ -52,6 +52,13 @@ class UsersController extends Controller {
             $users = User::wherein('id', $roleusers)->latest();
             return Datatables::of($users)
                             ->addIndexColumn()
+                            ->editColumn('payment_status', function($item)use($role_id) {
+                                if ($item->status == 'accepted'):
+                                    return "Payment Transaction Date: 240920";
+                                else:
+                                    return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
+                                endif;
+                            })
                             ->addColumn('action', function($item)use($role_id) {
 //                                $return = 'return confirm("Confirm delete?")';
                                 $return = '';
@@ -70,9 +77,12 @@ class UsersController extends Controller {
 
                                 return $return;
                             })
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action', 'payment_status'])
                             ->make(true);
         }
+        if (isset($role_id))
+            if ($role_id != 1)
+                $this->__rulesforindex += ['payment_status' => 'required'];
         return view('admin.users.index', ['rules' => array_keys($this->__rulesforindex), 'role_id' => $role_id]);
     }
 
@@ -134,6 +144,12 @@ class UsersController extends Controller {
         if (isset($request->role_plan))
             \DB::table('role_user')->where('role_id', $request->role_id)->update(['role_plan_id' => $request->role_plan]);
 
+        \Mail::send('emails.send_paymentlink', $data, function($message) use ($request) {
+//                $message->from(env('mail_from_address'));
+            $message->sender(env('mail_from_address'));
+            $message->to($request->email);
+            $message->subject('Please subscribe for payment !');
+        });
         return redirect('admin/users/role/' . $request->role_id)->with('flash_message', $role . ' User added!');
     }
 
@@ -166,14 +182,13 @@ class UsersController extends Controller {
 
         $roles = Role::select('id', 'name', 'label')->get();
         $roles = $roles->pluck('label', 'name');
-
-        $user = User::with('roles')->select('id', 'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status')->findOrFail($id);
+        $user = User::with('roles')->findOrFail($id);
         $user_roles = [];
         foreach ($user->roles as $role) {
+            $role_id = $role->id;
             $user_roles[] = $role->name;
         }
-
-        return view('admin.users.edit', compact('user', 'roles', 'user_roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'user_roles', 'role_id'));
     }
 
     /**
@@ -185,7 +200,6 @@ class UsersController extends Controller {
      * @return void
      */
     public function update(Request $request, $id) {
-
         $this->validate(
                 $request, [
             'first_name' => 'required',
@@ -193,30 +207,23 @@ class UsersController extends Controller {
 //                    'roles' => 'required'
                 ]
         );
-
         $data = $request->except('password');
-//       dd($data);
         if ($request->has('password')) {
             if (!empty($request->password))
                 $data['password'] = bcrypt($request->password);
         }
-
+        if (isset($data['trainer_services']))
+            $data['trainer_services'] = json_encode($data['trainer_services']);
         $user = User::findOrFail($id);
-//       dd($user);
         $user->update($data);
-
 //        $user->roles()->detach();
 //        foreach ($request->roles as $role) {
 //            $user->assignRole('Customer');
 //            $user->assignRole($role);
 //        }
 //dd('aa');
-        if ($request->roles[0] == 'Super-Admin')
-            return redirect('admin/users/role/1')->with('flash_message', 'User updated!');
-        if ($request->roles[0] == 'Personal-Trainer')
-            return redirect('admin/users/role/2')->with('flash_message', 'User updated!');
-        if ($request->roles[0] == 'Customer')
-            return redirect('admin/users/role/3')->with('flash_message', 'User updated!');
+
+        return redirect('admin/users/role/' . $request->role_id)->with('flash_message', ' User Updated');
     }
 
     /**
@@ -240,6 +247,22 @@ class UsersController extends Controller {
         $user = User::findOrFail($request->id);
         $user->status = $request->status == 'Block' ? '0' : '1';
         $user->save();
+        return response()->json(["success" => true, 'message' => 'User updated!']);
+    }
+
+    public function sendPayment(Request $request) {
+//        dd('dd');
+        $data = User::whereId($request->id)->first()->toArray();
+//        $user->status = $request->status == 'Block' ? '0' : '1';
+//        $user->save();
+        $request->email = $data['email'];
+        $mail = \Mail::send('emails.send_paymentlink', $data, function($message) use ($request) {
+//                $message->from(env('mail_from_address'));
+                    $message->sender(env('mail_from_address'));
+                    $message->to($request->email);
+                    $message->subject('Please subscribe for payment !');
+                });
+        dd($mail);
         return response()->json(["success" => true, 'message' => 'User updated!']);
     }
 

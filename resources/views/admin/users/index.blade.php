@@ -165,6 +165,50 @@
     }
     });
     });
+   $('.data-table').on('click', '.sendPayment', function (e) {
+//       alert('a');
+    e.preventDefault();
+            var id = $(this).attr('data-id');
+            var status = $(this).attr('data-status');
+            Swal.fire({
+            title: 'Are you sure you wanted to Send Payment Link?',
+                    text: "",
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, ' + status + ' it!'
+            }).then((result) => {
+    Swal.showLoading();
+            if (result.value) {
+    var form_data = new FormData();
+            form_data.append("id", id);
+            form_data.append("status", status);
+            form_data.append("_token", $('meta[name="csrf-token"]').attr('content'));
+            $.ajax({
+            url: "{{route('user.sendPayment')}}",
+                    method: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function () {
+//                        Swal.showLoading();
+                    },
+                    success: function (data)
+                    {
+                    Swal.fire(
+                            status + ' !',
+                            'Notification has been ' + status + ' .',
+                            'success'
+                            ).then(() => {
+                    table.ajax.reload(null, false);
+                    });
+                    }
+            });
+    }
+    });
+    });
     });
 
 </script>

@@ -76,6 +76,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
 
     Route::resource('settings', 'Admin\SettingsController');
     Route::post('user/change-status', 'Admin\UsersController@changeStatus')->name('user.changeStatus');
+    Route::post('user/send-payment-link', 'Admin\UsersController@sendPayment')->name('user.sendPayment');
     Route::post('role/change-status', 'Admin\RolesController@changeStatus')->name('role.changeStatus');
     Route::post('tournament/change-status', 'Admin\TournamentsController@changeStatus')->name('tournament.changeStatus');
     Route::post('enrollments/winnerstatus', 'Admin\EnrollmentsController@winnerstatus')->name('enrollment.winnerstatus');
