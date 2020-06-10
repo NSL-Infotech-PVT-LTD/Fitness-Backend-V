@@ -78,6 +78,8 @@ class ClassScheduleController extends Controller {
         ]);
         $requestData = $request->all();
 //dd($requestData);
+        if (isset($requestData['repeat_on']))
+            $requestData['repeat_on'] = json_encode($requestData['repeat_on']);
         ClassSchedule::create($requestData);
 
         return redirect('admin/class-schedule')->with('flash_message', 'ClassSchedule added!');
