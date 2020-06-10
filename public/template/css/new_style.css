@@ -1,15 +1,15 @@
 @font-face {
   font-family:Norms;
-  src: url(http://localhost/volt/public/template/fonts/Norms.otf);
+  src: url(../fonts/Norms.otf);
 }
 @font-face {
   font-family:Norms;
-  src: url(http://localhost/volt/public/template/fonts/Norms-bold.otf);
+  src: url(../fonts/Norms-bold.otf);
 }
 
 @font-face {
   font-family:Norms;
-  src: url(http://localhost/volt/public/template/fonts/Norms-light.otf);
+  src: url('../fonts/Norms-light.otf');
 }
 
 .nav-sidebar .nav-link p
@@ -381,6 +381,37 @@ button.btn.btn-primary i {
    
     overflow: hidden;
 }
+
+input[type="radio"] {
+    width: 21px !IMPORTANT;
+    height: 31px;
+    margin: 2px 5px 0px 5px;
+    position: relative;
+    top: 11px;
+}
+
+.create_btn {
+    margin-top: 87px;
+    float: right;
+}
+
+.create_btn .btn {
+    padding: 4px 29px;
+}
+
+.nav-sidebar .nav-link> i.right.fas.fa-angle-left, .nav-sidebar .nav-link>p> i.right.fas.fa-angle-left {
+    transform: rotate(90deg);
+        font-size: 20px !IMPORTANT
+}
+.nav-sidebar .menu-open>.nav-link i.right {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg) !important;
+}
+.table-bordered td, .table-bordered th {
+ 
+    font-weight: bold;
+}
+
 @media(max-width:768px) and (max-width: 1024px){
 .left_img {
     background-image: url(/volt/public/login_img.jpg);
