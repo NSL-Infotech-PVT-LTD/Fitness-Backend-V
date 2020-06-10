@@ -30,7 +30,7 @@
                 <div id="checkboxes">
                     <?php foreach (['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as $day): ?>
                         <div class="checkbox">
-                            <input type="checkbox" id="{{$day}}}" name="repeat_on[]" value="{{$day}}" <?= in_array($day, $classschedule->repeat_on) ? 'checked=""' : '' ?>>
+                            <input type="checkbox" id="{{$day}}}" name="repeat_on[]" value="{{$day}}" <?= isset($classschedule->repeat_on)?(in_array($day, $classschedule->repeat_on) ? 'checked=""' : ''):'' ?>>
                             <label for="{{$day}}"></label>
                             <span>{{$day}}</span>
                         </div>
