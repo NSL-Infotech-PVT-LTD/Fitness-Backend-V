@@ -30,6 +30,7 @@
                 <div id="checkboxes">
                     <?php foreach (['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as $day): ?>
                         <div class="checkbox">
+
                             <input type="checkbox" id="{{$day}}}" name="repeat_on[]" value="{{$day}}" <?= isset($classschedule->repeat_on)?(in_array($day, $classschedule->repeat_on) ? 'checked=""' : ''):'' ?>>
                             <label for="{{$day}}"></label>
                             <span>{{$day}}</span>
@@ -61,7 +62,7 @@
     </div>
 
 
-    <div class="col-md-5 col-sm-5">
+    <div class="col-md-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group{{ $errors->has('class_id') ? 'has-error' : ''}}">
@@ -70,6 +71,8 @@
                     {!! $errors->first('class_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+
+
             <div class="col-md-12">
                 <div class="form-group{{ $errors->has('trainer_id') ? 'has-error' : ''}}">
                     {!! Form::label('trainer_id', 'Trainer Id', ['class' => 'control-label']) !!}
@@ -80,24 +83,27 @@
             <div class="col-md-6">
                 <div class="form-group{{ $errors->has('cp_spots') ? 'has-error' : ''}}">
                     {!! Form::label('cp_spots', 'Cp Spots', ['class' => 'control-label']) !!}
-                    {!! Form::text('cp_spots', null, ['class' => 'form-control']) !!}
+                    {!! Form::number('cp_spots', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('cp_spots', '<p class="help-block">:message</p>') !!}
 
                 </div>
+
+
 
             </div>
             <div class="col-md-6">
                 <div class="form-group{{ $errors->has('capacity') ? 'has-error' : ''}}">
                     {!! Form::label('capacity', 'Capacity', ['class' => 'control-label']) !!}
-                    {!! Form::text('capacity', null, ['class' => 'form-control']) !!}
+                    {!! Form::number('capacity', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('capacity', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-
-            <div class="form-group">
+ <div class="col-md-12">
+            <div class="form-group create_btn">
                 {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
             </div>
         </div>
+            </div>
     </div>
 
 </div>
