@@ -15,7 +15,7 @@ if (isset($events->image))
 </div>
 <div class="form-group{{ $errors->has('description') ? 'has-error' : ''}}">
     {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
-    {!! Form::text('description', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! Form::textarea('description', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('start_date') ? ' has-error' : ''}}">
@@ -29,7 +29,11 @@ if (isset($events->image))
     {!! $errors->first('end_date', '<p class="help-block">:message</p>') !!}
 </div>
 
-
+<div class="form-group{{ $errors->has('location') ? 'has-error' : ''}}">
+    {!! Form::label('location', 'Location', ['class' => 'control-label']) !!}
+    {!! Form::text('location', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('location', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
 </div>
