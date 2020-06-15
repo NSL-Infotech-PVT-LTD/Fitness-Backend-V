@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Registration Form</h1>
+                    <h1>Edit Form</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Registration Form</li>
+                        <li class="breadcrumb-item active">Edit Form</li>
                     </ol>
                 </div>
             </div>
@@ -27,9 +27,9 @@
             <div class="card card-default">
 
                 <div class="card">
-                    <div class="card-header">Create New User</div>
+                    <div class="card-header">Edit User</div>
                     <div class="card-body">
-                        <a href="{{ url(url()->previous()) }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{url()->previous()}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -41,8 +41,12 @@
                         </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/admin/users', 'class' => 'form-horizontal']) !!}
-                        @include ('admin.users.form', ['formMode' => 'create'])
+                        {!! Form::model($traineruser, [
+                        'method' => 'PATCH',
+                        'url' => ['/admin/trainer-user', $traineruser->id],
+                        'class' => 'form-horizontal'
+                        ]) !!}
+                        @include ('admin.trainer-user.form', ['formMode' => 'edit'])
 
                         {!! Form::close() !!}
 
@@ -54,5 +58,6 @@
     </section>
     <!-- /.content -->
 </div>
+
 
 @endsection

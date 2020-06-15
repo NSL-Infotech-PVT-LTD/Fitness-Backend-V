@@ -14,12 +14,6 @@ class RolesTableSeeder extends Seeder {
 
         DB::table('roles')->insert([
             [
-                'name' => 'Personal-Trainer',
-                'label' => 'personal-trainer',
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now(),
-            ],
-            [
                 'name' => 'Gym Members',
                 'label' => 'gym',
                 'created_at' => \Carbon\Carbon::now(),

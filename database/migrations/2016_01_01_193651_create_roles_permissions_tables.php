@@ -15,6 +15,7 @@ class CreateRolesPermissionsTables extends Migration {
             $table->increments('id');
             $table->string('name');
             $table->string('label')->nullable();
+            $table->enum('type', ['user', 'guest'])->nullable();
             $table->enum('category', ['single', 'couple', 'family_with_1', 'family_with_2'])->nullable();
             $table->string('image')->nullable();
             \App\Helpers\DbExtender::defaultParams($table);
@@ -56,8 +57,8 @@ class CreateRolesPermissionsTables extends Migration {
         Schema::create('role_user', function (Blueprint $table) {
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->integer('role_plan_id')->unsigned();
-            $table->foreign('role_plan_id')->references('id')->on('role_plans')->onDelete('cascade')->nullable();
+            $table->integer('role_plan_id')->nullable()->unsigned();
+            $table->foreign('role_plan_id')->references('id')->on('role_plans')->onDelete('cascade');
 
             if (\App::VERSION() >= '5.8') {
                 $table->bigInteger('user_id')->unsigned();

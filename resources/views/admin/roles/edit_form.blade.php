@@ -92,6 +92,11 @@
     {!! Form::text('label', null, ['class' => 'form-control']) !!}
     {!! $errors->first('label', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group{{ $errors->has('type') ? 'has-error' : ''}}">
+    {!! Form::label('type', 'Type', ['class' => 'control-label']) !!}
+    {!! Form::select('type', ['user'=>'User', 'guest'=>'Guest'], isset($role->type) ? $role->type : [], ['class' => 'form-control', 'multiple' => false]) !!}
+    {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group{{ $errors->has('category') ? 'has-error' : ''}}">
     {!! Form::label('category', 'Category', ['class' => 'control-label']) !!}
     {!! Form::select('category', ['single'=>'Single', 'couple'=>'Couple', 'family_with_1'=>'Family With One Child', 'family_with_2'=>'Family With Two Child'], isset($role->category) ? $role->category : [], ['class' => 'form-control', 'multiple' => false]) !!}

@@ -38,7 +38,7 @@ class AuthController extends ApiController {
 
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['name' => 'required|unique:users', 'email' => 'required|email|unique:users', 'password' => 'required', 'mobile' => 'required|unique:users', 'location' => 'required', 'dob' => 'required', 'image' => ''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => ''];
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
@@ -49,14 +49,15 @@ class AuthController extends ApiController {
             $input['password'] = Hash::make($request->password);
             if (isset($request->image))
                 $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
-//            $input['is_notify'] = '1';
-//            $input['is_login'] = '1';
+
             $user = \App\User::create($input);
-            //Assign role to created user[1=>10,2=>20,]
-            $user->assignRole(\App\Role::where('id', 2)->first()->name);
+            //Assign role to created user
+            $role = \App\Role::whereId($request->role_id)->first()->name;
+            $user->assignRole($role);
+            if (isset($request->role_plan_id))
+                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $user->id)->update(['role_plan_id' => $request->role_plan_id]);
             // create user token for authorization
             $token = $user->createToken('netscape')->accessToken;
-
 //            testing comment
             // Add user device details for firbase
             parent::addUserDeviceData($user, $request);
@@ -90,25 +91,19 @@ class AuthController extends ApiController {
         }
     }
 
-     public function Login(Request $request) {
+    public function Login(Request $request) {
+        $rules = ['email' => 'required', 'password' => 'required'];
+        $rules = array_merge($this->requiredParams, $rules);
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), true);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
         try {
-
-//parent::addUserDeviceData($user, $request);
-            $email = $request->email;
-// dd($email);
-
             if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
                 $user = \App\User::find(Auth::user()->id);
-                $user->save();
                 $token = $user->createToken('netscape')->accessToken;
                 parent::addUserDeviceData($user, $request);
-                return parent::successCreated(['message' => 'Login Successfully', 'token' => $token, 'user' => $user]);
-            } elseif (Auth::attempt(['name' => request('email'), 'password' => request('password')])) {
-                $user = \App\User::find(Auth::user()->id);
-                $user->save();
-                $token = $user->createToken('netscape')->accessToken;
-                parent::addUserDeviceData($user, $request);
-                return parent::successCreated(['message' => 'Login Successfully', 'token' => $token, 'user' => $user]);
+                return parent::success(['message' => 'Login Successfully', 'token' => $token, 'user' => $user]);
             } else {
                 return parent::error("User credentials doesn't matched");
             }
@@ -117,7 +112,30 @@ class AuthController extends ApiController {
         }
     }
 
-    public function getitems(Request $request) {
+    public function getRolesByType(Request $request) {
+        $rules = ['search' => '', 'type' => 'required|in:user,guest'];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        // dd($category_id);
+        try {
+            $model = \App\Role::where('type', $request->type)->where('status', '1');
+//            $perPage = isset($request->limit) ? $request->limit : 20;
+            if (isset($request->search)) {
+                $model = $model->where(function($query) use ($request) {
+                    $query->where('name', 'LIKE', "%$request->search%")
+                            ->orWhere('description', 'LIKE', "%$request->search%");
+                });
+            }
+//            return parent::success($model->paginate($perPage));
+            return parent::success($model->get());
+        } catch (\Exception $ex) {
+            return parent::error($ex->getMessage());
+        }
+    }
+
+    public function getRoles(Request $request) {
         $rules = ['search' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
@@ -125,22 +143,16 @@ class AuthController extends ApiController {
         endif;
         // dd($category_id);
         try {
-            $user = \App\User::findOrFail(\Auth::id());
-            $model = new \App\Tournament();
-            $model = $model->select('id', 'name', 'image', 'location', 'price', 'description', 'start_date', 'end_date', 'rules', 'privacy_policy','prize_name','prize_image');
-            $model = $model->where('state', '1');
-            $model = $model->where('end_date','>',\Carbon\Carbon::now());
-            $perPage = isset($request->limit) ? $request->limit : 20;
-
+            $model = \App\Role::where('status', '1');
+//            $perPage = isset($request->limit) ? $request->limit : 20;
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
                     $query->where('name', 'LIKE', "%$request->search%")
                             ->orWhere('description', 'LIKE', "%$request->search%");
                 });
             }
-
-
-            return parent::success($model->paginate($perPage));
+//            return parent::success($model->paginate($perPage));
+            return parent::success($model->get());
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
@@ -162,100 +174,6 @@ class AuthController extends ApiController {
 
             return parent::error($ex->getMessage());
         }
-    }
-
-    public function enroll(Request $request) {
-        $rules = ['type' => '', 'price' => '', 'token' => '', 'tournament_id' => 'required|exists:tournaments,id', 'size' => '', 'images' => ''];
-        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
-        if ($validateAttributes):
-            return $validateAttributes;
-        endif;
-        try {
-            $user = \App\User::findOrFail(\Auth::id());
-            $model = Tournament::findorfail($request->tournament_id);
-            $input = $request->all();
-            $input['customer_id'] = \Auth::id();
-
-            //start and end date check starts//
-//            if ($model->whereDate("start_date", '>',\Carbon\Carbon::now())->get()->isEmpty() != true)
-//                return parent::error('Sorry, You cant Enroll before start date');
-//            if ($model->whereDate("end_date", '<', \Carbon\Carbon::now())->get()->isEmpty() != true)
-//                return parent::error('Sorry, You cant Enroll after end date');
-            // start and end date check ends//
-
-
-            $oldenroll = \App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->value('id');
-//            dd($oldenroll);
-            if (\App\EnrollTournaments::where('tournament_id', $request->tournament_id)->where('customer_id', \Auth::id())->get()->isEmpty() === false) {
-
-                if ($files = $request->file('images')) {
-                    foreach ($files as $file) {
-                        $img = self::imageUpload($file, $request->tournament_id, $oldenroll, $request->type, $request->size);
-
-                        \App\Image::create($img);
-                    }
-                }
-                return parent::successCreated(['message' => 'Images added Successfully', 'images' => $img]);
-            } else {
-
-                \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-                if (\App\Tournament::where('id', $request->tournament_id)->where('price', '!=', '0')->get()->isEmpty() === false) {
-                    $stripe = \Stripe\Charge::create([
-                                "amount" => $model->price * 100,
-                                "currency" => config('app.stripe_default_currency'),
-                                "source" => $request->token, // obtained with Stripe.js
-                                "description" => "Charge for the enrollments of tournamnets in fishing project"
-                    ]);
-                    $enroll = EnrollTournaments::create($input);
-                    $enroll->payment_details = json_encode($stripe);
-                    $enroll->payment_id = $stripe->id;
-                    $enroll->save();
-                }
-
-
-                if (\App\Tournament::where('id', $request->tournament_id)->where('price', '=', '0')->get()->isEmpty() === false) {
-                    $enroll = EnrollTournaments::create($input);
-                }
-//                
-
-                return parent::successCreated(['message' => 'Enrolled Successfully', 'enroll' => $enroll]);
-            }
-        } catch (\Exception $ex) {
-            return parent::error($ex->getMessage());
-        }
-    }
-
-    public function getMyenroll(Request $request) {
-
-
-        $getMyTournamnents = EnrollTournaments::where('customer_id', Auth::id())->distinct('tournament_id')->pluck('tournament_id');
-        $getTuornament = Tournament::whereIn('id', $getMyTournamnents)->get();
-        if ($getTuornament) {
-            return parent::success(['tournaments' => $getTuornament]);
-        } else {
-            return parent::error('No Tournaments Found');
-        }
-    }
-
-    public function getTournamentDetails(Request $request) {
-        $rules = ['tournament_id' => 'required'];
-        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
-        if ($validateAttributes):
-            return $validateAttributes;
-        endif;
-
-
-        $mySubmittedEnrollments = EnrollTournaments::where('customer_id', Auth::id())->where('tournament_id', $request->tournament_id)->with('allImages')->with('userdetails')->get();
-
-        $worldWideEnrollments = EnrollTournaments::where('customer_id', '!=', Auth::id())->where('tournament_id', $request->tournament_id)->with('userdetails')->get();
-
-//        $winner = EnrollTournaments::where('tournament_id', $request->tournament_id)->where('status', '1')->with('userdetails')->get();
-
-        $winner = EnrollTournaments::where('tournament_id', $request->tournament_id)->where('status', '1')->with('allImages')->with('userdetails')->first();
-
-
-
-        return parent::success(['mySubmittedEnrollments' => $mySubmittedEnrollments, 'worldWideEnrollments' => $worldWideEnrollments, 'winner' => $winner]);
     }
 
     public function resetPassword(Request $request, Factory $view) {

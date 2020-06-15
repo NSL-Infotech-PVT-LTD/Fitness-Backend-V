@@ -39,7 +39,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <style>
             body { font-family: Norms !IMPORTANT;
-}
+            }
         </style>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
@@ -130,7 +130,7 @@
                                                      Message End 
                                                 </a>
                                                 <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                                                <a href="#" class="dropdown-item dropdown-footer">See View All Messages</a>
                                             </div>
                                         </li>-->
                     <!--Notifications Dropdown Menu--> 
@@ -203,6 +203,15 @@
                         <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
+
+                            <li class="nav-item">
+                                <a href="{{ url('admin/home') }}" class="nav-link">
+                                    <i class="fas fa-thermometer"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
                                     <i class="fas fa-user"></i>
@@ -215,21 +224,54 @@
                                     <li class="nav-item">
                                         <a href="{{ url('admin/adminusers') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
-                                            <p>Super Admin</p>
-                                            <span class="badge badge-info right">{{DB::table('admin_users')->count()}}</span>
+                                            <p>View All Users</p>
+                                        </a>
+                                        <a href="{{ url('admin/adminusers/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
                                         </a>
                                     </li>
-
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Trainers
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/trainer-user') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Trainer</p>
+                                        </a>
+                                        <a href="{{ url('admin/trainer-user/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Members
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
                                     <?php foreach (\App\Role::all() as $role): ?>
                                         <li class="nav-item">
                                             <a href="{{ url('admin/users/role/'.$role->id) }}" class="nav-link">
                                                 <i class="far fa-user"></i>
                                                 <p>{{$role->name}}</p>
-                                                <span class="badge badge-info right">{{$trainer = DB::table('role_user')->where('role_id', $role->id)->count()}}</span>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
-
                                 </ul>
                             </li>
 
@@ -237,82 +279,93 @@
                                 <a href="{{ url('admin/roles') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
-Plans                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
+                                        Plans                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
                                     </p>
                                 </a>
                             </li>
-                            <!--
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/service') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Service
-                                                                    <span class="badge badge-info right">{{$service = DB::table('services')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/activity-plan') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Activity Plan
-                                                                    <span class="badge badge-info right">{{$activity = DB::table('activity_plans')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/class') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Class
-                                                                    <span class="badge badge-info right">{{$class = DB::table('classes')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/training-detail') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Training Detail
-                                                                    <span class="badge badge-info right">{{$training = DB::table('training_details')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>-->
-                            <li class="nav-item">
-                                <a href="{{ url('admin/class') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <p>
-                                        Classes
-                                        <span class="badge badge-info right">{{$events = DB::table('classes')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/class-schedule') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <p>
-                                        Classes Schedule
-                                        <span class="badge badge-info right">{{$events = DB::table('class_schedules')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/service') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
                                     <p>
                                         Services
-                                        <span class="badge badge-info right">{{$events = DB::table('services')->count()}}</span>
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/service') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All services</p>
+                                        </a>
+                                        <a href="{{ url('admin/service/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/events') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Classes
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/class') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Classes</p>
+                                        </a>
+                                        <a href="{{ url('admin/class/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Classes Schedule
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/class-schedule') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Classes Schedule</p>
+                                        </a>
+                                        <a href="{{ url('admin/class-schedule/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
                                     <p>
                                         Events
-                                        <span class="badge badge-info right">{{$events = DB::table('events')->count()}}</span>
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/events') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Events</p>
+                                        </a>
+                                        <a href="{{ url('admin/events/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
                         </ul>

@@ -18,28 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('login', 'API\AuthController@Login');
 Route::post('register', 'API\AuthController@Register');
-
-Route::post('customer/login', 'API\AuthController@login');
-Route::post('service-provider/login', 'API\AuthController@login');
-Route::post('customer/register', 'API\AuthController@register');
-Route::post('service_provider/register', 'API\AuthController@service_provider');
-
-
-
-Route::group(['middleware' => ['auth:api', 'roles'], 'namespace' => 'API'], function() {
-//    Route::group(['middleware' => ['auth:api', 'roles'], 'roles' => ['App-Users'],'namespace' => 'API'], function() {
-//    Route::post('getDirectories', 'AuthController@getDirectories');
-});
-
-Route::group(['middleware' => 'auth:api'], function() {
-    Route::post('update', 'API\AuthController@Update');
-    Route::post('tournaments/list', 'API\AuthController@getitems');
-    Route::post('tournament/detail', 'API\AuthController@getitem');
-    Route::post('enroll', 'API\AuthController@enroll');
-    Route::post('enrollments/list', 'API\AuthController@getMyenroll');
-    Route::post('all/enrollments', 'API\AuthController@getAllenrollUsers');
-    Route::post('getTournamentDetails', 'API\AuthController@getTournamentDetails');
-});
-
-
+Route::post('logout', 'API\AuthController@logout');
 Route::post('reset-password', 'API\AuthController@resetPassword');
+Route::post('roles-type', 'API\AuthController@getRolesByType');
+Route::post('roles', 'API\AuthController@getRoles');
+
+Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
+    Route::post('update', 'API\AuthController@Update');
+});
