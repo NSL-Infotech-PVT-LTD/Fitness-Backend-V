@@ -7,6 +7,7 @@
         <meta name="keywords" content="{{ config('app.name') }}" />
         <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
         <!-- Bootstrap Core CSS -->
+          <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('adminLte/plugins/fontawesome-free/css/all.min.css') }}">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -28,12 +29,12 @@
        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
 
-
+   <link rel="stylesheet" href="{{ asset('adminLte/plugins/datatables/buttons.bootstrap4.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('/template/css/table.dataTable.css') }}">
         <link rel="stylesheet" href="{{ asset('/template/css/new_style.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
+      
        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 
         <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -170,7 +171,7 @@ body{
             <div class="dropdown d-inline-block ml-2 show">
                 <button type="button" class="btn btn-sm btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                
-                    <span class="d-none d-sm-inline-block ml-1">Profile</span>
+                    <span class="d-sm-inline-block">Profile</span>
                     <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="page-header-user-dropdown" style="position: absolute; transform: translate3d(-76px, 31px, 0px); top: 0px;left:0px; will-change: transform;" x-placement="bottom-end">
@@ -465,8 +466,18 @@ body{
         <!-- DataTables -->
         <script src="{{ asset('adminLte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('adminLte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+
+         <script src="{{ asset('adminLte/plugins/datatables/be_tables_datatables.min.js') }}"></script>
+          <script src="{{ asset('adminLte/plugins/datatables/dataTables.buttons.min.js') }}"></script>
+           <script src="{{ asset('adminLte/plugins/datatables/buttons.flash.min.js') }}"></script>
+            <script src="{{ asset('adminLte/plugins/datatables/buttons.html5.min.js') }}"></script>
+            <script src="{{ asset('adminLte/plugins/datatables/buttons.colVis.min.js') }}"></script>
+            <script src="{{ asset('adminLte/plugins/datatables/buttons.print.min.js') }}"></script>
+
         <script src="{{ asset('adminLte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('adminLte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+
+         
 
         <script>
 
