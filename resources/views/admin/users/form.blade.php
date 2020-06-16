@@ -80,7 +80,7 @@ if ($formMode == 'create'):
 </div>
 <?php if ($formMode == 'create'): ?>
     <div class="form-group{{ $errors->has('role_plan') ? ' has-error' : ''}}">
-        {!! Form::label('role_plan', 'Role Plans: ', ['class' => 'control-label']) !!}
+        {!! Form::label('role_plan', :', ['class' => 'control-label']) !!}
         {!! Form::select('role_plan', \App\RolePlans::where('role_id',$role_id)->get()->pluck('role_plan','id')->toArray(), isset($user_roles) ? $user_roles : [], ['class' => 'form-control', 'multiple' => false]) !!}
     </div>
 <?php endif; ?>
