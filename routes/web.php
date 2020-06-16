@@ -46,60 +46,36 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::resource('activitylogs', 'Admin\ActivityLogsController')->only([
         'index', 'show', 'destroy'
     ]);
-
     //do here
-
     Route::get('users/index/customer', 'Admin\UsersController@routeToCustomer');
     Route::get('users/index/trainer', 'Admin\UsersController@routeToTrainer');
-
-
-
-
-
     //here
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     Route::resource('settings', 'Admin\SettingsController');
     Route::post('user/change-status', 'Admin\UsersController@changeStatus')->name('user.changeStatus');
     Route::post('user/send-payment-link', 'Admin\UsersController@sendPayment')->name('user.sendPayment');
     Route::post('role/change-status', 'Admin\RolesController@changeStatus')->name('role.changeStatus');
-    Route::post('tournament/change-status', 'Admin\TournamentsController@changeStatus')->name('tournament.changeStatus');
-    Route::post('enrollments/winnerstatus', 'Admin\EnrollmentsController@winnerstatus')->name('enrollment.winnerstatus');
+    Route::resource('trainer-user', 'Admin\\TrainerUserController');
+    Route::post('trainer-user/change-status', 'Admin\TrainerUserController@changeStatus')->name('trainer-user.changeStatus');
 
-    Route::resource('products', 'Admin\\ProductsController');
 
     Route::resource('service', 'Admin\\ServiceController');
     Route::post('service/change-status', 'Admin\ServiceController@changeStatus')->name('service.changeStatus');
     Route::resource('class', 'Admin\\ClassController');
     Route::post('class/change-status', 'Admin\ClassController@changeStatus')->name('class.changeStatus');
-    Route::resource('training-detail', 'Admin\\TrainingDetailController');
-    Route::post('training-detail/change-status', 'Admin\TrainingDetailController@changeStatus')->name('training-detail.changeStatus');
-    Route::resource('activity-plan', 'Admin\\ActivityPlanController');
-    Route::post('activity-plan/change-status', 'Admin\ActivityPlanController@changeStatus')->name('activity-plan.changeStatus');
+    Route::resource('class-schedule', 'Admin\\ClassScheduleController');
+    Route::post('class-schedule/change-status', 'Admin\ClassScheduleController@changeStatus')->name('class-schedule.changeStatus');
     Route::resource('events', 'Admin\\EventsController');
     Route::post('event/change-status', 'Admin\EventsController@changeStatus')->name('events.changeStatus');
     Route::post('event/special', 'Admin\EventsController@MarkSpecial')->name('event.markspecial');
-    Route::resource('special-events', 'Admin\\SpecialEventsController');
-    Route::post('special-events/change-status', 'Admin\SpecialEventsController@changeStatus')->name('special-events.changeStatus');
+
+
+
+
+
     Route::post('membership/change-status', 'Admin\MembershipController@changeStatus')->name('membership.changeStatus');
     Route::resource('membership', 'Admin\\MembershipController');
-    Route::resource('class-schedule', 'Admin\\ClassScheduleController');
-    Route::post('class-schedule/change-status', 'Admin\ClassScheduleController@changeStatus')->name('class-schedule.changeStatus');
+    Route::resource('activity-plan', 'Admin\\ActivityPlanController');
+    Route::post('activity-plan/change-status', 'Admin\ActivityPlanController@changeStatus')->name('activity-plan.changeStatus');
     Route::get('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
     Route::post('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
 });

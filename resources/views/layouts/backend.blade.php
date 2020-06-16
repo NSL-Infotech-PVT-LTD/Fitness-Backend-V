@@ -25,21 +25,27 @@
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('adminLte/plugins/summernote/summernote-bs4.css') }}">
         <!-- Google Font: Source Sans Pro -->
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
 
+
+
+        <link rel="stylesheet" href="{{ asset('/template/css/table.dataTable.css') }}">
         <link rel="stylesheet" href="{{ asset('/template/css/new_style.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
-        <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+       <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
         <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
         <script src="{{asset('js/jquery-1.11.1.min.js')}}"></script>
         <script src="{{ asset('template/js/menu_jquery.js') }}  "></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        
         <style>
-            body { font-family: Norms !IMPORTANT;
-}
+body{ 
+         font-family: "Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
+        }
         </style>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
@@ -51,11 +57,11 @@
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link btnmenu" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                        <a class="nav-link btnmenu" data-widget="pushmenu" href="#" role="button"><i class="fa fa-fw fa-ellipsis-v"></i></a>
                     </li>
-                    <li class="nav-item d-none d-sm-inline-block">
+                    <!---<li class="nav-item d-none d-sm-inline-block">
                         <a href="{{ url('admin/home')}}" class="nav-link"> <i class="fas fa-house-user"></i></a>
-                    </li>
+                    </li>-->
                     <li class="nav-item d-none d-sm-inline-block">
                         <!--<a href="#" class="nav-link">Contact</a>-->
                     </li>
@@ -75,93 +81,100 @@
 
                 <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto">
-                    <!--Messages Dropdown Menu--> 
-                    <!--                    <li class="nav-item dropdown">
-                                            <a class="nav-link" data-toggle="dropdown" href="#">
-                                                <i class="far fa-comments"></i>
-                                                <span class="badge badge-danger navbar-badge">3</span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">
-                                                     Message Start 
-                                                    <div class="media">
-                                                        <img src="{{ asset('adminLte/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle') }}">
-                                                        <div class="media-body">
-                                                            <h3 class="dropdown-item-title">
-                                                                Brad Diesel
-                                                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                                            </h3>
-                                                            <p class="text-sm">Call me whenever you can...</p>
-                                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                                        </div>
-                                                    </div>
-                                                     Message End 
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item">
-                                                     Message Start 
-                                                    <div class="media">
-                                                        <img src="{{ asset('adminLte/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3') }}">
-                                                        <div class="media-body">
-                                                            <h3 class="dropdown-item-title">
-                                                                John Pierce
-                                                                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                                            </h3>
-                                                            <p class="text-sm">I got your message bro</p>
-                                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                                        </div>
-                                                    </div>
-                                                     Message End 
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item">
-                                                     Message Start 
-                                                    <div class="media">
-                                                        <img src="{{ asset('adminLte/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3') }}">
-                                                        <div class="media-body">
-                                                            <h3 class="dropdown-item-title">
-                                                                Nora Silvester
-                                                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                                                            </h3>
-                                                            <p class="text-sm">The subject goes here</p>
-                                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                                        </div>
-                                                    </div>
-                                                     Message End 
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                                            </div>
-                                        </li>-->
-                    <!--Notifications Dropdown Menu--> 
-                    <!--                    <li class="nav-item dropdown">
+              
+                  <li class="nav-item dropdown">
                                             <a class="nav-link" data-toggle="dropdown" href="#">
                                                 <i class="far fa-bell"></i>
-                                                <span class="badge badge-warning navbar-badge">15</span>
+                                                <span class="badge badge-warning navbar-badge">10</span>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                                <span class="dropdown-item dropdown-header">15 Notifications</span>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item">
-                                                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                                                    <span class="float-right text-muted text-sm">3 mins</span>
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item">
-                                                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                                                    <span class="float-right text-muted text-sm">12 hours</span>
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item">
-                                                    <i class="fas fa-file mr-2"></i> 3 new reports
-                                                    <span class="float-right text-muted text-sm">2 days</span>
-                                                </a>
+                                               <div class="p-2 bg-primary text-center">
+                        <h5 class="dropdown-header text-uppercase text-white">Notifications</h5>
+                              </div>
+                                               <ul class="nav-items mb-0">
+                        <li>
+                            <a class="text-dark media py-2" href="javascript:void(0)">
+                                <div class="mr-2 ml-3">
+                                    <i class="fa fa-fw fa-check-circle text-success"></i>
+                                </div>
+                                <div class="media-body pr-2">
+                                    <div class="font-w600">You have a new follower</div>
+                                    <small class="text-muted">15 min ago</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-dark media py-2" href="javascript:void(0)">
+                                <div class="mr-2 ml-3">
+                                    <i class="fa fa-fw fa-plus-circle text-info"></i>
+                                </div>
+                                <div class="media-body pr-2">
+                                    <div class="font-w600">1 new sale, keep it up</div>
+                                    <small class="text-muted">22 min ago</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-dark media py-2" href="javascript:void(0)">
+                                <div class="mr-2 ml-3">
+                                    <i class="fa fa-fw fa-times-circle text-danger"></i>
+                                </div>
+                                <div class="media-body pr-2">
+                                    <div class="font-w600">Update failed, restart server</div>
+                                    <small class="text-muted">26 min ago</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-dark media py-2" href="javascript:void(0)">
+                                <div class="mr-2 ml-3">
+                                    <i class="fa fa-fw fa-plus-circle text-info"></i>
+                                </div>
+                                <div class="media-body pr-2">
+                                    <div class="font-w600">2 new sales, keep it up</div>
+                                    <small class="text-muted">33 min ago</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-dark media py-2" href="javascript:void(0)">
+                                <div class="mr-2 ml-3">
+                                  <i class="fas fa-user"></i>
+                                </div>
+                                <div class="media-body pr-2">
+                                    <div class="font-w600">You have a new subscriber</div>
+                                    <small class="text-muted">41 min ago</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-dark media py-2" href="javascript:void(0)">
+                                <div class="mr-2 ml-3">
+                                    <i class="fa fa-fw fa-check-circle text-success"></i>
+                                </div>
+                                <div class="media-body pr-2">
+                                    <div class="font-w600">You have a new follower</div>
+                                    <small class="text-muted">42 min ago</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>  
+                                                 
+                                                 
                                                 <div class="dropdown-divider"></div>
                                                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                                             </div>
-                                        </li>-->
+                                        </li> 
 
-                    <div class="top_left">
+               <div class="d-flex align-items-center">
+            <div class="dropdown d-inline-block ml-2 show">
+                <button type="button" class="btn btn-sm btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+               
+                    <span class="d-none d-sm-inline-block ml-1">Profile</span>
+                    <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="page-header-user-dropdown" style="position: absolute; transform: translate3d(-76px, 31px, 0px); top: 0px;left:0px; will-change: transform;" x-placement="bottom-end">
+                      <div class="top_left">
 
 
                         <a class="nav-link" style ="Color:Black" href="{{ url('/logout') }}"
@@ -174,6 +187,12 @@
                             @csrf
                         </form>
                     </div>
+                  
+                </div>
+            </div>
+            
+            
+        </div>
 
                 </ul>
             </nav>
@@ -181,9 +200,9 @@
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
-                <a href="#" class="brand-link">
+                <a href="http://localhost/volt/public/admin/home" class="brand-link">
 
-                    <span class="brand-text font-weight-light"><img src="/volt/public/logo_black.png"></span>
+                    <span class="brand-text font-weight-light"><img src="/volt/public/logo_black.png"style="max-width:100px"></span>
                 </a>
 
                 <!-- Sidebar -->
@@ -203,6 +222,15 @@
                         <ul id="menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
+
+                            <li class="nav-item">
+                                <a href="{{ url('admin/home') }}" class="nav-link">
+                                   <i class="fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
                                     <i class="fas fa-user"></i>
@@ -215,104 +243,148 @@
                                     <li class="nav-item">
                                         <a href="{{ url('admin/adminusers') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
-                                            <p>Super Admin</p>
-                                            <span class="badge badge-info right">{{DB::table('admin_users')->count()}}</span>
+                                            <p>View All Users</p>
+                                        </a>
+                                        <a href="{{ url('admin/adminusers/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
                                         </a>
                                     </li>
-
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Trainers
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/trainer-user') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Trainer</p>
+                                        </a>
+                                        <a href="{{ url('admin/trainer-user/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Members
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
                                     <?php foreach (\App\Role::all() as $role): ?>
                                         <li class="nav-item">
                                             <a href="{{ url('admin/users/role/'.$role->id) }}" class="nav-link">
                                                 <i class="far fa-user"></i>
                                                 <p>{{$role->name}}</p>
-                                                <span class="badge badge-info right">{{$trainer = DB::table('role_user')->where('role_id', $role->id)->count()}}</span>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
-
                                 </ul>
                             </li>
 
-                            <li class="nav-item">
+                           <!-- <li class="nav-item">
                                 <a href="{{ url('admin/roles') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                                   <i class="fas fa-clipboard-list"></i>
                                     <p>
-Plans                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
+                                        Plans                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
                                     </p>
                                 </a>
-                            </li>
-                            <!--
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/service') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Service
-                                                                    <span class="badge badge-info right">{{$service = DB::table('services')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/activity-plan') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Activity Plan
-                                                                    <span class="badge badge-info right">{{$activity = DB::table('activity_plans')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/class') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Class
-                                                                    <span class="badge badge-info right">{{$class = DB::table('classes')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a href="{{ url('admin/training-detail') }}" class="nav-link">
-                                                                <i class="nav-icon fas fa-th"></i>
-                                                                <p>
-                                                                    Training Detail
-                                                                    <span class="badge badge-info right">{{$training = DB::table('training_details')->count()}}</span>
-                                                                </p>
-                                                            </a>
-                                                        </li>-->
-                            <li class="nav-item">
-                                <a href="{{ url('admin/class') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <p>
-                                        Classes
-                                        <span class="badge badge-info right">{{$events = DB::table('classes')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/class-schedule') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <p>
-                                        Classes Schedule
-                                        <span class="badge badge-info right">{{$events = DB::table('class_schedules')->count()}}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/service') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
+                            </li>---->
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                 <i class="fas fa-cog"></i>
                                     <p>
                                         Services
-                                        <span class="badge badge-info right">{{$events = DB::table('services')->count()}}</span>
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/service') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All services</p>
+                                        </a>
+                                        <a href="{{ url('admin/service/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/events') }}" class="nav-link">
-                                    <i class="fas fa-calendar-alt"></i>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Classes
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/class') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Classes</p>
+                                        </a>
+                                        <a href="{{ url('admin/class/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        Classes Schedule
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/class-schedule') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Classes Schedule</p>
+                                        </a>
+                                        <a href="{{ url('admin/class-schedule/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                   <i class="fas fa-calendar-alt"></i>
                                     <p>
                                         Events
-                                        <span class="badge badge-info right">{{$events = DB::table('events')->count()}}</span>
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/events') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Events</p>
+                                        </a>
+                                        <a href="{{ url('admin/events/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
                         </ul>

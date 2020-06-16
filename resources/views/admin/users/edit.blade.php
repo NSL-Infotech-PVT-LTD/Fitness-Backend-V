@@ -46,8 +46,7 @@
                         'url' => ['/admin/users', $user->id],
                         'class' => 'form-horizontal'
                         ]) !!}
-                        <?php $formName = isset($role_id) ? 'admin.users.form.' . (($role_id == 1) ? 'trainer' : 'customer') . '' : 'admin.users.form' ?>
-                        @include ($formName, ['formMode' => 'edit'])
+                        @include ('admin.users.form', ['formMode' => 'edit'])
 
                         {!! Form::close() !!}
 

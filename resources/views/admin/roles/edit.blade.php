@@ -27,7 +27,7 @@
         <div class="card card-default">
       
           <div class="card">
-                    <div class="card-header">Edit Class #{{ $classschedule->id }}</div>
+                    <div class="card-header">Edit Class #{{ $role->id }}</div>
                     <div class="card-body">
                           <a href="{{url()->previous()}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -43,12 +43,12 @@
 
                         {!! Form::model($role, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/class-schedule', $role->id],
+                            'url' => ['/admin/roles', $role->id],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}
 
-                        @include ('admin.class-schedule.form', ['formMode' => 'edit'])
+                        @include ('admin.roles.edit_form', ['formMode' => 'edit'])
 
                         {!! Form::close() !!}
                     </div>
