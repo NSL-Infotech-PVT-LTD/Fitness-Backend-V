@@ -233,12 +233,7 @@ a.btn.btn-success.btn-sm {
      
     float: right;
 }
-.page-item.active .page-link {
-    z-index: 3;
-    color: #fff;
-    background-color: #000000;
-    border-color: #000000;
-}
+ 
 .small-box p {
   
     font-size: 15px;
