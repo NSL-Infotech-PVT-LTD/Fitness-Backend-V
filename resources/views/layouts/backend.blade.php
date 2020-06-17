@@ -421,7 +421,8 @@ body{
                 if ((window.location.href == $(this).attr('href'))) {
                     $(this).addClass('active');
                     if ($(this).parent().parent().parent().hasClass('has-treeview')) {
-                        $(this).parent().parent().parent().addClass('menu-open')
+                        $(this).parent().parent().parent().addClass('menu-open');
+                        // $(this).parent().parent().parent().find('a.nav-link').addClass('active');
                     }
                 }
             });
