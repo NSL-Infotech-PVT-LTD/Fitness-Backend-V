@@ -288,21 +288,34 @@ body{
                                         <li class="nav-item">
                                             <a href="{{ url('admin/users/role/'.$role->id) }}" class="nav-link">
                                                 <i class="far fa-user"></i>
-                                                <p>{{$role->name}}</p>
+                                                <p>{{$role->name}} | {{$role->category}}</p>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
                             </li>
 
-                           <!-- <li class="nav-item">
-                                <a href="{{ url('admin/roles') }}" class="nav-link">
-                                   <i class="fas fa-clipboard-list"></i>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                 <i class="fas fa-cog"></i>
                                     <p>
-                                        Plans                                        <span class="badge badge-info right">{{$service = DB::table('roles')->count()}}</span>
+                                        Plans
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                            </li>---->
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/roles') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Plans</p>
+                                        </a>
+                                        <a href="{{ url('admin/roles/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
                                  <i class="fas fa-cog"></i>
