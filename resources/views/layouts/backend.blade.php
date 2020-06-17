@@ -421,7 +421,8 @@ body{
                 if ((window.location.href == $(this).attr('href'))) {
                     $(this).addClass('active');
                     if ($(this).parent().parent().parent().hasClass('has-treeview')) {
-                        $(this).parent().parent().parent().addClass('menu-open')
+                        $(this).parent().parent().parent().addClass('menu-open');
+                        // $(this).parent().parent().parent().find('a.nav-link').addClass('active');
                     }
                 }
             });
@@ -467,7 +468,7 @@ body{
         <script src="{{ asset('adminLte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('adminLte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 
-         <script src="{{ asset('adminLte/plugins/datatables/be_tables_datatables.min.js') }}"></script>
+         <!--<script src="{{ asset('adminLte/plugins/datatables/be_tables_datatables.min.js') }}"></script>-->
           <script src="{{ asset('adminLte/plugins/datatables/dataTables.buttons.min.js') }}"></script>
            <script src="{{ asset('adminLte/plugins/datatables/buttons.flash.min.js') }}"></script>
             <script src="{{ asset('adminLte/plugins/datatables/buttons.html5.min.js') }}"></script>
