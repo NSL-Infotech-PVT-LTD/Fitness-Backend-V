@@ -8,12 +8,23 @@
     color: #373737;
 }
 
-
+ 
+.nav-sidebar .nav-link.active p, .nav-sidebar .nav-link.active i{
+    color: black !important;
+}
+.nav-item.has-treeview.menu-open > .nav-link p, .nav-item.has-treeview.menu-open > .nav-link i{
+    color: black !important;
+}
+.nav-sidebar .active p {
+    color: black !important;
+}
 .nav-sidebar .nav-link p
 a.brand-link {
     text-align: center;
 }
-
+.nav-pills .nav-link:focus, .nav-pills .nav-link:hover {
+    background-color: #f9f9f9;
+}
 .main-sidebar{
     background-color: #ffffff;
 }
@@ -45,7 +56,7 @@ a.brand-link {
     padding: 0px !IMPORTANT;
 }
 [class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item:hover>.nav-link, [class*=sidebar-dark-] .nav-sidebar>.nav-item>.nav-link:focus {
-  
+      background: #f9f9f9;
     color: #000;
 }
 
@@ -304,7 +315,7 @@ label {
 }
 .content-header h1 {
     font-size: 25px;
-    padding: 28px 0px 0px 0px;
+    padding: 28px 0px 0px 20px;
 }
 .dropdown-menu.dropdown-menu-right.p-0.border-0.font-size-sm.show {
     left: -20px !IMPORTANT;
@@ -458,12 +469,7 @@ ul.nav.nav-treeview li a {
 .nav-treeview .nav-link {
     min-height: 13px;
 }
-ul.nav.nav-treeview p {
-    line-height: 18px;
-    font-size: .8125rem;
-    padding: 0px !IMPORTANT;
-
-}
+ 
 .nav-sidebar .menu-open>.nav-link i.right {
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg) !important;
