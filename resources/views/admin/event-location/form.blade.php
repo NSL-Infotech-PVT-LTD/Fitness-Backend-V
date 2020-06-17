@@ -1,5 +1,5 @@
 <div class="form-group{{ $errors->has('name') ? 'has-error' : ''}}">
-    {!! Form::label('name', 'Name', ['class' => 'control-label']) !!}
+    {!! Form::label('name', 'Location Name', ['class' => 'control-label']) !!}
     {!! Form::text('name', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 </div>
@@ -13,7 +13,7 @@ if (isset($eventlocation->image))
     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('location') ? 'has-error' : ''}}">
-    {!! Form::label('location', 'Location', ['class' => 'control-label']) !!}
+    {!! Form::label('location', 'Location Link', ['class' => 'control-label']) !!}
     {!! Form::text('location', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('location', '<p class="help-block">:message</p>') !!}
 </div>

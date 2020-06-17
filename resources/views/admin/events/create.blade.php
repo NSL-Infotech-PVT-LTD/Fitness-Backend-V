@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Events</li>
+                        <li class="breadcrumb-item active">Venues</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="card card-default">
 
                 <div class="card">
-                    <div class="card-header">Create New Event</div>
+                    <div class="card-header">Create New Venue</div>
                     <div class="card-body">
                         <a href="{{ url(url()->previous()) }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
