@@ -16,7 +16,7 @@ class CreateRolesPermissionsTables extends Migration {
             $table->string('name');
             $table->string('label')->nullable();
             $table->enum('type', ['user', 'guest'])->nullable();
-            $table->enum('category', ['single', 'couple', 'family_with_1', 'family_with_2'])->nullable();
+            $table->enum('category', ['single', 'couple', 'family_with_1', 'family_with_2','child'])->nullable();
             $table->string('image')->nullable();
             \App\Helpers\DbExtender::defaultParams($table);
         });

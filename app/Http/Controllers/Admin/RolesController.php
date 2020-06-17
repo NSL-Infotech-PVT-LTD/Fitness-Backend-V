@@ -11,7 +11,7 @@ use DB;
 
 class RolesController extends Controller {
 
-    protected $__rulesforindex = ['name' => 'required', 'label' => 'required'];
+    protected $__rulesforindex = ['name' => 'required', 'category' => 'required'];
 
     /**
      * Display a listing of the resource.

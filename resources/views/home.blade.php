@@ -29,7 +29,7 @@
             <div class="row dashboard_box">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-warning">
+                    <div class="small-box one_">
                         <div class="inner">
                             <h3>{{$trainer = DB::table('role_user')->where('role_id', 2)->count()}}</h3>
 
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-info">
+                    <div class="small-box two_">
                         <div class="inner">
                             <h3>{{$customer = DB::table('role_user')->where('role_id', 3)->count()}}</h3>
 
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-success">
+                    <div class="small-box three_">
                         <div class="inner">
                             <h3>{{$service = DB::table('services')->count()}}</h3>
 
@@ -74,7 +74,7 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-info">
+                    <div class="small-box four_">
                         <div class="inner">
                             <h3>{{$class = DB::table('classes')->count()}}</h3>
 
@@ -86,23 +86,11 @@
                         <a href="{{ url('admin/class') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
+                
+
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>{{$training = DB::table('training_details')->count()}}</h3>
-                            <p>Total Training Details</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="{{ url('admin/training-detail') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
+                    <div class="small-box five_">
                         <div class="inner">
                             <h3>{{$events = DB::table('events')->count()}}</h3>
                             <p>Total Events</p>
