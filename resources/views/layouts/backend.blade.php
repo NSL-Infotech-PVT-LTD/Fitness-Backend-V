@@ -277,7 +277,7 @@
 
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                    <i class="fas fa-user"></i>
+                                   <i class="fas fa-users"></i>
                                     <p>
                                         Members
                                         <i class="right fas fa-angle-left"></i>
@@ -297,7 +297,7 @@
 
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                    <i class="fas fa-cog"></i>
+                                   <i class="fas fa-clipboard-list"></i>
                                     <p>
                                         Plans
                                         <i class="right fas fa-angle-left"></i>
