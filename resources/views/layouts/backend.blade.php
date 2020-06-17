@@ -7,7 +7,7 @@
         <meta name="keywords" content="{{ config('app.name') }}" />
         <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
         <!-- Bootstrap Core CSS -->
-          <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
+        <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('adminLte/plugins/fontawesome-free/css/all.min.css') }}">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -26,27 +26,27 @@
         <!-- summernote -->
         <link rel="stylesheet" href="{{ asset('adminLte/plugins/summernote/summernote-bs4.css') }}">
         <!-- Google Font: Source Sans Pro -->
-       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
 
-   <link rel="stylesheet" href="{{ asset('adminLte/plugins/datatables/buttons.bootstrap4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('adminLte/plugins/datatables/buttons.bootstrap4.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('/template/css/table.dataTable.css') }}">
         <link rel="stylesheet" href="{{ asset('/template/css/new_style.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-      
-       <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 
         <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
         <script src="{{asset('js/jquery-1.11.1.min.js')}}"></script>
         <script src="{{ asset('template/js/menu_jquery.js') }}  "></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        
+
         <style>
-body{ 
-         font-family: "Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
-        }
+            body{ 
+                font-family: "Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
+            }
         </style>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
@@ -82,118 +82,118 @@ body{
 
                 <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto">
-              
-                  <li class="nav-item dropdown">
-                                            <a class="nav-link" data-toggle="dropdown" href="#">
-                                                <i class="far fa-bell"></i>
-                                                <span class="badge badge-warning navbar-badge">10</span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                               <div class="p-2 bg-primary text-center">
-                        <h5 class="dropdown-header text-uppercase text-white">Notifications</h5>
-                              </div>
-                                               <ul class="nav-items mb-0">
-                        <li>
-                            <a class="text-dark media py-2" href="javascript:void(0)">
-                                <div class="mr-2 ml-3">
-                                    <i class="fa fa-fw fa-check-circle text-success"></i>
-                                </div>
-                                <div class="media-body pr-2">
-                                    <div class="font-w600">You have a new follower</div>
-                                    <small class="text-muted">15 min ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="text-dark media py-2" href="javascript:void(0)">
-                                <div class="mr-2 ml-3">
-                                    <i class="fa fa-fw fa-plus-circle text-info"></i>
-                                </div>
-                                <div class="media-body pr-2">
-                                    <div class="font-w600">1 new sale, keep it up</div>
-                                    <small class="text-muted">22 min ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="text-dark media py-2" href="javascript:void(0)">
-                                <div class="mr-2 ml-3">
-                                    <i class="fa fa-fw fa-times-circle text-danger"></i>
-                                </div>
-                                <div class="media-body pr-2">
-                                    <div class="font-w600">Update failed, restart server</div>
-                                    <small class="text-muted">26 min ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="text-dark media py-2" href="javascript:void(0)">
-                                <div class="mr-2 ml-3">
-                                    <i class="fa fa-fw fa-plus-circle text-info"></i>
-                                </div>
-                                <div class="media-body pr-2">
-                                    <div class="font-w600">2 new sales, keep it up</div>
-                                    <small class="text-muted">33 min ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="text-dark media py-2" href="javascript:void(0)">
-                                <div class="mr-2 ml-3">
-                                  <i class="fas fa-user"></i>
-                                </div>
-                                <div class="media-body pr-2">
-                                    <div class="font-w600">You have a new subscriber</div>
-                                    <small class="text-muted">41 min ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="text-dark media py-2" href="javascript:void(0)">
-                                <div class="mr-2 ml-3">
-                                    <i class="fa fa-fw fa-check-circle text-success"></i>
-                                </div>
-                                <div class="media-body pr-2">
-                                    <div class="font-w600">You have a new follower</div>
-                                    <small class="text-muted">42 min ago</small>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>  
-                                                 
-                                                 
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                                            </div>
-                                        </li> 
 
-               <div class="d-flex align-items-center">
-            <div class="dropdown d-inline-block ml-2 show">
-                <button type="button" class="btn btn-sm btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-               
-                    <span class="d-sm-inline-block">Profile</span>
-                    <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="page-header-user-dropdown" style="position: absolute; transform: translate3d(-76px, 31px, 0px); top: 0px;left:0px; will-change: transform;" x-placement="bottom-end">
-                      <div class="top_left">
-
-
-                        <a class="nav-link" style ="Color:Black" href="{{ url('/logout') }}"
-                           onclick="event.preventDefault();
-    document.getElementById('logout-form').submit();">
-                            Logout <i class="fas fa-sign-out-alt"></i>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="far fa-bell"></i>
+                            <span class="badge badge-warning navbar-badge">10</span>
                         </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <div class="p-2 bg-primary text-center">
+                                <h5 class="dropdown-header text-uppercase text-white">Notifications</h5>
+                            </div>
+                            <ul class="nav-items mb-0">
+                                <li>
+                                    <a class="text-dark media py-2" href="javascript:void(0)">
+                                        <div class="mr-2 ml-3">
+                                            <i class="fa fa-fw fa-check-circle text-success"></i>
+                                        </div>
+                                        <div class="media-body pr-2">
+                                            <div class="font-w600">You have a new follower</div>
+                                            <small class="text-muted">15 min ago</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-dark media py-2" href="javascript:void(0)">
+                                        <div class="mr-2 ml-3">
+                                            <i class="fa fa-fw fa-plus-circle text-info"></i>
+                                        </div>
+                                        <div class="media-body pr-2">
+                                            <div class="font-w600">1 new sale, keep it up</div>
+                                            <small class="text-muted">22 min ago</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-dark media py-2" href="javascript:void(0)">
+                                        <div class="mr-2 ml-3">
+                                            <i class="fa fa-fw fa-times-circle text-danger"></i>
+                                        </div>
+                                        <div class="media-body pr-2">
+                                            <div class="font-w600">Update failed, restart server</div>
+                                            <small class="text-muted">26 min ago</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-dark media py-2" href="javascript:void(0)">
+                                        <div class="mr-2 ml-3">
+                                            <i class="fa fa-fw fa-plus-circle text-info"></i>
+                                        </div>
+                                        <div class="media-body pr-2">
+                                            <div class="font-w600">2 new sales, keep it up</div>
+                                            <small class="text-muted">33 min ago</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-dark media py-2" href="javascript:void(0)">
+                                        <div class="mr-2 ml-3">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div class="media-body pr-2">
+                                            <div class="font-w600">You have a new subscriber</div>
+                                            <small class="text-muted">41 min ago</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-dark media py-2" href="javascript:void(0)">
+                                        <div class="mr-2 ml-3">
+                                            <i class="fa fa-fw fa-check-circle text-success"></i>
+                                        </div>
+                                        <div class="media-body pr-2">
+                                            <div class="font-w600">You have a new follower</div>
+                                            <small class="text-muted">42 min ago</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>  
 
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                        </div>
+                    </li> 
+
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown d-inline-block ml-2 show">
+                            <button type="button" class="btn btn-sm btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+
+                                <span class="d-sm-inline-block">Profile</span>
+                                <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="page-header-user-dropdown" style="position: absolute; transform: translate3d(-76px, 31px, 0px); top: 0px;left:0px; will-change: transform;" x-placement="bottom-end">
+                                <div class="top_left">
+
+
+                                    <a class="nav-link" style ="Color:Black" href="{{ url('/logout') }}"
+                                       onclick="event.preventDefault();
+    document.getElementById('logout-form').submit();">
+                                        Logout <i class="fas fa-sign-out-alt"></i>
+                                    </a>
+
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+
+
                     </div>
-                  
-                </div>
-            </div>
-            
-            
-        </div>
 
                 </ul>
             </nav>
@@ -226,7 +226,7 @@ body{
 
                             <li class="nav-item">
                                 <a href="{{ url('admin/home') }}" class="nav-link">
-                                   <i class="fas fa-tachometer-alt"></i>
+                                    <i class="fas fa-tachometer-alt"></i>
                                     <p>
                                         Dashboard
                                     </p>
@@ -274,7 +274,7 @@ body{
                                     </li>
                                 </ul>
                             </li>
-                            
+
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
                                     <i class="fas fa-user"></i>
@@ -288,7 +288,7 @@ body{
                                         <li class="nav-item">
                                             <a href="{{ url('admin/users/role/'.$role->id) }}" class="nav-link">
                                                 <i class="far fa-user"></i>
-                                                <p>{{$role->name}} | {{$role->category}}</p>
+                                                <p><?= ($role->category != '') ? $role->name . ' | ' . (($role->category == 'family_with_2') ? 'Family' : $role->category) : $role->name ?></p>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
@@ -297,7 +297,7 @@ body{
 
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                 <i class="fas fa-cog"></i>
+                                    <i class="fas fa-cog"></i>
                                     <p>
                                         Plans
                                         <i class="right fas fa-angle-left"></i>
@@ -318,7 +318,7 @@ body{
                             </li>
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                 <i class="fas fa-cog"></i>
+                                    <i class="fas fa-cog"></i>
                                     <p>
                                         Services
                                         <i class="right fas fa-angle-left"></i>
@@ -381,7 +381,7 @@ body{
                             </li>
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                   <i class="fas fa-calendar-alt"></i>
+                                    <i class="fas fa-calendar-alt"></i>
                                     <p>
                                         Events
                                         <i class="right fas fa-angle-left"></i>
@@ -482,16 +482,16 @@ body{
         <script src="{{ asset('adminLte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 
          <!--<script src="{{ asset('adminLte/plugins/datatables/be_tables_datatables.min.js') }}"></script>-->
-          <script src="{{ asset('adminLte/plugins/datatables/dataTables.buttons.min.js') }}"></script>
-           <script src="{{ asset('adminLte/plugins/datatables/buttons.flash.min.js') }}"></script>
-            <script src="{{ asset('adminLte/plugins/datatables/buttons.html5.min.js') }}"></script>
-            <script src="{{ asset('adminLte/plugins/datatables/buttons.colVis.min.js') }}"></script>
-            <script src="{{ asset('adminLte/plugins/datatables/buttons.print.min.js') }}"></script>
+        <script src="{{ asset('adminLte/plugins/datatables/dataTables.buttons.min.js') }}"></script>
+        <script src="{{ asset('adminLte/plugins/datatables/buttons.flash.min.js') }}"></script>
+        <script src="{{ asset('adminLte/plugins/datatables/buttons.html5.min.js') }}"></script>
+        <script src="{{ asset('adminLte/plugins/datatables/buttons.colVis.min.js') }}"></script>
+        <script src="{{ asset('adminLte/plugins/datatables/buttons.print.min.js') }}"></script>
 
         <script src="{{ asset('adminLte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('adminLte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 
-         
+
 
         <script>
 
