@@ -69,7 +69,19 @@
 <script type="text/javascript">
     $(function () {
         var table = $('.data-table').DataTable({
-        processing: true,
+        language: {
+        lengthMenu: "_MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search..",
+                info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
+                paginate: {
+                first: '<i class="fa fa-angle-double-left"></i>',
+                        previous: '<i class="fa fa-angle-left"></i>',
+                        next: '<i class="fa fa-angle-right"></i>',
+                        last: '<i class="fa fa-angle-double-right"></i>',
+                },
+        },
+                processing: true,
                 serverSide: true,
                 ajax: "{{ route('trainer-user.index') }}",
                 columns: [
