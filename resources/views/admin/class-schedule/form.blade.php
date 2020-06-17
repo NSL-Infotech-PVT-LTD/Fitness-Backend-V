@@ -76,7 +76,7 @@
             <div class="col-md-12">
                 <div class="form-group{{ $errors->has('trainer_id') ? 'has-error' : ''}}">
                     {!! Form::label('trainer_id', 'Trainer Id', ['class' => 'control-label']) !!}
-                    {!! Form::select('trainer_id', \App\User::whereIn('id',\DB::table('role_user')->where('role_id', '1')->pluck('user_id'))->get()->pluck('first_name','id'), isset($classschedule->trainer_id) ? $classschedule->trainer_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
+                    {!! Form::select('trainer_id', \App\TrainerUser::where('status','1')->get()->pluck('first_name','id'), isset($classschedule->trainer_id) ? $classschedule->trainer_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
                     {!! $errors->first('trainer_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
