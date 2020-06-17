@@ -16,7 +16,8 @@ class CreateEventsTable extends Migration {
             $table->string('name')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
-            $table->string('location')->nullable();
+            $table->integer('location_id')->unsigned()->index();
+            $table->foreign('location_id')->references('id')->on('event_locations')->onDelete('cascade');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->enum('special', [0, 1])->default(0)->comment('1->special');

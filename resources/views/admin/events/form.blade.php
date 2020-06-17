@@ -29,10 +29,10 @@ if (isset($events->image))
     {!! $errors->first('end_date', '<p class="help-block">:message</p>') !!}
 </div>
 
-<div class="form-group{{ $errors->has('location') ? 'has-error' : ''}}">
-    {!! Form::label('location', 'Location', ['class' => 'control-label']) !!}
-    {!! Form::text('location', null, ['class' => 'form-control']) !!}
-    {!! $errors->first('location', '<p class="help-block">:message</p>') !!}
+<div class="form-group{{ $errors->has('location_id') ? 'has-error' : ''}}">
+    {!! Form::label('location_id', 'Location', ['class' => 'control-label']) !!}
+    {!! Form::select('location_id', \App\EventLocation::where('status','1')->get()->pluck('name','id'), isset($event->location_id) ? $event->location_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
+    {!! $errors->first('location_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
