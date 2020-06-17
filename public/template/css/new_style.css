@@ -93,7 +93,7 @@ padding: .5rem 1.25rem;
 }
 .content-wrapper {
        background: #f4f6f9;
-    margin-left: 225px !IMPORTANT;
+    margin-left: 245px !IMPORTANT;
 }
 .navbar-light .navbar-nav .nav-link:focus{
           background: transparent;
@@ -459,7 +459,7 @@ input[type="radio"] {
 font-size: 13px      
 }
 ul.nav.nav-treeview {
-    padding-left: 20px;
+    padding-left: 0px;
 }
 ul.nav.nav-treeview li a {
     padding: 4px 0px !IMPORTANT;
@@ -594,7 +594,7 @@ ul#menu i {
     color: #b0b0b0;
 }
 .layout-fixed .main-sidebar {
-    width: 234px;
+    width: 270px;
 }
 
 .content-header {
@@ -610,6 +610,11 @@ span.badge.badge-warning.navbar-badge {
 }
 .nav-treeview i {
     font-size: 0;
+}
+
+.menu-open li.nav-item p {
+    font-size: 14px;
+    
 }
 /*-----------------Responsive Start---------------------*/>
 
