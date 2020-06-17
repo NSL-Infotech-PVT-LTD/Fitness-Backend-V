@@ -27,7 +27,7 @@
         <div class="card card-default">
       
           <div class="card">
-                    <div class="card-header">Edit Event #{{ $event->id }}</div>
+                    <div class="card-header">Edit Venue #{{ $event->id }}</div>
                     <div class="card-body">
                           <a href="{{url()->previous()}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
