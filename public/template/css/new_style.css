@@ -93,7 +93,7 @@ padding: .5rem 1.25rem;
 }
 .content-wrapper {
        background: #f4f6f9;
-    margin-left: 245px !IMPORTANT;
+    margin-left: 270px !IMPORTANT;
 }
 .navbar-light .navbar-nav .nav-link:focus{
           background: transparent;
@@ -132,7 +132,7 @@ button.btn.res.btn-primary {
 }
 
 nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
-    margin-left: 250px;
+    margin-left: 266px
 }
 
 .nav-sidebar .nav-link p {
