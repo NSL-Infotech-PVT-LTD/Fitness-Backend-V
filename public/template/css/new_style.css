@@ -481,13 +481,31 @@ ul.nav.nav-treeview li a {
 
 .small-box {
 
-    background: transparent !IMPORTANT;
-    border-left: 4px solid #5c80d1 !important;
+    background: #fdfdfd !IMPORTANT;
+   
     padding: 10px 0;
     box-shadow: none !IMPORTANT;
     margin-bottom: 30px;
 
 }
+.small-box.one_ {
+    border-left: 4px solid #28201d;
+}
+.small-box.two_ {
+    border-left: 4px solid #d9a738;
+}
+.small-box.three_ {
+    border-left: 4px solid #149a91;
+}
+.small-box.four_ {
+    border-left: 4px solid #992027;
+}
+.small-box.five_ {
+    border-left: 4px solid #727177;
+}
+
+
+
 
 .small-box a {
     color: #fff !IMPORTANT;
