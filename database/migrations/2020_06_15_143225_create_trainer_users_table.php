@@ -16,7 +16,9 @@ class CreateTrainerUsersTable extends Migration {
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('mobile_prefix')->nullable();
             $table->string('mobile')->nullable();
+            $table->string('emergency_contact_no_prefix')->nullable();
             $table->string('emergency_contact_no')->nullable();
             $table->string('email')->nullable();
             $table->string('password')->nullable();
