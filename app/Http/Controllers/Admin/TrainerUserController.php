@@ -128,7 +128,7 @@ class TrainerUserController extends Controller {
             'first_name' => 'required',
             'email' => 'required|string|max:255|email|unique:users,email,' . $id,
             'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
-            'image' => 'required|image',
+            'image' => 'required',
                 ]
         );
         $data = $request->except('password');
