@@ -391,7 +391,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('admin/event-location') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
-                                            <p>View All Event Venues</p>
+                                            <p>View All Venues</p>
                                         </a>
                                         <a href="{{ url('admin/events') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
