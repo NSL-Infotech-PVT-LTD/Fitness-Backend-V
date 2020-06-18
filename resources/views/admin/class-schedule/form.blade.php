@@ -1,6 +1,23 @@
 <div class="row">
     <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group{{ $errors->has('class_id') ? 'has-error' : ''}}">
+                    {!! Form::label('class_id', 'Select Class', ['class' => 'control-label']) !!}
+                    {!! Form::select('class_id', \App\Classes::where('status','1')->get()->pluck('name','id'), isset($classschedule->class_id) ? $classschedule->class_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
+                    {!! $errors->first('class_id', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
 
+
+            <div class="col-md-12">
+                <div class="form-group{{ $errors->has('trainer_id') ? 'has-error' : ''}}">
+                    {!! Form::label('trainer_id', 'Select Trainer', ['class' => 'control-label']) !!}
+                    {!! Form::select('trainer_id', \App\TrainerUser::where('status','1')->get()->pluck('first_name','id'), isset($classschedule->trainer_id) ? $classschedule->trainer_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
+                    {!! $errors->first('trainer_id', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+        </div>
         <div class="form-group{{ $errors->has('class_type') ? 'has-error' : ''}}">
             {!! Form::radio('class_type', 'recurring', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
             {!! Form::label('class_type', 'Recurring', ['class' => 'control-label']) !!}
@@ -31,7 +48,7 @@
                     <?php foreach (['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as $day): ?>
                         <div class="checkbox">
 
-                            <input type="checkbox" id="{{$day}}}" name="repeat_on[]" value="{{$day}}" <?= isset($classschedule->repeat_on)?(in_array($day, $classschedule->repeat_on) ? 'checked=""' : ''):'' ?>>
+                            <input type="checkbox" id="{{$day}}}" name="repeat_on[]" value="{{$day}}" <?= isset($classschedule->repeat_on) ? (in_array($day, $classschedule->repeat_on) ? 'checked=""' : '') : '' ?>>
                             <label for="{{$day}}"></label>
                             <span>{{$day}}</span>
                         </div>
@@ -41,8 +58,15 @@
             </div>
         </div>
 
-        <div class="row" style="width:100%;">
-            <div class="col-md-6 col-sm-6">
+        <!--        <div class="row" style="width:100%;">
+                   
+                </div>-->
+    </div>
+
+
+    <div class="col-md-5">
+        <div class="row">
+ <div class="col-md-6 col-sm-6">
                 <div class="form-group{{ $errors->has('start_time') ? 'has-error' : ''}}">
                     {!! Form::label('start_time', 'Start Time', ['class' => 'control-label']) !!}
                     {!! Form::input('time', 'start_time', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
@@ -56,28 +80,6 @@
                     {!! Form::label('duration', 'Duration in Minutes', ['class' => 'control-label']) !!}
                     {!! Form::text('duration', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required','Duration'=>'In Minutes'] : ['class' => 'form-control']) !!}
                     {!! $errors->first('duration', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="col-md-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group{{ $errors->has('class_id') ? 'has-error' : ''}}">
-                    {!! Form::label('class_id', 'Class Id', ['class' => 'control-label']) !!}
-                    {!! Form::select('class_id', \App\Classes::where('status','1')->get()->pluck('name','id'), isset($classschedule->class_id) ? $classschedule->class_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
-                    {!! $errors->first('class_id', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-
-
-            <div class="col-md-12">
-                <div class="form-group{{ $errors->has('trainer_id') ? 'has-error' : ''}}">
-                    {!! Form::label('trainer_id', 'Trainer Id', ['class' => 'control-label']) !!}
-                    {!! Form::select('trainer_id', \App\TrainerUser::where('status','1')->get()->pluck('first_name','id'), isset($classschedule->trainer_id) ? $classschedule->trainer_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
-                    {!! $errors->first('trainer_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="col-md-6">
@@ -98,12 +100,12 @@
                     {!! $errors->first('capacity', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
- <div class="col-md-12">
-            <div class="form-group create_btn">
-                {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
+            <div class="col-md-12">
+                <div class="form-group create_btn">
+                    {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
+                </div>
             </div>
         </div>
-            </div>
     </div>
 
 </div>
