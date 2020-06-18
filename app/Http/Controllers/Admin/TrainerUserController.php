@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Role;
+//use App\Role;
 use App\TrainerUser;
 use Illuminate\Http\Request;
 use Auth;
@@ -66,13 +66,13 @@ class TrainerUserController extends Controller {
         $this->validate(
                 $request, [
             'first_name' => 'required|alpha',
-//            'middle_name' => 'required|alpha',
             'last_name' => 'required|alpha',
             'email' => 'required|string|max:255|email|unique:users',
             'password' => 'required',
             'mobile' => 'required|numeric',
             'birth_date' => 'required|date_format:Y-m-d|before:today',
             'emergency_contact_no' => 'required|numeric',
+            'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
                 ]
         );
         $data = $request->all();
@@ -127,7 +127,8 @@ class TrainerUserController extends Controller {
                 $request, [
             'first_name' => 'required',
             'email' => 'required|string|max:255|email|unique:users,email,' . $id,
-//                    'roles' => 'required'
+            'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
+            'image' => 'required',
                 ]
         );
         $data = $request->except('password');
