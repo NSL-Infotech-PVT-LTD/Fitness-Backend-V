@@ -73,6 +73,7 @@ class TrainerUserController extends Controller {
             'mobile' => 'required|numeric',
             'birth_date' => 'required|date_format:Y-m-d|before:today',
             'emergency_contact_no' => 'required|numeric',
+            'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
                 ]
         );
         $data = $request->all();
@@ -127,6 +128,7 @@ class TrainerUserController extends Controller {
                 $request, [
             'first_name' => 'required',
             'email' => 'required|string|max:255|email|unique:users,email,' . $id,
+            'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
 //                    'roles' => 'required'
                 ]
         );

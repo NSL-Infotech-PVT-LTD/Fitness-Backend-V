@@ -72,7 +72,7 @@ class ServiceController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'price' => 'required|numeric',
+//            'price' => 'required|numeric',
             'image' => 'required',
             'description' => 'required'
         ]);
@@ -109,7 +109,7 @@ class ServiceController extends Controller {
      */
     public function edit($id) {
         $service = Service::findOrFail($id);
-        $service = Service::select('id', 'name', 'default_price', 'image', 'description')->findOrFail($id);
+        $service = Service::select('id', 'name', 'price', 'image', 'description')->findOrFail($id);
 
         return view('admin.service.edit', compact('service'));
     }
@@ -125,7 +125,7 @@ class ServiceController extends Controller {
     public function update(Request $request, $id) {
         $this->validate($request, [
             'name' => 'required',
-            'default_price' => 'required',
+//            'price' => 'required',
 //            'image' => 'required',
             'description' => 'required'
         ]);

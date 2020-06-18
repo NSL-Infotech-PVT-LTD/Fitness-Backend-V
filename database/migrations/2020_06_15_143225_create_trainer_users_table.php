@@ -21,11 +21,15 @@ class CreateTrainerUsersTable extends Migration {
             $table->string('email')->nullable();
             $table->string('password')->nullable();
             $table->string('image')->nullable();
-            $table->text('address')->nullable();
             $table->string('birth_date')->nullable();
             $table->string('emirates_id')->nullable();
             $table->text('about')->nullable();
             $table->text('services')->nullable();
+            $table->text('address_house')->nullable();
+            $table->text('address_street')->nullable();
+            $table->text('address_city')->nullable();
+            $table->text('address_country')->nullable();
+            $table->text('address_postcode')->nullable();
             \App\Helpers\DbExtender::defaultParams($table);
         });
     }
