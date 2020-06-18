@@ -53,8 +53,8 @@
 
             <div class="col-md-6 col-sm-6">
                 <div class="form-group{{ $errors->has('duration') ? 'has-error' : ''}}">
-                    {!! Form::label('duration', 'Duration', ['class' => 'control-label']) !!}
-                    {!! Form::text('duration', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                    {!! Form::label('duration', 'Duration in Minutes', ['class' => 'control-label']) !!}
+                    {!! Form::text('duration', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required','Duration'=>'In Minutes'] : ['class' => 'form-control']) !!}
                     {!! $errors->first('duration', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
