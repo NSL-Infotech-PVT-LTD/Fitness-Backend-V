@@ -36,10 +36,10 @@
 
                             </thead>
                             <tbody>
-                                <tr><th>ID</th><td>{{ $eventlocation->id }}</td></tr>
-                                <tr><th>Name </th><td>{{ $eventlocation->name }} </td></tr>
-                                 <tr><th>Image</th><td><img width="150" src="{{url('uploads/event-location/'.$eventlocation->image)}}"> </td></tr>
-                                 <tr><th>Location </th><td>{{ $eventlocation->location }} </td></tr>
+                                <tr><th>ID</th><td>{{ $location->id }}</td></tr>
+                                <tr><th>Name </th><td>{{ $location->name }} </td></tr>
+                                 <tr><th>Image</th><td><img width="150" src="{{url('uploads/event-location/'.$location->image)}}"> </td></tr>
+                                 <tr><th>Location </th><td>{{ $location->location }} </td></tr>
 
                             </tbody>
                         </table>

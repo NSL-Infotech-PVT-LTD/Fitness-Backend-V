@@ -66,7 +66,7 @@
 
     <div class="col-md-5">
         <div class="row">
- <div class="col-md-6 col-sm-6">
+            <div class="col-md-6 col-sm-6">
                 <div class="form-group{{ $errors->has('start_time') ? 'has-error' : ''}}">
                     {!! Form::label('start_time', 'Start Time', ['class' => 'control-label']) !!}
                     {!! Form::input('time', 'start_time', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
@@ -78,7 +78,7 @@
             <div class="col-md-6 col-sm-6">
                 <div class="form-group{{ $errors->has('duration') ? 'has-error' : ''}}">
                     {!! Form::label('duration', 'Duration in Minutes', ['class' => 'control-label']) !!}
-                    {!! Form::text('duration', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required','Duration'=>'In Minutes'] : ['class' => 'form-control']) !!}
+                    {!! Form::number('duration', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required','Duration'=>'In Minutes'] : ['class' => 'form-control']) !!}
                     {!! $errors->first('duration', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -89,9 +89,14 @@
                     {!! $errors->first('cp_spots', '<p class="help-block">:message</p>') !!}
 
                 </div>
+            </div>
+            <div class="col-md-6">
 
-
-
+                <div class="form-group{{ $errors->has('location_id') ? 'has-error' : ''}}">
+                    {!! Form::label('location_id', 'Location ', ['class' => 'control-label']) !!}
+                    {!! Form::select('location_id', \App\Location::where('status','1')->get()->pluck('name','id'), isset($event->location_id) ? $event->location_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
+                    {!! $errors->first('location_id', '<p class="help-block">:message</p>') !!}
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group{{ $errors->has('capacity') ? 'has-error' : ''}}">

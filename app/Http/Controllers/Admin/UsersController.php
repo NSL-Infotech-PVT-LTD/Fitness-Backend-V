@@ -132,6 +132,7 @@ class UsersController extends Controller {
             'mobile' => 'required|numeric',
             'birth_date' => 'required|date_format:Y-m-d|before:today',
             'emergency_contact_no' => 'required|numeric',
+            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
                 ]
         );
         $data = $request->all();

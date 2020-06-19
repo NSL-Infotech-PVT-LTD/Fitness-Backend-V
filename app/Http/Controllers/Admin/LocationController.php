@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\EventLocation;
+use App\Location;
 use Illuminate\Http\Request;
 use DataTables;
 use DB;
 
-class EventLocationController extends Controller {
+class LocationController extends Controller {
 
     /**
      * Display a listing of the resource.
@@ -20,11 +20,11 @@ class EventLocationController extends Controller {
 
     public function index(Request $request) {
         if ($request->ajax()) {
-            $eventlocations = EventLocation::all();
-            return Datatables::of($eventlocations)
+            $locations = Location::all();
+            return Datatables::of($locations)
                             ->addIndexColumn()
                             ->editColumn('image', function($item) {
-                                return "<img width='50' src=" . url('uploads/event-location/' . $item->image) . ">";
+                                return "<img width='50' src=" . url('uploads/location/' . $item->image) . ">";
                             })
                             ->addColumn('special', function($item) {
                                 $return = '';
@@ -46,16 +46,16 @@ class EventLocationController extends Controller {
                                     $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
                                 endif;
 
-                                $return .= "  <a href=" . url('/admin/event-location/' . $item->id) . " title='View Events'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
+                                $return .= "  <a href=" . url('/admin/location/' . $item->id) . " title='View Events'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
                                     
-                                        <a href=" . url('/admin/event-location/' . $item->id . '/edit') . " title='Edit Events'><button class='btn btn-primary btn-sm'><i class='fas fa-pencil-alt' aria-hidden='true'></i> Edit </button></a>"
-                                        . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/event-location/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
+                                        <a href=" . url('/admin/location/' . $item->id . '/edit') . " title='Edit Events'><button class='btn btn-primary btn-sm'><i class='fas fa-pencil-alt' aria-hidden='true'></i> Edit </button></a>"
+                                        . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/location/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
                             ->rawColumns(['action', 'image', 'special'])
                             ->make(true);
         }
-        return view('admin.event-location.index', ['rules' => array_keys($this->__rulesforindex)]);
+        return view('admin.location.index', ['rules' => array_keys($this->__rulesforindex)]);
     }
 
     /**
@@ -64,7 +64,7 @@ class EventLocationController extends Controller {
      * @return \Illuminate\View\View
      */
     public function create() {
-        return view('admin.event-location.create');
+        return view('admin.location.create');
     }
 
     /**
@@ -77,18 +77,18 @@ class EventLocationController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'image' => 'required',
-            'location' => 'required'
+//            'image' => 'required',
+//            'location' => 'required'
         ]);
         $requestData = $request->all();
-        $requestData = $request->all();
-        $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-        $request->file('image')->move(base_path() . '/public/uploads/event-location/', $imageName);
-        $requestData['image'] = $imageName;
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/location/', $imageName);
+            $requestData['image'] = $imageName;
+        }
+        Location::create($requestData);
 
-        EventLocation::create($requestData);
-
-        return redirect('admin/event-location')->with('flash_message', 'Event Location added!');
+        return redirect('admin/location')->with('flash_message', 'Event Location added!');
     }
 
     /**
@@ -99,9 +99,9 @@ class EventLocationController extends Controller {
      * @return \Illuminate\View\View
      */
     public function show($id) {
-        $eventlocation = EventLocation::findOrFail($id);
+        $location = Location::findOrFail($id);
 
-        return view('admin.event-location.show', compact('eventlocation'));
+        return view('admin.location.show', compact('location'));
     }
 
     /**
@@ -112,9 +112,9 @@ class EventLocationController extends Controller {
      * @return \Illuminate\View\View
      */
     public function edit($id) {
-        $eventlocation = EventLocation::findOrFail($id);
+        $location = Location::findOrFail($id);
 
-        return view('admin.event-location.edit', compact('eventlocation'));
+        return view('admin.location.edit', compact('location'));
     }
 
     /**
@@ -129,19 +129,19 @@ class EventLocationController extends Controller {
         $this->validate($request, [
             'name' => 'required',
 //            'image' => 'required',
-            'location' => 'required'
+//            'location' => 'required'
         ]);
         $requestData = $request->all();
 
-        $eventlocation = EventLocation::findOrFail($id);
+        $location = Location::findOrFail($id);
         if ($request->hasfile('image')) {
             $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move(base_path() . '/public/uploads/event-location/', $imageName);
+            $request->file('image')->move(base_path() . '/public/uploads/location/', $imageName);
             $requestData['image'] = $imageName;
         }
-        $eventlocation->update($requestData);
+        $location->update($requestData);
 
-        return redirect('admin/event-location')->with('flash_message', 'Event Location updated!');
+        return redirect('admin/location')->with('flash_message', 'Event Location updated!');
     }
 
     /**
@@ -152,7 +152,7 @@ class EventLocationController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id) {
-        if (EventLocation::destroy($id)) {
+        if (Location::destroy($id)) {
             $data = 'Success';
         } else {
             $data = 'Failed';
@@ -162,9 +162,9 @@ class EventLocationController extends Controller {
 
     public function changeStatus(Request $request) {
 //        dd('dd');
-        $eventlocation = EventLocation::findOrFail($request->id);
-        $eventlocation->status = $request->status == 'Block' ? '0' : '1';
-        $eventlocation->save();
+        $location = Location::findOrFail($request->id);
+        $location->status = $request->status == 'Block' ? '0' : '1';
+        $location->save();
         return response()->json(["success" => true, 'message' => 'Event Location updated!']);
     }
 

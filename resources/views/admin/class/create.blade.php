@@ -41,7 +41,7 @@
                         </ul>
                         @endif
 
-                       {!! Form::open(['url' => '/admin/class', 'class' => 'form-horizontal', 'files' => true]) !!}
+                       {!! Form::open(['url' => '/admin/class', 'class' => 'form-horizontal',"enctype"=>"multipart/form-data",'files' => true]) !!}
 
                         @include ('admin.class.form', ['formMode' => 'create'])
 

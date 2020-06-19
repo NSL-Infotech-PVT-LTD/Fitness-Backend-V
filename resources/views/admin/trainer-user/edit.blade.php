@@ -44,7 +44,9 @@
                         {!! Form::model($traineruser, [
                         'method' => 'PATCH',
                         'url' => ['/admin/trainer-user', $traineruser->id],
-                        'class' => 'form-horizontal'
+                        'class' => 'form-horizontal',
+                        "enctype"=>"multipart/form-data"
+
                         ]) !!}
                         @include ('admin.trainer-user.form', ['formMode' => 'edit'])
 

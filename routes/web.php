@@ -67,8 +67,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::resource('events', 'Admin\\EventsController');
     Route::post('event/change-status', 'Admin\EventsController@changeStatus')->name('events.changeStatus');
     Route::post('event/special', 'Admin\EventsController@MarkSpecial')->name('event.markspecial');
-    Route::resource('event-location', 'Admin\\EventLocationController');
-    Route::post('event-location/change-status', 'Admin\EventLocationController@changeStatus')->name('event-location.changeStatus');
+    Route::resource('location', 'Admin\\LocationController');
+    Route::post('location/change-status', 'Admin\LocationController@changeStatus')->name('location.changeStatus');
 
 
 

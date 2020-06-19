@@ -26,7 +26,7 @@
     {!! $errors->first('emergency_contact_no', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('email') ? ' has-error' : ''}}">
-    {!! Form::label('email', 'Email @: ', ['class' => 'control-label']) !!}
+    {!! Form::label('email', 'Email: ', ['class' => 'control-label']) !!}
     {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
@@ -52,7 +52,7 @@
     {!! $errors->first('emirates_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('address_house') ? ' has-error' : ''}}">
-    {!! Form::label('address_house', 'House : ', ['class' => 'control-label']) !!}
+    {!! Form::label('address_house', 'Building/ House No.  : ', ['class' => 'control-label']) !!}
     {!! Form::text('address_house', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('address_house', '<p class="help-block">:message</p>') !!}
 </div>
@@ -72,18 +72,18 @@
         {!! Form::text('address_country', null, ['class' => 'form-control', 'required' => 'required']) !!}
         {!! $errors->first('address_country', '<p class="help-block">:message</p>') !!}
     </div>
-    <div class="col-md-3 form-group{{ $errors->has('address_postcode') ? ' has-error' : ''}}">
-        {!! Form::label('address_postcode', 'Postcode: ', ['class' => 'control-label']) !!}
-        {!! Form::text('address_postcode', null, ['class' => 'form-control', 'required' => 'required']) !!}
-        {!! $errors->first('address_postcode', '<p class="help-block">:message</p>') !!}
-    </div>
+    <!--    <div class="col-md-3 form-group{{ $errors->has('address_postcode') ? ' has-error' : ''}}">
+            {!! Form::label('address_postcode', 'Postcode: ', ['class' => 'control-label']) !!}
+            {!! Form::text('address_postcode', null, ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! $errors->first('address_postcode', '<p class="help-block">:message</p>') !!}
+        </div>-->
 </div>
 <?php
 if (isset($traineruser->image))
     echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->image) . ">";
 ?>
 <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
-    {!! Form::label('image', 'Profile Image', ['class' => 'control-label']) !!}
+    {!! Form::label('image', 'Profile Image (360 X 450)', ['class' => 'control-label']) !!}
     {!! Form::file('image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
 </div>
@@ -92,9 +92,19 @@ if (isset($traineruser->image))
     {!! Form::textarea('about', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('about', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('services') ? ' has-error' : ''}}">
+<div class="row form-group{{ $errors->has('services') ? ' has-error' : ''}}">
     {!! Form::label('services', 'Offered Services: ', ['class' => 'control-label']) !!}
-    {!! Form::select('services[]', \App\Service::where('status','1')->get()->pluck('name','id'), isset($traineruser->services) ? $traineruser->services : [], ['class' => 'form-control', 'multiple' => true]) !!}
+    <?php    
+    if (\App\Service::where('status', '1')->get()->isEmpty() == true): ?>
+        {{'There is no offered Services Yet Kindly Check Services Section!'}}
+    <?php else: ?>
+        <?php foreach (\App\Service::where('status', '1')->get()->pluck('name', 'id') as $id => $service): ?>
+            <div class="col-md-6 float-right">
+                {!! Form::label($id, $service, ['class' => 'control-label float-left col-md-4 text-capitalize']) !!}
+                {{ Form::checkbox('services[]',$id,(in_array($id, $traineruser->services)?true:false), ['class' => 'form-controls','id'=>$id]) }}
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>      
 </div>
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}

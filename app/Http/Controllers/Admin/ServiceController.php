@@ -73,15 +73,16 @@ class ServiceController extends Controller {
         $this->validate($request, [
             'name' => 'required',
 //            'price' => 'required|numeric',
-            'image' => 'required',
-            'description' => 'required'
+//            'image' => 'required',
+//            'description' => 'required'
         ]);
 
         $requestData = $request->all();
-        $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-        $request->file('image')->move(base_path() . '/public/uploads/services/', $imageName);
-        $requestData['image'] = $imageName;
-
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/services/', $imageName);
+            $requestData['image'] = $imageName;
+        }
         Service::create($requestData);
 
         return redirect('admin/service')->with('flash_message', 'Service added!');
@@ -127,7 +128,7 @@ class ServiceController extends Controller {
             'name' => 'required',
 //            'price' => 'required',
 //            'image' => 'required',
-            'description' => 'required'
+//            'description' => 'required'
         ]);
         $requestData = $request->all();
 

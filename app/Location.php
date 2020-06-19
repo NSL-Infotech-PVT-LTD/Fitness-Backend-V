@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class EventLocation extends Model
+class Location extends Model
 {
     use LogsActivity;
     
@@ -15,7 +15,7 @@ class EventLocation extends Model
      *
      * @var string
      */
-    protected $table = 'event_locations';
+    protected $table = 'locations';
 
     /**
     * The database primary key value.
