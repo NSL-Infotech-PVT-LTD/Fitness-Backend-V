@@ -35,7 +35,7 @@
                             @endforeach
                         </ul>
                         @endif
-                        {!! Form::open(['url' => '/admin/trainer-user', 'class' => 'form-horizontal']) !!}
+                        {!! Form::open(['url' => '/admin/trainer-user', 'class' => 'form-horizontal',"enctype"=>"multipart/form-data"]) !!}
                         @include ('admin.trainer-user.form', ['formMode' => 'create'])
                         {!! Form::close() !!}
                     </div>

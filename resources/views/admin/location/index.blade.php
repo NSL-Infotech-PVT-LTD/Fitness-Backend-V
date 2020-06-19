@@ -8,12 +8,12 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
 
-                    <h1>Event Location</h1>
+                    <h1>Location</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Event Location</li>
+                        <li class="breadcrumb-item active">Location</li>
                     </ol>
                 </div>
             </div>
@@ -30,7 +30,7 @@
 
                             <div class="card-body">
 
-                                <a href="{{ url('/admin/event-location/create') }}" class="btn btn-success btn-sm" title="Add New Event Location">
+                                <a href="{{ url('/admin/location/create') }}" class="btn btn-success btn-sm" title="Add New Location">
                                     <i class="fa fa-plus" aria-hidden="true"></i> Add New
                                 </a>
 
@@ -84,7 +84,7 @@
         },
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('event-location.index') }}",
+                ajax: "{{ route('location.index') }}",
                 columns: [
                 {data: 'id', name: 'id'},
 <?php foreach ($rules as $rule): ?>
@@ -118,7 +118,7 @@
                         data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
                         success: function (data) {
                             if (data == 'Success') {
-                                swal.fire("Deleted!", "Event Location has been deleted", "success");
+                                swal.fire("Deleted!", "Location has been deleted", "success");
                                 table.ajax.reload(null, false);
                             }
                         }
@@ -147,7 +147,7 @@
                     form_data.append("status", status);
                     form_data.append("_token", $('meta[name="csrf-token"]').attr('content'));
                     $.ajax({
-                        url: "{{route('event-location.changeStatus')}}",
+                        url: "{{route('location.changeStatus')}}",
                         method: "POST",
                         data: form_data,
                         contentType: false,
@@ -160,7 +160,7 @@
                         {
                             Swal.fire(
                                     status + ' !',
-                                    'Event Location has been ' + status + ' .',
+                                    'Location has been ' + status + ' .',
                                     'success'
                                     ).then(() => {
                                 table.ajax.reload(null, false);

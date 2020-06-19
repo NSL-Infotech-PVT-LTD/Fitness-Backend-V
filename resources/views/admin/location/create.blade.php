@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Event Location</h1>
+                    <h1>Location</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Event Location</li>
+                        <li class="breadcrumb-item active">Location</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="card card-default">
 
                 <div class="card">
-                    <div class="card-header">Create New Event Location</div>
+                    <div class="card-header">Create New Location</div>
                     <div class="card-body">
                         <a href="{{ url(url()->previous()) }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -41,9 +41,9 @@
                         </ul>
                         @endif
 
-                       {!! Form::open(['url' => '/admin/event-location', 'class' => 'form-horizontal', 'files' => true]) !!}
+                       {!! Form::open(['url' => '/admin/location', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                        @include ('admin.event-location.form', ['formMode' => 'create'])
+                        @include ('admin.location.form', ['formMode' => 'create'])
 
                         {!! Form::close() !!}
 

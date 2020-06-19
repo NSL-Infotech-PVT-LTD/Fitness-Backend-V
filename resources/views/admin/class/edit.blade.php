@@ -45,7 +45,7 @@
                             'method' => 'PATCH',
                             'url' => ['/admin/class', $class->id],
                             'class' => 'form-horizontal',
-                            'files' => true
+                            'files' => true,"enctype"=>"multipart/form-data"
                         ]) !!}
 
                         @include ('admin.class.form', ['formMode' => 'edit'])

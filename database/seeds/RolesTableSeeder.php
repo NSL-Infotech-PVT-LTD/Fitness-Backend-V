@@ -46,7 +46,7 @@ class RolesTableSeeder extends Seeder {
                     , 'half_yearly' => '8200'
                     , 'yearly' => '15300'
                 ],
-            ], 'Pool and beech Members' => [
+            ], 'Pool and beach Members' => [
                 'single' => [
                     'monthly' => '700'
                     , 'quarterly' => '1500'
@@ -91,8 +91,8 @@ class RolesTableSeeder extends Seeder {
                 'updated_at' => \Carbon\Carbon::now(),
             ],
             [
-                'name' => 'Fairmount Hotel Guest',
-                'label' => 'fairmount-hotel-guest',
+                'name' => 'Fairmont Hotel Guest',
+                'label' => 'fairmont-hotel-guest',
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ],

@@ -27,7 +27,7 @@
         <div class="card card-default">
       
           <div class="card">
-                    <div class="card-header">Edit Event Location #{{ $eventlocation->id }}</div>
+                    <div class="card-header">Edit Location #{{ $location->id }}</div>
                     <div class="card-body">
                           <a href="{{url()->previous()}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -41,14 +41,14 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($eventlocation, [
+                        {!! Form::model($location, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/event-location', $eventlocation->id],
+                            'url' => ['/admin/location', $location->id],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}
 
-                        @include ('admin.event-location.form', ['formMode' => 'edit'])
+                        @include ('admin.location.form', ['formMode' => 'edit'])
 
                         {!! Form::close() !!}
                     </div>

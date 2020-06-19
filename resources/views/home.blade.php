@@ -33,7 +33,7 @@
                         <div class="inner">
                             <h3>{{$trainer = DB::table('role_user')->where('role_id', 2)->count()}}</h3>
 
-                            <p>Personal Trainers Registrations</p>
+                            <p>Personal Trainer Registrations</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -47,7 +47,7 @@
                         <div class="inner">
                             <h3>{{$customer = DB::table('role_user')->where('role_id', 3)->count()}}</h3>
 
-                            <p>Customers Registrations</p>
+                            <p>Customer Registrations</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>

@@ -265,7 +265,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('admin/trainer-user') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
-                                            <p>View All Trainer</p>
+                                            <p>View All Trainers</p>
                                         </a>
                                         <a href="{{ url('admin/trainer-user/create') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
@@ -277,7 +277,7 @@
 
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                   <i class="fas fa-users"></i>
+                                    <i class="fas fa-users"></i>
                                     <p>
                                         Members
                                         <i class="right fas fa-angle-left"></i>
@@ -297,7 +297,7 @@
 
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                   <i class="fas fa-clipboard-list"></i>
+                                    <i class="fas fa-clipboard-list"></i>
                                     <p>
                                         Plans
                                         <i class="right fas fa-angle-left"></i>
@@ -349,7 +349,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('admin/class') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
-                                            <p>View All Classes</p>
+                                            <p>View All Class</p>
                                         </a>
                                         <a href="{{ url('admin/class/create') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
@@ -362,7 +362,7 @@
                                 <a href="" class="nav-link">
                                     <i class="fas fa-user"></i>
                                     <p>
-                                        Classes Schedule
+                                        Class Schedule
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -370,7 +370,7 @@
                                     <li class="nav-item">
                                         <a href="{{ url('admin/class-schedule') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
-                                            <p>View All Classes Schedule</p>
+                                            <p>View All Class Schedules</p>
                                         </a>
                                         <a href="{{ url('admin/class-schedule/create') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
@@ -389,15 +389,32 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ url('admin/event-location') }}" class="nav-link">
-                                            <i class="fas fa-users-cog"></i>
-                                            <p>View All Venues</p>
-                                        </a>
                                         <a href="{{ url('admin/events') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
                                             <p>View All Events</p>
                                         </a>
                                         <a href="{{ url('admin/events/create') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Add New</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-location-arrow"></i>
+                                    <p>
+                                        Venues
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/location') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Venues</p>
+                                        </a>
+                                        <a href="{{ url('admin/location/create') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
                                             <p>Add New</p>
                                         </a>
@@ -415,6 +432,9 @@
         </div>
         <style type="text/css" class='fa-star-o'>
             table tr th:first-child {width: 50px !important;}
+            .menu-open li.nav-item p {
+                text-transform: capitalize;
+            }
         </style>
         <script>
             var toggle = true;

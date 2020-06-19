@@ -68,7 +68,8 @@ class ClassController extends Controller {
         $this->validate($request, [
             'name' => 'required',
 //            'price' => 'required|numeric',
-            'image' => 'required',
+//            'image' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
             'description' => 'required'
         ]);
         $requestData = $request->all();

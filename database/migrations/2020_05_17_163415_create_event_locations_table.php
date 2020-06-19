@@ -11,7 +11,7 @@ class CreateEventLocationsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('event_locations', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('image')->nullable();
