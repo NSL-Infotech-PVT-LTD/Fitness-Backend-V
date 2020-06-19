@@ -42,7 +42,7 @@ class ClassController extends Controller {
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/class/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action','image'])
+                            ->rawColumns(['action', 'image'])
                             ->make(true);
         }
         return view('admin.class.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -65,13 +65,10 @@ class ClassController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request) {
-        $this->validate($request, [
-            'name' => 'required',
-//            'price' => 'required|numeric',
-//            'image' => 'required',
-            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
-            'description' => 'required'
-        ]);
+        $rules = ['name' => 'required', 'description' => 'required'];
+        if ($request->has('image'))
+            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
+        $this->validate($request, $rules);
         $requestData = $request->all();
         $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(base_path() . '/public/uploads/class/', $imageName);
