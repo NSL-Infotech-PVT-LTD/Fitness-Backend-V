@@ -120,7 +120,10 @@ class RolesController extends Controller {
      * @return void
      */
     public function update(Request $request, $id) {
-        $this->validate($request, ['name' => 'required', 'category' => 'required']);
+        $rules = ['name' => 'required', 'category' => 'required'];
+        if ($request->has('image'))
+            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
+        $this->validate($request,$rules);
         $requestData = $request->all();
         if ($request->hasfile('image')) {
             $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
