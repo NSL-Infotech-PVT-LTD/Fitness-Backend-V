@@ -31,7 +31,7 @@
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('password') ? ' has-error' : ''}}">
-    {!! Form::label('password', 'Password: ', ['class' => 'control-label']) !!}
+    {!! Form::label('password', 'Password: Password between 6 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace.', ['class' => 'control-label']) !!}
     @php
     $passwordOptions = ['class' => 'form-control'];
     if ($formMode === 'create') {
