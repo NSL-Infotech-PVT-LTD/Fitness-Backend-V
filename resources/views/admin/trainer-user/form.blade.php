@@ -31,7 +31,8 @@
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('password') ? ' has-error' : ''}}">
-    {!! Form::label('password', 'Password: </br>Password between 6 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace.', ['class' => 'control-label']) !!}
+    {!! Form::label('password', 'Password:', ['class' => 'control-label']) !!}
+    {!! Form::label('password', 'Password between 6 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace.', ['class' => 'control-label']) !!}
     @php
     $passwordOptions = ['class' => 'form-control'];
     if ($formMode === 'create') {
@@ -96,7 +97,7 @@ if (isset($traineruser->image))
     {!! Form::label('services', 'Offered Services: ', ['class' => 'control-label']) !!}
     <?php if (\App\Service::where('status', '1')->get()->isEmpty() == true): ?>
         {{'There is no offered Services Yet Kindly Check Services Section!'}}
-        <?php
+    <?php
     else:
         $servies = isset($traineruser->services) ? $traineruser->services : [];
         ?>
