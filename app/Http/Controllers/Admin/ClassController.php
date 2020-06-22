@@ -66,8 +66,8 @@ class ClassController extends Controller {
      */
     public function store(Request $request) {
         $rules = ['name' => 'required', 'description' => 'required'];
-        if ($request->has('image'))
-            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
+//        if ($request->has('image'))
+//            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
         $this->validate($request, $rules);
         $requestData = $request->all();
         $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
