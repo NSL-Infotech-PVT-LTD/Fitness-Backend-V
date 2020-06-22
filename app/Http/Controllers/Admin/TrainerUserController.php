@@ -73,7 +73,7 @@ class TrainerUserController extends Controller {
             'birth_date' => 'required|date_format:Y-m-d|before:today',
             'emergency_contact_no' => 'required|numeric',
             'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
-            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
+//            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
                 ]
         );
         $data = $request->all();
@@ -129,8 +129,8 @@ class TrainerUserController extends Controller {
             'email' => 'required|string|max:255|email|unique:users,email,' . $id,
             'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
         ];
-        if ($request->has('image'))
-            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
+//        if ($request->has('image'))
+//            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
         if ($request->has('password'))
             $rules += ['password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/'];
         $this->validate(

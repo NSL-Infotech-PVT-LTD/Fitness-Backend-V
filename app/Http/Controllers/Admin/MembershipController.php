@@ -93,7 +93,7 @@ class MembershipController extends Controller {
             'category' => 'required',
             'name' => 'required',
             'description' => 'required',
-            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
+//            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
         ]);
         $requestData = $request->only(['user_type', 'category', 'name', 'description', 'image']);
         if ($request->hasfile('image')) {

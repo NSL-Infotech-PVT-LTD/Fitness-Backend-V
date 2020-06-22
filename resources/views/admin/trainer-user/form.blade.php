@@ -94,14 +94,16 @@ if (isset($traineruser->image))
 </div>
 <div class="row form-group{{ $errors->has('services') ? ' has-error' : ''}}">
     {!! Form::label('services', 'Offered Services: ', ['class' => 'control-label']) !!}
-    <?php    
-    if (\App\Service::where('status', '1')->get()->isEmpty() == true): ?>
+    <?php if (\App\Service::where('status', '1')->get()->isEmpty() == true): ?>
         {{'There is no offered Services Yet Kindly Check Services Section!'}}
-    <?php else: ?>
+    <?php
+    else:
+        $servies = isset($traineruser->services) ? $traineruser->services : [];
+        ?>
         <?php foreach (\App\Service::where('status', '1')->get()->pluck('name', 'id') as $id => $service): ?>
             <div class="col-md-6 float-right">
                 {!! Form::label($id, $service, ['class' => 'control-label float-left col-md-4 text-capitalize']) !!}
-                {{ Form::checkbox('services[]',$id,(in_array($id, $traineruser->services)?true:false), ['class' => 'form-controls','id'=>$id]) }}
+                {{ Form::checkbox('services[]',$id,(in_array($id, $servies)?true:false), ['class' => 'form-controls','id'=>$id]) }}
             </div>
         <?php endforeach; ?>
     <?php endif; ?>      

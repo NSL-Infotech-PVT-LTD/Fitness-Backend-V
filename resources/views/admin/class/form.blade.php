@@ -13,7 +13,7 @@ if (isset($class->image))
     echo "<img width='100' src=" . url('uploads/class/' . $class->image) . ">";
 ?>
 <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
-    {!! Form::label('image', 'Image', ['class' => 'control-label']) !!}
+    {!! Form::label('image', 'Image (360 X 450)', ['class' => 'control-label']) !!}
     {!! Form::file('image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
 </div>
