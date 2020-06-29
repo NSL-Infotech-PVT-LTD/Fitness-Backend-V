@@ -62,11 +62,7 @@ class RolesController extends Controller {
     public function store(Request $request) {
         $this->validate($request, ['name' => 'required', 'category' => 'required']);
         $requestData = $request->all();
-        if ($request->hasfile('image')) {
-            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move(base_path() . '/public/uploads/roles/', $imageName);
-            $requestData['image'] = $imageName;
-        }
+
 //        dd($requestData);
         $role = Role::create($requestData);
         $role->permissions()->detach();
@@ -80,7 +76,13 @@ class RolesController extends Controller {
         foreach (['monthly', 'quarterly', 'half_yearly', 'yearly'] as $feetype):
             if ($request->$feetype == null || $request->$feetype == '')
                 continue;
-            \App\RolePlans::create(['role_id' => $role->id, 'fee_type' => $feetype, 'fee' => $request->$feetype]);
+            $rolePlans = ['role_id' => $role->id, 'fee_type' => $feetype, 'fee' => $request->$feetype];
+            if ($request->hasfile($feetype . '_image')) {
+                $imageName = uniqid() . '.' . $request->file($feetype . '_image')->getClientOriginalExtension();
+                $request->file($feetype . '_image')->move(base_path() . '/public/uploads/roles/', $imageName);
+                $rolePlans += ['image' => $imageName];
+            }
+            \App\RolePlans::create($rolePlans);
         endforeach;
         return redirect('admin/roles')->with('flash_message', 'Role added!');
     }
@@ -123,7 +125,7 @@ class RolesController extends Controller {
         $rules = ['name' => 'required', 'category' => 'required'];
 //        if ($request->has('image'))
 //            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
-        $this->validate($request,$rules);
+        $this->validate($request, $rules);
         $requestData = $request->all();
         if ($request->hasfile('image')) {
             $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
@@ -145,11 +147,17 @@ class RolesController extends Controller {
                 continue;
             $rolePlan = \App\RolePlans::where('role_id', $id)->where('fee_type', $feetype)->get();
 //            dd($rolePlan->isEmpty());
+            $rolePlans = ['role_id' => $id, 'fee_type' => $feetype, 'fee' => $request->$feetype];
+            if ($request->hasfile($feetype . '_image')) {
+                $imageName = uniqid() . '.' . $request->file($feetype . '_image')->getClientOriginalExtension();
+                $request->file($feetype . '_image')->move(base_path() . '/public/uploads/roles/', $imageName);
+                $rolePlans += ['image' => $imageName];
+            }
             if ($rolePlan->isEmpty() == true):
-                \App\RolePlans::create(['role_id' => $id, 'fee_type' => $feetype, 'fee' => $request->$feetype]);
+                \App\RolePlans::create($rolePlans);
             else:
                 $rolePlanUpdate = \App\RolePlans::findorfail($rolePlan->first()->id);
-                $rolePlanUpdate->update(['role_id' => $id, 'fee_type' => $feetype, 'fee' => $request->$feetype]);
+                $rolePlanUpdate->update($rolePlans);
             endif;
         endforeach;
         return redirect('admin/roles')->with('flash_message', 'Role updated!');

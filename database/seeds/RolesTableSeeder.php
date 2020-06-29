@@ -74,7 +74,7 @@ class RolesTableSeeder extends Seeder {
         ]];
         foreach ($roles as $name => $categories):
             foreach ($categories as $category => $plans):
-                $role = App\Role::create(['name' => $name, 'label' => $name . $category, 'category' => $category, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+                $role = App\Role::create(['name' => $name, 'label' => $name . $category, 'category' => $category, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'type' => 'user', 'status' => 1]);
                 $rolePlan = [];
                 foreach ($plans as $feetype => $fee):
                     $rolePlan[] = ['fee_type' => $feetype, 'fee' => $fee, 'role_id' => $role->id];
@@ -86,13 +86,17 @@ class RolesTableSeeder extends Seeder {
         DB::table('roles')->insert([
             [
                 'name' => 'Local Guest',
-                'label' => 'guest',
+                'label' => 'local-guest',
+                'type' => 'guest',
+                'status' => 1,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ],
             [
                 'name' => 'Fairmont Hotel Guest',
                 'label' => 'fairmont-hotel-guest',
+                'type' => 'guest',
+                'status' => 1,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ],

@@ -14,7 +14,7 @@ class Role extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'label', 'category', 'image','type'];
+    protected $fillable = ['name', 'label', 'category', 'image', 'type','status'];
 
     /**
      * A role may be given various permissions.
@@ -64,8 +64,11 @@ class Role extends Model {
             if ($model->isEmpty() !== true):
                 $a = [];
                 foreach ($model as $m):
-                    $a[$m->fee_type] = $m->fee;
+                    $a[$m->fee_type]['id'] = $m->id;
+                    $a[$m->fee_type]['fee'] = $m->fee;
+                    $a[$m->fee_type]['image'] = $m->image;
                 endforeach;
+//                dd($a);
                 return $a;
             endif;
             return [];

@@ -48,7 +48,7 @@
                             'files' => true
                         ]) !!}
 
-                        @include ('admin.roles.edit_form', ['formMode' => 'edit'])
+                        @include ('admin.roles.form', ['formMode' => 'edit'])
 
                         {!! Form::close() !!}
                     </div>
