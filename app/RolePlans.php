@@ -28,7 +28,7 @@ class RolePlans extends Model {
      *
      * @var array
      */
-    protected $fillable = ['role_id', 'fee_type', 'fee', 'params', 'status'];
+    protected $fillable = ['role_id', 'fee_type', 'fee', 'params', 'status','image'];
 
     /**
      * Change activity log event description
