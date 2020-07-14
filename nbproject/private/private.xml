@@ -8,7 +8,6 @@
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/create.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/permissions/edit.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_09_153137_create_class_schedules_table.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Helpers/DbExtender.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/UsersController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/form/trainer.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/index.blade.php</file>
@@ -20,8 +19,12 @@
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_05_30_133744_create_classes_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/create.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/adminusers/index.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/seeds/DatabaseSeeder.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Role.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/RolePlans.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/emails/send_paymentlink.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Classes.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/seeds/RolesTableSeeder.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/form.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/edit.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backend.blade.php</file>

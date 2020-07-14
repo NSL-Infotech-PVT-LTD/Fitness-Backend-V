@@ -66,7 +66,7 @@ class Role extends Model {
                 foreach ($model as $m):
                     $a[$m->fee_type]['id'] = $m->id;
                     $a[$m->fee_type]['fee'] = $m->fee;
-                    $a[$m->fee_type]['image'] = $m->image;
+//                    $a[$m->fee_type]['image'] = $m->image;
                 endforeach;
 //                dd($a);
                 return $a;
