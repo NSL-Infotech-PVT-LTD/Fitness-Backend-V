@@ -17,7 +17,7 @@ class CreateRolesPermissionsTables extends Migration {
             $table->string('label')->nullable();
             $table->enum('type', ['user', 'guest'])->nullable();
             $table->enum('category', ['single', 'couple', 'family_with_1', 'family_with_2', 'child'])->nullable();
-//            $table->string('image')->nullable();
+            $table->string('image')->nullable();
             \App\Helpers\DbExtender::defaultParams($table);
         });
 
@@ -27,7 +27,7 @@ class CreateRolesPermissionsTables extends Migration {
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->enum('fee_type', ['monthly', 'quarterly', 'half_yearly', 'yearly'])->nullable();
             $table->bigInteger('fee')->nullable();
-            $table->string('image')->nullable();
+//            $table->string('image')->nullable();
             \App\Helpers\DbExtender::defaultParams($table);
         });
 

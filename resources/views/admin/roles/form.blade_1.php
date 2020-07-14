@@ -102,15 +102,6 @@
     {!! Form::select('category', ['single'=>'Single', 'couple'=>'Couple', 'family_with_1'=>'Family With One Child', 'family_with_2'=>'Family With Two Child'], isset($role->category) ? $role->category : [], ['class' => 'form-control', 'multiple' => false]) !!}
     {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
 </div>
-<?php
-if (isset($role->image))
-    echo "<img width='100' src=" . url('uploads/roles/' . $role->image) . ">";
-?>
-<div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
-    {!! Form::label('image', 'Image (360 X 450)', ['class' => 'control-label','style'=>"width: 100%"]) !!}
-    {!! Form::file('image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-    {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
-</div>
 <div class="prices">
     <div class="tab">
         <a class="tablinks" onclick="price(event, 'Monthly')">Monthly </a>
@@ -121,23 +112,56 @@ if (isset($role->image))
     <div id="Monthly" class="tabcontent" <?= isset($role->plans['monthly']['fee']) ? "style='display:block'" : '' ?>>
         <h3>Monthly </h3>
         <input type="text" id="Monthly" placeholder="Enter Your Amount" name="monthly"  value="<?= isset($role->plans['monthly']['fee']) ? $role->plans['monthly']['fee'] : '' ?>">
-
+        <?php
+        if (isset($role->plans['monthly']['image']))
+            echo "<img width='100' src=" . url('uploads/membership/' . $role->plans['monthly']['image']) . ">";
+        ?>
+        <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
+            {!! Form::label('image', 'Image (360 X 450)', ['class' => 'control-label','style'=>"width: 100%"]) !!}
+            {!! Form::file('monthly_image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+            {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+        </div>
     </div>
     <div id="Quarterly" class="tabcontent" <?= isset($role->plans['quarterly']['fee']) ? "style='display:block'" : '' ?>>
         <h3>Quarterly</h3>
-        <input type="text" id="quarterly" placeholder="Enter Your Amount" name="quarterly" value="<?= isset($role->plans['quarterly']['fee']) ? $role->plans['quarterly']['fee'] : '' ?>">        
+        <input type="text" id="quarterly" placeholder="Enter Your Amount" name="quarterly" value="<?= isset($role->plans['quarterly']['fee']) ? $role->plans['quarterly']['fee'] : '' ?>">
+        <?php
+        if (isset($role->plans['quaterly']['image']))
+            echo "<img width='100' src=" . url('uploads/membership/' . $role->plans['quaterly']['image']) . ">";
+        ?>
+        <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
+            {!! Form::label('image', 'Image (360 X 450)', ['class' => 'control-label','style'=>"width: 100%"]) !!}
+            {!! Form::file('quaterly_image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+            {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+        </div>
     </div>
 
     <div id="Half" class="tabcontent second" <?= isset($role->plans['half_yearly']['fee']) ? "style='display:block'" : '' ?>>
         <h3>Half Yearly</h3>
         <input type="text" id="haff" placeholder="Enter Your Amount" name="half_yearly"  value="<?= isset($role->plans['half_yearly']['fee']) ? $role->plans['half_yearly']['fee'] : '' ?>"> 
-
+        <?php
+        if (isset($role->plans['half_yearly']['image']))
+            echo "<img width='100' src=" . url('uploads/membership/' . $role->plans['half_yearly']['image']) . ">";
+        ?>
+        <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
+            {!! Form::label('image', 'Image (360 X 450)', ['class' => 'control-label','style'=>"width: 100%"]) !!}
+            {!! Form::file('half_yearly_image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+            {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+        </div>
     </div>
 
     <div id="Yearly" class="tabcontent" <?= isset($role->plans['yearly']['fee']) ? "style='display:block'" : '' ?>>
         <h3>Yearly</h3>
         <input type="text" id="yearly" placeholder="Enter Your Amount" name="yearly"  value="<?= isset($role->plans['yearly']['fee']) ? $role->plans['yearly']['fee'] : '' ?>">
-
+        <?php
+        if (isset($role->plans['yearly']['image']))
+            echo "<img width='100' src=" . url('uploads/membership/' . $role->plans['yearly']['image']) . ">";
+        ?>
+        <div class="form-group{{ $errors->has('image') ? 'has-error' : ''}}">
+            {!! Form::label('image', 'Image (360 X 450)', ['class' => 'control-label','style'=>"width: 100%"]) !!}
+            {!! Form::file('yearly_image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+            {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+        </div>
     </div>
 </div>
 
