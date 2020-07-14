@@ -121,15 +121,15 @@ class AuthController extends ApiController {
         // dd($category_id);
         try {
             $model = \App\Role::where('type', $request->type)->where('status', '1');
-//            $perPage = isset($request->limit) ? $request->limit : 20;
-            if (isset($request->search)) {
-                $model = $model->where(function($query) use ($request) {
-                    $query->where('name', 'LIKE', "%$request->search%")
-                            ->orWhere('description', 'LIKE', "%$request->search%");
-                });
-            }
-//            return parent::success($model->paginate($perPage));
-            return parent::success($model->get());
+            $return = [];
+            foreach ($model->select('name')->get()->flatten()->unique() as $data):
+//                dd($data->name);
+                $return[$data->name] = \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get();
+//                $return[] = ['plan_name' => $data->name, 'data' => \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get()];
+//                $return[] = [$data->name => \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get()];
+            endforeach;
+//            dd($return);
+            return parent::success($return, 200, 'array');
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
