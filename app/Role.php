@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Http\Request;
 
 class Role extends Model {
 
@@ -14,7 +15,7 @@ class Role extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'label', 'category', 'image', 'type','status'];
+    protected $fillable = ['name', 'label', 'category', 'image', 'type', 'status'];
 
     /**
      * A role may be given various permissions.
@@ -59,14 +60,14 @@ class Role extends Model {
     protected $appends = array('plans');
 
     public function getPlansAttribute() {
+//        $request = new Request();
+//        dd($request->ajax());
         try {
             $model = RolePlans::where('role_id', $this->id)->get();
             if ($model->isEmpty() !== true):
                 $a = [];
                 foreach ($model as $m):
-                    $a[$m->fee_type]['id'] = $m->id;
-                    $a[$m->fee_type]['fee'] = $m->fee;
-//                    $a[$m->fee_type]['image'] = $m->image;
+                    $a[$m->fee_type] = ['id' => $m->id, 'fee' => $m->fee];
                 endforeach;
 //                dd($a);
                 return $a;
@@ -75,6 +76,10 @@ class Role extends Model {
         } catch (Exception $ex) {
             return [];
         }
+    }
+
+    public function PlanDetail() {
+        return $this->hasMany(RolePlans::class, 'role_id', 'id')->select('id', 'fee', 'fee_type','role_id');
     }
 
 }
