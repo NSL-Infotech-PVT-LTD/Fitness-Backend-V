@@ -112,19 +112,20 @@ class AuthController extends ApiController {
         }
     }
 
-    public function getRolesByType(Request $request) {
-        $rules = ['search' => '', 'type' => 'required|in:user,guest'];
+    public function getRoles(Request $request) {
+        $rules = ['search' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
         // dd($category_id);
         try {
-            $model = \App\Role::where('type', $request->type)->where('status', '1');
+            $model = \App\Role::where('status', '1');
             $return = [];
             foreach ($model->select('name')->get()->flatten()->unique() as $data):
 //                dd($data->name);
-                $return[$data->name] = \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get();
+                $var = strtolower(str_replace(' ', '_', $data->name));
+                $return[$var] = \App\Role::where('status', '1')->where('name', $data->name)->with('PlanDetail')->get();
 //                $return[] = ['plan_name' => $data->name, 'data' => \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get()];
 //                $return[] = [$data->name => \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get()];
             endforeach;
@@ -135,28 +136,28 @@ class AuthController extends ApiController {
         }
     }
 
-    public function getRoles(Request $request) {
-        $rules = ['search' => ''];
-        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
-        if ($validateAttributes):
-            return $validateAttributes;
-        endif;
-        // dd($category_id);
-        try {
-            $model = \App\Role::where('status', '1');
-//            $perPage = isset($request->limit) ? $request->limit : 20;
-            if (isset($request->search)) {
-                $model = $model->where(function($query) use ($request) {
-                    $query->where('name', 'LIKE', "%$request->search%")
-                            ->orWhere('description', 'LIKE', "%$request->search%");
-                });
-            }
-//            return parent::success($model->paginate($perPage));
-            return parent::success($model->get());
-        } catch (\Exception $ex) {
-            return parent::error($ex->getMessage());
-        }
-    }
+//    public function getRoles(Request $request) {
+//        $rules = ['search' => ''];
+//        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+//        if ($validateAttributes):
+//            return $validateAttributes;
+//        endif;
+//        // dd($category_id);
+//        try {
+//            $model = \App\Role::where('status', '1');
+////            $perPage = isset($request->limit) ? $request->limit : 20;
+//            if (isset($request->search)) {
+//                $model = $model->where(function($query) use ($request) {
+//                    $query->where('name', 'LIKE', "%$request->search%")
+//                            ->orWhere('description', 'LIKE', "%$request->search%");
+//                });
+//            }
+////            return parent::success($model->paginate($perPage));
+//            return parent::success($model->get());
+//        } catch (\Exception $ex) {
+//            return parent::error($ex->getMessage());
+//        }
+//    }
 
     public function getitem(Request $request) {
 
