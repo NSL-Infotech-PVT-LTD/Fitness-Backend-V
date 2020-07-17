@@ -79,7 +79,11 @@ class Role extends Model {
     }
 
     public function PlanDetail() {
-        return $this->hasMany(RolePlans::class, 'role_id', 'id')->select('id', 'fee', 'fee_type','role_id');
+        return $this->hasMany(RolePlans::class, 'role_id', 'id')->select('id', 'fee', 'fee_type', 'role_id');
+    }
+
+    public function getCategoryAttribute($value) {
+        return ucfirst(str_replace('_', ' ', $value));
     }
 
 }

@@ -28,7 +28,7 @@ class RolePlans extends Model {
      *
      * @var array
      */
-    protected $fillable = ['role_id', 'fee_type', 'fee', 'params', 'status','image'];
+    protected $fillable = ['role_id', 'fee_type', 'fee', 'params', 'status', 'image'];
 
     /**
      * Change activity log event description
@@ -45,6 +45,10 @@ class RolePlans extends Model {
 
     public function getRolePlanAttribute() {
         return $this->fee_type . ': AED ' . $this->fee;
+    }
+
+    public function getFeeTypeAttribute($value) {
+        return ucfirst(str_replace('_', ' ', $value));
     }
 
 }
