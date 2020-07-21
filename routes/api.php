@@ -24,5 +24,6 @@ Route::post('roles-type', 'API\AuthController@getRolesByType');
 Route::post('roles', 'API\AuthController@getRoles');
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
-    Route::post('update', 'API\AuthController@Update');
+    Route::post('update', 'AuthController@Update');
+    Route::post('events', 'EventController@getItems');
 });

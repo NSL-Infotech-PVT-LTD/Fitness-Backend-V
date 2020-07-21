@@ -39,11 +39,42 @@ class AuthController extends ApiController {
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
         $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => ''];
+
+
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
+//      $role = \App\Role::whereId($request->role_id)->first();
+        $role = \DB::table('roles')->whereId($request->role_id)->first();
+//        dd($request->all(), $role);
+        if ($role->type == 'user'):
+//            dd($role->category);
+            if (in_array($role->category, ['couple', 'family_with_2'])):
+                $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users'];
+                $finalRules = [];
+                foreach ($rules as $key => $rule):
+                    $finalRules[$key . '_1'] = $rule;
+                    if ($role->category == 'family_with_2'):
+                        if ($request->child == '1_child'):
+                            $finalRules[$key . '_2'] = $rule;
+                        endif;
+                        if ($request->child == '2_child'):
+                            $finalRules[$key . '_2'] = $rule;
+                            $finalRules[$key . '_3'] = $rule;
+                        endif;
+                    endif;
+                endforeach;
+//                dd($finalRules);
+                $validateAttributes = parent::validateAttributes($request, 'POST', $finalRules, array_keys($rules), false);
+                if ($validateAttributes):
+                    return $validateAttributes;
+                endif;
+            endif;
+        endif;
+//        dd($request->all());
+
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
