@@ -87,7 +87,7 @@ class EventsController extends Controller {
         $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(base_path() . '/public/uploads/events/', $imageName);
         $requestData['image'] = $imageName;
-
+//dd($requestData);
         Event::create($requestData);
 
         return redirect('admin/events')->with('flash_message', 'Event added!');
