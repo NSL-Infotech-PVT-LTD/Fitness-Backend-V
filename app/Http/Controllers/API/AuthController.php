@@ -36,6 +36,20 @@ class AuthController extends ApiController {
         return $inputNew;
     }
 
+    private static function getRequestByRK($data, $rk) {
+        $return = [];
+//        $rk = '_1';
+        foreach ($data as $key => $value):
+            if (strpos($key, $rk) == true):
+                $return[str_replace($rk, '', $key)] = $value;
+                if (str_replace($rk, '', $key) == 'password')
+                    $return[str_replace($rk, '', $key)] = Hash::make($value);
+            endif;
+        endforeach;
+//        dd($return);
+        return $return;
+    }
+
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
         $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => ''];
@@ -47,41 +61,50 @@ class AuthController extends ApiController {
             return $validateAttributes;
         endif;
 //      $role = \App\Role::whereId($request->role_id)->first();
-        $role = \DB::table('roles')->whereId($request->role_id)->first();
-//        dd($request->all(), $role);
-        if ($role->type == 'user'):
-//            dd($role->category);
-            if (in_array($role->category, ['couple', 'family_with_2'])):
-                $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users'];
+        $checkRole = \DB::table('roles')->whereId($request->role_id)->first();
+//        dd($request->all(), $checkRole);
+        if ($checkRole->type == 'user'):
+//            dd($checkRole->category);            
+            if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
+                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email'];
                 $finalRules = [];
                 foreach ($rules as $key => $rule):
                     $finalRules[$key . '_1'] = $rule;
-                    if ($role->category == 'family_with_2'):
-                        if ($request->child == '1_child'):
-                            $finalRules[$key . '_2'] = $rule;
-                        endif;
-                        if ($request->child == '2_child'):
-                            $finalRules[$key . '_2'] = $rule;
-                            $finalRules[$key . '_3'] = $rule;
-                        endif;
+                    if ($checkRole->category == 'family_with_1')
+                        $finalRules[$key . '_2'] = $rule;
+                    if ($checkRole->category == 'family_with_2'):
+                        $finalRules[$key . '_2'] = $rule;
+                        $finalRules[$key . '_3'] = $rule;
                     endif;
                 endforeach;
-//                dd($finalRules);
-                $validateAttributes = parent::validateAttributes($request, 'POST', $finalRules, array_keys($rules), false);
+//                dd($request->all(),$finalRules);
+                $validateAttributes = parent::validateAttributes($request, 'POST', $finalRules, array_keys($finalRules), false);
                 if ($validateAttributes):
                     return $validateAttributes;
                 endif;
             endif;
         endif;
-//        dd($request->all());
+//        self::getRequestByRK($request->all(), '_1');
+//        dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => 121]));
 
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
             if (isset($request->image))
                 $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
-
             $user = \App\User::create($input);
+            if ($checkRole->type == 'user'):
+                if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
+//                    dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => $user->id]));
+                    \App\User::create(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => $user->id]));
+                    if ($checkRole->category == 'family_with_1')
+                        \App\User::create(array_merge(self::getRequestByRK($request->all(), '_2'), ['parent_id' => $user->id]));
+                    if ($checkRole->category == 'family_with_2'):
+                        \App\User::create(array_merge(self::getRequestByRK($request->all(), '_2'), ['parent_id' => $user->id]));
+                        \App\User::create(array_merge(self::getRequestByRK($request->all(), '_3'), ['parent_id' => $user->id]));
+                    endif;
+                endif;
+            endif;
             //Assign role to created user
             $role = \App\Role::whereId($request->role_id)->first()->name;
             $user->assignRole($role);
@@ -132,6 +155,8 @@ class AuthController extends ApiController {
         try {
             if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
                 $user = \App\User::find(Auth::user()->id);
+                if ($user->status == '0')
+                    return parent::error("Account is not approved yet, Kindly Contact Admin for more detail.");
                 $token = $user->createToken('netscape')->accessToken;
                 parent::addUserDeviceData($user, $request);
                 return parent::success(['message' => 'Login Successfully', 'token' => $token, 'user' => $user]);

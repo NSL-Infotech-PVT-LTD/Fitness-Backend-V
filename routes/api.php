@@ -22,6 +22,7 @@ Route::post('logout', 'API\AuthController@logout');
 Route::post('reset-password', 'API\AuthController@resetPassword');
 Route::post('roles-type', 'API\AuthController@getRolesByType');
 Route::post('roles', 'API\AuthController@getRoles');
+Route::post('roles', 'API\ConfigurationController@testPush');
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');
