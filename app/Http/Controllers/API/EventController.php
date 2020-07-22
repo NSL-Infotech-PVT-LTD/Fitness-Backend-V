@@ -9,7 +9,7 @@ use App\Event as MyModel;
 class EventController extends ApiController {
 
     public function getItems(Request $request) {
-        $rules = ['search' => '', 'is_special' => ''];
+        $rules = ['search' => '', 'is_special' => '','order_by'=>'required|in:upcoming,past'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -20,6 +20,11 @@ class EventController extends ApiController {
             $perPage = isset($request->limit) ? $request->limit : 20;
             if ($request->is_special != null)
                 $model = $model->where('special', $request->is_special);
+
+            if ($request->order_by == 'upcoming')
+                $model = $model->whereDate('start_date', '>=', \Carbon\Carbon::now());
+            if ($request->order_by == 'past')
+                $model = $model->whereDate('start_date', '<', \Carbon\Carbon::now());
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
                     $query->where('name', 'LIKE', "%$request->search%")
