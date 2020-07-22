@@ -143,16 +143,20 @@ class ApiController extends \App\Http\Controllers\Controller {
         if ($validator->fails()) {
 //            $errors = [];
             $messages = $validator->getMessageBag();
-            foreach ($messages->keys() as $key) {
-                $errors = $messages->get($key)['0'];
+            foreach ($messages->keys() as $k => $key) {
+                $errors[$key] = $messages->get($key)['0'];
             }
             return self::error($errors, 422, false);
         }
         return false;
     }
 
- public static function error($message, $errorCode = 422, $messageIndex = false) {
+    public static function error($message, $errorCode = 422, $messageIndex = false) {
 
+//        dd($message);
+//        $message = (object) $message;
+//        echo json_encode(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], JSON_FORCE_OBJECT);
+//        die();
         return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], $errorCode);
     }
 
@@ -227,10 +231,11 @@ class ApiController extends \App\Http\Controllers\Controller {
 
     public static function pushNotificationiOSMultipleUsers($data = [], $userIds, $customData = null) {
         foreach ($userIds as $userId):
-            self::pushNotificationiOS($data, $userId,$customData);
+            self::pushNotificationiOS($data, $userId, $customData);
         endforeach;
         return true;
     }
+
     public static function pushNotificationiOS($data = [], $userId, $customData = null) {
         foreach (\App\UserDevice::whereUserId($userId)->get() as $userDevice):
             self::pushNotifyiOS($data, $userDevice->token);
@@ -384,7 +389,7 @@ class ApiController extends \App\Http\Controllers\Controller {
 
         // Check errors
         if ($response) {
-
+            
         } else {
             $error = curl_error($curl) . '(' . curl_errno($curl) . ')';
             echo $error . "\n";
