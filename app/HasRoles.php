@@ -2,15 +2,14 @@
 
 namespace App;
 
-trait HasRoles
-{
+trait HasRoles {
+
     /**
      * A user may have multiple roles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
-    {
+    public function roles() {
         return $this->belongsToMany(Role::class);
     }
 
@@ -21,10 +20,9 @@ trait HasRoles
      *
      * @return mixed
      */
-    public function assignRole($role)
-    {
+    public function assignRole($role, $key = null) {
         return $this->roles()->save(
-            Role::whereName($role)->firstOrFail()
+                        ($key == null) ? Role::whereName($role)->firstOrFail() : Role::where($key, $role)->firstOrFail()
         );
     }
 
@@ -35,9 +33,8 @@ trait HasRoles
      *
      * @return boolean
      */
-    public function hasRole($role)
-    {
-        if($role===null)
+    public function hasRole($role) {
+        if ($role === null)
             return null;
         if (is_string($role)) {
             return $this->roles->contains('name', $role);
@@ -63,8 +60,8 @@ trait HasRoles
      *
      * @return boolean
      */
-    public function hasPermission(Permission $permission)
-    {
+    public function hasPermission(Permission $permission) {
         return $this->hasRole($permission->roles);
     }
+
 }
