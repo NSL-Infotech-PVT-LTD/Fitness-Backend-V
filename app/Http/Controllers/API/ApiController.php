@@ -157,7 +157,12 @@ class ApiController extends \App\Http\Controllers\Controller {
 //        $message = (object) $message;
 //        echo json_encode(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], JSON_FORCE_OBJECT);
 //        die();
-        return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], $errorCode);
+        if (is_string($message))
+            $return = ['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message, 'errors' => null];
+        else
+            $return = ['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => null, 'errors' => $message];
+        return response()->json($return, $errorCode);
+//        return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message, 'errors' => null], $errorCode);
     }
 
     public static function success($data, $code = 200, $returnType = 'object') {
