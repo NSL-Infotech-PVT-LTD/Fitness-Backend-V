@@ -54,17 +54,21 @@ class UsersController extends Controller {
             return Datatables::of($users)
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
-                                if ($item->payment_status == 'accepted'):
-                                    return "Payment Transaction Date: 240920";
+                                if ($item->parent_id == null):
+                                    if ($item->payment_status == 'accepted'):
+                                        return "Payment Transaction Date: 240920";
+                                    else:
+                                        return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
+                                    endif;
                                 else:
-                                    return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
+                                    return "Parent Will Pay subscription";
                                 endif;
                             })
                             ->editColumn('parent_id', function($item) {
                                 if ($item->parent_id == null):
                                     return 'NAN';
                                 else:
-                                    return $item->parent_id;
+                                    return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->first()->first_name . '</a>';
                                 endif;
                             })
                             ->addColumn('subscription', function($item)use($role_id) {
@@ -86,13 +90,13 @@ class UsersController extends Controller {
                                     endif;
                                 endif;
 
-                                $return .= " <a href=" . url('/admin/users/' . $item->id) . " title='View User'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
+                                $return .= " <a  href=" . url('/admin/users/' . $item->id) . " title='View User'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
                                          <a href=" . url('/admin/users/' . $item->id . '/edit') . " title='Edit User'><button class='btn btn-primary btn-sm'><i class='fas fa-pencil-alt' aria-hidden='true'></i> Edit </button></a>
                                           <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/users/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
 
                                 return $return;
                             })
-                            ->rawColumns(['action', 'payment_status'])
+                            ->rawColumns(['action', 'payment_status', 'parent_id'])
                             ->make(true);
         }
         if (isset($role_id))
