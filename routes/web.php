@@ -33,16 +33,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
 
     Route::get('home', 'HomeController@index')->name('home');
     Route::post('myfun', 'HomeController@myfun')->name('home.revenue');
-    Route::resource('tournament', 'Admin\TournamentsController');
-    Route::get('mydata/{id}', 'Admin\EnrollmentsController@enrollmentByid');
-    Route::resource('enrollments', 'Admin\EnrollmentsController');
     Route::get('/', 'HomeController@index')->name('home');
-    ;
     Route::resource('roles', 'Admin\RolesController');
     Route::resource('permissions', 'Admin\PermissionsController');
     Route::resource('users', 'Admin\UsersController');
     Route::resource('adminusers', 'Admin\AdminUsersController');
-    Route::resource('pages', 'Admin\PagesController');
     Route::resource('activitylogs', 'Admin\ActivityLogsController')->only([
         'index', 'show', 'destroy'
     ]);
