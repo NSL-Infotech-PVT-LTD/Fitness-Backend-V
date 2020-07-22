@@ -17,7 +17,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'email' => 'required'];
+    protected $__rulesforindex = ['first_name' => 'required', 'email' => 'required', 'payment_status' => 'required', 'subscription' => 'required'];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -49,6 +49,7 @@ class UsersController extends Controller {
 
         if ($request->ajax()) {
             $roleusers = \DB::table('role_user')->where('role_id', $role_id)->pluck('user_id');
+//            dd($roleusers);
             $users = User::wherein('id', $roleusers)->latest();
             return Datatables::of($users)
                             ->addIndexColumn()
@@ -57,6 +58,13 @@ class UsersController extends Controller {
                                     return "Payment Transaction Date: 240920";
                                 else:
                                     return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
+                                endif;
+                            })
+                            ->editColumn('parent_id', function($item) {
+                                if ($item->parent_id == null):
+                                    return 'NAN';
+                                else:
+                                    return $item->parent_id;
                                 endif;
                             })
                             ->addColumn('subscription', function($item)use($role_id) {
@@ -89,7 +97,8 @@ class UsersController extends Controller {
         }
         if (isset($role_id))
             if ($role_id != 1)
-                $this->__rulesforindex += ['payment_status' => 'required', 'subscription' => 'required'];
+                $this->__rulesforindex += ['parent_id' => 'required'];
+
         return view('admin.users.index', ['rules' => array_keys($this->__rulesforindex), 'role_id' => $role_id]);
     }
 
@@ -147,8 +156,7 @@ class UsersController extends Controller {
         }
 //        dd($request->role_id);
         $user = User::create($data);
-        $role = Role::whereId($request->role_id)->first()->name;
-        $user->assignRole($role);
+        $user->assignRole($request->role_id, 'id');
         if (isset($request->role_plan))
             \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $user->id)->update(['role_plan_id' => $request->role_plan]);
         if (isset($request->role_plan))
@@ -265,7 +273,7 @@ class UsersController extends Controller {
         return response()->json(["success" => true, 'message' => 'User updated!']);
     }
 
-    private static function mailSend($data, $request) {
+    public static function mailSend($data, $request) {
         \Mail::send('emails.send_paymentlink', $data, function($message) use ($request) {
             $message->from(env('MAIL_FROM_ADDRESS'));
             $message->sender(env('MAIL_FROM_ADDRESS'));
