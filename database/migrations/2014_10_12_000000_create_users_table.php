@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration {
             $table->string('image')->nullable();
             $table->string('payment_status')->nullable();
             $table->text('payment_params')->nullable();
+            $table->string('parent_id')->default(0);
             $table->enum('status', [0, 1])->default(0)->comment('0->Unactive, 1->Active');
             $table->rememberToken();
             $table->timestamps();
