@@ -86,7 +86,6 @@ class AuthController extends ApiController {
         endif;
 //        self::getRequestByRK($request->all(), '_1');
 //        dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => 121]));
-
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
@@ -100,7 +99,7 @@ class AuthController extends ApiController {
                 \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $user->id)->update(['role_plan_id' => $request->role_plan_id]);
 //            dd('s');
             if (isset($request->role_plan_id))
-                \App\Http\Controllers\Admin\UsersController::mailSend($data, $request);
+                \App\Http\Controllers\Admin\UsersController::mailSend($input, $request);
             if ($checkRole->type == 'user'):
                 if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
 //                    dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => $user->id]));
