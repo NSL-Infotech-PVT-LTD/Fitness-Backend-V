@@ -259,8 +259,9 @@ class UsersController extends Controller {
     public function changeStatus(Request $request) {
 //        dd('dd');
         $user = User::findOrFail($request->id);
-        if ($user->payment_status != 'accepted')
-            return response()->json(["success" => false, 'message' => 'Customer has not paid Subscription yet, Kindly send link again as customer not paid yet.']);
+        
+//        if ($user->payment_status != 'accepted')
+//            return response()->json(["success" => false, 'message' => 'Customer has not paid Subscription yet, Kindly send link again as customer not paid yet.']);
         $user->status = $request->status == 'Block' ? '0' : '1';
         $user->save();
         return response()->json(["success" => true, 'message' => 'User updated!']);
