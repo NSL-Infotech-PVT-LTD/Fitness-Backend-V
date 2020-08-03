@@ -82,12 +82,10 @@ class UsersController extends Controller {
 //                                $return = 'return confirm("Confirm delete?")';
                                 $return = '';
 
-                                if ($role_id != '1'):
-                                    if ($item->status == '0'):
-                                        $return .= "<button class='btn btn-danger btn-sm changeStatus' title='UnBlock'  data-id=" . $item->id . " data-status='UnBlock'>UnBlock / Active</button>";
-                                    else:
-                                        $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
-                                    endif;
+                                if ($item->status == '0'):
+                                    $return .= "<button class='btn btn-danger btn-sm changeStatus' title='UnBlock'  data-id=" . $item->id . " data-status='UnBlock'>UnBlock / Active</button>";
+                                else:
+                                    $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
                                 endif;
 
                                 $return .= " <a  href=" . url('/admin/users/' . $item->id) . " title='View User'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
@@ -259,7 +257,7 @@ class UsersController extends Controller {
     public function changeStatus(Request $request) {
 //        dd('dd');
         $user = User::findOrFail($request->id);
-        
+
 //        if ($user->payment_status != 'accepted')
 //            return response()->json(["success" => false, 'message' => 'Customer has not paid Subscription yet, Kindly send link again as customer not paid yet.']);
         $user->status = $request->status == 'Block' ? '0' : '1';
