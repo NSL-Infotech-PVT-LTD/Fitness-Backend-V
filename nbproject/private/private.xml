@@ -27,6 +27,7 @@
             <file>file:/Applications/AMPPS/www/volt/database/seeds/RolesTableSeeder.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/form.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/edit.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backend.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/form/customer.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/config/database.php</file>
