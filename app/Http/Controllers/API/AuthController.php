@@ -146,23 +146,24 @@ class AuthController extends ApiController {
     }
 
     public function Update(Request $request) {
-        $user = \App\User::findOrFail(\Auth::id());
 
-        $rules = ['name' => '', 'location' => '', 'image' => '', 'dob' => ''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
         try {
             $input = $request->all();
+//            dd($input);
 //            $input['sport_id']= json_encode($request->sport_id);
             if (isset($request->image))
                 $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
 
+            $user = \App\User::findOrFail(\Auth::id());
             $user->fill($input);
             $user->save();
 
-            $user = \App\User::whereId($user->id)->select('id', 'name', 'email', 'mobile', 'location', 'dob', 'image')->first();
+            $user = \App\User::whereId($user->id)->select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image','parent_id')->first();
             return parent::successCreated(['message' => 'Updated Successfully', 'user' => $user]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
