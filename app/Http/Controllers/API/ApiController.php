@@ -169,6 +169,8 @@ class ApiController extends \App\Http\Controllers\Controller {
 //        print_r($data);die;
         if ($returnType == 'array')
             $data = (array) $data;
+        elseif ($returnType == 'data')
+            $data = $data;
         else
             $data = (object) $data;
         return response()->json(['status' => true, 'code' => $code, 'data' => $data], $code);

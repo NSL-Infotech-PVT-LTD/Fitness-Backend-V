@@ -163,7 +163,7 @@ class AuthController extends ApiController {
             $user->fill($input);
             $user->save();
 
-            $user = \App\User::whereId($user->id)->select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image','parent_id')->first();
+            $user = \App\User::whereId($user->id)->select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id')->first();
             return parent::successCreated(['message' => 'Updated Successfully', 'user' => $user]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
@@ -240,20 +240,17 @@ class AuthController extends ApiController {
 //        }
 //    }
 
-    public function getitem(Request $request) {
 
-        $rules = ['id' => 'required'];
-        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), true);
+    public function getProfile(Request $request) {
+        $rules = [];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
-        // dd($category_id);
         try {
-            $model = new Tournament;
-            $model = $model->where('id', $request->id);
+            $model = \App\User::select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id')->where('id', \Auth::id());
             return parent::success($model->first());
         } catch (\Exception $ex) {
-
             return parent::error($ex->getMessage());
         }
     }
