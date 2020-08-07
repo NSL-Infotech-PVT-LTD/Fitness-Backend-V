@@ -64,6 +64,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('event/special', 'Admin\EventsController@MarkSpecial')->name('event.markspecial');
     Route::resource('location', 'Admin\\LocationController');
     Route::post('location/change-status', 'Admin\LocationController@changeStatus')->name('location.changeStatus');
+    Route::resource('configuration', 'Admin\ConfigurationController');
+    Route::get('configuration', 'Admin\ConfigurationController@customEdit')->name('admin.configuration');
 
 
 

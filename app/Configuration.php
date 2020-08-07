@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Configuration extends Model
-{
-     protected $table = 'configurations';
+class Configuration extends Model {
+
+    protected $table = 'configurations';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -20,9 +20,6 @@ class Configuration extends Model
      *
      * @var array
      */
-//    protected $fillable = ['name', 'image', 'description', 'price','category_id'];
-
-
+    protected $fillable = ['about_us', 'terms_and_conditions', 'privacy_policy', 'admin_email'];
 
 }
-

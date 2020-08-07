@@ -177,7 +177,9 @@
                             <div class="dropdown-menu dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="page-header-user-dropdown" style="position: absolute; transform: translate3d(-76px, 31px, 0px); top: 0px;left:0px; will-change: transform;" x-placement="bottom-end">
                                 <div class="top_left">
 
-
+                                    <a  class="nav-link" style="Color:Black"  href="{{ route('admin.configuration') }}">
+                                        Configuration <i class="fas fa-gears"></i>
+                                    </a>
                                     <a class="nav-link" style ="Color:Black" href="{{ url('/logout') }}"
                                        onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">

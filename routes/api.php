@@ -26,7 +26,10 @@ Route::post('roles', 'API\AuthController@getRoles');
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');
+    Route::post('get-profile', 'AuthController@getProfile');
     Route::post('events', 'EventController@getItems');
     Route::post('trainers', 'TrainerController@getitems');
     Route::post('trainer', 'TrainerController@getitem');
 });
+
+Route::get('config/{column}', 'API\ConfigurationController@getConfigurationByColumn');
