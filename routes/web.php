@@ -67,6 +67,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::resource('configuration', 'Admin\ConfigurationController');
     Route::get('configuration', 'Admin\ConfigurationController@customEdit')->name('admin.configuration');
 
+    Route::resource('bookings', 'Admin\\BookingsController');
 
 
 

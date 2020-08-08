@@ -6,35 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Twilio\Rest\Client;
 use Validator;
-use App\Tournament;
 use App\User;
-use App\EnrollTournaments;
 use DB;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\Factory;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Mail\Message;
-use Stripe;
 
 class AuthController extends ApiController {
 
-    public static function imageUpload($file, $tournament_id, $enrollment_id, $type, $size) {
-
-
-        $path = public_path('uploads/images');
-        $name = time() . rand(1, 10) . $file->getClientOriginalName();
-        $file->move($path, $name);
-        $inputNew['images'] = $name;
-        $inputNew['customer_id'] = \Auth::id();
-        $inputNew['tournament_id'] = $tournament_id;
-        $inputNew['enrollment_id'] = $enrollment_id;
-        $inputNew['type'] = $type;
-        $inputNew['size'] = $size;
-
-
-        return $inputNew;
-    }
+   
 
     private static function getRequestByRK($data, $rk) {
         $return = [];

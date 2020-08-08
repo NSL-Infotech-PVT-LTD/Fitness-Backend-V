@@ -29,6 +29,38 @@ class TrainerUser extends Model {
      * @var array
      */
     protected $fillable = ['first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode'];
+    protected $appends = array('full_name', 'booking_cnt', 'booking_reviewed_cnt', 'rating_avg');
+
+    public function getRatingAvgAttribute() {
+        $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->get()->pluck('id');
+        $model = \App\Booking::where('model_type', 'class_schedules')->whereIn('model_id', $classschedule->toArray());
+        $model = $model->whereNotNull('rating');
+        return number_format((float) $model->avg('rating'), 1, '.', '');
+//        return $model->avg('rating');
+    }
+
+    public function getBookingReviewedCntAttribute() {
+        $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->get()->pluck('id');
+        $model = \App\Booking::where('model_type', 'class_schedules')->whereIn('model_id', $classschedule->toArray());
+        $model = $model->whereNotNull('rating');
+        return $model->count();
+    }
+
+    public function getBookingCntAttribute() {
+        $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->get()->pluck('id');
+        $model = \App\Booking::where('model_type', 'class_schedules')->whereIn('model_id', $classschedule->toArray());
+//        $model = $model->whereNotNull('rating');
+        return $model->count();
+    }
+
+    public function getFullNameAttribute() {
+        $name = '';
+        $name .= $this->first_name;
+        $this->middle_name == '' ? '' : $name .= ' ' . $this->middle_name;
+        $name .= ' ' . $this->last_name;
+
+        return $name;
+    }
 
     /**
      * Change activity log event description
