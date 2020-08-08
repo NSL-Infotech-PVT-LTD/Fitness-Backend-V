@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class ClassSchedule extends Model {
+class Booking extends Model {
 
     use LogsActivity;
 
@@ -14,7 +14,7 @@ class ClassSchedule extends Model {
      *
      * @var string
      */
-    protected $table = 'class_schedules';
+    protected $table = 'bookings';
 
     /**
      * The database primary key value.
@@ -28,7 +28,7 @@ class ClassSchedule extends Model {
      *
      * @var array
      */
-    protected $fillable = ['class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity','location_id'];
+    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by','review','rating'];
 
     /**
      * Change activity log event description
@@ -41,9 +41,21 @@ class ClassSchedule extends Model {
         return __CLASS__ . " model has been {$eventName}";
     }
 
+    public static function boot() {
+        parent::boot();
 
-    public function getRepeatOnAttribute($value) {
-        return ($value == null) ? null : json_decode($value);
+
+//        static::updating(function($model) {
+//            $model->updated_by = isset(auth()->user()->id) ? auth()->user()->id : $model->updated_by;
+//        });
+
+        static::creating(function($model) {
+            $model->created_by = \Auth::id() == '' ? null : \Auth::id();
+        });
+
+//        static::deleting(function($model) {
+//            
+//        });
     }
 
 }

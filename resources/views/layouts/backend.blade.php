@@ -423,6 +423,23 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-bookmark-o"></i>
+                                    <p>
+                                        Bookings
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/bookings') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Bookings</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
                         </ul>
                     </nav>

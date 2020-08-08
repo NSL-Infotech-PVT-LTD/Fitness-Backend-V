@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Twilio\Rest\Client;
 use Validator;
-use App\Tournament;
 use App\TrainerUser as Mymodel;
-use App\EnrollTournaments;
 use DB;
 use Auth;
 
@@ -23,7 +21,7 @@ class TrainerController extends ApiController {
         try {
             $model = new Mymodel;
             $perPage = isset($request->limit) ? $request->limit : 20;
-            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode');
+            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'image');
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
                     $query->where('first_name', 'LIKE', "$request->search%")->orWhere('middle_name', 'LIKE', "$request->search%")->orWhere('last_name', 'LIKE', "$request->search%")->orWhere('email', 'LIKE', "$request->search%");
@@ -47,8 +45,29 @@ class TrainerController extends ApiController {
         try {
             $model = new Mymodel;
             $model = $model->where('id', $request->id);
-            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode');
-            return parent::success($model->first());
+            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'email', 'about', 'services', 'image');
+            $related = Mymodel::where('status', '1')->select('id', 'first_name', 'middle_name', 'last_name', 'image')->orderBy(DB::raw('RAND()'))->take(10)->get();
+            return parent::success(['trainer' => $model->first(), 'related' => $related]);
+        } catch (\Exception $ex) {
+
+            return parent::error($ex->getMessage());
+        }
+    }
+
+    public function getReviewListByTrainerID(Request $request) {
+        $rules = ['trainer_id' => 'required|exists:trainer_users,id'];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+            $classschedule = \App\ClassSchedule::where('trainer_id', $request->trainer_id)->get()->pluck('id');
+//            dd($request->trainer_id);
+            $model = \App\Booking::where('model_type', 'class_schedules')->whereIn('model_id', $classschedule->toArray());
+            $model = $model->whereNotNull('rating');
+            $model = $model->select('id', 'review', 'rating')->orderBy('id', 'desc');
+            $perPage = isset($request->limit) ? $request->limit : 20;
+            return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
 
             return parent::error($ex->getMessage());
