@@ -64,8 +64,8 @@ class TrainerController extends ApiController {
             $classschedule = \App\ClassSchedule::where('trainer_id', $request->trainer_id)->get()->pluck('id');
 //            dd($request->trainer_id);
             $model = \App\Booking::where('model_type', 'class_schedules')->whereIn('model_id', $classschedule->toArray());
-            $model = $model->whereNotNull('rating');
-            $model = $model->select('id', 'review', 'rating')->orderBy('id', 'desc');
+            $model = $model->whereNotNull('rating')->with('createdByDetail');
+            $model = $model->select('id', 'review', 'rating','created_at','created_by')->orderBy('id', 'desc');
             $perPage = isset($request->limit) ? $request->limit : 20;
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
