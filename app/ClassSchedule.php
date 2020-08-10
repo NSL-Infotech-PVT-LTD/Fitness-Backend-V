@@ -28,7 +28,7 @@ class ClassSchedule extends Model {
      *
      * @var array
      */
-    protected $fillable = ['class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity','location_id'];
+    protected $fillable = ['class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id'];
 
     /**
      * Change activity log event description
@@ -41,9 +41,12 @@ class ClassSchedule extends Model {
         return __CLASS__ . " model has been {$eventName}";
     }
 
-
     public function getRepeatOnAttribute($value) {
         return ($value == null) ? null : json_decode($value);
+    }
+
+    public function locationDetail() {
+        return $this->hasOne(Location::class, 'id', 'location_id')->select('id', 'name', 'image', 'location');
     }
 
 }
