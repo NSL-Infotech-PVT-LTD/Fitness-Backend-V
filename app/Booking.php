@@ -28,7 +28,7 @@ class Booking extends Model {
      *
      * @var array
      */
-    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by','review','rating'];
+    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by', 'review', 'rating'];
 
     /**
      * Change activity log event description
@@ -56,6 +56,10 @@ class Booking extends Model {
 //        static::deleting(function($model) {
 //            
 //        });
+    }
+
+    public function createdByDetail() {
+        return $this->hasOne(User::class, 'id', 'created_by')->select('id', 'first_name','middle_name', 'last_name', 'image');
     }
 
 }

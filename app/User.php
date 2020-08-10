@@ -22,7 +22,7 @@ class User extends Authenticatable {
 //    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image','parent_id'
+        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id'
     ];
 
     /**
@@ -42,8 +42,16 @@ class User extends Authenticatable {
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $appends = array('role');
+    protected $appends = array('role','full_name');
 
+    public function getFullNameAttribute() {
+        $name = '';
+        $name .= $this->first_name;
+        $this->middle_name == '' ? '' : $name .= ' ' . $this->middle_name;
+        $name .= ' ' . $this->last_name;
+
+        return $name;
+    }
 
     public function getRoleAttribute() {
         try {
