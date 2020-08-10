@@ -15,13 +15,13 @@ class ConfigurationController extends ApiController {
         endif;
         try {
 
-            if (!in_array($column, ['terms_and_conditions', 'privacy_policy','about_us']))
+            if (!in_array($column, ['terms_and_conditions', 'privacy_policy', 'about_us']))
                 return parent::error('Please use valid column');
 //dd($column);
             $model = MyModel::first();
             $var = $column;
 //            dd($var);   
-            return parent::success($model->$var, 200, 'data');
+            return parent::success(['config' => $model->$var]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
