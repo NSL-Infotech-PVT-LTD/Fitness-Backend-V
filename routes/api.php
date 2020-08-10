@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');
     Route::post('get-profile', 'AuthController@getProfile');
     Route::post('events', 'EventController@getItems');
+    Route::post('event', 'EventController@getItem');
     Route::post('trainers', 'TrainerController@getitems');
     Route::post('trainer', 'TrainerController@getitem');
     Route::post('trainer/reviews', 'TrainerController@getReviewListByTrainerID');
