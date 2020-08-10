@@ -29,6 +29,10 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('get-profile', 'AuthController@getProfile');
     Route::post('events', 'EventController@getItems');
     Route::post('event', 'EventController@getItem');
+
+    Route::post('class-schedules', 'ClassScheduleController@getItems');
+    Route::post('class-schedule', 'ClassScheduleController@getItem');
+
     Route::post('trainers', 'TrainerController@getitems');
     Route::post('trainer', 'TrainerController@getitem');
     Route::post('trainer/reviews', 'TrainerController@getReviewListByTrainerID');

@@ -41,7 +41,7 @@ class Event extends Model {
         return __CLASS__ . " model has been {$eventName}";
     }
 
-    public function locationDetails() {
+    public function locationDetail() {
         return $this->hasOne(Location::class, 'id', 'location_id')->select('id', 'name', 'image', 'location');
     }
 
