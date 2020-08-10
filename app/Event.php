@@ -5,10 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Event extends Model
-{
+class Event extends Model {
+
     use LogsActivity;
-    
 
     /**
      * The database table used by the model.
@@ -18,10 +17,10 @@ class Event extends Model
     protected $table = 'events';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -29,9 +28,7 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'image', 'description','status','start_date','end_date','special','location_id'];
-
-    
+    protected $fillable = ['name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id'];
 
     /**
      * Change activity log event description
@@ -40,8 +37,12 @@ class Event extends Model
      *
      * @return string
      */
-    public function getDescriptionForEvent($eventName)
-    {
+    public function getDescriptionForEvent($eventName) {
         return __CLASS__ . " model has been {$eventName}";
     }
+
+    public function locationDetails() {
+        return $this->hasOne(Location::class, 'id', 'location_id')->select('id', 'name', 'image', 'location');
+    }
+
 }
