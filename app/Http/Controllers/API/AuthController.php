@@ -129,7 +129,7 @@ class AuthController extends ApiController {
 
     public function Update(Request $request) {
 
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => ''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
