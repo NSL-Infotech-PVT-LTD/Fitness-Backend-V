@@ -25,6 +25,7 @@ class CreateTrainerUsersTable extends Migration {
             $table->string('image')->nullable();
             $table->string('birth_date')->nullable();
             $table->string('emirates_id')->nullable();
+            $table->string('expirence')->nullable();
             $table->text('about')->nullable();
             $table->text('services')->nullable();
             $table->text('address_house')->nullable();

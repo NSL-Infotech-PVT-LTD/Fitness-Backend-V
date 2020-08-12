@@ -30,6 +30,11 @@
     {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group{{ $errors->has('expirence') ? ' has-error' : ''}}">
+    {!! Form::label('expirence', 'Email: ', ['class' => 'control-label']) !!}
+    {!! Form::text('expirence', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('expirence', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group{{ $errors->has('password') ? ' has-error' : ''}}">
     {!! Form::label('password', 'Password:', ['class' => 'control-label']) !!}
     {!! Form::label('password', 'Password between 6 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace.', ['class' => 'control-label']) !!}
