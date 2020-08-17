@@ -65,7 +65,7 @@ class UsersController extends Controller {
                                 endif;
                             })
                             ->editColumn('parent_id', function($item) {
-                                if ($item->parent_id == null):
+                                if ($item->parent_id == null || $item->parent_id == '0'):
                                     return 'NAN';
                                 else:
                                     return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->first()->first_name . '</a>';
