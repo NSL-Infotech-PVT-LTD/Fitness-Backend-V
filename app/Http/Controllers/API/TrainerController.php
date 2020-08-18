@@ -14,7 +14,7 @@ class TrainerController extends ApiController {
 
     public function getitems(Request $request) {
         $rules = ['limit' => '', 'search' => ''];
-        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), true);
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
