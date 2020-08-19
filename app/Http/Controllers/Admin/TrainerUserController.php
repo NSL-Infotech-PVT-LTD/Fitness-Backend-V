@@ -132,7 +132,8 @@ class TrainerUserController extends Controller {
 //        if ($request->has('image'))
 //            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
         if ($request->has('password'))
-            $rules += ['password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/'];
+            if (!empty($request->password))
+                $rules += ['password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/'];
         $this->validate(
                 $request, $rules
         );
