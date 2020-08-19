@@ -36,7 +36,7 @@ class TrainerUserController extends Controller {
 
                                 $return .= " <a href=" . url('/admin/trainer-user/' . $item->id) . " title='View User'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
                                          <a href=" . url('/admin/trainer-user/' . $item->id . '/edit') . " title='Edit User'><button class='btn btn-primary btn-sm'><i class='fas fa-pencil-alt' aria-hidden='true'></i> Edit </button></a>
-                                          <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/users/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
+                                          <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/trainer-user/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
 
                                 return $return;
                             })
