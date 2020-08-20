@@ -29,6 +29,11 @@ class Event extends Model {
      * @var array
      */
     protected $fillable = ['name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id'];
+    protected $appends = array('is_booked_by_me');
+
+    public function getIsBookedByMeAttribute() {
+        return (((\App\Booking::where('model_type', 'events')->where('model_id', $this->id)->count()) > 0) ? true : false);
+    }
 
     /**
      * Change activity log event description

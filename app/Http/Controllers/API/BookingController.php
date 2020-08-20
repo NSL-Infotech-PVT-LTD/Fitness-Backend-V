@@ -18,6 +18,11 @@ class BookingController extends ApiController {
             return $validateAttributes;
         endif;
         $rules = ['model_id' => 'required|exists:' . $request->model_type . ',id'];
+        if ($request->model_type == 'class_schedules')
+            $rules += ['session' => 'required|in:1,6,12'];
+        else if ($request->model_type == 'trainer_users')
+            $rules += ['hours' => 'required|in:1,6,12,24'];
+
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -25,7 +30,15 @@ class BookingController extends ApiController {
         try {
             if (Mymodel::where('model_id', $request->model_id)->where('model_type', $request->model_type)->where('created_by', \Auth::id())->get()->isEmpty() !== true)
                 return parent::error('Booking already in place');
-            $input = $request->all();
+
+            $input = [];
+            if ($request->model_type == 'class_schedules')
+                $input = $request->only('model_type', 'model_id', 'session');
+            else if ($request->model_type == 'trainer_users')
+                $input = $request->only('model_type', 'model_id', 'hours');
+            else
+                $input = $request->only('model_type', 'model_id');
+
             $model = Mymodel::create($input);
             return parent::successCreated(['message' => 'Created Successfully', 'booking' => $model]);
         } catch (\Exception $ex) {
@@ -41,7 +54,7 @@ class BookingController extends ApiController {
         endif;
         try {
             $model = new Mymodel;
-            $model = $model->select('id', 'model_type', 'model_id', 'payment_status', 'created_by')->where('created_by', \Auth::id())->orderBy('id', 'desc');
+            $model = $model->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours')->where('created_by', \Auth::id())->orderBy('id', 'desc');
             $perPage = isset($request->limit) ? $request->limit : 20;
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
