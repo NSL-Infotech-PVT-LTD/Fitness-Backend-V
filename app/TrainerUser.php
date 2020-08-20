@@ -28,8 +28,12 @@ class TrainerUser extends Model {
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode','expirence'];
-    protected $appends = array('full_name', 'booking_cnt', 'booking_reviewed_cnt', 'rating_avg');
+    protected $fillable = ['first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode', 'expirence'];
+    protected $appends = array('full_name', 'booking_cnt', 'booking_reviewed_cnt', 'rating_avg', 'is_booked_by_me');
+
+    public function getIsBookedByMeAttribute() {
+        return (((\App\Booking::where('model_type', 'trainer_users')->where('model_id', $this->id)->count()) > 0) ? true : false);
+    }
 
     public function getRatingAvgAttribute() {
         $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->get()->pluck('id');
