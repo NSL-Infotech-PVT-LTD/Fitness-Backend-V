@@ -28,7 +28,7 @@ class Booking extends Model {
      *
      * @var array
      */
-    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by', 'review', 'rating','hours','session'];
+    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by', 'review', 'rating', 'hours', 'session'];
 
     /**
      * Change activity log event description
@@ -58,8 +58,23 @@ class Booking extends Model {
 //        });
     }
 
+    protected $appends = array('model_detail');
+
+    public function getModelDetailAttribute() {
+        if ($this->model_type == 'class_schedules')
+            $model = ClassSchedule::where('id', $this->model_id)->get();
+        else if ($this->model_type == 'trainer_users')
+            $model = TrainerUser::where('id', $this->model_id)->get();
+        else if ($this->model_type == 'events')
+            $model = Event::where('id', $this->model_id)->get();
+        else
+            $model = '';
+        if ($model->isEmpty() != true)
+            return $model->first();
+    }
+
     public function createdByDetail() {
-        return $this->hasOne(User::class, 'id', 'created_by')->select('id', 'first_name','middle_name', 'last_name', 'image');
+        return $this->hasOne(User::class, 'id', 'created_by')->select('id', 'first_name', 'middle_name', 'last_name', 'image');
     }
 
 }
