@@ -32,7 +32,7 @@ class TrainerUser extends Model {
     protected $appends = array('full_name', 'booking_cnt', 'booking_reviewed_cnt', 'rating_avg', 'is_booked_by_me');
 
     public function getIsBookedByMeAttribute() {
-        return (((\App\Booking::where('model_type', 'trainer_users')->where('model_id', $this->id)->count()) > 0) ? true : false);
+        return (((\App\Booking::where('model_type', 'trainer_users')->where('model_id', $this->id)->where('created_by', \Auth::id())->count()) > 0) ? true : false);
     }
 
     public function getRatingAvgAttribute() {

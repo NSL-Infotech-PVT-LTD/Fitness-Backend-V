@@ -32,7 +32,7 @@ class ClassSchedule extends Model {
     protected $appends = array('is_booked_by_me');
 
     public function getIsBookedByMeAttribute() {
-        return (((\App\Booking::where('model_type', 'class_schedules')->where('model_id', $this->id)->count()) > 0) ? true : false);
+        return (((\App\Booking::where('model_type', 'class_schedules')->where('model_id', $this->id)->where('created_by', \Auth::id())->count()) > 0) ? true : false);
     }
 
     /**
