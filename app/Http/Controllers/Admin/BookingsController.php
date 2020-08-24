@@ -156,11 +156,11 @@ class BookingsController extends Controller {
         $user = Booking::findOrFail($id);
         if ($status == '0'):
             Booking::destroy($id);
-            return response()->json(["success" => true, 'message' => 'Booking Removed Sucessfully!']);
+            return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']);
         endif;
         $user->status = $status == '1' ? '1' : '0';
         $user->save();
-        return response()->json(["success" => true, 'message' => 'Booking updated!']);
+        return response()->json(["success" => true, 'message' => 'Booking Confirmed Successfully']);
     }
 
 }
