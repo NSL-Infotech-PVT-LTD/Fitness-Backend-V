@@ -47,14 +47,16 @@ class BookingController extends ApiController {
     }
 
     public function getitems(Request $request) {
-        $rules = ['limit' => ''];
+        $rules = ['limit' => '', 'model_type' => 'required|in:class_schedules,trainer_users,events,all'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
         try {
             $model = new Mymodel;
-            $model = $model->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours','created_at')->where('created_by', \Auth::id())->orderBy('id', 'desc');
+            $model = $model->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours', 'created_at')->where('created_by', \Auth::id())->orderBy('id', 'desc');
+            if ($request->model_type != 'all')
+                $model = $model->where('model_type', $request->model_type);
             $perPage = isset($request->limit) ? $request->limit : 20;
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
