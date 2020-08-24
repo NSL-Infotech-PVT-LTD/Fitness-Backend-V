@@ -43,7 +43,14 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <?php foreach ($rules as $rule): ?>
+                                        <?php foreach ($rules as $rule): 
+                                            if($rule=='model_type')
+                                                $rule='Module Name';
+                                            else if($rule=='created_by')
+                                                $rule='Booked By';
+                                            else if($rule=='created_at')
+                                                $rule='Booked On';
+                                            ?>
                                             <th>{{ucfirst($rule)}}</th>
                                         <?php endforeach; ?>
                                         <th>Actions</th>
@@ -97,6 +104,35 @@
             {data: 'action', name: 'action', orderable: false, searchable: false}
             ,
             ]
+    });
+    $('.data-table').on('click', '.changeStatus', function (e) {
+    e.preventDefault();
+    var url = $(this).attr('traget-href');
+    swal.fire({
+    title: "Are you sure want to update status of booking?",
+            text: "Status change can't be revoked !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
+    }).then((result) => {
+    Swal.showLoading();
+    if (result.value) {
+    $.ajax({
+    url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: {method: '_POST', submit: true, _token: '{{csrf_token()}}'},
+            success: function (data) {
+            if (data.success) {
+            swal.fire("Changed!", data.message, "success");
+            table.ajax.reload(null, false);
+            }
+            }
+    });
+    }
+    });
     });
 //deleting data
     $('.data-table').on('click', '.btnDelete[data-remove]', function (e) {
