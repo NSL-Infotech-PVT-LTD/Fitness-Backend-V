@@ -17,7 +17,7 @@ class ClassScheduleController extends ApiController {
         // dd($category_id);
         try {
             $model = MyModel::where('status', '1');
-            $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id');
+            $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id')->with(['locationDetail','trainerDetail','classDetail']);
             $perPage = isset($request->limit) ? $request->limit : 20;
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
@@ -40,7 +40,7 @@ class ClassScheduleController extends ApiController {
         // dd($category_id);
         try {
             $model = new Mymodel;
-            $model = $model->where('id', $request->id)->with('locationDetail');
+            $model = $model->where('id', $request->id)->with(['locationDetail','trainerDetail','classDetail']);
             $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id');
             return parent::success($model->first());
         } catch (\Exception $ex) {

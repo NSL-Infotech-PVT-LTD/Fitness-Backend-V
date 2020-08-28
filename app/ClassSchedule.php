@@ -50,6 +50,12 @@ class ClassSchedule extends Model {
         return ($value == null) ? null : json_decode($value);
     }
 
+    public function classDetail() {
+        return $this->hasOne(Classes::class, 'id', 'class_id')->select('id', 'name', 'image', 'description');
+    }
+    public function trainerDetail() {
+        return $this->hasOne(TrainerUser::class, 'id', 'trainer_id')->select('id','first_name', 'middle_name', 'last_name', 'image');
+    }
     public function locationDetail() {
         return $this->hasOne(Location::class, 'id', 'location_id')->select('id', 'name', 'image', 'location');
     }
