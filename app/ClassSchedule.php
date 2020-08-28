@@ -53,7 +53,7 @@ class ClassSchedule extends Model {
     public function classDetail() {
         return $this->hasOne(Classes::class, 'id', 'class_id')->select('id', 'name', 'image', 'description');
     }
-    public function trainerDetail() {
+    public function trainer() {
         return $this->hasOne(TrainerUser::class, 'id', 'trainer_id')->select('id','first_name', 'middle_name', 'last_name', 'image');
     }
     public function locationDetail() {
