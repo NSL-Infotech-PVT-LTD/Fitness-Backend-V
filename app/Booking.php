@@ -62,7 +62,7 @@ class Booking extends Model {
 
     public function getModelDetailAttribute() {
         if ($this->model_type == 'class_schedules')
-            $model = ClassSchedule::where('id', $this->model_id)->get();
+            $model = ClassSchedule::where('id', $this->model_id)->with(['locationDetail','trainer','classDetail'])->get();
         else if ($this->model_type == 'trainer_users')
             $model = TrainerUser::where('id', $this->model_id)->get();
         else if ($this->model_type == 'events')
