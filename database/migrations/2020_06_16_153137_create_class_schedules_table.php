@@ -23,7 +23,7 @@ class CreateClassSchedulesTable extends Migration {
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade')->nullable();
             $table->integer('class_id')->unsigned()->index();
             $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade')->nullable();
-            $table->bigInteger('trainer_id')->unsigned()->index();
+            $table->integer('trainer_id')->unsigned()->index();
             $table->foreign('trainer_id')->references('id')->on('trainer_users')->onDelete('cascade')->nullable();
             $table->string('cp_spots')->nullable();
             $table->string('capacity')->nullable();
