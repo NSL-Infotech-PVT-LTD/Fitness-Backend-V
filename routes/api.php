@@ -23,10 +23,7 @@ Route::post('reset-password', 'API\AuthController@resetPassword');
 Route::post('roles-type', 'API\AuthController@getRolesByType');
 Route::post('roles', 'API\AuthController@getRoles');
 //Route::post('roles', 'API\ConfigurationController@testPush');
-Route::get('/reset-success', function () {
-    \Auth::logout();
-    return view('auth.after-reset');
-});
+
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');

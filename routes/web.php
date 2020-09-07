@@ -19,7 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
+Route::get('/reset-success', function () {
+    \Auth::logout();
+    return view('auth.after-reset');
+});
 
 
 
