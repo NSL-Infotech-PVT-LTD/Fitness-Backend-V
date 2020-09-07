@@ -67,7 +67,7 @@ class TrainerUserController extends Controller {
                 $request, [
             'first_name' => 'required|alpha',
             'last_name' => 'required|alpha',
-            'email' => 'required|string|max:255|email|unique:users',
+            'email' => 'required|string|max:255|email|unique:trainer_users',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/',
             'mobile' => 'required|numeric',
             'birth_date' => 'required|date_format:Y-m-d|before:today',
@@ -126,7 +126,7 @@ class TrainerUserController extends Controller {
     public function update(Request $request, $id) {
         $rules = [
             'first_name' => 'required',
-            'email' => 'required|string|max:255|email|unique:users,email,' . $id,
+            'email' => 'required|string|max:255|email|unique:trainer_users,email,' . $id,
             'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
         ];
 //        if ($request->has('image'))

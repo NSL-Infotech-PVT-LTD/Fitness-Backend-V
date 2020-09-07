@@ -31,7 +31,7 @@
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('expirence') ? ' has-error' : ''}}">
-    {!! Form::label('expirence', 'Expirence: ', ['class' => 'control-label']) !!}
+    {!! Form::label('expirence', 'Years Of Experience: ', ['class' => 'control-label']) !!}
     {!! Form::text('expirence', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('expirence', '<p class="help-block">:message</p>') !!}
 </div>
