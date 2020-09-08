@@ -16,7 +16,7 @@ class EventController extends ApiController {
         endif;
         // dd($category_id);
         try {
-            $model = MyModel::where('status', '1');
+            $model = MyModel::where('status', '1')->with('locationDetail');
             $perPage = isset($request->limit) ? $request->limit : 20;
             if ($request->is_special != null)
                 $model = $model->where('special', $request->is_special);
