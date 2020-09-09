@@ -111,6 +111,7 @@
             confirmButtonClass: "btn-danger",
             confirmButtonText: "Confirm",
             cancelButtonText: "Cancel",
+<<<<<<< HEAD:resources/views/admin/class-schedule/index.blade.php
         }).then((result) => {
             Swal.showLoading();
             if (result.value) {
@@ -126,6 +127,21 @@
                         }
                     }
                 });
+=======
+    }).then((result) => {
+    Swal.showLoading();
+    if (result.value) {
+    $.ajax({
+    url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
+            success: function (data) {
+            if (data == 'Success') {
+            swal.fire("Deleted!", "Special Events has been deleted", "success");
+            table.ajax.reload(null, false);
+            }
+>>>>>>> 0d48457ce0ed000c280b77a70a8bedef4a6a420b:resources/views/admin/special-events/index.blade.php
             }
         });
     });
@@ -163,7 +179,11 @@
                     {
                     Swal.fire(
                             status + ' !',
+<<<<<<< HEAD:resources/views/admin/class-schedule/index.blade.php
                             'Class has been ' + status + ' .',
+=======
+                            'Special Events has been ' + status + ' .',
+>>>>>>> 0d48457ce0ed000c280b77a70a8bedef4a6a420b:resources/views/admin/special-events/index.blade.php
                             'success'
                             ).then(() => {
                     table.ajax.reload(null, false);
