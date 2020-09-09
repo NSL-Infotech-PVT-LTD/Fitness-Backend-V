@@ -36,7 +36,7 @@
     {!! $errors->first('expirence', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('certifications') ? ' has-error' : ''}}">
-    {!! Form::label('certifications', 'Certifications & Specifications: ', ['class' => 'control-label']) !!}
+    {!! Form::label('certifications', 'Certifications: ', ['class' => 'control-label']) !!}
     {!! Form::text('certifications', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('certifications', '<p class="help-block">:message</p>') !!}
 </div>
