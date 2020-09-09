@@ -21,7 +21,7 @@ class TrainerController extends ApiController {
         try {
             $model = new Mymodel;
             $perPage = isset($request->limit) ? $request->limit : 20;
-            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'image','expirence')->where('status','1');
+            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'image','expirence','certifications','specialities')->where('status','1');
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
                     $query->where('first_name', 'LIKE', "$request->search%")->orWhere('middle_name', 'LIKE', "$request->search%")->orWhere('last_name', 'LIKE', "$request->search%")->orWhere('email', 'LIKE', "$request->search%");
@@ -45,7 +45,7 @@ class TrainerController extends ApiController {
         try {
             $model = new Mymodel;
             $model = $model->where('id', $request->id);
-            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'email', 'about', 'services', 'image','expirence')->where('status','1');
+            $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'email', 'about', 'services', 'image','expirence','certifications','specialities')->where('status','1');
             $related = Mymodel::where('status', '1')->select('id', 'first_name', 'middle_name', 'last_name', 'image')->orderBy(DB::raw('RAND()'))->take(10)->get();
             return parent::success(['trainer' => $model->first(), 'related' => $related]);
         } catch (\Exception $ex) {
