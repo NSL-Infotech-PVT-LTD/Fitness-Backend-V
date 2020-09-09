@@ -63,7 +63,7 @@
     {!! $errors->first('birth_date', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('emirates_id') ? ' has-error' : ''}}">
-    {!! Form::label('emirates_id', 'Emirates Id: ', ['class' => 'control-label']) !!}
+    {!! Form::label('emirates_id', 'Emirates Id/Passport: ', ['class' => 'control-label']) !!}
     {!! Form::text('emirates_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('emirates_id', '<p class="help-block">:message</p>') !!}
 </div>
