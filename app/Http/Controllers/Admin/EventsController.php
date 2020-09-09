@@ -77,7 +77,7 @@ class EventsController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-//            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
             'description' => 'required',
             'start_date' => 'required|date_format:Y-m-d|after:today',
             'end_date' => 'required|date_format:Y-m-d|after:today'
