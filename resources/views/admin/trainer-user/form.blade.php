@@ -35,6 +35,16 @@
     {!! Form::text('expirence', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('expirence', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group{{ $errors->has('certifications') ? ' has-error' : ''}}">
+    {!! Form::label('certifications', 'Certifications & Specifications: ', ['class' => 'control-label']) !!}
+    {!! Form::text('certifications', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('certifications', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group{{ $errors->has('specialities') ? ' has-error' : ''}}">
+    {!! Form::label('specialities', 'Specialities: ', ['class' => 'control-label']) !!}
+    {!! Form::text('specialities', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('specialities', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group{{ $errors->has('password') ? ' has-error' : ''}}">
     {!! Form::label('password', 'Password:', ['class' => 'control-label']) !!}
     {!! Form::label('password', 'Password between 6 and 20 characters; must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, but cannot contain whitespace.', ['class' => 'control-label']) !!}
@@ -102,7 +112,7 @@ if (isset($traineruser->image))
     {!! Form::label('services', 'Offered Services: ', ['class' => 'control-label']) !!}
     <?php if (\App\Service::where('status', '1')->get()->isEmpty() == true): ?>
         {{'There is no offered Services Yet Kindly Check Services Section!'}}
-    <?php
+        <?php
     else:
         $servies = isset($traineruser->services) ? $traineruser->services : [];
         ?>
