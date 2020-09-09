@@ -36,7 +36,7 @@ class TrainerController extends ApiController {
 
     public function getItem(Request $request) {
 
-        $rules = ['id' => 'required'];
+        $rules = ['id' => 'required|exists:trainer_users,id'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), true);
         if ($validateAttributes):
             return $validateAttributes;
