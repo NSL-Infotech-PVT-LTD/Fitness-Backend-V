@@ -144,6 +144,12 @@ class TrainerUserController extends Controller {
         }
         if (isset($data['services']))
             $data['services'] = json_encode($data['services']);
+
+        if ($request->hasfile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
+            $data['image'] = $imageName;
+        }
         $traineruser = TrainerUser::findOrFail($id);
         $traineruser->update($data);
         return redirect('admin/trainer-user/')->with('flash_message', 'Trainer updated!');
