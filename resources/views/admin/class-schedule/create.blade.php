@@ -41,7 +41,7 @@
                         </ul>
                         @endif
 
-                       {!! Form::open(['url' => '/admin/class-schedule', 'class' => 'form-horizontal', 'files' => true]) !!}
+                        {!! Form::open(['url' => '/admin/class-schedule', 'class' => 'form-horizontal', 'files' => true]) !!}
 
                         @include ('admin.class-schedule.form', ['formMode' => 'create'])
 
@@ -55,7 +55,23 @@
     </section>
     <!-- /.content -->
 </div>
-
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var checkbox = $('#checkboxes');
+        checkbox.hide();
+        jQuery("input[name='class_type']").change(function () {
+            var selected;
+            $.each($("input[name='class_type']:checked"), function () {
+                selected = $(this).val();
+            });
+            if (selected == 'recurring') {
+                checkbox.show();
+            } else {
+                checkbox.hide();
+            }
+        });
+    });
+</script>
 @endsection
 
 
