@@ -29,10 +29,15 @@ class ClassSchedule extends Model {
      * @var array
      */
     protected $fillable = ['class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id'];
-    protected $appends = array('is_booked_by_me');
+    protected $appends = array('is_booked_by_me', 'available_capacity');
 
     public function getIsBookedByMeAttribute() {
         return (((\App\Booking::where('model_type', 'class_schedules')->where('model_id', $this->id)->where('created_by', \Auth::id())->count()) > 0) ? true : false);
+    }
+
+    public function getAvailableCapacityAttribute() {
+        $bookedTickets = \App\Booking::where('model_type', 'class_schedules')->where('model_id', $this->id)->get()->count();
+        return $this->capacity - $bookedTickets - $this->cp_spots;
     }
 
     /**
@@ -53,9 +58,11 @@ class ClassSchedule extends Model {
     public function classDetail() {
         return $this->hasOne(Classes::class, 'id', 'class_id')->select('id', 'name', 'image', 'description');
     }
+
     public function trainer() {
-        return $this->hasOne(TrainerUser::class, 'id', 'trainer_id')->select('id','first_name', 'middle_name', 'last_name', 'image');
+        return $this->hasOne(TrainerUser::class, 'id', 'trainer_id')->select('id', 'first_name', 'middle_name', 'last_name', 'image');
     }
+
     public function locationDetail() {
         return $this->hasOne(Location::class, 'id', 'location_id')->select('id', 'name', 'image', 'location');
     }
