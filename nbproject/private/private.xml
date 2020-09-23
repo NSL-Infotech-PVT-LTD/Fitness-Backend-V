@@ -8,9 +8,9 @@
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_08_07_134500_create_bookings_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/BookingsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/TrainerUserController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_09_153137_create_class_schedules_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Booking.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/form/trainer.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/trainer-user/form.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/ClassSchedule.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/form.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/.env</file>
@@ -36,6 +36,7 @@
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2014_10_12_000000_create_users_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ClassScheduleController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/lang/en/validation.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_15_143225_create_trainer_users_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ApiController.php</file>
             <file>file:/Applications/AMPPS/www/volt/database/seeds/DatabaseSeeder.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Role.php</file>
@@ -43,6 +44,7 @@
             <file>file:/Applications/AMPPS/www/volt/resources/views/emails/send_paymentlink.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/TrainerController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Event.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/EventsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/edit.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backend.blade.php</file>
@@ -51,7 +53,6 @@
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/roles/edit.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/create.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/EventController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/TrainerUser.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/edit.blade.php</file>
         </group>
     </open-files>
