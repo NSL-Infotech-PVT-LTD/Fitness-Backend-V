@@ -65,4 +65,25 @@ class BookingController extends ApiController {
         }
     }
 
+    public function deleteItem(Request $request) {
+        $rules = ['id' => [
+                'required',
+                \Illuminate\Validation\Rule::exists('bookings')->where(function ($query)use($request) {
+                            $query->where('id', $request->id);
+                            $query->where('created_by', \Auth::id());
+                        }),
+        ]];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+            Mymodel::where('id', $request->id)->delete();
+            return parent::successCreated('Booking Deleted Succesfully !');
+        } catch (\Exception $ex) {
+
+            return parent::error($ex->getMessage());
+        }
+    }
+
 }

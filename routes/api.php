@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     //Bookings
     Route::post('bookings/store', 'BookingController@store');
     Route::post('bookings', 'BookingController@getitems');
+    Route::post('booking/delete', 'BookingController@deleteItem');
 });
 
 Route::get('config/{column}', 'API\ConfigurationController@getConfigurationByColumn');
