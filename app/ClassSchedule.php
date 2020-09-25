@@ -35,6 +35,11 @@ class ClassSchedule extends Model {
         return (((\App\Booking::where('model_type', 'class_schedules')->where('model_id', $this->id)->where('created_by', \Auth::id())->count()) > 0) ? true : false);
     }
 
+    public function getIsBookedByMeBookingIdAttribute() {
+        $booking = \App\Booking::where('model_type', 'class_schedules')->where('model_id', $this->id)->where('created_by', \Auth::id());
+        return ((($booking->count()) > 0) ? $booking->first()->id : 0);
+    }
+
     public function getAvailableCapacityAttribute() {
         $bookedTickets = \App\Booking::where('model_type', 'class_schedules')->where('model_id', $this->id)->get()->count();
         return $this->capacity - $bookedTickets - $this->cp_spots;
