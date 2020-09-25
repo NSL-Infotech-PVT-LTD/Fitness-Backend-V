@@ -105,6 +105,16 @@
                     {!! $errors->first('capacity', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+            <div class="form-group{{ $errors->has('class_type') ? 'has-error' : ''}}">
+                {!! Form::radio('gender_type', 'female', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                {!! Form::label('gender_type', 'Female', ['class' => 'control-label']) !!}
+                {!! Form::radio('gender_type', 'male', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                {!! Form::label('gender_type', 'Male', ['class' => 'control-label']) !!}
+                {!! Form::radio('gender_type', 'both', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                {!! Form::label('gender_type', 'Both', ['class' => 'control-label']) !!}
+                {!! $errors->first('gender_type', '<p class="help-block">:message</p>') !!}
+
+            </div>
             <div class="col-md-12">
                 <div class="form-group create_btn">
                     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}

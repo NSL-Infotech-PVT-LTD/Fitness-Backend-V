@@ -34,7 +34,7 @@ class AuthController extends ApiController {
 
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => ''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '','gender'=>'required|in,male,female'];
 
 
         $rules = array_merge($this->requiredParams, $rules);
@@ -48,7 +48,7 @@ class AuthController extends ApiController {
         if ($checkRole->type == 'user'):
 //            dd($checkRole->category);            
             if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
-                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email'];
+                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email','gender'=>'required|in,male,female'];
                 $finalRules = [];
                 foreach ($rules as $key => $rule):
                     $finalRules[$key . '_1'] = $rule;
@@ -145,7 +145,7 @@ class AuthController extends ApiController {
             $user->fill($input);
             $user->save();
 
-            $user = \App\User::whereId($user->id)->select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id')->first();
+            $user = \App\User::whereId($user->id)->select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id','gender')->first();
             return parent::successCreated(['message' => 'Updated Successfully', 'user' => $user]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
@@ -230,7 +230,7 @@ class AuthController extends ApiController {
             return $validateAttributes;
         endif;
         try {
-            $model = \App\User::select('id','first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id')->where('id', \Auth::id());
+            $model = \App\User::select('id','first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id','gender')->where('id', \Auth::id());
             return parent::success(['user' => $model->first()]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
