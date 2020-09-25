@@ -14,10 +14,15 @@ class ClassScheduleController extends ApiController {
         if ($validateAttributes):
             return $validateAttributes;
         endif;
-        // dd($category_id);
+//         dd();
         try {
+            $genderType = ['both'];
+            if (User::whereId(\Auth::id())->first()->gender != null)
+                $genderType += [User::whereId(\Auth::id())->first()->gender];
             $model = MyModel::where('status', '1');
-            $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id')->with(['locationDetail','trainer','classDetail']);
+            $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id', 'gender_type');
+            $model = $model->whereIN('gender_type', $genderType);
+            $model = $model->with(['locationDetail', 'trainer', 'classDetail']);
             $perPage = isset($request->limit) ? $request->limit : 20;
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
@@ -40,7 +45,7 @@ class ClassScheduleController extends ApiController {
         // dd($category_id);
         try {
             $model = new Mymodel;
-            $model = $model->where('id', $request->id)->with(['locationDetail','trainer','classDetail']);
+            $model = $model->where('id', $request->id)->with(['locationDetail', 'trainer', 'classDetail']);
             $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id');
             return parent::success($model->first());
         } catch (\Exception $ex) {

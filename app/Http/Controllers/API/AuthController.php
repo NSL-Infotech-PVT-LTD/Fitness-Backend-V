@@ -34,7 +34,7 @@ class AuthController extends ApiController {
 
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '','gender'=>'required|in,male,female'];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '','gender'=>'required|in:male,female'];
 
 
         $rules = array_merge($this->requiredParams, $rules);
@@ -48,7 +48,7 @@ class AuthController extends ApiController {
         if ($checkRole->type == 'user'):
 //            dd($checkRole->category);            
             if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
-                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email','gender'=>'required|in,male,female'];
+                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email','gender'=>'required|in:male,female'];
                 $finalRules = [];
                 foreach ($rules as $key => $rule):
                     $finalRules[$key . '_1'] = $rule;
