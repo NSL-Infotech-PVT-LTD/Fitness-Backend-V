@@ -29,10 +29,15 @@ class Event extends Model {
      * @var array
      */
     protected $fillable = ['name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id'];
-    protected $appends = array('is_booked_by_me');
+    protected $appends = array('is_booked_by_me','is_booked_by_me_booking_id');
 
     public function getIsBookedByMeAttribute() {
         return (((\App\Booking::where('model_type', 'events')->where('model_id', $this->id)->where('created_by', \Auth::id())->count()) > 0) ? true : false);
+    }
+
+    public function getIsBookedByMeBookingIdAttribute() {
+        $booking = \App\Booking::where('model_type', 'events')->where('model_id', $this->id)->where('created_by', \Auth::id());
+        return ((($booking->count()) > 0) ? $booking->first()->id : 0);
     }
 
     /**
