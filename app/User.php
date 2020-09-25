@@ -42,7 +42,7 @@ class User extends Authenticatable {
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $appends = array('role','full_name');
+    protected $appends = array('role', 'full_name');
 
     public function getFullNameAttribute() {
         $name = '';
@@ -61,9 +61,9 @@ class User extends Authenticatable {
                 if ($role->get()->isEmpty() !== true)
                     return $role->select('name', 'id')->with('permission')->first();
             endif;
-            return [];
+            return (object) [];
         } catch (Exception $ex) {
-            return [];
+            return (object) [];
         }
     }
 
