@@ -55,11 +55,15 @@ class User extends Authenticatable {
 
     public function getRoleAttribute() {
         try {
-            $rolesID = \DB::table('role_user')->where('user_id', $this->id)->pluck('role_id');
+            $currentUserRole = \DB::table('role_user')->where('user_id', $this->id);
+            $rolesID = $currentUserRole->pluck('role_id');
             if ($rolesID->isEmpty() !== true):
                 $role = Role::whereIn('id', $rolesID);
-                if ($role->get()->isEmpty() !== true)
-                    return $role->select('name', 'id')->with('permission')->first();
+                if ($role->get()->isEmpty() !== true):
+                    $data = $role->select('name', 'id','image')->with('permission')->first();
+                return (object) array_merge($data->toArray(),['current_plan'=> RolePlans::select('id','fee_type','fee')->whereId($currentUserRole->first()->role_plan_id)->first()]);
+                endif;
+                    
             endif;
             return (object) [];
         } catch (Exception $ex) {
