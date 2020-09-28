@@ -13,13 +13,13 @@
     {!! Form::text('last_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('last_name', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('child') ? ' has-error' : ''}}">
+<!--<div class="form-group{{ $errors->has('child') ? ' has-error' : ''}}">
     {!! Form::label('child', 'Child: ', ['class' => 'control-label']) !!}
     {!! Form::radio('child','1_child' ,['class' => 'form-control', 'required' => 'required']) !!} One Child
     {!! Form::radio('child','2_child' ,['class' => 'form-control', 'required' => 'required']) !!} Two Children
     {!! Form::radio('child','none' ,['class' => 'form-control', 'required' => 'required','checked' => false]) !!} None
     {!! $errors->first('child', '<p class="help-block">:message</p>') !!}
-</div>
+</div>-->
 <div class="form-group{{ $errors->has('mobile') ? ' has-error' : ''}}">
     {!! Form::label('mobile', 'Mobile: ', ['class' => 'control-label']) !!}
     {!! Form::text('mobile', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -57,10 +57,10 @@ if ($formMode == 'create'):
     {!! Form::date('birth_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('birth_date', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group{{ $errors->has('marital_status') ? ' has-error' : ''}}">
-    {!! Form::label('marital_status', 'Marital Status: ', ['class' => 'control-label']) !!}
-    {!! Form::radio('marital_status','single' ,['class' => 'form-control', 'required' => 'required']) !!} Single
-    {!! Form::radio('marital_status','married' ,['class' => 'form-control', 'required' => 'required']) !!} Married
+<div class="form-group{{ $errors->has('gender') ? ' has-error' : ''}}">
+    {!! Form::label('gender', 'Gender: ', ['class' => 'control-label']) !!}
+    {!! Form::radio('gender','male' ,['class' => 'form-control', 'required' => 'required']) !!} Male
+    {!! Form::radio('gender','female' ,['class' => 'form-control', 'required' => 'required']) !!} Female
     {!! $errors->first('marital_status', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group{{ $errors->has('designation') ? ' has-error' : ''}}">
@@ -77,6 +77,10 @@ if ($formMode == 'create'):
     {!! Form::label('address', 'Address: ', ['class' => 'control-label']) !!}
     {!! Form::text('address', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group{{ $errors->has('city') ? ' has-error' : ''}}">
+    {!! Form::label('city', 'City', ['class' => 'control-label']) !!}
+    {!! Form::select('city', ['Abu Dhabi','Dubai','Ajman','Fujairah','Ras al Khaimah','Sharjah','Umm al Quwain'], null, ['class' => 'form-control', 'multiple' => false]) !!}
 </div>
 <?php if ($formMode == 'create'): ?>
     <div class="form-group{{ $errors->has('role_plan') ? ' has-error' : ''}}">
