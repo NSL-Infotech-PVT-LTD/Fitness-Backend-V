@@ -60,7 +60,7 @@ class User extends Authenticatable {
             if ($rolesID->isEmpty() !== true):
                 $role = Role::whereIn('id', $rolesID);
                 if ($role->get()->isEmpty() !== true):
-                    $data = $role->select('name', 'id','image')->with('permission')->first();
+                    $data = $role->select('name', 'id','image','label')->with('permission')->first();
                 return (object) array_merge($data->toArray(),['current_plan'=> RolePlans::select('id','fee_type','fee')->whereId($currentUserRole->first()->role_plan_id)->first()]);
                 endif;
                     
