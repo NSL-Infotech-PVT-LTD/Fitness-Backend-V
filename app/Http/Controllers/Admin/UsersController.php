@@ -213,7 +213,8 @@ class UsersController extends Controller {
      * @return void
      */
     public function update(Request $request, $id) {
-        $rules = ['first_name' => 'required', 'email' => 'required|string|max:255|email|unique:users,email,' . $id,];
+        $rules = ['first_name' => 'required'];
+//        $rules = ['first_name' => 'required', 'email' => 'required|string|max:255|email|unique:users,email,' . $id,];
 //        if ($request->has('image'))
 //            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
         if ($request->has('password'))
