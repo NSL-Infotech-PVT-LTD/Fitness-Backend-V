@@ -16,8 +16,6 @@ use Illuminate\Mail\Message;
 
 class AuthController extends ApiController {
 
-   
-
     private static function getRequestByRK($data, $rk) {
         $return = [];
 //        $rk = '_1';
@@ -32,23 +30,41 @@ class AuthController extends ApiController {
         return $return;
     }
 
+    private static function array_has_dupesReturn($array) {
+        $dups = array();
+        foreach (array_count_values($array) as $val => $c):
+            if ($c > 1)
+                $dups[] = $val;
+        endforeach;
+        return $dups;
+    }
+
+    private static function array_duplicates(array $array) {
+        return array_diff_assoc($array, array_unique($array));
+    }
+
+    private static function array_has_dupes($array) {
+        return count($array) !== count(array_unique($array));
+    }
+
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '','gender'=>'required|in:male,female','city'=>'required'];
 
-
+        $emails = [];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required'];
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
+        $emails['email'] = $request->email;
 //      $role = \App\Role::whereId($request->role_id)->first();
         $checkRole = \DB::table('roles')->whereId($request->role_id)->first();
 //        dd($request->all(), $checkRole);
         if ($checkRole->type == 'user'):
 //            dd($checkRole->category);            
             if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
-                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email','gender'=>'required|in:male,female'];
+                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email', 'gender' => 'required|in:male,female'];
                 $finalRules = [];
                 foreach ($rules as $key => $rule):
                     $finalRules[$key . '_1'] = $rule;
@@ -64,8 +80,18 @@ class AuthController extends ApiController {
                 if ($validateAttributes):
                     return $validateAttributes;
                 endif;
+
+                if (isset($request->email_1))
+                    $emails['email_1'] = $request->email_1;
+                if (isset($request->email_2))
+                    $emails['email_2'] = $request->email_2;
+                if (isset($request->email_3))
+                    $emails['email_3'] = $request->email_3;
             endif;
         endif;
+        $emails = self::array_duplicates($emails);
+        if (count($emails) > 0)
+            return parent::error([array_key_first($emails) => 'The ' . array_key_first($emails) . ' has already been taken.'], 422, false);
 //        self::getRequestByRK($request->all(), '_1');
 //        dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => 121]));
         try {
@@ -129,7 +155,7 @@ class AuthController extends ApiController {
 
     public function Update(Request $request) {
 
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => '','city'=>''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => '', 'city' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -145,7 +171,7 @@ class AuthController extends ApiController {
             $user->fill($input);
             $user->save();
 
-            $user = \App\User::whereId($user->id)->select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id','gender','city')->first();
+            $user = \App\User::whereId($user->id)->select('first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city')->first();
             return parent::successCreated(['message' => 'Updated Successfully', 'user' => $user]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
@@ -230,7 +256,7 @@ class AuthController extends ApiController {
             return $validateAttributes;
         endif;
         try {
-            $model = \App\User::select('id','first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id','gender','city')->where('id', \Auth::id());
+            $model = \App\User::select('id', 'first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city')->where('id', \Auth::id());
             return parent::success(['user' => $model->first()]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
