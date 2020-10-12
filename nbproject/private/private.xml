@@ -3,57 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/permissions/edit.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/routes/api.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_08_07_134500_create_bookings_table.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/BookingsController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/TrainerUserController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Booking.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/form/trainer.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/trainer-user/form.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/ClassSchedule.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/form.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/.env</file>
-            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_05_30_133744_create_classes_table.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/create.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/adminusers/index.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/lang/en/auth.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Classes.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/seeds/RolesTableSeeder.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/form.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ClassController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/config/database.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/roles/create.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/BookingController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/User.php</file>
-            <file>file:/Applications/AMPPS/www/volt/routes/web.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/ClassScheduleController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/composer.json</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/index.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/create.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/index.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Middleware/CheckRole.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/migrations/2014_10_12_000000_create_users_table.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ClassScheduleController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/lang/en/validation.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_15_143225_create_trainer_users_table.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ApiController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/seeds/DatabaseSeeder.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Role.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/RolePlans.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/emails/send_paymentlink.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/TrainerController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/show/customer.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/index.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Event.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/EventsController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/BookingsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/edit.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backend.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ClassController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/form/customer.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/index.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/roles/edit.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/create.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/EventController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class/edit.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/BookingController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ClassScheduleController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2014_10_12_000000_create_users_table.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/form.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/User.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/ClassSchedule.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/form.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/TrainerUser.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ApiController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/create.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/ClassScheduleController.php</file>
         </group>
     </open-files>
 </project-private>
