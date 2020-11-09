@@ -22,7 +22,7 @@ class User extends Authenticatable {
 //    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id','gender','city'
+        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city'
     ];
 
     /**
@@ -60,13 +60,12 @@ class User extends Authenticatable {
             if ($rolesID->isEmpty() !== true):
                 $role = Role::whereIn('id', $rolesID);
                 if ($role->get()->isEmpty() !== true):
-                    $data = $role->select('name', 'id','image','category')->with('permission')->first();
-                return (object) array_merge($data->toArray(),['current_plan'=> RolePlans::select('id','fee_type','fee')->whereId($currentUserRole->first()->role_plan_id)->first()]);
+                    $data = $role->select('name', 'id', 'image', 'category')->with('permission')->first();
+                    return (object) array_merge($data->toArray(), ['current_plan' => RolePlans::select('id', 'fee_type', 'fee')->whereId($currentUserRole->first()->role_plan_id)->first(), 'action_date' => $currentUserRole->first()->created_at]);
                 endif;
-                    
             endif;
             return (object) [];
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return (object) [];
         }
     }
