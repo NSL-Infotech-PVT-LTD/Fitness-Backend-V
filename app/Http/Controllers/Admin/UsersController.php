@@ -17,7 +17,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '', 'subscription' => 'required','joining_date', 'end_date'];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '', 'subscription' => 'required'];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -97,7 +97,7 @@ class UsersController extends Controller {
 
                                 return $return;
                             })
-                            ->rawColumns(['action', 'payment_status', 'parent_id', 'package','joining_date', 'end_date'])
+                            ->rawColumns(['action', 'payment_status', 'parent_id', 'package'])
                             ->make(true);
         }
         if (isset($role_id))
