@@ -517,6 +517,7 @@ button.btn.btn-success.btn-sm.changeStatus {
     border: 1px solid #d50100;
     margin-top: -7px;
     margin-right: 6px;
+        margin-bottom: 6px;
 }
 
  
@@ -654,5 +655,16 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
 .card-header {
     padding: 0px 0px;
 }
+}
+
+.country-img {
+    margin-left: 7px;
+    border: 1px solid;
+    height: 25px;
+    width: 30px;
+    text-align: center;
+    border-radius: 7px;
+    background: #232323;
+    color: #fff;
 }
 

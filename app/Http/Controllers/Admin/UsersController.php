@@ -17,7 +17,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'email' => 'required', 'payment_status' => 'required', 'subscription' => 'required'];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '', 'subscription' => 'required','joining_date', 'end_date'];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -50,7 +50,7 @@ class UsersController extends Controller {
         if ($request->ajax()) {
             $roleusers = \DB::table('role_user')->where('role_id', $role_id)->pluck('user_id');
 //            dd($roleusers);
-            $users = User::wherein('id', $roleusers)->latest();
+            $users = User::wherein('id', $roleusers)->get();
             return Datatables::of($users)
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
@@ -70,6 +70,9 @@ class UsersController extends Controller {
                                 else:
                                     return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->first()->first_name . '</a>';
                                 endif;
+                            })
+                            ->addColumn('package', function($item)use($role_id) {
+                                return $item->role->category;
                             })
                             ->addColumn('subscription', function($item)use($role_id) {
                                 $model = \DB::table('role_user')->where('role_id', $role_id)->where('user_id', $item->id)->get();
@@ -94,7 +97,7 @@ class UsersController extends Controller {
 
                                 return $return;
                             })
-                            ->rawColumns(['action', 'payment_status', 'parent_id'])
+                            ->rawColumns(['action', 'payment_status', 'parent_id', 'package','joining_date', 'end_date'])
                             ->make(true);
         }
         if (isset($role_id))

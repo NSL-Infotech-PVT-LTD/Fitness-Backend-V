@@ -17,7 +17,7 @@ class BookingsController extends Controller {
      * @return \Illuminate\View\View
      */
 //    protected $__rulesforindex = ['model_type' => 'required', 'model_id' => 'required', 'created_by' => 'required', 'created_at' => 'required'];
-    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required'];
+    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required', 'payment_status' => 'required'];
 
     public function index(Request $request) {
         if ($request->ajax()) {

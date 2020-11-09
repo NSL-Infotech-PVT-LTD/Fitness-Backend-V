@@ -43,7 +43,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-hover data-table">
+                            <table class="table table-bordered table-responsive table-hover data-table" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

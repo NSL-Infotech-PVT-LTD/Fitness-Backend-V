@@ -450,7 +450,7 @@
             @yield('content')
         </div>
         <style type="text/css" class='fa-star-o'>
-            table tr th:first-child {width: 50px !important;}
+            /*table tr th:first-child {width: 50px !important;}*/
             .menu-open li.nav-item p {
                 text-transform: capitalize;
             }
