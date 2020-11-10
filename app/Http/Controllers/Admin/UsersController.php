@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Role;
 use App\User;
+use Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use HasRoles;
@@ -17,7 +18,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '', 'subscription' => 'required'];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '', 'subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => ''];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -50,7 +51,7 @@ class UsersController extends Controller {
         if ($request->ajax()) {
             $roleusers = \DB::table('role_user')->where('role_id', $role_id)->pluck('user_id');
 //            dd($roleusers);
-            $users = User::wherein('id', $roleusers)->get();
+            $users = User::wherein('id', $roleusers)->latest();
             return Datatables::of($users)
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
@@ -81,6 +82,33 @@ class UsersController extends Controller {
                                         return \App\RolePlans::whereId($model->first()->role_plan_id)->first()->fee_type;
                                 return 'nan';
                             })
+                            ->addColumn('payment_date', function($item)use($role_id) {
+                                return $item->role->action_date;
+                            })
+                            ->addColumn('joining_date', function($item)use($role_id) {
+                                return $item->roles['0']['created_at'];
+                            })
+                            ->addColumn('end_date', function($item)use($role_id) {
+                                $subscription_endDate = new Carbon\Carbon($item->roles['0']['action_date']);
+                                switch ($item->roles['0']['current_plan']['fee_type']):
+                                    case'Monthly':
+                                        $subscription_endDate = $subscription_endDate->addMonth();
+//                                        dd('ss');
+                                        break;
+                                    case'Quarterly':
+                                        $subscription_endDate = $subscription_endDate->addMonths(3);
+                                        break;
+                                    case'Half yearly':
+                                        $subscription_endDate = $subscription_endDate->addMonths(6);
+                                        break;
+                                    case'Yearly':
+                                        $subscription_endDate = $subscription_endDate->addMonths(12);
+                                        break;
+                                endswitch;
+//                                dd($subscription_endDate);
+                                $subscription_end = new Carbon\Carbon($subscription_endDate);
+                                return $subscription_end->diffForHumans();
+                            })
                             ->addColumn('action', function($item)use($role_id) {
 //                                $return = 'return confirm("Confirm delete?")';
                                 $return = '';
@@ -97,7 +125,7 @@ class UsersController extends Controller {
 
                                 return $return;
                             })
-                            ->rawColumns(['action', 'payment_status', 'parent_id', 'package'])
+                            ->rawColumns(['action', 'payment_status', 'parent_id', 'package','payment_date','joining_date','end_date'])
                             ->make(true);
         }
         if (isset($role_id))

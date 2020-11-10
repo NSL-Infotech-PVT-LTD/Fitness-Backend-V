@@ -18,10 +18,11 @@ class ClassScheduleController extends ApiController {
         try {
             $genderType = ['both'];
             if (User::whereId(\Auth::id())->first()->gender != null)
-                $genderType += [User::whereId(\Auth::id())->first()->gender];
+                $gen = [User::whereId(\Auth::id())->first()->gender];
+            $gender = array_merge($genderType,$gen);
             $model = MyModel::where('status', '1');
             $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id', 'gender_type');
-            $model = $model->whereIN('gender_type', $genderType);
+            $model = $model->whereIn('gender_type', $gender);
             $model = $model->with(['locationDetail', 'trainer', 'classDetail']);
             $perPage = isset($request->limit) ? $request->limit : 20;
             if (isset($request->search)) {

@@ -32,7 +32,6 @@
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-
                             </thead>
                             <tbody>
                                 <tr>
@@ -59,7 +58,7 @@
                                 <tr><th>Designation</th><td> {{ $user->designation }} </td></tr>
                                 <tr><th>Emirates Id</th><td> {{ $user->emirates_id }} </td></tr>
                                 <tr><th>Address</th><td> {{ $user->address }} </td></tr>
-                                <tr><th>Approved Action Date</th><td> {{ $user->roles['0']['action_date'] }} </td></tr>
+                                <tr><th>Approved Action Date</th><td>{{$user->roles['0']['created_at'] }} </td></tr>
                                 <?php
 //                                dd($user->role->current_plan->fee_type);
                                 $subscription_endDate = new Carbon\Carbon($user->roles['0']['action_date']);
