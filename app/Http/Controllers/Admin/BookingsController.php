@@ -28,7 +28,7 @@ class BookingsController extends Controller {
                                 return \App\User::whereId($item->created_by)->first()->full_name;
                             })
                             ->editColumn('model_type', function($item) {
-                                
+
                                 switch ($item->model_type):
                                     case'trainer_users':
                                         return 'Trainer/' . $item->model_detail['first_name'];
@@ -61,7 +61,7 @@ class BookingsController extends Controller {
                                 endif;
                                 return $return;
                             })
-                            ->rawColumns(['action', 'model_id','type'])
+                            ->rawColumns(['action', 'model_id', 'type'])
                             ->make(true);
         }
         return view('admin.bookings.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -160,8 +160,25 @@ class BookingsController extends Controller {
     public function changeStatus(Request $request, $status, $id) {
 //        dd('dd');
         $user = Booking::findOrFail($id);
+//        dd($user->toArray());
         if ($status == '0'):
             Booking::destroy($id);
+            if ($user->model_type == 'class_schedules') {
+                $name = $user->model_detail->trainer['first_name'] . ' ' . $user->model_detail->trainer['middle_name'] . ' ' . $user->model_detail->trainer['last_name'];
+                $email = $user->model_detail->trainer['email'];
+            } elseif ($user->model_type == 'trainer_users') {
+                $name = $user->model_detail['first_name'] . ' ' . $user->model_detail['middle_name'] . ' ' . $user->model_detail['last_name'];
+                $email = $user->model_detail['email'];
+            } else { return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']); }
+//            parent::pushNotifications(['title' => self::$__BookingStatus['pending']['customer']['title'], 'body' => self::$__BookingStatus['pending']['customer']['body'], 'data' => ['target_id' => $address['id'], 'target_model' => 'Booking', 'data_type' => 'Booking', 'booking_id' => $address['id']]], \Auth::id(), TRUE);//send mail to user as a feedback    
+
+            $dataM = ['subject' => 'Reject your booking', 'name' => $name, 'to' => $email];
+
+            \Mail::send('emails.notify', $dataM, function($message) use ($dataM) {
+                $message->to($dataM['to']);
+                $message->subject($dataM['subject']);
+            });
+            //ENDS
             return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']);
         endif;
         $user->status = $status == '1' ? '1' : '0';
