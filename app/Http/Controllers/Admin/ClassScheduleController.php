@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\ClassSchedule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
 use DB;
@@ -23,6 +24,9 @@ class ClassScheduleController extends Controller {
             $class = ClassSchedule::all();
             return Datatables::of($class)
                             ->addIndexColumn()
+                            ->editColumn('start_date', function($item) {
+                                return Carbon::parse($item->start_date)->format(config('app.date_format'));
+                            })
                             ->editColumn('image', function($item) {
                                 return "<img width='50' src=" . url('uploads/class/' . $item->image) . ">";
                             })
@@ -42,7 +46,7 @@ class ClassScheduleController extends Controller {
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/class-schedule/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action', 'image'])
+                            ->rawColumns(['action', 'image', 'start_date'])
                             ->make(true);
         }
         return view('admin.class-schedule.index', ['rules' => array_keys($this->__rulesforindex)]);
@@ -123,7 +127,7 @@ class ClassScheduleController extends Controller {
         $this->validate($request, [
             'class_type' => 'required',
             'start_date' => 'required',
-            'end_date' => '',
+//            'end_date' => 'required',
             'repeat_on' => '',
             'start_time' => 'required',
             'duration' => 'required',

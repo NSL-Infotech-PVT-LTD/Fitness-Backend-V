@@ -17,23 +17,25 @@ class BookingsController extends Controller {
      * @return \Illuminate\View\View
      */
 //    protected $__rulesforindex = ['model_type' => 'required', 'model_id' => 'required', 'created_by' => 'required', 'created_at' => 'required'];
-    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required'];
+    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required', 'payment_status' => 'required', 'type' => ''];
 
     public function index(Request $request) {
         if ($request->ajax()) {
-            $bookings = Booking::all();
+            $bookings = Booking::latest();
             return Datatables::of($bookings)
                             ->addIndexColumn()
                             ->editColumn('created_by', function($item) {
                                 return \App\User::whereId($item->created_by)->first()->full_name;
                             })
                             ->editColumn('model_type', function($item) {
+                                
                                 switch ($item->model_type):
                                     case'trainer_users':
-                                        return 'Trainer';
+                                        return 'Trainer/' . $item->model_detail['first_name'];
                                         break;
                                     case'class_schedules':
-                                        return 'Group Class';
+                                        $res = json_decode($item->model_detail, true);
+                                        return 'Group Class/' . $res['class_detail']['name'];
                                         break;
                                     default:
                                         return $item->model_type;
@@ -42,6 +44,10 @@ class BookingsController extends Controller {
                             })
                             ->editColumn('model_id', function($item) {
                                 return "<a href=" . url('admin/' . $item->model_type . '/' . $item->model_id) . ">" . $item->model_type . "</a>";
+                            })
+                            ->addColumn('type', function($item) {
+                                $user = \App\User::where('id', $item->created_by)->first();
+                                return $user->role->name;
                             })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
@@ -55,7 +61,7 @@ class BookingsController extends Controller {
                                 endif;
                                 return $return;
                             })
-                            ->rawColumns(['action', 'model_id'])
+                            ->rawColumns(['action', 'model_id','type'])
                             ->make(true);
         }
         return view('admin.bookings.index', ['rules' => array_keys($this->__rulesforindex)]);
