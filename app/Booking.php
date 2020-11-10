@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model {
 
-    use LogsActivity;
+    use LogsActivity, SoftDeletes;
 
     /**
      * The database table used by the model.

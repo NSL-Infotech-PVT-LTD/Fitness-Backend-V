@@ -44,7 +44,7 @@
                                         
                                     </td>
                                 </tr>
-                                <tr><th>Membership ID</th><td>{{ $user->id }}</td></tr>
+                                <tr><th>Membership ID</th><td>VFM{{ $user->id }}</td></tr>
                                 <tr><th>First Name</th><td> {{ $user->first_name }} </td></tr>
                                 <tr><th>Middle Name</th><td> {{ $user->middle_name }} </td></tr>
                                 <tr><th>Last Name</th><td> {{ $user->last_name }} </td></tr>

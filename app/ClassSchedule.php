@@ -65,7 +65,7 @@ class ClassSchedule extends Model {
     }
 
     public function trainer() {
-        return $this->hasOne(TrainerUser::class, 'id', 'trainer_id')->select('id', 'first_name', 'middle_name', 'last_name', 'image');
+        return $this->hasOne(TrainerUser::class, 'id', 'trainer_id')->select('id', 'first_name', 'middle_name', 'last_name', 'image','email');
     }
 
     public function locationDetail() {
