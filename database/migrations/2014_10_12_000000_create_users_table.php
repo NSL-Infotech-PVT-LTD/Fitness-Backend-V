@@ -26,6 +26,8 @@ class CreateUsersTable extends Migration {
             $table->date('birth_date')->nullable();
             $table->enum('marital_status', ['single', 'married'])->nullable();
             $table->string('designation')->nullable();
+            $table->string('nationality')->nullable();
+            $table->text('about_us')->nullable();
             $table->string('emirates_id')->nullable();
             $table->string('address')->nullable();
             $table->string('image')->nullable();
