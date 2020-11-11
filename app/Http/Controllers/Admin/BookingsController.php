@@ -158,7 +158,6 @@ class BookingsController extends Controller {
     }
 
     public function changeStatus(Request $request, $status, $id) {
-//        dd('dd');
         $user = Booking::findOrFail($id);
 //        dd($user->toArray());
         if ($status == '0'):
