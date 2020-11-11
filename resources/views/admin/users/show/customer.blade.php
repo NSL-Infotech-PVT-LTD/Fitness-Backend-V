@@ -36,12 +36,12 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <?php if($user->image != null) { ?>
+                                        <?php if ($user->image != null) { ?>
                                             <img width="100" src="{{ url('uploads/image/'.$user->image)}}">
                                         <?php } else { ?>
                                             <div class='country-img'>NA</div>
-                                        <?php }   ?>
-                                        
+                                        <?php } ?>
+
                                     </td>
                                 </tr>
                                 <tr><th>Membership ID</th><td>VFM{{ $user->id }}</td></tr>
@@ -93,7 +93,7 @@
                                         <td> Inactive</td>
                                     <?php } ?>
                                 </tr>
-
+                                <tr><th>Role Plan</th><td> {{ $user->roles['0']->name }}  </td></tr>
                                 <tr><th>Created At</th><td> {{ $user->created_at }} </td></tr>
                             </tbody>
                         </table>
