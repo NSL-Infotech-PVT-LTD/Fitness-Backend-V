@@ -1,12 +1,29 @@
 @extends('layouts.backend')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
+<?php // dd($user->role->name,$user->role->current_plan->toArray(),$user->role->current_plan->fee_type,$user->role->action_date)?>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>View Details</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ url('admin/home')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Details</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
 
-            <div class="col-md-9">
-                <div class="card">
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
                     <div class="card-header">Booking {{ $booking->id }}</div>
                     <div class="card-body">
 
@@ -40,7 +57,12 @@
 
                     </div>
                 </div>
-            </div>
+            <!-- /.row -->
         </div>
-    </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
 @endsection
+
