@@ -18,7 +18,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '', 'subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => ''];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','feature' => '', 'subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => ''];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -52,6 +52,7 @@ class UsersController extends Controller {
             $roleusers = \DB::table('role_user')->where('role_id', $role_id)->pluck('user_id');
 //            dd($roleusers);
             $users = User::wherein('id', $roleusers)->latest();
+//            dd(json_decode($users)->role->permission);
             return Datatables::of($users)
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
@@ -74,6 +75,14 @@ class UsersController extends Controller {
                             })
                             ->addColumn('package', function($item)use($role_id) {
                                 return $item->role->category;
+                            })
+                            ->addColumn('feature', function($item)use($role_id) {
+                                $res = json_decode($item, true);
+                                $data = [];
+                                foreach($res['role']['permission'] as $feature) {
+                                    $data[] = $feature['name'];
+                                }
+                                return implode(", ",$data);
                             })
                             ->addColumn('subscription', function($item)use($role_id) {
                                 $model = \DB::table('role_user')->where('role_id', $role_id)->where('user_id', $item->id)->get();
@@ -125,7 +134,7 @@ class UsersController extends Controller {
 
                                 return $return;
                             })
-                            ->rawColumns(['action', 'payment_status', 'parent_id', 'package','payment_date','joining_date','end_date'])
+                            ->rawColumns(['action','feature', 'payment_status', 'parent_id', 'package','payment_date','joining_date','end_date'])
                             ->make(true);
         }
         if (isset($role_id))
