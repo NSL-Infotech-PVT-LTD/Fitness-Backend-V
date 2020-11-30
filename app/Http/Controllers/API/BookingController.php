@@ -40,10 +40,10 @@ class BookingController extends ApiController {
                 $input = $request->only('model_type', 'model_id');
 
             $model = Mymodel::create($input);
-            dd($model['created_by']);
+//            dd($model['created_by']);
             
             //Send to the artist
-        parent::pushNotifications(['title' => 'Confirmed', 'body' => 'Booking confirmation', 'data' => ['target_id' => $model['model_id'], 'target_model' => 'Booking', 'data_type' => 'Booking']], $model['created_by'], TRUE);
+        parent::pushNotifications(['title' => 'Confirmed', 'body' => 'Booking confirmation', 'data' => ['target_id' => $model['created_by'], 'target_model' => 'Booking', 'data_type' => 'Booking']], $model['created_by'], TRUE);
             
             return parent::successCreated(['message' => 'Created Successfully', 'booking' => $model]);
         } catch (\Exception $ex) {
