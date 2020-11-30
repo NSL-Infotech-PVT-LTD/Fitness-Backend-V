@@ -281,8 +281,8 @@ class ApiController extends \App\Http\Controllers\Controller {
 //
 // if (User::whereId($userId)->where('is_login', '1')->get()->isEmpty() === true)
 // return true;
-        if (User::whereId($userId)->where('is_notify', '1')->get()->isEmpty() === true)
-            return true;
+//        if (User::whereId($userId)->where('is_notify', '1')->get()->isEmpty() === true)
+//            return true;
         $tokens = [];
         foreach (\App\UserDevice::whereUserId($userId)->get() as $userDevice):
             $tokens[] = $userDevice->token;
