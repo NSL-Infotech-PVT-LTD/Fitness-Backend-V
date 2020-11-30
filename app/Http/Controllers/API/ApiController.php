@@ -250,6 +250,26 @@ class ApiController extends \App\Http\Controllers\Controller {
         return true;
     }
     
+    public static $_AuthId = 0;
+
+    private static function savePushNotification($data, $userId) {
+        try {
+
+            if (isset($data['data']))
+                $data['message'] = json_encode($data['data']);
+            $data += ['target_id' => $userId];
+            if (\Auth::id() != '')
+                $data += ['created_by' => \Auth::id()];
+            else
+                $data += ['created_by' => self::$_AuthId];
+
+            \App\Notification::create($data);
+            return true;
+        } catch (Exception $ex) {
+            
+        }
+    }
+    
     public static function pushNotifications($data = [], $userId, $saveNotification = true) {
         if ($saveNotification) {
             //dd($userId);
