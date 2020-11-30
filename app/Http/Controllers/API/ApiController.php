@@ -249,6 +249,29 @@ class ApiController extends \App\Http\Controllers\Controller {
         endforeach;
         return true;
     }
+    
+    public static function pushNotifications($data = [], $userId, $saveNotification = true) {
+        if ($saveNotification) {
+            //dd($userId);
+            self::savePushNotification($data, $userId);
+        }
+
+// echo $userId;
+// dd(User::whereId($userId)->where('is_notify', '1')->get()->isEmpty());
+//
+// if (User::whereId($userId)->where('is_login', '1')->get()->isEmpty() === true)
+// return true;
+        if (User::whereId($userId)->where('is_notify', '1')->get()->isEmpty() === true)
+            return true;
+        $tokens = [];
+        foreach (\App\UserDevice::whereUserId($userId)->get() as $userDevice):
+            $tokens[] = $userDevice->token;
+        endforeach;
+        //dd($tokens);
+        if (count($tokens) > 0)
+            self::pushNotofication($data, $tokens);
+        return true;
+    }
 
     private static function pushNotifyiOS($data, $devicetoken, $customData = null) {
         //return true;
