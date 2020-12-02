@@ -73,7 +73,7 @@ class Role extends Model {
                 return $a;
             endif;
             return [];
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return [];
         }
     }
@@ -82,8 +82,8 @@ class Role extends Model {
         return $this->hasMany(RolePlans::class, 'role_id', 'id')->select('id', 'fee', 'fee_type', 'role_id');
     }
 
-    public function getCategoryAttribute($value) {
-        return ucfirst(str_replace('_', ' ', $value));
-    }
+//    public function getCategoryAttribute($value) {
+//        return ucfirst(str_replace('_', ' ', $value));
+//    }
 
 }

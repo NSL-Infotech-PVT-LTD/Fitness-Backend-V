@@ -51,7 +51,7 @@ class AuthController extends ApiController {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
 
         $emails = [];
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required','nationality' => 'required', 'about_us' => ''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required', 'nationality' => 'required', 'about_us' => ''];
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
@@ -155,7 +155,7 @@ class AuthController extends ApiController {
 
     public function Update(Request $request) {
 
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => '', 'city' => '','nationality' => 'required', 'about_us' => ''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => '', 'city' => '', 'nationality' => 'required', 'about_us' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -202,22 +202,35 @@ class AuthController extends ApiController {
     }
 
     public function getRoles(Request $request) {
-        $rules = ['search' => ''];
+        $rules = [];
+        if (isset($request->type))
+            $rules += ['type' => 'required|in:gym_members,pool_and_beach_members,local_guest,fairmont_hotel_guest', 'user_with_child_only' => 'required|in:true,false'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
-        // dd($category_id);
+//         dd($rules);
         try {
             $model = \App\Role::where('status', '1');
             $return = [];
             foreach ($model->select('name')->get()->flatten()->unique() as $data):
-//                dd($data->name);
+//                dd($request->user_with_child_only);
                 $var = strtolower(str_replace(' ', '_', $data->name));
-                $return[$var] = \App\Role::where('status', '1')->where('name', $data->name)->with('PlanDetail')->get();
+                $role = \App\Role::where('status', '1');
+                if ($request->user_with_child_only == 'false')
+                    $role = $role->where('type', '!=', 'user_with_child');
+                elseif ($request->user_with_child_only == 'true')
+                    $role = $role->where('type', '=', 'user_with_child');
+                else
+                    $role = $role->where('type', '!=', 'user_with_child');
+
+                $return[$var] = $role->where('name', $data->name)->with('PlanDetail')->get();
 //                $return[] = ['plan_name' => $data->name, 'data' => \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get()];
 //                $return[] = [$data->name => \App\Role::where('type', $request->type)->where('status', '1')->where('name', $data->name)->with('PlanDetail')->get()];
             endforeach;
+
+            if ($request->type != '')
+                return parent::success($return[$request->type]);
 //            dd($return);
             return parent::success($return, 200, 'array');
         } catch (\Exception $ex) {
@@ -256,7 +269,7 @@ class AuthController extends ApiController {
             return $validateAttributes;
         endif;
         try {
-            $model = \App\User::select('id', 'first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city','nationality', 'about_us')->where('id', \Auth::id());
+            $model = \App\User::select('id', 'first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us')->where('id', \Auth::id());
             return parent::success(['user' => $model->first()]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
