@@ -46,6 +46,15 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'trainer' => [
+            'driver' => 'session',
+            'provider' => 'trainers',
+        ],
+        'trainer-api' => [
+            'driver' => 'passport',
+            'provider' => 'trainers',
+            'hash' => false,
+        ],
     ],
     /*
       |--------------------------------------------------------------------------
@@ -71,6 +80,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\AdminUser::class,
+        ],
+        'trainers' => [
+            'driver' => 'eloquent',
+            'model' => App\TrainerUser::class,
         ],
     // 'users' => [
     //     'driver' => 'database',
@@ -99,6 +112,11 @@ return [
         ],
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'trainer' => [
+            'provider' => 'trainers',
             'table' => 'password_resets',
             'expire' => 60,
         ],

@@ -24,7 +24,14 @@ Route::post('roles-type', 'API\AuthController@getRolesByType');
 Route::post('roles', 'API\AuthController@getRoles');
 //Route::post('roles', 'API\ConfigurationController@testPush');
 
-
+Route::group(['prefix' => 'trainer', 'namespace' => 'API'], function () {
+    Route::post('login', 'AuthTrainerController@Login');
+    Route::post('reset-password', 'AuthTrainerController@resetPassword');
+    Route::get('logout', 'AuthTrainerController@logout');
+});
+Route::group(['prefix' => 'trainer','middleware' => 'auth:trainer-api', 'namespace' => 'API'], function () {
+    Route::post('bookings', 'AuthTrainerBookingController@getitems');
+});
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');
     Route::post('get-profile', 'AuthController@getProfile');

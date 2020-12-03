@@ -249,7 +249,7 @@ class ApiController extends \App\Http\Controllers\Controller {
         endforeach;
         return true;
     }
-    
+
     public static $_AuthId = 0;
 
     private static function savePushNotification($data, $userId) {
@@ -269,7 +269,7 @@ class ApiController extends \App\Http\Controllers\Controller {
             
         }
     }
-    
+
     public static function pushNotifications($data = [], $userId, $saveNotification = true) {
         if ($saveNotification) {
             //dd($userId);
@@ -456,6 +456,17 @@ class ApiController extends \App\Http\Controllers\Controller {
 //        dd($data->user->id);
 
         return $data;
+    }
+
+    protected function addTrainerUserDeviceData(\App\TrainerUser $user, $request) {
+        if (\App\TrainerUserDevice::where('token', $request->device_token)->get()->isEmpty() === true):
+            $userDevice = new \App\TrainerUserDevice;
+            $userDevice->trainer_user_id = $user->id;
+            $userDevice->type = $request->device_type;
+            $userDevice->token = $request->device_token;
+            $userDevice->save();
+        endif;
+        return true;
     }
 
     protected function addUserDeviceData(User $user, $request) {

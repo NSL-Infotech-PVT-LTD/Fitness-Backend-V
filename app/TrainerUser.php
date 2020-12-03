@@ -4,10 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class TrainerUser extends Model {
+class TrainerUser extends Authenticatable {
 
-    use LogsActivity;
+    use LogsActivity,
+        HasApiTokens,
+        Notifiable;
 
     /**
      * The database table used by the model.
