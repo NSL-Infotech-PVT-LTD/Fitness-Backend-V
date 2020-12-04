@@ -44,12 +44,14 @@ class Handler extends ExceptionHandler {
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception) {
+//        dd($exception);
         if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
-                
-             if (in_array('api', $exception->guards())){
+            if (in_array('api', $exception->guards())) {
                 return \App\Http\Controllers\API\ApiController::error('Invalid AUTH Token', 401);
             }
-            
+            if (in_array('trainer-api', $exception->guards())) {
+                return \App\Http\Controllers\API\ApiController::error('Invalid AUTH Token', 401);
+            }
 //            return \App\Http\Controllers\API\ApiController::error('Invalid AUTH Token', 401);
         }
         return parent::render($request, $exception);
