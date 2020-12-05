@@ -27,6 +27,14 @@ class TrainerUser extends Authenticatable {
      * @var string
      */
     protected $primaryKey = 'id';
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+    ];
 
     /**
      * Attributes that should be mass-assignable.
@@ -34,7 +42,7 @@ class TrainerUser extends Authenticatable {
      * @var array
      */
     protected $fillable = ['first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode', 'expirence', 'certifications', 'specialities'];
-    protected $appends = array('full_name', 'booking_cnt', 'booking_reviewed_cnt', 'rating_avg', 'is_booked_by_me', 'is_booked_by_me_booking_id');
+    protected $appends = array('full_name', 'booking_cnt', 'booking_reviewed_cnt', 'rating_avg', 'is_booked_by_me', 'is_booked_by_me_booking_id', 'date_duration');
 
     public function getIsBookedByMeAttribute() {
         return (((\App\Booking::where('model_type', 'trainer_users')->where('model_id', $this->id)->where('created_by', \Auth::id())->count()) > 0) ? true : false);
@@ -50,6 +58,12 @@ class TrainerUser extends Authenticatable {
         $model = \App\Booking::where('model_type', 'class_schedules')->whereIn('model_id', $classschedule->toArray());
         $model = $model->whereNotNull('rating');
         return number_format((float) $model->avg('rating'), 1, '.', '');
+//        return $model->avg('rating');
+    }
+    
+    public function getDateDurationAttribute() {
+        $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->get(['id', 'start_date', 'end_date', 'trainer_id', 'duration']);
+        return $classschedule;
 //        return $model->avg('rating');
     }
 
