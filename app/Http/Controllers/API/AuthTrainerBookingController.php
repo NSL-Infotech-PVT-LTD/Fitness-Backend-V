@@ -24,7 +24,7 @@ class AuthTrainerBookingController extends ApiController {
 //            if ($request->model_type != 'all')
             $model = $model->where('model_type', 'trainer_users');
 //            unset($model['password']);
-            dd($model->get()->toArray());
+//            dd($model->get()->toArray());
             $perPage = isset($request->limit) ? $request->limit : 20;
             return parent::success($model->paginate($perPage));
         } catch (\Exception $ex) {
