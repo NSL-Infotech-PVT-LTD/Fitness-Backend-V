@@ -62,7 +62,7 @@ class TrainerUser extends Authenticatable {
     }
     
     public function getDateDurationAttribute() {
-        $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->get(['id', 'start_date', 'end_date', 'trainer_id', 'duration']);
+        $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->first(['id', 'start_date', 'end_date', 'trainer_id', 'duration']);
         return $classschedule;
 //        return $model->avg('rating');
     }
