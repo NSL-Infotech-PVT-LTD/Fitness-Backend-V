@@ -20,7 +20,7 @@ class AuthTrainerBookingController extends ApiController {
         endif;
         try {
             $model = new Mymodel;
-            $model = $model->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours', 'created_at')->where('model_id', \Auth::id())->orderBy('id', 'asc');
+            $model = $model->with(['booking_schedule'])->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours', 'created_at')->where('model_id', \Auth::id())->orderBy('id', 'asc');
 //            if ($request->model_type != 'all')
             $model = $model->where('model_type', 'trainer_users');
 //            unset($model['password']);
