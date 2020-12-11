@@ -181,6 +181,12 @@ class ApiController extends \App\Http\Controllers\Controller {
             $data = ['message' => $data];
         return response()->json(['status' => true, 'code' => $code, 'data' => (object) $data], $code);
     }
+    
+    public static function successCreatedNoData($data, $code = 403) {
+        if (!is_array($data))
+            $data = ['message' => $data];
+        return response()->json(['status' => true, 'code' => $code, 'data' => (object) $data], $code);
+    }
 
     protected static function sendOTPUser(User $user) {
         $otp = mt_rand(1000, 9999);
