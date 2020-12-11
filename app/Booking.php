@@ -58,7 +58,7 @@ class Booking extends Model {
 //        });
     }
 
-    protected $appends = array('model_detail');
+    protected $appends = array('model_detail', 'is_schedule');
 
     public function getModelDetailAttribute() {
         if ($this->model_type == 'class_schedules')
@@ -75,6 +75,19 @@ class Booking extends Model {
 
     public function createdByDetail() {
         return $this->hasOne(User::class, 'id', 'created_by')->select('id', 'first_name', 'middle_name', 'last_name', 'image');
+    }
+    
+    public function booking_schedule() {
+        return $this->hasMany(\App\BookingSchedule::class)->select('id','booking_id','trainer_user_id','schedule_date');
+    }
+    
+    //check trainer schedule booking or not
+    public function getIsScheduleAttribute() {
+        $booking = \App\BookingSchedule::where('booking_id', $this->id)->where('trainer_user_id', \Auth::id())->count();
+        $bookSch = false;
+        if($booking > 0)
+            $bookSch = true;
+        return $bookSch;
     }
 
 }
