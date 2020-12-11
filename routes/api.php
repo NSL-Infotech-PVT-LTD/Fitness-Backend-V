@@ -33,6 +33,7 @@ Route::group(['prefix' => 'trainer','middleware' => 'auth:trainer-api', 'namespa
     Route::post('bookings', 'AuthTrainerBookingController@getitems');
     Route::post('get-dates', 'AuthTrainerBookingController@getScheduledDates');
     Route::post('get-by-id', 'AuthTrainerBookingController@getitem');
+    Route::post('add-date', 'AuthTrainerBookingController@addScheduleDate');
 });
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');

@@ -67,5 +67,36 @@ class AuthTrainerBookingController extends ApiController {
             return parent::error($ex->getMessage());
         }
     }
+    
+    //add Schedule date for booking in booking schedule table
+    public function addScheduleDate(Request $request) {
+        $rules = ['booking_id' => 'required|exists:bookings,id', 'trainer_user_id' => 'required|exists:trainer_users,id', 'schedule_date' => 'required'];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+            $model = new \App\BookingSchedule();
+            $slot = \App\Booking::whereId($request->booking_id)->value('hours');
+            $input = $request->all();
+            $totalDate = count(json_decode($request->schedule_date));
+            $data = [];
+            if($slot == $totalDate) {
+                foreach (json_decode($request->schedule_date) as $date) {
+                    $data = [
+                        'booking_id' => $input['booking_id'],
+                        'trainer_user_id' => $input['trainer_user_id'],
+                        'schedule_date' => $date,
+                    ];
+                    \App\BookingSchedule::insert($data);
+                }
+            } else {
+                return parent::successCreatedNoData(['message' => 'Please select '. $slot .' slots!']);
+            }
+            return parent::successCreated(['message' => 'Created Successfully']);
+        } catch (\Exception $ex) {
+            return parent::error($ex->getMessage());
+        }
+    }
 
 }
