@@ -13,12 +13,12 @@
     {!! Form::textarea('privacy_policy', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('privacy_policy', '<p class="help-block">:message</p>') !!}
 </div>
-
 <div class="form-group{{ $errors->has('admin_email') ? 'has-error' : ''}}">
     {!! Form::label('admin_email', 'Email', ['class' => 'control-label']) !!}
     {!! Form::email('admin_email', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('admin_email', '<p class="help-block">:message</p>') !!}
 </div>
+
 
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
