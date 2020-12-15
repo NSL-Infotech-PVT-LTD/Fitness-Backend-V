@@ -57,7 +57,7 @@ class AuthTrainerBookingController extends ApiController {
         endif;
         try {
             $model = new \App\BookingSchedule();
-            $model = $model->where('booking_id', $request->booking_id)->where('trainer_user_id', $request->trainer_user_id)->select('schedule_date')->orderBy('id', 'asc');
+            $model = $model->where('trainer_user_id', \Auth::id())->value('schedule_date');
             
             $model = $model->get();
             if(count($model) > 0)
