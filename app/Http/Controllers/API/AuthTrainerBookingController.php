@@ -50,7 +50,7 @@ class AuthTrainerBookingController extends ApiController {
     }
     
     public function getScheduledDates(Request $request) {
-        $rules = ['booking_id' => 'required|exists:bookings,id', 'trainer_user_id' => 'required|exists:trainer_users,id'];
+        $rules = [];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
