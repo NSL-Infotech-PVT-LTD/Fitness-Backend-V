@@ -59,7 +59,6 @@ class AuthTrainerBookingController extends ApiController {
             $model = new \App\BookingSchedule();
             $model = $model->where('trainer_user_id', \Auth::id())->value('schedule_date');
             
-            $model = $model->get();
             if(count($model) > 0)
                 return parent::success($model);
             return parent::successCreatedNoData(['data' => [], 'message' => 'No Data Found!']);
