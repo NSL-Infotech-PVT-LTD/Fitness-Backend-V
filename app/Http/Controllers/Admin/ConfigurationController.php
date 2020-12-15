@@ -49,7 +49,7 @@ class ConfigurationController extends Controller {
         $this->validate($request, [
             'about_us' => 'required',
             'terms_and_conditions' => 'required',
-            'privacy_policy' => 'required',
+            'privacy_policy' => 'required'
         ]);
         $requestData = $request->all();
 
@@ -103,7 +103,7 @@ class ConfigurationController extends Controller {
         $this->validate($request, [
             'about_us' => 'required',
             'terms_and_conditions' => 'required',
-            'privacy_policy' => 'required',
+            'privacy_policy' => 'required'
         ]);
         $requestData = $request->all();
 

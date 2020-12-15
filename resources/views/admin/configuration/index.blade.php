@@ -40,6 +40,7 @@
                                     <td>{{ $item->about_us }}</td>
                                     <td>{{ $item->terms_and_conditions }}</td>
                                     <td>{{ $item->privacy_policy }}</td>
+                                    
                                     <td>
                                         <a href="{{ url('/admin/configuration/' . $item->id) }}" title="View Configuration"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
                                         <a href="{{ url('/admin/configuration/' . $item->id . '/edit') }}" title="Edit Configuration"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
