@@ -35,6 +35,11 @@ Route::group(['prefix' => 'trainer','middleware' => 'auth:trainer-api', 'namespa
     Route::post('get-by-id', 'AuthTrainerBookingController@getitem');
     Route::post('add-date', 'AuthTrainerBookingController@addScheduleDate');
 });
+
+Route::group(['prefix' => 'trainer', 'namespace' => 'API'], function () {
+    Route::post('bookings', 'AuthTrainerBookingController@getitems');
+});
+    
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');
     Route::post('get-profile', 'AuthController@getProfile');
