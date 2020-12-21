@@ -29,17 +29,13 @@ Route::group(['prefix' => 'trainer', 'namespace' => 'API'], function () {
     Route::post('reset-password', 'AuthTrainerController@resetPassword');
     Route::get('logout', 'AuthTrainerController@logout');
 });
-Route::group(['prefix' => 'trainer','middleware' => 'auth:trainer-api', 'namespace' => 'API'], function () {
+Route::group(['prefix' => 'trainer', 'middleware' => 'auth:trainer-api', 'namespace' => 'API'], function () {
     Route::post('bookings', 'AuthTrainerBookingController@getitems');
     Route::post('get-dates', 'AuthTrainerBookingController@getScheduledDates');
     Route::post('get-by-id', 'AuthTrainerBookingController@getitem');
     Route::post('add-date', 'AuthTrainerBookingController@addScheduleDate');
 });
 
-Route::group(['prefix' => 'trainer', 'namespace' => 'API'], function () {
-    Route::post('bookings', 'AuthTrainerBookingController@getitems');
-});
-    
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');
     Route::post('get-profile', 'AuthController@getProfile');
@@ -49,7 +45,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('class-schedules', 'ClassScheduleController@getItems');
     Route::post('class-schedule', 'ClassScheduleController@getItem');
 
-    Route::post('trainers', 'TrainerController@getitems');
+
     Route::post('trainer', 'TrainerController@getitem');
     Route::post('trainer/reviews', 'TrainerController@getReviewListByTrainerID');
 
@@ -57,6 +53,10 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('bookings/store', 'BookingController@store');
     Route::post('bookings', 'BookingController@getitems');
     Route::post('booking/delete', 'BookingController@deleteItem');
+});
+
+Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
+    Route::post('trainers', 'TrainerController@getitems');
 });
 
 Route::get('config/{column}', 'API\ConfigurationController@getConfigurationByColumn');
