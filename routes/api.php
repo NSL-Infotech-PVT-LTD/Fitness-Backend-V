@@ -45,8 +45,6 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('class-schedules', 'ClassScheduleController@getItems');
     Route::post('class-schedule', 'ClassScheduleController@getItem');
 
-    Route::post('trainer/reviews', 'TrainerController@getReviewListByTrainerID');
-
     //Bookings
     Route::post('bookings/store', 'BookingController@store');
     Route::post('bookings', 'BookingController@getitems');
@@ -56,6 +54,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
 Route::group(['namespace' => 'API'], function() {
     Route::post('trainers', 'TrainerController@getitems');
     Route::post('trainer', 'TrainerController@getitem');
+    Route::post('trainer/reviews', 'TrainerController@getReviewListByTrainerID');
 });
 
 Route::get('config/{column}', 'API\ConfigurationController@getConfigurationByColumn');
