@@ -22,7 +22,7 @@ class User extends Authenticatable {
 //    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city','nationality','about_us'
+        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'trainer_id', 'trainer_slot', 'address', 'status', 'image', 'parent_id', 'gender', 'city','nationality','about_us'
     ];
 
     /**

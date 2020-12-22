@@ -49,7 +49,7 @@ class AuthController extends ApiController {
 
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-
+//dd(\App\Role::where('id',$request->role_id)->value('member'));
         $emails = [];
         $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required', 'nationality' => 'required', 'about_us' => ''];
         $rules = array_merge($this->requiredParams, $rules);
@@ -60,33 +60,45 @@ class AuthController extends ApiController {
         $emails['email'] = $request->email;
 //      $role = \App\Role::whereId($request->role_id)->first();
         $checkRole = \DB::table('roles')->whereId($request->role_id)->first();
-//        dd($request->all(), $checkRole);
+        $roleMember = $checkRole->member;
+//        dd($request->all(), $roleMember);
         if ($checkRole->type == 'user'):
 //            dd($checkRole->category);            
             if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
-                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email', 'gender' => 'required|in:male,female'];
+                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email', 'gender' => 'required|in:male,female', 'trainer_id' => '', 'trainer_slot' => ''];
                 $finalRules = [];
                 foreach ($rules as $key => $rule):
-                    $finalRules[$key . '_1'] = $rule;
-                    if ($checkRole->category == 'family_with_1')
-                        $finalRules[$key . '_2'] = $rule;
-                    if ($checkRole->category == 'family_with_2'):
-                        $finalRules[$key . '_2'] = $rule;
-                        $finalRules[$key . '_3'] = $rule;
-                    endif;
+                    for ($i = 1; $i < $roleMember; $i++):
+                        $finalRules[$key . '_' . $i] = $rule;
+                    endfor;
                 endforeach;
+//                dd($finalRules);
+//                foreach ($rules as $key => $rule):
+//                    $finalRules[$key . '_1'] = $rule;
+//                    if ($checkRole->category == 'family_with_1')
+//                        $finalRules[$key . '_2'] = $rule;
+//                    if ($checkRole->category == 'family_with_2'):
+//                        $finalRules[$key . '_2'] = $rule;
+//                        $finalRules[$key . '_3'] = $rule;
+//                    endif;
+//                endforeach;
 //                dd($request->all(),$finalRules);
                 $validateAttributes = parent::validateAttributes($request, 'POST', $finalRules, array_keys($finalRules), false);
                 if ($validateAttributes):
                     return $validateAttributes;
                 endif;
 
-                if (isset($request->email_1))
-                    $emails['email_1'] = $request->email_1;
-                if (isset($request->email_2))
-                    $emails['email_2'] = $request->email_2;
-                if (isset($request->email_3))
-                    $emails['email_3'] = $request->email_3;
+//                if (isset($request->email_1))
+//                    $emails['email_1'] = $request->email_1;
+//                if (isset($request->email_2))
+//                    $emails['email_2'] = $request->email_2;
+//                if (isset($request->email_3))
+//                    $emails['email_3'] = $request->email_3;
+                for ($i = 1; $i < $roleMember; $i++):
+                    $var = 'email_' . $i;
+                    if (isset($request->$var))
+                        $emails[$var] = $request->$var;
+                endfor;
             endif;
         endif;
         $emails = self::array_duplicates($emails);
@@ -109,38 +121,46 @@ class AuthController extends ApiController {
             if (isset($request->role_plan_id))
                 \App\Http\Controllers\Admin\UsersController::mailSend($input, $request);
             if ($checkRole->type == 'user'):
-                if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
-//                    dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => $user->id]));
-                    switch ($checkRole->category):
-                        case'couple':
-                            $m1 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => $user->id]));
-                            //Assign role to created user
-                            $m1->assignRole($request->role_id, 'id');
-                            if (isset($request->role_plan_id))
-                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m1->id)->update(['role_plan_id' => $request->role_plan_id]);
-                            break;
-                        case'family_with_1':
-                            $m2 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_2'), ['parent_id' => $user->id]));
-                            //Assign role to created user
-                            $m2->assignRole($request->role_id, 'id');
-                            if (isset($request->role_plan_id))
-                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m2->id)->update(['role_plan_id' => $request->role_plan_id]);
-                            break;
-                        case'family_with_2':
-                            $m31 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_2'), ['parent_id' => $user->id]));
-                            //Assign role to created user
-                            $m31->assignRole($request->role_id, 'id');
-                            if (isset($request->role_plan_id))
-                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m31->id)->update(['role_plan_id' => $request->role_plan_id]);
+                for ($i = 1; $i < $roleMember; $i++):
+                    $m1 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_'.$i), ['parent_id' => $user->id]));
+                    //Assign role to created user
+                    $m1->assignRole($request->role_id, 'id');
+                    if (isset($request->role_plan_id))
+                        \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m1->id)->update(['role_plan_id' => $request->role_plan_id]);
+                endfor;
 
-                            $m32 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_3'), ['parent_id' => $user->id]));
-                            //Assign role to created user
-                            $m32->assignRole($request->role_id, 'id');
-                            if (isset($request->role_plan_id))
-                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m32->id)->update(['role_plan_id' => $request->role_plan_id]);
-                            break;
-                    endswitch;
-                endif;
+//                if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
+////                    dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => $user->id]));
+//                    switch ($checkRole->category):
+//                        case'couple':
+//                            $m1 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => $user->id]));
+//                            //Assign role to created user
+//                            $m1->assignRole($request->role_id, 'id');
+//                            if (isset($request->role_plan_id))
+//                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m1->id)->update(['role_plan_id' => $request->role_plan_id]);
+//                            break;
+//                        case'family_with_1':
+//                            $m2 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_2'), ['parent_id' => $user->id]));
+//                            //Assign role to created user
+//                            $m2->assignRole($request->role_id, 'id');
+//                            if (isset($request->role_plan_id))
+//                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m2->id)->update(['role_plan_id' => $request->role_plan_id]);
+//                            break;
+//                        case'family_with_2':
+//                            $m31 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_2'), ['parent_id' => $user->id]));
+//                            //Assign role to created user
+//                            $m31->assignRole($request->role_id, 'id');
+//                            if (isset($request->role_plan_id))
+//                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m31->id)->update(['role_plan_id' => $request->role_plan_id]);
+//
+//                            $m32 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_3'), ['parent_id' => $user->id]));
+//                            //Assign role to created user
+//                            $m32->assignRole($request->role_id, 'id');
+//                            if (isset($request->role_plan_id))
+//                                \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m32->id)->update(['role_plan_id' => $request->role_plan_id]);
+//                            break;
+//                    endswitch;
+//                endif;
             endif;
             // create user token for authorization
             $token = $user->createToken('netscape')->accessToken;
