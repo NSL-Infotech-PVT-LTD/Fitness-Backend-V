@@ -29,6 +29,8 @@ class CreateUsersTable extends Migration {
             $table->string('nationality')->nullable();
             $table->text('about_us')->nullable();
             $table->string('emirates_id')->nullable();
+            $table->integer('trainer_id')->nullable();
+            $table->integer('trainer_slot')->nullable();
             $table->string('address')->nullable();
             $table->string('image')->nullable();
             $table->string('payment_status')->nullable();
