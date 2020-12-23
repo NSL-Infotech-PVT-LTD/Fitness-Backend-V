@@ -108,7 +108,7 @@
             data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
             success: function (data) {
             if (data == 'Success') {
-            swal.fire("Deleted!", "ActivityPlan has been deleted", "success");
+            swal.fire("Deleted!", "Activity Plan has been deleted", "success");
             table.ajax.reload(null, false);
             }
             }
@@ -150,7 +150,7 @@
                     {
                     Swal.fire(
                             status + ' !',
-                            'ActivityPlan has been ' + status + ' .',
+                            'Activity Plan has been ' + status + ' .',
                             'success'
                             ).then(() => {
                     table.ajax.reload(null, false);
