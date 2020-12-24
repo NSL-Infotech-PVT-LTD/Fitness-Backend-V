@@ -21,6 +21,9 @@
         "stripe/stripe-php": "^7.27",
         "symfony/translation": "4.3.8",
         "webup/laravel-sendinblue": "^2.0",
+        "slim/slim": "4.0.0",
+        "nyholm/psr7": "^1.2",
+        "nyholm/psr7-server": "^0.3.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

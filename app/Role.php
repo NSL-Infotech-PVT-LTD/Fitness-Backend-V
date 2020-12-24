@@ -57,7 +57,55 @@ class Role extends Model {
         return __CLASS__ . " model has been {$eventName}";
     }
 
-    protected $appends = array('plans');
+    protected $appends = array('plans', 'price_label_monthly', 'price_label_quarterly', 'price_label_half_yearly', 'price_label_yearly');
+
+    public function getPriceLabelMonthlyAttribute() {
+        try {
+            $model = RolePlans::where('role_id', $this->id)->where('fee_type', 'monthly');
+            if ($model->count() != 0):
+                return $model->value('fee') . ' AED ' . $this->label;
+            endif;
+            return '';
+        } catch (\Exception $ex) {
+            return '';
+        }
+    }
+
+    public function getPriceLabelQuarterlyAttribute() {
+        try {
+            $model = RolePlans::where('role_id', $this->id)->where('fee_type', 'quarterly');
+            if ($model->count() != 0):
+                return $model->value('fee') . ' AED ' . $this->label;
+            endif;
+            return '';
+        } catch (\Exception $ex) {
+            return '';
+        }
+    }
+
+    public function getPriceLabelHalfYearlyAttribute() {
+        try {
+            $model = RolePlans::where('role_id', $this->id)->where('fee_type', 'half_yearly');
+            if ($model->count() != 0):
+                return $model->value('fee') . ' AED ' . $this->label;
+            endif;
+            return '';
+        } catch (\Exception $ex) {
+            return '';
+        }
+    }
+
+    public function getPriceLabelYearlyAttribute() {
+        try {
+            $model = RolePlans::where('role_id', $this->id)->where('fee_type', 'yearly');
+            if ($model->count() != 0):
+                return $model->value('fee') . ' AED ' . $this->label;
+            endif;
+            return '';
+        } catch (\Exception $ex) {
+            return '';
+        }
+    }
 
     public function getPlansAttribute() {
 //        $request = new Request();
@@ -85,5 +133,4 @@ class Role extends Model {
 //    public function getCategoryAttribute($value) {
 //        return ucfirst(str_replace('_', ' ', $value));
 //    }
-
 }

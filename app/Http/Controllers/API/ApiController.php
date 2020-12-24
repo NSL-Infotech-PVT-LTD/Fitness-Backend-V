@@ -369,14 +369,18 @@ class ApiController extends \App\Http\Controllers\Controller {
         return $results;
     }
 
-    protected static function CURL_API($method, $url, $data, $httpHeaders = []) {
+    public static function CURL_API($method, $url, $data, $httpHeaders = [], $contentTypejson = true, $curlOptionUserPWD = []) {
         $curl = curl_init();
 //        dd($data);
         switch ($method) {
             case "POST":
                 curl_setopt($curl, CURLOPT_POST, 1);
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+                if ($data):
+                    if ($contentTypejson)
+                        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+                    else
+                        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+                endif;
                 break;
             case "PUT":
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
@@ -387,12 +391,19 @@ class ApiController extends \App\Http\Controllers\Controller {
                 if ($data)
                     $url = sprintf("%s?%s", $url, http_build_query($data));
         }
-        $headers = array_merge(['Content-Type: application/json'], $httpHeaders);
+        if ($contentTypejson)
+            $headers = $httpHeaders;
+//            $headers = array_merge(['Content-Type: application/json'], $httpHeaders);
+        else
+            $headers = array_merge(['Content-Type: application/x-www-form-urlencoded'], $httpHeaders);
+//        $headers = $httpHeaders;
 // OPTIONS:
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        if (count($curlOptionUserPWD) > 0)
+            curl_setopt($curl, CURLOPT_USERPWD, $curlOptionUserPWD['0'] . ":" . $curlOptionUserPWD['1']);
 //dd($data);
 //dd($headers);
 // EXECUTE:
@@ -401,6 +412,7 @@ class ApiController extends \App\Http\Controllers\Controller {
             die("Connection Failure");
         }
         curl_close($curl);
+        dd($data, $headers, $result);
         return json_decode($result);
     }
 
