@@ -115,7 +115,7 @@ class Role extends Model {
             if ($model->isEmpty() !== true):
                 $a = [];
                 foreach ($model as $m):
-                    $a[$m->fee_type] = ['id' => $m->id, 'fee' => $m->fee];
+                    $a[$m->fee_type] = ['id' => $m->id, 'fee' => $m->fee, 'fee_type' => $m->fee_type];
                 endforeach;
 //                dd($a);
                 return $a;
