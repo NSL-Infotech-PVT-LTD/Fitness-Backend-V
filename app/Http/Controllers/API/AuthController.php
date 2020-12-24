@@ -60,18 +60,18 @@ class AuthController extends ApiController {
         $emails['email'] = $request->email;
 //      $role = \App\Role::whereId($request->role_id)->first();
         $checkRole = \DB::table('roles')->whereId($request->role_id)->first();
-        $roleMember = $checkRole->member;
-//        dd($request->all(), $roleMember);
-        if ($checkRole->type == 'user'):
+        $roleMember = (int) $checkRole->member;
+//        dd($checkRole, $roleMember);
+//        if ($checkRole->type == 'user'):
+        if (in_array($checkRole->type, ['user', 'user_with_child'])):
 //            dd($checkRole->category);            
-            if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
-                $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email', 'gender' => 'required|in:male,female', 'trainer_id' => '', 'trainer_slot' => ''];
-                $finalRules = [];
-                foreach ($rules as $key => $rule):
-                    for ($i = 1; $i < $roleMember; $i++):
-                        $finalRules[$key . '_' . $i] = $rule;
-                    endfor;
-                endforeach;
+            $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email', 'gender' => 'required|in:male,female', 'trainer_id' => '', 'trainer_slot' => ''];
+            $finalRules = [];
+            foreach ($rules as $key => $rule):
+                for ($i = 1; $i < $roleMember; $i++):
+                    $finalRules[$key . '_' . $i] = $rule;
+                endfor;
+            endforeach;
 //                dd($finalRules);
 //                foreach ($rules as $key => $rule):
 //                    $finalRules[$key . '_1'] = $rule;
@@ -83,10 +83,10 @@ class AuthController extends ApiController {
 //                    endif;
 //                endforeach;
 //                dd($request->all(),$finalRules);
-                $validateAttributes = parent::validateAttributes($request, 'POST', $finalRules, array_keys($finalRules), false);
-                if ($validateAttributes):
-                    return $validateAttributes;
-                endif;
+            $validateAttributes = parent::validateAttributes($request, 'POST', $finalRules, array_keys($finalRules), false);
+            if ($validateAttributes):
+                return $validateAttributes;
+            endif;
 
 //                if (isset($request->email_1))
 //                    $emails['email_1'] = $request->email_1;
@@ -94,12 +94,12 @@ class AuthController extends ApiController {
 //                    $emails['email_2'] = $request->email_2;
 //                if (isset($request->email_3))
 //                    $emails['email_3'] = $request->email_3;
-                for ($i = 1; $i < $roleMember; $i++):
-                    $var = 'email_' . $i;
-                    if (isset($request->$var))
-                        $emails[$var] = $request->$var;
-                endfor;
-            endif;
+            for ($i = 1; $i < $roleMember; $i++):
+                $var = 'email_' . $i;
+                if (isset($request->$var))
+                    $emails[$var] = $request->$var;
+            endfor;
+//            dd($emails);
         endif;
         $emails = self::array_duplicates($emails);
         if (count($emails) > 0)
@@ -120,9 +120,11 @@ class AuthController extends ApiController {
 //            dd('s');
             if (isset($request->role_plan_id))
                 \App\Http\Controllers\Admin\UsersController::mailSend($input, $request);
-            if ($checkRole->type == 'user'):
+//            if ($checkRole->type == 'user'):
+
+            if (in_array($checkRole->type, ['user', 'user_with_child'])):
                 for ($i = 1; $i < $roleMember; $i++):
-                    $m1 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_'.$i), ['parent_id' => $user->id]));
+                    $m1 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_' . $i), ['parent_id' => $user->id]));
                     //Assign role to created user
                     $m1->assignRole($request->role_id, 'id');
                     if (isset($request->role_plan_id))
