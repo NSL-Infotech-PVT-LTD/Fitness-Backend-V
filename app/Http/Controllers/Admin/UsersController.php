@@ -18,7 +18,8 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','feature' => '', 'subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => ''];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => '','trainer_id'=>'trainer_id'];
+//    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','feature' => '', 'subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => ''];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -71,6 +72,13 @@ class UsersController extends Controller {
                                     return 'NAN';
                                 else:
                                     return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->first()->first_name . '</a>';
+                                endif;
+                            })
+                            ->editColumn('trainer_id', function($item) {
+                                if ($item->trainer_id == null || $item->trainer_id == '0'):
+                                    return 'NAN';
+                                else:
+                                    return '<a target="_blank" href="' . route('trainer-user.show', $item->trainer_id) . '">' . \App\TrainerUser::whereId($item->trainer_id)->value('first_name') . '</a>';
                                 endif;
                             })
                             ->addColumn('package', function($item)use($role_id) {
