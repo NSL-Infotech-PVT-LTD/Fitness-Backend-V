@@ -47,6 +47,11 @@ class AuthController extends ApiController {
         return count($array) !== count(array_unique($array));
     }
 
+    private static function bookTrainer($trainerId, $trainerSlot, $userId) {
+        \App\Booking::$__AuthID = $userId;
+        return \App\Booking::create(['model_type' => 'trainer_users', 'model_id' => $trainerId, 'hours' => $trainerSlot]);
+    }
+
     public function Register(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
 //dd(\App\Role::where('id',$request->role_id)->value('member'));
@@ -124,11 +129,14 @@ class AuthController extends ApiController {
 
             if (in_array($checkRole->type, ['user', 'user_with_child'])):
                 for ($i = 1; $i < $roleMember; $i++):
-                    $m1 = \App\User::create(array_merge(self::getRequestByRK($request->all(), '_' . $i), ['parent_id' => $user->id]));
+                    $dataUser = array_merge(self::getRequestByRK($request->all(), '_' . $i), ['parent_id' => $user->id]);
+                    $m1 = \App\User::create($dataUser);
                     //Assign role to created user
                     $m1->assignRole($request->role_id, 'id');
                     if (isset($request->role_plan_id))
                         \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m1->id)->update(['role_plan_id' => $request->role_plan_id]);
+                    if ($dataUser['trainer_id'] != '' && $dataUser['trainer_slot'] != '')
+                        self::bookTrainer($dataUser['trainer_id'], $dataUser['trainer_slot'],$m1->id);
                 endfor;
 
 //                if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
@@ -166,6 +174,9 @@ class AuthController extends ApiController {
             endif;
             // create user token for authorization
             $token = $user->createToken('netscape')->accessToken;
+
+            if ($request->trainer_id != '' && $request->trainer_slot != '')
+                self::bookTrainer($request->trainer_id, $request->trainer_id,$user->id);
 //            testing comment
             // Add user device details for firbase
             parent::addUserDeviceData($user, $request);

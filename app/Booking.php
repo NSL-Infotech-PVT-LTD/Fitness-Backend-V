@@ -41,16 +41,15 @@ class Booking extends Model {
         return __CLASS__ . " model has been {$eventName}";
     }
 
+    public static $__AuthID = 0;
+
     public static function boot() {
         parent::boot();
-
-
 //        static::updating(function($model) {
 //            $model->updated_by = isset(auth()->user()->id) ? auth()->user()->id : $model->updated_by;
 //        });
-
         static::creating(function($model) {
-            $model->created_by = \Auth::id() == '' ? null : \Auth::id();
+            $model->created_by = \Auth::id() == '' ? self::$__AuthID : \Auth::id();
         });
 
 //        static::deleting(function($model) {
@@ -62,7 +61,7 @@ class Booking extends Model {
 
     public function getModelDetailAttribute() {
         if ($this->model_type == 'class_schedules')
-            $model = ClassSchedule::where('id', $this->model_id)->with(['locationDetail','trainer','classDetail'])->get();
+            $model = ClassSchedule::where('id', $this->model_id)->with(['locationDetail', 'trainer', 'classDetail'])->get();
         else if ($this->model_type == 'trainer_users')
             $model = TrainerUser::where('id', $this->model_id)->get();
         else if ($this->model_type == 'events')
@@ -76,16 +75,16 @@ class Booking extends Model {
     public function createdByDetail() {
         return $this->hasOne(User::class, 'id', 'created_by')->select('id', 'first_name', 'middle_name', 'last_name', 'image');
     }
-    
+
     public function booking_schedule() {
-        return $this->hasMany(\App\BookingSchedule::class)->select('id','booking_id','trainer_user_id','schedule_date');
+        return $this->hasMany(\App\BookingSchedule::class)->select('id', 'booking_id', 'trainer_user_id', 'schedule_date');
     }
-    
+
     //check trainer schedule booking or not
     public function getIsScheduleAttribute() {
         $booking = \App\BookingSchedule::where('booking_id', $this->id)->where('trainer_user_id', \Auth::id())->count();
         $bookSch = false;
-        if($booking > 0)
+        if ($booking > 0)
             $bookSch = true;
         return $bookSch;
     }
