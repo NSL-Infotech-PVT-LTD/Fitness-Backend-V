@@ -18,7 +18,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required','subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => '','trainer_id'=>'trainer_id'];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','payment_date'=>'','joining_date' => '','end_date' => '','trainer_id'=>'trainer_id'];
 //    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','feature' => '', 'subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => ''];
 
     public function index(Request $request) {
