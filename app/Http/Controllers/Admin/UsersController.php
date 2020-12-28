@@ -18,8 +18,7 @@ class UsersController extends Controller {
      *
      * @return void
      */
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','subscription' => 'required','payment_date'=>'','joining_date' => '','trainer_id'=>'trainer_id'];
-//    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '','feature' => '', 'subscription' => 'required','payment_date'=>'','joining_date' => '','end_date' => ''];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'mobile' => 'required', 'email' => 'required', 'payment_status' => 'required', 'package' => '', 'feature' => '', 'subscription' => 'required', 'payment_date' => '', 'joining_date' => '', 'end_date' => ''];
 
     public function index(Request $request) {
         $keyword = $request->get('search');
@@ -68,10 +67,10 @@ class UsersController extends Controller {
                                 endif;
                             })
                             ->editColumn('parent_id', function($item) {
-                                if ($item->parent_id == null || $item->parent_id == '0'):
+                                if ($item->parent_id == null || $item->parent_id == '0' || User::whereId($item->parent_id)->count() == '0'):
                                     return 'NAN';
                                 else:
-                                    return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->first()->first_name . '</a>';
+                                    return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->value('first_name') . '</a>';
                                 endif;
                             })
                             ->editColumn('trainer_id', function($item) {
@@ -87,10 +86,10 @@ class UsersController extends Controller {
                             ->addColumn('feature', function($item)use($role_id) {
                                 $res = json_decode($item, true);
                                 $data = [];
-                                foreach($res['role']['permission'] as $feature) {
+                                foreach ($res['role']['permission'] as $feature) {
                                     $data[] = $feature['name'];
                                 }
-                                return implode(", ",$data);
+                                return implode(", ", $data);
                             })
                             ->addColumn('subscription', function($item)use($role_id) {
                                 $model = \DB::table('role_user')->where('role_id', $role_id)->where('user_id', $item->id)->get();
@@ -142,7 +141,7 @@ class UsersController extends Controller {
 
                                 return $return;
                             })
-                            ->rawColumns(['action','feature', 'payment_status', 'parent_id', 'package','payment_date','joining_date','end_date'])
+                            ->rawColumns(['action', 'feature', 'payment_status', 'parent_id', 'package', 'payment_date', 'joining_date', 'end_date'])
                             ->make(true);
         }
         if (isset($role_id))
