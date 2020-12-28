@@ -56,7 +56,7 @@ class AuthController extends ApiController {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
 //dd(\App\Role::where('id',$request->role_id)->value('member'));
         $emails = [];
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required', 'nationality' => 'required', 'about_us' => ''];
+        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required', 'nationality' => 'required', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
         $rules = array_merge($this->requiredParams, $rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
@@ -115,7 +115,7 @@ class AuthController extends ApiController {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
             if (isset($request->image))
-                $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
+                $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'));
 //            dd(\App\Role::whereId($request->role_id)->first()->name);
             $user = \App\User::create($input);
             //Assign role to created user
@@ -136,7 +136,7 @@ class AuthController extends ApiController {
                     if (isset($request->role_plan_id))
                         \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $m1->id)->update(['role_plan_id' => $request->role_plan_id]);
                     if ($dataUser['trainer_id'] != '' && $dataUser['trainer_slot'] != '')
-                        self::bookTrainer($dataUser['trainer_id'], $dataUser['trainer_slot'],$m1->id);
+                        self::bookTrainer($dataUser['trainer_id'], $dataUser['trainer_slot'], $m1->id);
                 endfor;
 
 //                if (in_array($checkRole->category, ['couple', 'family_with_2', 'family_with_1'])):
@@ -176,7 +176,7 @@ class AuthController extends ApiController {
             $token = $user->createToken('netscape')->accessToken;
 
             if ($request->trainer_id != '' && $request->trainer_slot != '')
-                self::bookTrainer($request->trainer_id, $request->trainer_id,$user->id);
+                self::bookTrainer($request->trainer_id, $request->trainer_id, $user->id);
 //            testing comment
             // Add user device details for firbase
             parent::addUserDeviceData($user, $request);
