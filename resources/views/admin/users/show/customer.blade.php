@@ -95,6 +95,10 @@
                                 </tr>
                                 <tr><th>Role Plan</th><td> {{ $user->roles['0']->name }}  </td></tr>
                                 <tr><th>Created At</th><td> {{ $user->created_at }} </td></tr>
+                                <tr><th>Nationality</th><td> {{ $user->nationality }} </td></tr>
+                                <tr><th>Work Place</th><td> {{ $user->workplace }} </td></tr>
+                                <tr><th>How did you hear about us</th><td> {{ $user->about_us }} </td></tr>
+                                <tr><th></th><td> </td></tr>
                             </tbody>
                         </table>
                     </div>

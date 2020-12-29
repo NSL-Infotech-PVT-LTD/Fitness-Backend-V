@@ -32,7 +32,17 @@
                                 <tr>
                                     <th>ID</th><td>{{ $traineruser->id }}</td>
                                 </tr>
-                                <tr><th> First Name </th><td> {{ $traineruser->first_name }} </td></tr><tr><th> Middle Name </th><td> {{ $traineruser->middle_name }} </td></tr><tr><th> Last Name </th><td> {{ $traineruser->last_name }} </td></tr>
+                                <tr><th> First Name </th><td> {{ $traineruser->first_name }} </td></tr>
+                                <tr><th> Middle Name </th><td> {{ $traineruser->middle_name }} </td></tr>
+                                <tr><th> Last Name </th><td> {{ $traineruser->last_name }} </td></tr>
+                                <tr><th> email </th><td> {{ $traineruser->email }} </td></tr>
+                                <tr><th> Experience </th><td> {{ $traineruser->expirence }} </td></tr>
+                                <tr><th> Certifications </th><td> {{ $traineruser->certifications }} </td></tr>
+                                <tr><th> Speciality  </th><td> {{ $traineruser->specialities }} </td></tr>
+                                <tr><th> Birth Date	  </th><td> {{ $traineruser->birth_date	 }} </td></tr>
+                                <tr><th> About	  </th><td> {{ $traineruser->about	 }} </td></tr>
+                                <tr><th> Address	  </th><td> {{ $traineruser->address_house }} </td></tr>
+                                <tr><th> Emergency Contact No </th><td> {{ $traineruser->emergency_contact_no }} </td></tr>
                             </tbody>
                         </table>
                     </div>
