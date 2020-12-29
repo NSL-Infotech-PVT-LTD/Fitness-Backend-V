@@ -56,91 +56,133 @@ class UsersController extends Controller {
             return Datatables::of($users)
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
-                                if ($item->parent_id == null):
-                                    if ($item->payment_status == 'accepted'):
-                                        return "Payment Transaction Date: 240920";
+                                try {
+                                    if ($item->parent_id == null):
+                                        if ($item->payment_status == 'accepted'):
+                                            return "Payment Transaction Date: 240920";
+                                        else:
+                                            return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
+                                        endif;
                                     else:
-                                        return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
+                                        return "Parent Will Pay subscription";
                                     endif;
-                                else:
-                                    return "Parent Will Pay subscription";
-                                endif;
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
+                                }
                             })
                             ->editColumn('parent_id', function($item) {
-                                if ($item->parent_id == null || $item->parent_id == '0' || User::whereId($item->parent_id)->count() == '0'):
+                                try {
+                                    if ($item->parent_id == null || $item->parent_id == '0' || User::whereId($item->parent_id)->count() == '0'):
+                                        return 'NAN';
+                                    else:
+                                        return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->value('first_name') . '</a>';
+                                    endif;
+                                } catch (\Exception $ex) {
                                     return 'NAN';
-                                else:
-                                    return '<a target="_blank" href="' . route('users.show', $item->parent_id) . '">' . User::whereId($item->parent_id)->value('first_name') . '</a>';
-                                endif;
+                                }
                             })
                             ->editColumn('trainer_id', function($item) {
-                                if ($item->trainer_id == null || $item->trainer_id == '0'):
+                                try {
+                                    if ($item->trainer_id == null || $item->trainer_id == '0'):
+                                        return 'NAN';
+                                    else:
+                                        return '<a target="_blank" href="' . route('trainer-user.show', $item->trainer_id) . '">' . \App\TrainerUser::whereId($item->trainer_id)->value('first_name') . '</a>';
+                                    endif;
+                                } catch (\Exception $ex) {
                                     return 'NAN';
-                                else:
-                                    return '<a target="_blank" href="' . route('trainer-user.show', $item->trainer_id) . '">' . \App\TrainerUser::whereId($item->trainer_id)->value('first_name') . '</a>';
-                                endif;
+                                }
                             })
                             ->addColumn('package', function($item)use($role_id) {
-                                return $item->role->category;
+                                try {
+
+                                    return $item->role->category;
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
+                                }
                             })
                             ->addColumn('feature', function($item)use($role_id) {
-                                $res = json_decode($item, true);
-                                $data = [];
-                                foreach ($res['role']['permission'] as $feature) {
-                                    $data[] = $feature['name'];
+                                try {
+                                    $res = json_decode($item, true);
+                                    $data = [];
+                                    foreach ($res['role']['permission'] as $feature) {
+                                        $data[] = $feature['name'];
+                                    }
+                                    return implode(", ", $data);
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
                                 }
-                                return implode(", ", $data);
                             })
                             ->addColumn('subscription', function($item)use($role_id) {
-                                $model = \DB::table('role_user')->where('role_id', $role_id)->where('user_id', $item->id)->get();
-                                if ($model->isEmpty() != true)
-                                    if ($model->first()->role_plan_id != null)
-                                        return \App\RolePlans::whereId($model->first()->role_plan_id)->first()->fee_type;
-                                return 'nan';
+                                try {
+                                    $model = \DB::table('role_user')->where('role_id', $role_id)->where('user_id', $item->id)->get();
+                                    if ($model->isEmpty() != true)
+                                        if ($model->first()->role_plan_id != null)
+                                            return \App\RolePlans::whereId($model->first()->role_plan_id)->first()->fee_type;
+                                    return 'nan';
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
+                                }
                             })
                             ->addColumn('payment_date', function($item)use($role_id) {
-                                return $item->role->action_date;
+                                try {
+                                    return $item->role->action_date;
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
+                                }
                             })
                             ->addColumn('joining_date', function($item)use($role_id) {
-                                return $item->roles['0']['created_at'];
+                                try {
+                                    return $item->roles['0']['created_at'];
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
+                                }
                             })
                             ->addColumn('end_date', function($item)use($role_id) {
 //                                dd($item->role->current_plan->fee_type);
-                                $subscription_endDate = new Carbon\Carbon($item->role->action_date);
-                                switch ($item->role->current_plan->fee_type):
-                                    case'monthly':
-                                        $subscription_endDate = $subscription_endDate->addMonth();
+                                try {
+
+                                    $subscription_endDate = new Carbon\Carbon($item->role->action_date);
+                                    switch ($item->role->current_plan->fee_type):
+                                        case'monthly':
+                                            $subscription_endDate = $subscription_endDate->addMonth();
 //                                        dd('ss');
-                                        break;
-                                    case'quarterly':
-                                        $subscription_endDate = $subscription_endDate->addMonths(3);
-                                        break;
-                                    case'half_yearly':
-                                        $subscription_endDate = $subscription_endDate->addMonths(6);
-                                        break;
-                                    case'yearly':
-                                        $subscription_endDate = $subscription_endDate->addMonths(12);
-                                        break;
-                                endswitch;
+                                            break;
+                                        case'quarterly':
+                                            $subscription_endDate = $subscription_endDate->addMonths(3);
+                                            break;
+                                        case'half_yearly':
+                                            $subscription_endDate = $subscription_endDate->addMonths(6);
+                                            break;
+                                        case'yearly':
+                                            $subscription_endDate = $subscription_endDate->addMonths(12);
+                                            break;
+                                    endswitch;
 //                                dd($subscription_endDate);
-                                $subscription_end = new Carbon\Carbon($subscription_endDate);
-                                return $subscription_end->diffForHumans();
+                                    $subscription_end = new Carbon\Carbon($subscription_endDate);
+                                    return $subscription_end->diffForHumans();
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
+                                }
                             })
                             ->addColumn('action', function($item)use($role_id) {
 //                                $return = 'return confirm("Confirm delete?")';
-                                $return = '';
+                                try {
+                                    $return = '';
 
-                                if ($item->status == '0'):
-                                    $return .= "<button class='btn btn-danger btn-sm changeStatus' title='UnBlock'  data-id=" . $item->id . " data-status='UnBlock'>UnBlock / Active</button>";
-                                else:
-                                    $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
-                                endif;
+                                    if ($item->status == '0'):
+                                        $return .= "<button class='btn btn-danger btn-sm changeStatus' title='UnBlock'  data-id=" . $item->id . " data-status='UnBlock'>UnBlock / Active</button>";
+                                    else:
+                                        $return .= "<button class='btn btn-success btn-sm changeStatus' title='Block' data-id=" . $item->id . " data-status='Block' >Block / Inactive</button>";
+                                    endif;
 
-                                $return .= " <a  href=" . url('/admin/users/' . $item->id) . " title='View User'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
+                                    $return .= " <a  href=" . url('/admin/users/' . $item->id) . " title='View User'><button class='btn btn-info btn-sm'><i class='fas fa-folder' aria-hidden='true'></i> View </button></a>
                                          <a href=" . url('/admin/users/' . $item->id . '/edit') . " title='Edit User'><button class='btn btn-primary btn-sm'><i class='fas fa-pencil-alt' aria-hidden='true'></i> Edit </button></a>
                                           <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/users/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
 
-                                return $return;
+                                    return $return;
+                                } catch (\Exception $ex) {
+                                    return 'NAN';
+                                }
                             })
                             ->rawColumns(['action', 'feature', 'payment_status', 'parent_id', 'package', 'payment_date', 'joining_date', 'end_date'])
                             ->make(true);
