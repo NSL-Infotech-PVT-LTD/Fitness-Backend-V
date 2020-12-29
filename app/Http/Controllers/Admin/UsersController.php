@@ -105,19 +105,20 @@ class UsersController extends Controller {
                                 return $item->roles['0']['created_at'];
                             })
                             ->addColumn('end_date', function($item)use($role_id) {
-                                $subscription_endDate = new Carbon\Carbon($item->roles['0']['action_date']);
-                                switch ($item->roles['0']['current_plan']['fee_type']):
-                                    case'Monthly':
+//                                dd($item->role->current_plan->fee_type);
+                                $subscription_endDate = new Carbon\Carbon($item->role->action_date);
+                                switch ($item->role->current_plan->fee_type):
+                                    case'monthly':
                                         $subscription_endDate = $subscription_endDate->addMonth();
 //                                        dd('ss');
                                         break;
-                                    case'Quarterly':
+                                    case'quarterly':
                                         $subscription_endDate = $subscription_endDate->addMonths(3);
                                         break;
-                                    case'Half yearly':
+                                    case'half_yearly':
                                         $subscription_endDate = $subscription_endDate->addMonths(6);
                                         break;
-                                    case'Yearly':
+                                    case'yearly':
                                         $subscription_endDate = $subscription_endDate->addMonths(12);
                                         break;
                                 endswitch;
