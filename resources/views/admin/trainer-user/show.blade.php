@@ -38,7 +38,7 @@
                                 <tr><th> email </th><td> {{ $traineruser->email }} </td></tr>
                                 <tr><th> Experience </th><td> {{ $traineruser->expirence }} </td></tr>
                                 <tr><th> Certifications </th><td> {{ $traineruser->certifications }} </td></tr>
-                                <tr><th> Speciality  </th><td> {{ $traineruser->specialities }} </td></tr>
+                                <tr><th> Specialty  </th><td> {{ $traineruser->specialities }} </td></tr>
                                 <tr><th> Birth Date	  </th><td> {{ $traineruser->birth_date	 }} </td></tr>
                                 <tr><th> About	  </th><td> {{ $traineruser->about	 }} </td></tr>
                                 <tr><th> Address	  </th><td> {{ $traineruser->address_house }} </td></tr>
