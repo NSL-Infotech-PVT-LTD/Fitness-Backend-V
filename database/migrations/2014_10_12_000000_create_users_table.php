@@ -38,6 +38,8 @@ class CreateUsersTable extends Migration {
             $table->string('parent_id')->default(0);
             $table->string('workplace')->nullable();
             $table->string('martial_status')->nullable();
+            $table->string('hotel_room_no')->nullable();
+            $table->string('duration_of_stay')->nullable();
 //            $table->string('how_did_you_hear_about_us')->nullable();
             $table->enum('gender', ['male', 'female'])->default()->nullable();
             $table->enum('status', [0, 1])->default(0)->comment('0->Unactive, 1->Active');
