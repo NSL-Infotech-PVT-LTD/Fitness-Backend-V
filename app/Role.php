@@ -15,7 +15,7 @@ class Role extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'label', 'category', 'image', 'type', 'status'];
+    protected $fillable = ['name', 'label', 'category', 'image', 'type', 'status','member'];
 
     /**
      * A role may be given various permissions.
