@@ -43,6 +43,11 @@
                                 <tr><th> About	  </th><td> {{ $traineruser->about	 }} </td></tr>
                                 <tr><th> Address	  </th><td> {{ $traineruser->address_house }} </td></tr>
                                 <tr><th> Emergency Contact No </th><td> {{ $traineruser->emergency_contact_no }} </td></tr>
+                                <?php if ($traineruser->image == ''): ?>
+                                    <tr><th>Image</th><td>NAN</td></tr>
+                                <?php else: ?>
+                                    <tr><th>Image</th><td><img width="150" src="{{url('uploads/trainer-user/'.$traineruser->image)}}"> </td></tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
