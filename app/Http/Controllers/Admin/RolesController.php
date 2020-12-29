@@ -151,8 +151,8 @@ class RolesController extends Controller {
             if ($request->$feetype == null || $request->$feetype == '')
                 continue;
             $rolePlan = \App\RolePlans::where('role_id', $id)->where('fee_type', $feetype)->get();
-//            dd($rolePlan->isEmpty());
             $rolePlans = ['role_id' => $id, 'fee_type' => $feetype, 'fee' => $request->$feetype];
+//            dd($rolePlans);
             if ($request->hasfile($feetype . '_image')) {
                 $imageName = uniqid() . '.' . $request->file($feetype . '_image')->getClientOriginalExtension();
                 $request->file($feetype . '_image')->move(base_path() . '/public/uploads/roles/', $imageName);
@@ -161,8 +161,7 @@ class RolesController extends Controller {
             if ($rolePlan->isEmpty() == true):
                 \App\RolePlans::create($rolePlans);
             else:
-                $rolePlanUpdate = \App\RolePlans::findorfail($rolePlan->first()->id);
-                $rolePlanUpdate->update($rolePlans);
+                \App\RolePlans::where('id', $rolePlan->first()->id)->update(['fee' => $request->$feetype]);
             endif;
         endforeach;
         return redirect('admin/roles')->with('flash_message', 'Role updated!');
