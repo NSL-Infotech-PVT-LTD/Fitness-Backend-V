@@ -47,7 +47,7 @@ class BookingsController extends Controller {
                             })
                             ->addColumn('type', function($item) {
                                 $user = \App\User::where('id', $item->created_by)->first();
-                                return $user->role->name;
+                                return isset($user->role->name) ? $user->role->name : 'NAN';
                             })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
@@ -168,7 +168,9 @@ class BookingsController extends Controller {
             } elseif ($user->model_type == 'trainer_users') {
                 $name = $user->model_detail['first_name'] . ' ' . $user->model_detail['middle_name'] . ' ' . $user->model_detail['last_name'];
                 $email = $user->model_detail['email'];
-            } else { return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']); }
+            } else {
+                return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']);
+            }
 //            parent::pushNotifications(['title' => self::$__BookingStatus['pending']['customer']['title'], 'body' => self::$__BookingStatus['pending']['customer']['body'], 'data' => ['target_id' => $address['id'], 'target_model' => 'Booking', 'data_type' => 'Booking', 'booking_id' => $address['id']]], \Auth::id(), TRUE);//send mail to user as a feedback    
 
             $dataM = ['subject' => 'Reject your booking', 'name' => $name, 'to' => $email];
