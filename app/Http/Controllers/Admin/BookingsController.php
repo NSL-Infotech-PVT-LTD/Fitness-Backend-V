@@ -17,11 +17,16 @@ class BookingsController extends Controller {
      * @return \Illuminate\View\View
      */
 //    protected $__rulesforindex = ['model_type' => 'required', 'model_id' => 'required', 'created_by' => 'required', 'created_at' => 'required'];
-    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required', 'payment_status' => 'required', 'type' => ''];
+    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required', 'payment_status' => 'required', 'type' => '', 'created_by' => ''];
 
     public function index(Request $request) {
         if ($request->ajax()) {
-            $bookings = Booking::latest();
+            $bookings = new Booking();
+            if ($request->created_by != '')
+                $bookings = $bookings->where('created_by', $request->created_by);
+            $bookings = $bookings->latest();
+
+//            dd($request->created_by);
             return Datatables::of($bookings)
                             ->addIndexColumn()
                             ->editColumn('created_by', function($item) {

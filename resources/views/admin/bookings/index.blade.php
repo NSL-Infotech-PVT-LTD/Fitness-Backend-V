@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    
+
                     <h1>Bookings</h1>
                 </div>
                 <div class="col-sm-6">
@@ -27,15 +27,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                          
-<!--                <div class="card-body">
-                  
-                            <a href="{{ url('/admin/bookings/create') }}" class="btn btn-success btn-sm" title="Add New">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
 
-                </div>-->
+                            <!--                <div class="card-body">
+                                              
+                                                        <a href="{{ url('/admin/bookings/create') }}" class="btn btn-success btn-sm" title="Add New">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                                                    </a>
                             
+                                            </div>-->
+
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -43,13 +43,14 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <?php foreach ($rules as $rule): 
-                                            if($rule=='model_type')
-                                                $rule='Module Name';
-                                            else if($rule=='created_by')
-                                                $rule='Booked By';
-                                            else if($rule=='created_at')
-                                                $rule='Booked On';
+                                        <?php
+                                        foreach ($rules as $rule):
+                                            if ($rule == 'model_type')
+                                                $rule = 'Module Name';
+                                            else if ($rule == 'created_by')
+                                                $rule = 'Booked By';
+                                            else if ($rule == 'created_at')
+                                                $rule = 'Booked On';
                                             ?>
                                             <th>{{ucfirst($rule)}}</th>
                                         <?php endforeach; ?>
@@ -76,22 +77,22 @@
 
 <script type="text/javascript">
     $(function () {
-    var table = $('.data-table').DataTable({       
-                language: {
-                lengthMenu: "_MENU_",
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search..",
-                        info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
-                        paginate: {
-                        first: '<i class="fa fa-angle-double-left"></i>',
-                                previous: '<i class="fa fa-angle-left"></i>',
-                                next: '<i class="fa fa-angle-right"></i>',
-                                last: '<i class="fa fa-angle-double-right"></i>',
-                        },
-                },
-    processing: true,
+    var table = $('.data-table').DataTable({
+    language: {
+    lengthMenu: "_MENU_",
+            search: "_INPUT_",
+            searchPlaceholder: "Search..",
+            info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
+            paginate: {
+            first: '<i class="fa fa-angle-double-left"></i>',
+                    previous: '<i class="fa fa-angle-left"></i>',
+                    next: '<i class="fa fa-angle-right"></i>',
+                    last: '<i class="fa fa-angle-double-right"></i>',
+            },
+    },
+            processing: true,
             serverSide: true,
-            ajax: "{{ route('bookings.index') }}",
+            ajax: "<?=   (request()->get('created_by') != '') ? route('bookings.index'). "?created_by=" .request()->get('created_by') : route('bookings.index') ?>",
             columns: [
             {data: 'id', name: 'id'},
 <?php foreach ($rules as $rule): ?>
@@ -101,7 +102,8 @@
                     {data: "{{$rule}}", name: "{{$rule}}"},
     <?php endif; ?>
 <?php endforeach; ?>
-            {data: 'action', name: 'action', orderable: false, searchable: false}
+            {data: 'action', name: 'action', orderable: false, searchable: false
+            }
             ,
             ]
     });
@@ -164,8 +166,8 @@
     }
     });
     });
-  
-    });
+    }
+    );
 
 </script>
 @endsection
