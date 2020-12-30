@@ -19,7 +19,6 @@ class TrainerController extends ApiController {
             return $validateAttributes;
         endif;
         try {
-            dd('ss');
             $model = new Mymodel;
             $perPage = isset($request->limit) ? $request->limit : 20;
             $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'image','expirence','certifications','specialities')->where('status','1');
