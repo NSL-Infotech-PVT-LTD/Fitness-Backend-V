@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('booking/delete', 'BookingController@deleteItem');
 });
 
-Route::group(['middleware' => 'auth:api','prefix' => 'register','namespace' => 'API'], function() {
+Route::group(['middleware' => 'auth:api', 'prefix' => 'register', 'namespace' => 'API'], function() {
     Route::post('trainers', 'TrainerController@getitems');
     Route::post('trainer', 'TrainerController@getitem');
     Route::post('trainer/reviews', 'TrainerController@getReviewListByTrainerID');
@@ -61,5 +61,9 @@ Route::group(['namespace' => 'API'], function() {
     Route::post('trainer', 'TrainerController@getitem');
     Route::post('trainer/reviews', 'TrainerController@getReviewListByTrainerID');
 });
-
+Route::group(['middleware' => ['auth:api', 'roles'], 'namespace' => 'API'], function() {
+    Route::post('notification/list', 'NotificationController@notifications');
+    Route::post('notification/read', 'NotificationController@notificationRead');
+//    Route::post('notification/status', 'AuthController@updateNotifyStatus');
+});
 Route::get('config/{column}', 'API\ConfigurationController@getConfigurationByColumn');
