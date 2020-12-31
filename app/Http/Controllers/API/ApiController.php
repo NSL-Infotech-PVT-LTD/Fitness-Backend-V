@@ -411,7 +411,7 @@ class ApiController extends \App\Http\Controllers\Controller {
             die("Connection Failure");
         }
         curl_close($curl);
-        dd($data, $headers, $result);
+//        dd($data, $headers, $result);
         return json_decode($result);
     }
 
