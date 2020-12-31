@@ -56,6 +56,7 @@ class AuthController extends ApiController {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
 //dd(\App\Role::where('id',$request->role_id)->value('member'));
         $emails = [];
+        
 //        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required', 'nationality' => 'required', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
         if (isset($request->role_plan_id))
             $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '','image'=>'', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
