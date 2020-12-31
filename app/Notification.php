@@ -49,7 +49,7 @@ class Notification extends Model {
 //    }
     
     public function customerDetail() {
-        return $this->hasOne(User::class, 'id', 'created_by')->select('id', 'name', 'image');
+        return $this->hasOne(User::class, 'id', 'created_by')->select('id', 'first_name', 'middle_name', 'last_name', 'image');
     }
     
     public function getBookingDetailAttribute() {
