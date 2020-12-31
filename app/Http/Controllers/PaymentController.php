@@ -47,9 +47,30 @@ class PaymentController extends Controller {
 
 
     public function index() {
-        API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', ['grant_type' => 'client_credentials'], ['Content-Type: x-www-form-urlencoded', 'Authorization: Basic NGY4YzE1YzUtYTJhNS00OTZiLThkNmItZjU3NGM0MmRjZTAxOmY2MWExODUyLWRlZDAtNDQwZi1iZDZlLThhMmE5YmQ0NmRmZA=='], true);
 
-        dd('ss');
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/vnd.ni-identity.v1+json',
+                'Authorization: Basic NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ=='
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+//        echo $response;
+        dd($response);
+
 //        return view('payment.index');
     }
 

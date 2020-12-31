@@ -181,7 +181,7 @@ class ApiController extends \App\Http\Controllers\Controller {
             $data = ['message' => $data];
         return response()->json(['status' => true, 'code' => $code, 'data' => (object) $data], $code);
     }
-    
+
     public static function successCreatedNoData($data, $code = 403) {
         if (!is_array($data))
             $data = ['message' => $data];
@@ -404,8 +404,7 @@ class ApiController extends \App\Http\Controllers\Controller {
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         if (count($curlOptionUserPWD) > 0)
             curl_setopt($curl, CURLOPT_USERPWD, $curlOptionUserPWD['0'] . ":" . $curlOptionUserPWD['1']);
-//dd($data);
-//dd($headers);
+//        dd($data, $headers);
 // EXECUTE:
         $result = curl_exec($curl);
         if (!$result) {
