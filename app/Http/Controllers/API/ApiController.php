@@ -214,6 +214,42 @@ class ApiController extends \App\Http\Controllers\Controller {
         }
     }
 
+    public static function pushNotoficationRaw($data = [], $deviceToken) {
+        try {
+            $url = "https://fcm.googleapis.com/fcm/send";
+            $token = is_array($deviceToken) ? $deviceToken : [$deviceToken];
+            $serverKey = env('FCM_SERVER_KEY');
+            $dataToSend = array_merge(['priority' => 'high'], $data);
+            $arrayToSend = ['registration_ids' => $token, 'data' => $dataToSend, ['notification' => ['title' => $data['title'], 'body' => $data['body']]]];
+            $headers = array();
+            $headers[] = 'Authorization: key=' . $serverKey;
+            self::CURL_API('POST', $url, $arrayToSend, $headers, true);
+//            
+//            
+//            $json = json_encode($arrayToSend);
+//            $headers = array();
+//            $headers[] = 'Content-Type: application/json';
+//            $headers[] = 'Authorization: key=' . $serverKey;
+//            $ch = curl_init();
+//            curl_setopt($ch, CURLOPT_URL, $url);
+//            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+//            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//            //Send the request
+//            $response = curl_exec($ch);
+////            dd($ch);
+//            //Close request
+//            if ($response === FALSE) {
+////                die('FCM Send Error: ' . curl_error($ch));
+//                return true;
+//            }
+//            curl_close($ch);
+            return true;
+        } catch (\Exception $ex) {
+            return true;
+        }
+    }
+
     public static function pushNotofication($data = [], $deviceToken) {
         // FCM
         $optionBuilder = new OptionsBuilder();
@@ -289,13 +325,29 @@ class ApiController extends \App\Http\Controllers\Controller {
 // return true;
 //        if (User::whereId($userId)->where('is_notify', '1')->get()->isEmpty() === true)
 //            return true;
-        $tokens = [];
-        foreach (\App\UserDevice::whereUserId($userId)->get() as $userDevice):
-            $tokens[] = $userDevice->token;
+//        $tokens = [];
+//        foreach (\App\UserDevice::whereUserId($userId)->get() as $userDevice):
+//            $tokens[] = $userDevice->token;
+//        endforeach;
+//        //dd($tokens);
+//        if (count($tokens) > 0)
+//            self::pushNotofication($data, $tokens);
+//        return true;
+
+        $tokensAndroid = [];
+        foreach (\App\UserDevice::where('type', 'android')->whereUserId($userId)->get() as $userDevice):
+            $tokensAndroid[] = $userDevice->token;
         endforeach;
         //dd($tokens);
-        if (count($tokens) > 0)
-            self::pushNotofication($data, $tokens);
+        if (count($tokensAndroid) > 0)
+            self::pushNotoficationRaw($data, $tokensAndroid);
+
+        $tokensiOS = [];
+        foreach (\App\UserDevice::where('type', 'ios')->whereUserId($userId)->get() as $userDevice):
+            $tokensiOS[] = $userDevice->token;
+        endforeach;
+        if (count($tokensiOS) > 0)
+            self::pushNotofication($data, $tokensiOS);
         return true;
     }
 
