@@ -35,6 +35,18 @@
     {!! Form::text('expirence', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('expirence', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group{{ $errors->has('type') ? 'has-error' : ''}}">
+    <div class="fifty-fifty">
+        {!! Form::radio('type', 'freelancer', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required','id'=>'freelancer'] : ['class' => 'form-control']) !!}
+        {!! Form::label('type', 'Freelancer', ['class' => 'control-label']) !!}
+    </div>
+    <div class="fifty-fifty">
+        {!! Form::radio('type', 'permanent', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required','id'=>'permanent'] : ['class' => 'form-control']) !!}
+        {!! Form::label('type', 'Permanent', ['class' => 'control-label']) !!}
+    </div>
+    {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+
+</div>
 <div class="form-group{{ $errors->has('certifications') ? ' has-error' : ''}}">
     {!! Form::label('certifications', 'Certifications: ', ['class' => 'control-label']) !!}
     {!! Form::text('certifications', null, ['class' => 'form-control', 'required' => 'required']) !!}

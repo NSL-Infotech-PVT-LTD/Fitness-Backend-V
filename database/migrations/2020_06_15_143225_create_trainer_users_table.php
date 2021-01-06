@@ -26,6 +26,7 @@ class CreateTrainerUsersTable extends Migration {
             $table->string('birth_date')->nullable();
             $table->string('emirates_id')->nullable();
             $table->string('expirence')->nullable();
+            $table->enum('type',['permanent','freelancer'])->nullable();
             $table->text('about')->nullable();
             $table->text('certifications')->nullable();
             $table->text('specialities')->nullable();
