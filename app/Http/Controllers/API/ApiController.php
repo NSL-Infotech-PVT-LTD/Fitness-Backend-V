@@ -369,7 +369,7 @@ class ApiController extends \App\Http\Controllers\Controller {
         return $results;
     }
 
-    public static function CURL_API($method, $url, $data, $httpHeaders = [], $contentTypejson = true, $curlOptionUserPWD = []) {
+    public static function CURL_API($method, $url, $data, $httpHeaders = [], $contentTypejson = true, $curlOptionUserPWD = [], $debug = false) {
         $curl = curl_init();
 //        dd($data);
         switch ($method) {
@@ -411,7 +411,9 @@ class ApiController extends \App\Http\Controllers\Controller {
             die("Connection Failure");
         }
         curl_close($curl);
-//        dd($data, $headers, $result);
+        if ($debug == true):
+            dd($data, $headers, $result);
+        endif;
         return json_decode($result);
     }
 

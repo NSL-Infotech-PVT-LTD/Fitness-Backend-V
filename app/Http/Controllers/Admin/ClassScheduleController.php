@@ -12,7 +12,7 @@ use DB;
 
 class ClassScheduleController extends Controller {
 
-    protected $__rulesforindex = ['class_type' => 'required', 'start_date' => 'required'];
+    protected $__rulesforindex = ['class_id' => '', 'class_type' => 'required', 'start_date' => 'required'];
 
     /**
      * Display a listing of the resource.
@@ -20,10 +20,14 @@ class ClassScheduleController extends Controller {
      * @return \Illuminate\View\View
      */
     public function index(Request $request) {
+//        dd($class = ClassSchedule::all()->toArray());
         if ($request->ajax()) {
             $class = ClassSchedule::all();
             return Datatables::of($class)
                             ->addIndexColumn()
+                            ->editColumn('class_id', function($item) {
+                                return "<a href=" . url('admin/class/' . $item->class_id) . ">" . \App\Classes::whereId($item->class_id)->value('name') . "</a>";
+                            })
                             ->editColumn('start_date', function($item) {
                                 return Carbon::parse($item->start_date)->format(config('app.date_format'));
                             })
@@ -46,7 +50,7 @@ class ClassScheduleController extends Controller {
                                         . "  <button class='btn btn-danger btn-sm btnDelete' type='submit' data-remove='" . url('/admin/class-schedule/' . $item->id) . "'><i class='fas fa-trash' aria-hidden='true'></i> Delete </button>";
                                 return $return;
                             })
-                            ->rawColumns(['action', 'image', 'start_date'])
+                            ->rawColumns(['action', 'image', 'start_date', 'class_id'])
                             ->make(true);
         }
         return view('admin.class-schedule.index', ['rules' => array_keys($this->__rulesforindex)]);

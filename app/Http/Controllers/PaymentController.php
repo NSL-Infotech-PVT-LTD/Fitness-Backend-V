@@ -91,7 +91,8 @@ class PaymentController extends Controller {
             ], "total" => ["currencyCode" => "AED", "value" => 100],
             "message" => "Thank you for shopping with ACME Services LLC. Please visit the link provided below to pay your bill. We will ship your order once we have confirmation of your payment."
         ];
-        $response = API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com//invoices/outlets/' . $outletReference . '/invoice', $data, ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $response->access_token], true);
+//        $data=[];
+        $response = API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com//invoices/outlets/' . $outletReference . '/invoice', $data, ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Bearer ' . $response->access_token], true, [], true);
 
         dd($response);
 //        return view('payment.index');

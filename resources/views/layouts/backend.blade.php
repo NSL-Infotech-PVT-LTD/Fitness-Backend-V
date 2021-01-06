@@ -83,89 +83,89 @@
                 <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="far fa-bell"></i>
-                            <span class="badge badge-warning navbar-badge">10</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="p-2 bg-primary text-center">
-                                <h5 class="dropdown-header text-uppercase text-white">Notifications</h5>
-                            </div>
-                            <ul class="nav-items mb-0">
-                                <li>
-                                    <a class="text-dark media py-2" href="javascript:void(0)">
-                                        <div class="mr-2 ml-3">
-                                            <i class="fa fa-fw fa-check-circle text-success"></i>
-                                        </div>
-                                        <div class="media-body pr-2">
-                                            <div class="font-w600">You have a new follower</div>
-                                            <small class="text-muted">15 min ago</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark media py-2" href="javascript:void(0)">
-                                        <div class="mr-2 ml-3">
-                                            <i class="fa fa-fw fa-plus-circle text-info"></i>
-                                        </div>
-                                        <div class="media-body pr-2">
-                                            <div class="font-w600">1 new sale, keep it up</div>
-                                            <small class="text-muted">22 min ago</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark media py-2" href="javascript:void(0)">
-                                        <div class="mr-2 ml-3">
-                                            <i class="fa fa-fw fa-times-circle text-danger"></i>
-                                        </div>
-                                        <div class="media-body pr-2">
-                                            <div class="font-w600">Update failed, restart server</div>
-                                            <small class="text-muted">26 min ago</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark media py-2" href="javascript:void(0)">
-                                        <div class="mr-2 ml-3">
-                                            <i class="fa fa-fw fa-plus-circle text-info"></i>
-                                        </div>
-                                        <div class="media-body pr-2">
-                                            <div class="font-w600">2 new sales, keep it up</div>
-                                            <small class="text-muted">33 min ago</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark media py-2" href="javascript:void(0)">
-                                        <div class="mr-2 ml-3">
-                                            <i class="fas fa-user"></i>
-                                        </div>
-                                        <div class="media-body pr-2">
-                                            <div class="font-w600">You have a new subscriber</div>
-                                            <small class="text-muted">41 min ago</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark media py-2" href="javascript:void(0)">
-                                        <div class="mr-2 ml-3">
-                                            <i class="fa fa-fw fa-check-circle text-success"></i>
-                                        </div>
-                                        <div class="media-body pr-2">
-                                            <div class="font-w600">You have a new follower</div>
-                                            <small class="text-muted">42 min ago</small>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>  
-
-
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                        </div>
-                    </li> 
+                    <!--                    <li class="nav-item dropdown">
+                                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                                <i class="far fa-bell"></i>
+                                                <span class="badge badge-warning navbar-badge">10</span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                                <div class="p-2 bg-primary text-center">
+                                                    <h5 class="dropdown-header text-uppercase text-white">Notifications</h5>
+                                                </div>
+                                                <ul class="nav-items mb-0">
+                                                    <li>
+                                                        <a class="text-dark media py-2" href="javascript:void(0)">
+                                                            <div class="mr-2 ml-3">
+                                                                <i class="fa fa-fw fa-check-circle text-success"></i>
+                                                            </div>
+                                                            <div class="media-body pr-2">
+                                                                <div class="font-w600">You have a new follower</div>
+                                                                <small class="text-muted">15 min ago</small>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="text-dark media py-2" href="javascript:void(0)">
+                                                            <div class="mr-2 ml-3">
+                                                                <i class="fa fa-fw fa-plus-circle text-info"></i>
+                                                            </div>
+                                                            <div class="media-body pr-2">
+                                                                <div class="font-w600">1 new sale, keep it up</div>
+                                                                <small class="text-muted">22 min ago</small>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="text-dark media py-2" href="javascript:void(0)">
+                                                            <div class="mr-2 ml-3">
+                                                                <i class="fa fa-fw fa-times-circle text-danger"></i>
+                                                            </div>
+                                                            <div class="media-body pr-2">
+                                                                <div class="font-w600">Update failed, restart server</div>
+                                                                <small class="text-muted">26 min ago</small>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="text-dark media py-2" href="javascript:void(0)">
+                                                            <div class="mr-2 ml-3">
+                                                                <i class="fa fa-fw fa-plus-circle text-info"></i>
+                                                            </div>
+                                                            <div class="media-body pr-2">
+                                                                <div class="font-w600">2 new sales, keep it up</div>
+                                                                <small class="text-muted">33 min ago</small>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="text-dark media py-2" href="javascript:void(0)">
+                                                            <div class="mr-2 ml-3">
+                                                                <i class="fas fa-user"></i>
+                                                            </div>
+                                                            <div class="media-body pr-2">
+                                                                <div class="font-w600">You have a new subscriber</div>
+                                                                <small class="text-muted">41 min ago</small>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="text-dark media py-2" href="javascript:void(0)">
+                                                            <div class="mr-2 ml-3">
+                                                                <i class="fa fa-fw fa-check-circle text-success"></i>
+                                                            </div>
+                                                            <div class="media-body pr-2">
+                                                                <div class="font-w600">You have a new follower</div>
+                                                                <small class="text-muted">42 min ago</small>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>  
+                    
+                    
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                                            </div>
+                                        </li> -->
 
                     <div class="d-flex align-items-center">
                         <div class="dropdown d-inline-block ml-2 show">
@@ -290,8 +290,22 @@
                                         <li class="nav-item">
                                             <a href="{{ url('admin/users/role/'.$role->id) }}" class="nav-link">
                                                 <i class="far fa-user"></i>
-                                                <p><?= ($role->category != '') ? $role->name . ' | ' . (($role->category == 'family_with_2') ? 'Family' : $role->category) : $role->name ?></p>
+                                                <?php
+                                                $name_dot = strlen($role->name) > 10 ? substr($role->name, 0, 10) . "..." : $role->name;
+                                                $cat_dot = strlen($role->category) > 10 ? substr($role->category, 0, 10) . "..." : $role->category;
+
+                                                $category = ($role->category != '') ? $role->name . ' | ' . $role->category : $role->name;
+                                                $categoryHtml = ($role->category != '') ? '<span class="name ellipsis">' . $name_dot . '</span> | <span class="category">' . (($cat_dot == 'family_with_2') ? 'Family' : $cat_dot) . '</span>' : $name_dot;
+                                                ?>
+                                                <p data-toggle="tooltip" data-placement="bottom" title="<?= $category ?>"><?= $categoryHtml ?></p> 
+                                                <?php $count = \App\User::wherein('id', \DB::table('role_user')->where('role_id', $role->id)->pluck('user_id'))->where('status', '1')->count() ?>
+                                                <?php if ($count): ?>
+                                                    <b class="badge badge-danger"><?= $count ?></b>
+                                                <?php endif; ?>
                                             </a>
+
+
+
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
@@ -425,7 +439,7 @@
                             </li>
                             <li class="nav-item has-treeview">
                                 <a href="" class="nav-link">
-                                    <i class="fas fa-bookmark-o"></i>
+                                    <i class="fas fa-book"></i>
                                     <p>
                                         Bookings
                                         <i class="right fas fa-angle-left"></i>
@@ -436,6 +450,10 @@
                                         <a href="{{ url('admin/bookings') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
                                             <p>View All Bookings</p>
+                                            <?php $count = \App\Booking::where('status', '1')->count() ?>
+                                            <?php if ($count): ?>
+                                                <b class="badge badge-danger"><?= $count ?></b>
+                                            <?php endif; ?>
                                         </a>
                                     </li>
                                 </ul>
@@ -456,6 +474,9 @@
             }
         </style>
         <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
             var toggle = true;
 
             $(".sidebar-icon").click(function () {
