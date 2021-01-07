@@ -59,7 +59,7 @@ class BookingController extends ApiController {
         endif;
         try {
             $model = new Mymodel;
-            $model = $model->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours', 'created_at')->where('created_by', \Auth::id())->orderBy('id', 'asc');
+            $model = $model->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours', 'created_at','status')->where('created_by', \Auth::id())->orderBy('id', 'asc');
             if ($request->model_type != 'all')
                 $model = $model->where('model_type', $request->model_type);
             $perPage = isset($request->limit) ? $request->limit : 20;

@@ -28,7 +28,7 @@ class Booking extends Model {
      *
      * @var array
      */
-    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by', 'review', 'rating', 'hours', 'session'];
+    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by', 'review', 'rating', 'hours', 'session','status'];
 
     /**
      * Change activity log event description
