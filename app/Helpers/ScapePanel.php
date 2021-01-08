@@ -29,13 +29,11 @@ class ScapePanel {
     }
 
     public static function paymentFunction($userDetails, $planName, $price) {
-        
+//        dd($userDetails,$planName,$price);
         $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
         $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
 //        dd($response, $response->access_token);
-
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api-gateway.sandbox.ngenius-payments.com//invoices/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/invoice',
             CURLOPT_RETURNTRANSFER => true,
@@ -51,13 +49,13 @@ class ScapePanel {
       "email":"' . $userDetails['email'] . '",
       "transactionType":"SALE",
       "emailSubject": "Invoice from VOLT Services LLC",
-      "invoiceExpiryDate": "'.\Carbon\Carbon::now()->addDays(2)->format('Y-m-d').'",
+      "invoiceExpiryDate": "' . \Carbon\Carbon::now()->addDays(2)->format('Y-m-d') . '",
       "items":[
         {
           "description":"' . $planName . '",
           "totalPrice":{
             "currencyCode":"AED",
-            "value":' . $price . '
+            "value":' . (int) $price * 100 . '
           },
           "quantity": 1
         }

@@ -119,6 +119,10 @@ class AuthController extends ApiController {
             return parent::error([array_key_first($emails) => 'The ' . array_key_first($emails) . ' has already been taken.'], 422, false);
 //        self::getRequestByRK($request->all(), '_1');
 //        dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => 121]));
+//        $roleplan = \App\RolePlans::whereId($request->role_plan_id);
+//
+//        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction(['firstName' => $request->first_name, 'lastName' => $request->last_name, 'email' => $request->email], $roleplan->value('fee_type'), $roleplan->value('fee'));
+//        dd('ss');
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
@@ -128,13 +132,15 @@ class AuthController extends ApiController {
             $user = \App\User::create($input);
             //Assign role to created user
             $user->assignRole($request->role_id, 'id');
-            if (isset($request->role_plan_id))
+            if (isset($request->role_plan_id)):
                 \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $user->id)->update(['role_plan_id' => $request->role_plan_id]);
-            $roleplan = \App\RolePlans::whereId($request->role_plan_id);
-            $paymentFunction = \App\Helpers\ScapePanel::paymentFunction(['firstName' => $request->first_name, 'lastName' => $request->last_name, 'email' => $request->email], $roleplan->value('fee_type'), $roleplan->value('fee'));
+                $roleplan = \App\RolePlans::whereId($request->role_plan_id);
 
-            if (isset($request->role_plan_id))
+                $paymentFunction = \App\Helpers\ScapePanel::paymentFunction(['firstName' => $request->first_name, 'lastName' => $request->last_name, 'email' => $request->email], $roleplan->value('fee_type'), $roleplan->value('fee'));
+                if ($paymentFunction == false)
+                    return parent::error("something went wrong while sending payment link");
                 \App\Http\Controllers\Admin\UsersController::mailSend(array_merge($input, ['payment_href' => $paymentFunction]), $request);
+            endif;
 //            if ($checkRole->type == 'user'):
 
             if (in_array($checkRole->type, ['user', 'user_with_child'])):
