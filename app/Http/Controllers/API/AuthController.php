@@ -53,13 +53,14 @@ class AuthController extends ApiController {
     }
 
     public function Register(Request $request) {
+//        dd(\Carbon\Carbon::now()->addDays(2)->format('Y-m-d'));
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
 //dd(\App\Role::where('id',$request->role_id)->value('member'));
         $emails = [];
-        
+
 //        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required', 'nationality' => 'required', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
         if (isset($request->role_plan_id))
-            $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '','image'=>'', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
+            $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'image' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
         else
             $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => '', 'birth_date' => '', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => '', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => '', 'hotel_room_no' => '', 'duration_of_stay' => ''];
 
@@ -129,9 +130,11 @@ class AuthController extends ApiController {
             $user->assignRole($request->role_id, 'id');
             if (isset($request->role_plan_id))
                 \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $user->id)->update(['role_plan_id' => $request->role_plan_id]);
-//            dd('s');
+            $roleplan = \App\RolePlans::whereId($request->role_plan_id);
+            $paymentFunction = \App\Helpers\ScapePanel::paymentFunction(['firstName' => $request->first_name, 'lastName' => $request->last_name, 'email' => $request->email], $roleplan->value('fee_type'), $roleplan->value('fee'));
+
             if (isset($request->role_plan_id))
-                \App\Http\Controllers\Admin\UsersController::mailSend($input, $request);
+                \App\Http\Controllers\Admin\UsersController::mailSend(array_merge($input, ['payment_href' => $paymentFunction]), $request);
 //            if ($checkRole->type == 'user'):
 
             if (in_array($checkRole->type, ['user', 'user_with_child'])):

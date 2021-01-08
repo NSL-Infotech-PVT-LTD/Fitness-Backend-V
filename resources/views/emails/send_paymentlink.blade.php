@@ -46,7 +46,7 @@
                   <tr>
                      <h2 style="padding: 20px 0px 0px 0px; color:#000;font-weight:900;line-height:20px;font-size:20px;margin: 0;">Payment </h2>
                      <td style="border-radius:70px;">
-                        <a  href="#" target="_blank" style=" text-decoration: none;
+                        <a  href="{{$payment_href}}" target="_blank" style=" text-decoration: none;
                            padding: 18px 40px;
                            display: block;
                            color: #fff;

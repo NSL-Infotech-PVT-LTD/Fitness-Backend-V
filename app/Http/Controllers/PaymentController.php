@@ -71,30 +71,52 @@ class PaymentController extends Controller {
     public function index() {
         $response = API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ=='], true);
 //        dd($response, $response->access_token);
-        $outletReference = 'bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00';
-        $data = [
-            "firstName" => "Test",
-            "lastName" => "Customer",
-            "email" => "gaurav@netscapelabs.com",
-            "transactionType" => "SALE",
-            "emailSubject" => "Invoice from ACME Services LLC",
-            "invoiceExpiryDate" => "2022-07-28",
-            "items" => [
-                [
-                    "description" => "1 x large widget",
-                    "totalPrice" => [
-                        "currencyCode" => "AED",
-                        "value" => 100
-                    ],
-                    "quantity" => 1
-                ]
-            ], "total" => ["currencyCode" => "AED", "value" => 100],
-            "message" => "Thank you for shopping with ACME Services LLC. Please visit the link provided below to pay your bill. We will ship your order once we have confirmation of your payment."
-        ];
-//        $data=[];
-        $response = API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com//invoices/outlets/' . $outletReference . '/invoice', $data, ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Bearer ' . $response->access_token], true, [], true);
 
-        dd($response);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-gateway.sandbox.ngenius-payments.com//invoices/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/invoice',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+      "firstName":"Hari",
+      "lastName":"Krishnan",
+      "email":"gaurav1@netscapelabs.com",
+      "transactionType":"SALE",
+      "emailSubject": "Invoice from ACME Services LLC",
+      "invoiceExpiryDate": "2021-01-10",
+      "items":[
+        {
+          "description":"1 x large widget",
+          "totalPrice":{
+            "currencyCode":"AED",
+            "value":100
+          },
+          "quantity": 1
+        }
+      ],
+      "total":{
+        "currencyCode":"AED",
+        "value":100
+      },
+      "message":"Thank you for shopping with ACME Services LLC. Please visit the link provided below to pay your bill."
+    }',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/vnd.ni-invoice.v1+json',
+                'Authorization: Bearer ' . $response->access_token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response =json_decode($response);
+        dd($response,$response->_links->payment->href);
 //        return view('payment.index');
     }
 
