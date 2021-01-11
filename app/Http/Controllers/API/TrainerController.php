@@ -22,8 +22,8 @@ class TrainerController extends ApiController {
             $model = new Mymodel;
             $perPage = isset($request->limit) ? $request->limit : 20;
             $model = $model->select('id', 'first_name', 'middle_name', 'last_name', 'image','expirence','certifications','specialities')
-                    ->where('status','permanent')
-                    ->where('type','1');
+                    ->where('status','1')
+                    ->where('type','permanent');
             if (isset($request->search)) {
                 $model = $model->where(function($query) use ($request) {
                     $query->where('first_name', 'LIKE', "$request->search%")->orWhere('middle_name', 'LIKE', "$request->search%")->orWhere('last_name', 'LIKE', "$request->search%")->orWhere('email', 'LIKE', "$request->search%");
