@@ -203,7 +203,7 @@
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
-                <a href="http://localhost/volt/public/admin/home" class="brand-link">
+                <a href="{{ url('admin/home') }}" class="brand-link">
 
                     <span class="brand-text font-weight-light"><img src="/volt/public/logo_black.png"style="max-width:100px"></span>
                 </a>
@@ -298,7 +298,7 @@
                                                 $categoryHtml = ($role->category != '') ? '<span class="name ellipsis">' . $name_dot . '</span> | <span class="category">' . (($cat_dot == 'family_with_2') ? 'Family' : $cat_dot) . '</span>' : $name_dot;
                                                 ?>
                                                 <p data-toggle="tooltip" data-placement="bottom" title="<?= $category ?>"><?= $categoryHtml ?></p> 
-                                                <?php $count = \App\User::wherein('id', \DB::table('role_user')->where('role_id', $role->id)->pluck('user_id'))->where('status', '1')->count() ?>
+                                                <?php $count = \App\User::wherein('id', \DB::table('role_user')->where('role_id', $role->id)->pluck('user_id'))->where('status', '0')->count() ?>
                                                 <?php if ($count): ?>
                                                     <b class="badge badge-danger"><?= $count ?></b>
                                                 <?php endif; ?>

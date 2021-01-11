@@ -34,7 +34,7 @@
                             <table style="margin: auto;">
                                 <tr>
                                 <a href="#">
-                                    <img src="{{ url('logo.png') }}" style="width:70px;"></a>
+                                    <img src="https://dev.netscapelabs.com/volt/public/logo.png" style="width:70px;"></a>
                                 </tr>
                             </table>
                         </td>
@@ -49,10 +49,8 @@
                             <table style="margin: auto;">
                                 <tr>
                                 <h2 style="color: #353334;font-size: 23px;margin: 0px;">Hi {{$name}}</h2>
-                                <p style="color:#353334;font-size:18px;line-height:27px;">
-                                    {{ $notifyMessage }}
-                                </p>
-                                </tr>
+                                <p style="color:#353334;font-size:18px;line-height:27px;">Your booking has been rejected by volt.
+                                    </tr>
                             </table>
                         </td>
                     </table>

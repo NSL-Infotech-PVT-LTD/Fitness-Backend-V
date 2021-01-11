@@ -177,7 +177,8 @@
                     data.message,
                     'info'
                     ).then(() => {
-            table.ajax.reload(null, false);
+//            table.ajax.reload(null, false);
+            location.reload();
             });
             } else {
 
@@ -186,7 +187,8 @@
                     'User has been ' + status + ' .',
                     'success'
                     ).then(() => {
-            table.ajax.reload(null, false);
+//            table.ajax.reload(null, false);
+            location.reload();
             });
             }
             }

@@ -163,33 +163,41 @@ class BookingsController extends Controller {
     }
 
     public function changeStatus(Request $request, $status, $id) {
-        $user = Booking::findOrFail($id);
-//        dd($user->toArray());
+        $model = Booking::findOrFail($id);
+//        dd($model->toArray());
         if ($status == '0'):
             Booking::destroy($id);
-            if ($user->model_type == 'class_schedules') {
-                $name = $user->model_detail->trainer['first_name'] . ' ' . $user->model_detail->trainer['middle_name'] . ' ' . $user->model_detail->trainer['last_name'];
-                $email = $user->model_detail->trainer['email'];
-            } elseif ($user->model_type == 'trainer_users') {
-                $name = $user->model_detail['first_name'] . ' ' . $user->model_detail['middle_name'] . ' ' . $user->model_detail['last_name'];
-                $email = $user->model_detail['email'];
-            } else {
-                return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']);
-            }
-//            parent::pushNotifications(['title' => self::$__BookingStatus['pending']['customer']['title'], 'body' => self::$__BookingStatus['pending']['customer']['body'], 'data' => ['target_id' => $address['id'], 'target_model' => 'Booking', 'data_type' => 'Booking', 'booking_id' => $address['id']]], \Auth::id(), TRUE);//send mail to user as a feedback    
-
-            $dataM = ['subject' => 'Reject your booking', 'name' => $name, 'to' => $email];
-
-            \Mail::send('emails.notify', $dataM, function($message) use ($dataM) {
-                $message->to($dataM['to']);
-                $message->subject($dataM['subject']);
-            });
-            //ENDS
-            return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']);
+            $statusMSG = 'Rejected';
+        else:
+            $model->status = $status == '1' ? '1' : '0';
+            $model->save();
+            $statusMSG = 'Accepted';
         endif;
-        $user->status = $status == '1' ? '1' : '0';
-        $user->save();
-        return response()->json(["success" => true, 'message' => 'Booking Confirmed Successfully']);
+        $modelBookedBy = $model->created_by;
+//        if ($model->model_type == 'class_schedules') {
+//            $name = $model->model_detail->trainer['first_name'] . ' ' . $model->model_detail->trainer['middle_name'] . ' ' . $model->model_detail->trainer['last_name'];
+//            $email = $model->model_detail->trainer['email'];
+//            
+//        } elseif ($model->model_type == 'trainer_users') {
+//            $name = $model->model_detail['first_name'] . ' ' . $model->model_detail['middle_name'] . ' ' . $model->model_detail['last_name'];
+//            $email = $model->model_detail['email'];
+//        } else {
+//            return response()->json(["success" => true, 'message' => 'Booking Removed Successfully']);
+//        }
+//            parent::pushNotifications(['title' => self::$__BookingStatus['pending']['customer']['title'], 'body' => self::$__BookingStatus['pending']['customer']['body'], 'data' => ['target_id' => $address['id'], 'target_model' => 'Booking', 'data_type' => 'Booking', 'booking_id' => $address['id']]], \Auth::id(), TRUE);//send mail to user as a feedback    
+//
+//        $dataM = ['subject' => 'Reject your booking', 'name' => $name, 'to' => $email];
+//
+//        \Mail::send('emails.notify', $dataM, function($message) use ($dataM) {
+//            $message->to($dataM['to']);
+//            $message->subject($dataM['subject']);
+//        });
+        //ENDS
+        //Send to the Customer
+        \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking ' . $statusMSG, 'body' => 'Booking ' . $statusMSG, 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $modelBookedBy, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is ' . $statusMSG, 'customData' => ['notifyMessage' => 'Your booking has been ' . $statusMSG . ' by volt.']]);
+        if ($model->model_type == 'trainer_users')
+            \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking Received', 'body' => 'Kindly Schdeule slots for customer', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->model_id, TRUE, ['template_name' => 'notify', 'subject' => 'Kindly Schdeule slots for customer', 'customData' => ['notifyMessage' => 'Booking has been approved by Admin, Kindly Schdeule slots for customer.']]);
+        return response()->json(["success" => true, 'message' => 'Booking ' . $statusMSG . ' Successfully !!!']);
     }
 
 }

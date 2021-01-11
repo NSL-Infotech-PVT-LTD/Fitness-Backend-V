@@ -30,12 +30,12 @@ class ScapePanel {
 
     /**
      * 
-     * @param array $userDetails
-     * @param int $bookingID
-     * @param int $price
+     * @param object $user object of User Model
+     * @param int $bookingID Booking Id which you're booking
+     * @param int $price Price you want to sell.
      * @return boolean
      */
-    public static function paymentFunction($userDetails, $bookingID, $price) {
+    public static function paymentFunction(\App\User $user, $bookingID, $price) {
 //        dd($userDetails,$planName,$price);
         $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
         $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
@@ -51,9 +51,9 @@ class ScapePanel {
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-      "firstName":"' . $userDetails['firstName'] . '",
-      "lastName":"' . $userDetails['lastName'] . '",
-      "email":"' . $userDetails['email'] . '",
+      "firstName":"' . $user->first_name . '",
+      "lastName":"' . $user->lastName . '",
+      "email":"' . $user->email . '",
       "transactionType":"SALE",
       "emailSubject": "Invoice from VOLT Services LLC",
       "invoiceExpiryDate": "' . \Carbon\Carbon::now()->addDays(2)->format('Y-m-d') . '",

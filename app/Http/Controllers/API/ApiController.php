@@ -312,11 +312,34 @@ class ApiController extends \App\Http\Controllers\Controller {
         }
     }
 
-    public static function pushNotifications($data = [], $userId, $saveNotification = true) {
-        if ($saveNotification) {
-            //dd($userId);
+    private static function emailSend($templateName, $subject, $userId, $customData = []) {
+        $user = User::whereId($userId)->first();
+        //send mail to user as a feedback    
+//        $dataM = ['subject' => 'Register Notification', 'name' => $request->name, 'to' => $request->email];
+        $dataM = ['subject' => $subject, 'name' => $user->name, 'to' => $user->email];
+        if (count($customData) > 0)
+            $dataM += $customData;
+//        dd($dataM,$templateName,$subject);
+        //ENDS      
+        dispatch(new \App\Jobs\BackgroundEMAIL($templateName, $dataM));
+        return true;
+    }
+
+    /**
+     * 
+     * @param array $data
+     * @param int $userId
+     * @param bool $saveNotification
+     * @param array $emailTemplate if you want to send email send array ['template_name'=>'','subject'=>'','customData'=>'']
+     * @return boolean
+     */
+    public static function pushNotifications($data = [], $userId, $saveNotification = true, $emailTemplate = false) {
+
+        if ($saveNotification)
             self::savePushNotification($data, $userId);
-        }
+        if ($emailTemplate != false):
+            self::emailSend($emailTemplate['template_name'], $emailTemplate['subject'], $userId, $emailTemplate['customData']);
+        endif;
 
 // echo $userId;
 // dd(User::whereId($userId)->where('is_notify', '1')->get()->isEmpty());
