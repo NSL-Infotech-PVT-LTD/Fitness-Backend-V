@@ -92,7 +92,7 @@
     },
             processing: true,
             serverSide: true,
-            ajax: "<?=   (request()->get('created_by') != '') ? route('bookings.index'). "?created_by=" .request()->get('created_by') : route('bookings.index') ?>",
+            ajax: "<?= (request()->get('created_by') != '') ? route('bookings.index') . "?created_by=" . request()->get('created_by') : route('bookings.index') ?>",
             columns: [
             {data: 'id', name: 'id'},
 <?php foreach ($rules as $rule): ?>
@@ -129,7 +129,8 @@
             success: function (data) {
             if (data.success) {
             swal.fire("Changed!", data.message, "success");
-            table.ajax.reload(null, false);
+//            table.ajax.reload(null, false);
+            location.reload();
             }
             }
     });

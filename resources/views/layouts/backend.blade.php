@@ -450,7 +450,7 @@
                                         <a href="{{ url('admin/bookings') }}" class="nav-link">
                                             <i class="fas fa-users-cog"></i>
                                             <p>View All Bookings</p>
-                                            <?php $count = \App\Booking::where('status', '1')->count() ?>
+                                            <?php $count = \App\Booking::where('status', '0')->count() ?>
                                             <?php if ($count): ?>
                                                 <b class="badge badge-danger"><?= $count ?></b>
                                             <?php endif; ?>
