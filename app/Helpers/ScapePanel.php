@@ -28,7 +28,14 @@ class ScapePanel {
         endif;
     }
 
-    public static function paymentFunction($userDetails, $planName, $price) {
+    /**
+     * 
+     * @param array $userDetails
+     * @param int $bookingID
+     * @param int $price
+     * @return boolean
+     */
+    public static function paymentFunction($userDetails, $bookingID, $price) {
 //        dd($userDetails,$planName,$price);
         $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
         $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
@@ -52,7 +59,7 @@ class ScapePanel {
       "invoiceExpiryDate": "' . \Carbon\Carbon::now()->addDays(2)->format('Y-m-d') . '",
       "items":[
         {
-          "description":"' . $planName . '",
+          "description":"' . $bookingID . '",
           "totalPrice":{
             "currencyCode":"AED",
             "value":' . (int) $price * 100 . '
