@@ -172,6 +172,8 @@ class BookingsController extends Controller {
             $model->status = $status == '1' ? '1' : '0';
             $model->save();
             $statusMSG = 'Accepted';
+            if ($model->model_type == 'trainer_users')
+                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking Received', 'body' => 'Kindly Schdeule slots for customer', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->model_id, TRUE, ['template_name' => 'notify', 'subject' => 'Kindly Schdeule slots for customer', 'customData' => ['notifyMessage' => 'Booking has been approved by Admin, Kindly Schdeule slots for customer.']]);
         endif;
         $modelBookedBy = $model->created_by;
 //        if ($model->model_type == 'class_schedules') {
@@ -195,8 +197,6 @@ class BookingsController extends Controller {
         //ENDS
         //Send to the Customer
         \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking ' . $statusMSG, 'body' => 'Booking ' . $statusMSG, 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $modelBookedBy, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is ' . $statusMSG, 'customData' => ['notifyMessage' => 'Your booking has been ' . $statusMSG . ' by volt.']]);
-        if ($model->model_type == 'trainer_users')
-            \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking Received', 'body' => 'Kindly Schdeule slots for customer', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->model_id, TRUE, ['template_name' => 'notify', 'subject' => 'Kindly Schdeule slots for customer', 'customData' => ['notifyMessage' => 'Booking has been approved by Admin, Kindly Schdeule slots for customer.']]);
         return response()->json(["success" => true, 'message' => 'Booking ' . $statusMSG . ' Successfully !!!']);
     }
 

@@ -87,7 +87,7 @@ class TrainerUser extends Authenticatable {
         $this->middle_name == '' ? '' : $name .= ' ' . $this->middle_name;
         $name .= ' ' . $this->last_name;
 
-        return $name;
+        return ucwords($name);
     }
 
     /**
