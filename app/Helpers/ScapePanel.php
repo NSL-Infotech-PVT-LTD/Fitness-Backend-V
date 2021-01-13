@@ -37,6 +37,7 @@ class ScapePanel {
      */
     public static function paymentFunction(\App\User $user, $bookingID, $price) {
 //        dd($userDetails,$planName,$price);
+//        dd($user->first_name,$user->last_name);
         $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
         $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
 //        dd($response, $response->access_token);
@@ -52,7 +53,7 @@ class ScapePanel {
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
       "firstName":"' . $user->first_name . '",
-      "lastName":"' . $user->lastName . '",
+      "lastName":"' . $user->last_name . '",
       "email":"' . $user->email . '",
       "transactionType":"SALE",
       "emailSubject": "Invoice from VOLT Services LLC",
