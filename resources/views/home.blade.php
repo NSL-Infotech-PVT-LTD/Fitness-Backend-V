@@ -31,18 +31,17 @@
                     <!-- small box -->
                     <div class="small-box one_">
                         <div class="inner">
-                            <h3>{{$trainer = DB::table('role_user')->where('role_id', 2)->count()}}</h3>
-
+                            <h3><?= App\TrainerUser::count() ?></h3>
                             <p>Personal Trainer Registrations</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{ url('admin/users/role/2') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('admin/trainer-user') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
+<!--                <div class="col-lg-3 col-6">
+                     small box 
                     <div class="small-box two_">
                         <div class="inner">
                             <h3>{{$customer = DB::table('role_user')->where('role_id', 3)->count()}}</h3>
@@ -54,7 +53,7 @@
                         </div>
                         <a href="{{ url('admin/users/role/3') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box three_">
