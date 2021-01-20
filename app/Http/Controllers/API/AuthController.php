@@ -127,7 +127,8 @@ class AuthController extends ApiController {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
             if (isset($request->image))
-                $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'));
+                if (!empty($request->file('image')))
+                    $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'));
 //            dd(\App\Role::whereId($request->role_id)->first()->name);
             $user = \App\User::create($input);
             //Assign role to created user
@@ -216,7 +217,8 @@ class AuthController extends ApiController {
 //            dd($input);
 //            $input['sport_id']= json_encode($request->sport_id);
             if (isset($request->image))
-                $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
+                if (!empty($request->file('image')))
+                    $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
 
             $user = \App\User::findOrFail(\Auth::id());
             $user->fill($input);
