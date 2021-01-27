@@ -348,11 +348,18 @@ class UsersController extends Controller {
     public function changeStatus(Request $request) {
 //        dd('dd');
         $user = User::findOrFail($request->id);
-
+//        dd(User::whereId($user->id)->first()->role->current_plan->value('fee'));
+        //Payment function start
+        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user);
+        if ($paymentFunction == false)
+            return response()->json(["success" => true, 'message' => 'Something went wrong while sending payment link']);
+        \App\Http\Controllers\Admin\UsersController::mailSend(array_merge(User::whereId($user->id)->first()->toArray(), ['payment_href' => $paymentFunction]), $request);
+        //Payment function end
 //        if ($user->payment_status != 'accepted')
 //            return response()->json(["success" => false, 'message' => 'Customer has not paid Subscription yet, Kindly send link again as customer not paid yet.']);
         $user->status = $request->status == 'Block' ? '0' : '1';
         $user->save();
+
         return response()->json(["success" => true, 'message' => 'User updated!']);
     }
 

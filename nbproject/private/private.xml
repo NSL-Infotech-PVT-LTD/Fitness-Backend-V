@@ -10,6 +10,7 @@
             <file>file:/Applications/AMPPS/www/volt/app/UserDevice.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/index.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/app.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/home.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/routes/api.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/BookingsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/TrainerUserController.php</file>
@@ -19,6 +20,8 @@
             <file>file:/Applications/AMPPS/www/volt/config/auth.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/PaymentController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/UsersController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backendMain.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2014_10_12_000000_create_users_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/emails/notify.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthTrainerController.php</file>
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_15_143225_create_trainer_users_table.php</file>

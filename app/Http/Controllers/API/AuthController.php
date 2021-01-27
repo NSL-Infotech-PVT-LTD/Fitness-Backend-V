@@ -135,14 +135,17 @@ class AuthController extends ApiController {
             $user->assignRole($request->role_id, 'id');
             if (isset($request->role_plan_id)):
                 \DB::table('role_user')->where('role_id', $request->role_id)->where('user_id', $user->id)->update(['role_plan_id' => $request->role_plan_id]);
-
-                //Payment function start
-                $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user, $user->id, \App\RolePlans::whereId($request->role_plan_id)->value('fee'));
-                if ($paymentFunction == false)
-                    return parent::error("something went wrong while sending payment link");
-                //Payment function end
-
-                \App\Http\Controllers\Admin\UsersController::mailSend(array_merge($input, ['payment_href' => $paymentFunction]), $request);
+//
+//                //Payment function start
+//                $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user, $user->id, \App\RolePlans::whereId($request->role_plan_id)->value('fee'));
+//                if ($paymentFunction == false)
+//                    return parent::error("something went wrong while sending payment link");
+//                \App\Http\Controllers\Admin\UsersController::mailSend(array_merge($input, ['payment_href' => $paymentFunction]), $request);
+//            //Payment function end
+            else:
+                $user = User::findOrFail($user->id);
+                $user->status = '1';
+                $user->save();
             endif;
 //            if ($checkRole->type == 'user'):
 

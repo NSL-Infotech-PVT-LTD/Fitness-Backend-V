@@ -32,12 +32,16 @@ class ScapePanel {
      * 
      * @param object $user object of User Model
      * @param int $bookingID Booking Id which you're booking
-     * @param int $price Price you want to sell.
      * @return boolean
      */
-    public static function paymentFunction(\App\User $user, $bookingID, $price) {
+//    public static function paymentFunction(\App\User $user, $bookingID, $price) {
+    public static function paymentFunction(\App\User $user, $bookingID = null, $price = null) {
 //        dd($userDetails,$planName,$price);
 //        dd($user->first_name,$user->last_name);
+        if ($bookingID == null)
+            $bookingID = $user->id;
+        if ($price == null)
+            $price = \App\User::whereId($user->id)->first()->role->current_plan->value('fee');
         $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
         $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
 //        dd($response, $response->access_token);

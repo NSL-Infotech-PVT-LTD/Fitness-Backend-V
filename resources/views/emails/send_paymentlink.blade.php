@@ -113,7 +113,7 @@
          <tr>
             <td>
                <p style=" font-size:13px;padding:15px 0px 10px 0px;font-weight:500;line-height:20px;">Regards,<br>
-                  <b>Akshay</b>
+                  <b>Volt Fitness Club</b>
                </p>
             </td>
          </tr>
