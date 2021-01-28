@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 
+use Carbon;
 class User extends Authenticatable {
 
     use HasApiTokens,
