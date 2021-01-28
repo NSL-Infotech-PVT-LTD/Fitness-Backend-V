@@ -22,7 +22,7 @@ class User extends Authenticatable {
 //    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'trainer_id', 'trainer_slot', 'address', 'status', 'image', 'parent_id', 'gender', 'city','nationality','about_us','workplace','hotel_room_no','duration_of_stay','check_in','check_out','guest_sessions'
+        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'trainer_id', 'trainer_slot', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us', 'workplace', 'hotel_room_no', 'duration_of_stay', 'check_in', 'check_out', 'guest_sessions'
     ];
 
     /**
@@ -42,7 +42,7 @@ class User extends Authenticatable {
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $appends = array('role', 'full_name');
+    protected $appends = array('role', 'full_name', 'role_expired_on');
 
     public function getFullNameAttribute() {
         $name = '';
@@ -51,6 +51,32 @@ class User extends Authenticatable {
         $name .= ' ' . $this->last_name;
 
         return $name;
+    }
+
+    public function getRoleExpiredOnAttribute() {
+
+        try {
+            $subscription_endDate = new Carbon\Carbon($this->role->action_date);
+            switch ($this->role->current_plan->fee_type):
+                case'monthly':
+                    $subscription_endDate = $subscription_endDate->addMonth();
+                    break;
+                case'quarterly':
+                    $subscription_endDate = $subscription_endDate->addMonths(3);
+                    break;
+                case'half_yearly':
+                    $subscription_endDate = $subscription_endDate->addMonths(6);
+                    break;
+                case'yearly':
+                    $subscription_endDate = $subscription_endDate->addMonths(12);
+                    break;
+            endswitch;
+//                                dd($subscription_endDate);
+            $subscription_end = new Carbon\Carbon($subscription_endDate);
+            return $subscription_end->diffForHumans();
+        } catch (\Exception $ex) {
+            return '';
+        }
     }
 
     public function getRoleAttribute() {
