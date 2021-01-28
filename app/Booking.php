@@ -43,19 +43,19 @@ class Booking extends Model {
 
     public static $__AuthID = 0;
 
-    public static function boot() {
-        parent::boot();
+//    public static function boot() {
+//        parent::boot();
 //        static::updating(function($model) {
 //            $model->updated_by = isset(auth()->user()->id) ? auth()->user()->id : $model->updated_by;
 //        });
-        static::creating(function($model) {
+//        static::creating(function($model) {
 //            $model->created_by = \Auth::id() == '' ? self::$__AuthID : \Auth::id();
-        });
+//        });
 
 //        static::deleting(function($model) {
 //            
 //        });
-    }
+//    }
 
     protected $appends = array('model_detail', 'is_schedule');
 
