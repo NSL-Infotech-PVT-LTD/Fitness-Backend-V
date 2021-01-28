@@ -49,7 +49,7 @@ class BookingController extends ApiController {
                 $input = $request->only('model_type', 'model_id', 'hours');
             else
                 $input = $request->only('model_type', 'model_id');
-
+            $input += ['created_by' => \Auth::id()];
             $model = Mymodel::create($input);
 //            dd($model['created_by']);
             //Send to the artist
