@@ -12,7 +12,7 @@ class BookingController extends ApiController {
 
     public function store(Request $request) {
 //        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-        $rules = ['model_type' => 'required|in:events,class_schedules,trainer_users'];
+        $rules = ['model_type' => 'required|in:events,class_schedules,trainer_users,sessions'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
