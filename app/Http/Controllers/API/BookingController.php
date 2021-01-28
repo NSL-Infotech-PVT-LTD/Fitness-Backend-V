@@ -21,7 +21,7 @@ class BookingController extends ApiController {
         if ($request->model_type == 'class_schedules')
             $rules += ['session' => 'required|in:1,6,12'];
         else if ($request->model_type == 'sessions')
-            $rules += ['session' => 'required|in:1,6,12'];
+            $rules += ['session' => 'required|in:1,6,12', 'model_id' => ''];
         else if ($request->model_type == 'trainer_users')
             $rules += ['hours' => 'required|in:1,6,12,24'];
 
@@ -30,13 +30,14 @@ class BookingController extends ApiController {
             return $validateAttributes;
         endif;
         try {
-            if (Mymodel::where('model_id', $request->model_id)->where('model_type', $request->model_type)->where('created_by', \Auth::id())->get()->isEmpty() !== true)
-                return parent::error('Booking already in place');
+            if ($request->model_type != 'sessions'):
+                if (Mymodel::where('model_id', $request->model_id)->where('model_type', $request->model_type)->where('created_by', \Auth::id())->get()->isEmpty() !== true)
+                    return parent::error('Booking already in place');
 
-            if ($request->model_type == 'trainer_users')
-                if (Mymodel::where('model_type', 'trainer_users')->where('created_by', \Auth::id())->get()->count() >= 1)
-                    return parent::error('You can book one trainer at one time');
-
+                if ($request->model_type == 'trainer_users')
+                    if (Mymodel::where('model_type', 'trainer_users')->where('created_by', \Auth::id())->get()->count() >= 1)
+                        return parent::error('You can book one trainer at one time');
+            endif;
             $input = [];
             if ($request->model_type == 'class_schedules')
                 $input = $request->only('model_type', 'model_id', 'session');
