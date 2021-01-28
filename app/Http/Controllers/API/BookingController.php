@@ -17,14 +17,14 @@ class BookingController extends ApiController {
         if ($validateAttributes):
             return $validateAttributes;
         endif;
-        $rules = ['model_id' => 'required|exists:' . $request->model_type . ',id'];
+        $rules += ['model_id' => 'required|exists:' . $request->model_type . ',id'];
         if ($request->model_type == 'class_schedules')
             $rules += ['session' => 'required|in:1,6,12'];
         else if ($request->model_type == 'sessions')
             $rules += ['session' => 'required|in:1,6,12', 'model_id' => ''];
         else if ($request->model_type == 'trainer_users')
             $rules += ['hours' => 'required|in:1,6,12,24'];
-
+dd($rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
