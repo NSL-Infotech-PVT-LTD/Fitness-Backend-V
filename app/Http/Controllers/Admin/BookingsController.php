@@ -174,6 +174,12 @@ class BookingsController extends Controller {
             $statusMSG = 'Accepted';
             if ($model->model_type == 'trainer_users')
                 \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking Received', 'body' => 'Kindly Schdeule slots for customer', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->model_id, TRUE, ['template_name' => 'notify', 'subject' => 'Kindly Schdeule slots for customer', 'customData' => ['notifyMessage' => 'Booking has been approved by Admin, Kindly Schdeule slots for customer.']]);
+            if ($model->model_type == 'sessions'):
+                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Your Sessions is been approved', 'body' => 'Now you can book class schedule', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
+                $user = User::findOrFail($model->created_by);
+                $user->guest_sessions = $user->guest_sessions + $model->session;
+                $user->save();
+            endif;
         endif;
         $modelBookedBy = $model->created_by;
 //        if ($model->model_type == 'class_schedules') {

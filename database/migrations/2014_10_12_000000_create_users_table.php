@@ -42,6 +42,7 @@ class CreateUsersTable extends Migration {
             $table->string('duration_of_stay')->nullable();
             $table->date('check_in')->nullable();
             $table->date('check_out')->nullable();
+            $table->integer('guest_sessions')->default(0);
 //            $table->string('how_did_you_hear_about_us')->nullable();
             $table->enum('gender', ['male', 'female'])->default()->nullable();
             $table->enum('status', [0, 1])->default(0)->comment('0->Unactive, 1->Active');

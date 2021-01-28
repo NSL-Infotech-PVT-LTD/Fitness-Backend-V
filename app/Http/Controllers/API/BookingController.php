@@ -20,6 +20,8 @@ class BookingController extends ApiController {
         $rules = ['model_id' => 'required|exists:' . $request->model_type . ',id'];
         if ($request->model_type == 'class_schedules')
             $rules += ['session' => 'required|in:1,6,12'];
+        else if ($request->model_type == 'sessions')
+            $rules += ['session' => 'required|in:1,6,12'];
         else if ($request->model_type == 'trainer_users')
             $rules += ['hours' => 'required|in:1,6,12,24'];
 
@@ -38,6 +40,8 @@ class BookingController extends ApiController {
             $input = [];
             if ($request->model_type == 'class_schedules')
                 $input = $request->only('model_type', 'model_id', 'session');
+            else if ($request->model_type == 'sessions')
+                $input = $request->only('model_type', 'session');
             else if ($request->model_type == 'trainer_users')
                 $input = $request->only('model_type', 'model_id', 'hours');
             else

@@ -13,7 +13,7 @@ class CreateBookingsTable extends Migration {
     public function up() {
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('model_type', ['events', 'class_schedules', 'trainer_users'])->nullable();
+            $table->enum('model_type', ['events', 'class_schedules', 'trainer_users','sessions'])->nullable();
             $table->string('model_id')->nullable();
             $table->float('rating')->nullable();
             $table->text('review')->nullable();
