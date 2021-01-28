@@ -33,7 +33,7 @@ class BookingController extends ApiController {
         endif;
         try {
             if (\Auth::user()->role->id == '8')
-                if ($request->model_type == 'sessions')
+                if ($request->model_type == 'class_schedules')
                     if (\App\User::whereId(\Auth::id())->first()->guest_sessions < $request->session)
                         return parent::error('Please buy more session to book your booking, your current session count is ' . \App\User::whereId(\Auth::id())->first()->guest_sessions);
 
@@ -57,7 +57,7 @@ class BookingController extends ApiController {
 
             $model = Mymodel::create($input);
             if (\Auth::user()->role->id == '8'):
-                if ($request->model_type == 'sessions'):
+                if ($request->model_type == 'class_schedules'):
                     $user = \App\User::findOrFail(\Auth::id());
                     $user->guest_sessions = $user->guest_sessions - $request->session;
                     $user->save();
