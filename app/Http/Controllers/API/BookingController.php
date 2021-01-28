@@ -26,7 +26,7 @@ class BookingController extends ApiController {
             $rules += ['hours' => 'required|in:1,6,12,24'];
         if ($request->model_type == 'sessions')
             unset($rules['model_id']);
-        dd($rules);
+//        dd($rules);
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
