@@ -28,7 +28,7 @@ class Booking extends Model {
      *
      * @var array
      */
-    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by', 'review', 'rating', 'hours', 'session','status'];
+    protected $fillable = ['model_type', 'model_id', 'payment_status', 'payment_params', 'created_by', 'review', 'rating', 'hours', 'session', 'status'];
 
     /**
      * Change activity log event description
@@ -43,19 +43,19 @@ class Booking extends Model {
 
     public static $__AuthID = 0;
 
-//    public static function boot() {
-//        parent::boot();
+    public static function boot() {
+        parent::boot();
 //        static::updating(function($model) {
 //            $model->updated_by = isset(auth()->user()->id) ? auth()->user()->id : $model->updated_by;
 //        });
-//        static::creating(function($model) {
-//            $model->created_by = \Auth::id() == '' ? self::$__AuthID : \Auth::id();
-//        });
+        static::creating(function($model) {
+            $model->created_by = \Auth::id() == '' ? self::$__AuthID : \Auth::id();
+        });
 
 //        static::deleting(function($model) {
 //            
 //        });
-//    }
+    }
 
     protected $appends = array('model_detail', 'is_schedule');
 
@@ -68,6 +68,8 @@ class Booking extends Model {
             $model = Event::where('id', $this->model_id)->get();
         else
             $model = '';
+        if ($model == '')
+            return '';
         if ($model->isEmpty() != true)
             return $model->first();
     }
