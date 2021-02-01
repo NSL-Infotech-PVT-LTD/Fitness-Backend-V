@@ -74,7 +74,7 @@ class BookingController extends ApiController {
     }
 
     public function getitems(Request $request) {
-        $rules = ['limit' => '', 'model_type' => 'required|in:class_schedules,trainer_users,events,all'];
+        $rules = ['limit' => '', 'model_type' => 'required|in:class_schedules,trainer_users,events,sessions,all'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;

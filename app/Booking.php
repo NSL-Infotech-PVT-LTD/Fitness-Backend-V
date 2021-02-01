@@ -67,9 +67,8 @@ class Booking extends Model {
         else if ($this->model_type == 'events')
             $model = Event::where('id', $this->model_id)->get();
         else
-            $model = '';
-        if ($model == '')
             return '';
+
         if ($model->isEmpty() != true)
             return $model->first();
     }
