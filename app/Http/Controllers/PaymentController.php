@@ -78,6 +78,7 @@ class PaymentController extends Controller {
 
             file_put_contents("webhook_response_failure.txt", "No Response");
         }
+        dd('process doone');
     }
 
     public function index() {
