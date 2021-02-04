@@ -68,6 +68,18 @@ class PaymentController extends Controller {
 //        
 //        dd(json_decode($response));
 
+    public function updateByHook() {
+        try {
+            //$json = $_REQUEST;
+            $json = file_get_contents("php://input");
+            $order = json_decode($json);
+            file_put_contents("webhook_response.txt", $json);
+        } catch (PDOException $e) {
+
+            file_put_contents("webhook_response_failure.txt", "No Response");
+        }
+    }
+
     public function index() {
         $response = API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ=='], true);
 //        dd($response, $response->access_token);
@@ -115,8 +127,8 @@ class PaymentController extends Controller {
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $response =json_decode($response);
-        dd($response,$response->_links->payment->href);
+        $response = json_decode($response);
+        dd($response, $response->_links->payment->href);
 //        return view('payment.index');
     }
 
