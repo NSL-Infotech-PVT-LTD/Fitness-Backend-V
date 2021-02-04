@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
   |
  */
 
+Route::any('/update_by_hook', 'PaymentController@updateByHook');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

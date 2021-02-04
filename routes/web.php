@@ -18,7 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/pay', 'PaymentController@index');
-Route::any('/update_by_hook', 'PaymentController@updateByHook');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/reset-success', function () {
