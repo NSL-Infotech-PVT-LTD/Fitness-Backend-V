@@ -32,10 +32,10 @@ class BookingController extends ApiController {
             return $validateAttributes;
         endif;
         try {
-            if (\Auth::user()->role->id == '8')
-                if ($request->model_type == 'class_schedules')
-                    if (\App\User::whereId(\Auth::id())->first()->guest_sessions < $request->session)
-                        return parent::error('Please buy more session to book your booking, your current session count is ' . \App\User::whereId(\Auth::id())->first()->guest_sessions);
+//            if (\Auth::user()->role->id == '8')
+            if ($request->model_type == 'class_schedules')
+                if (\App\User::whereId(\Auth::id())->first()->my_sessions < $request->session)
+                    return parent::error('Please buy more session to book your booking, your current session count is ' . \App\User::whereId(\Auth::id())->first()->my_sessions);
 
             if ($request->model_type != 'sessions'):
                 if (Mymodel::where('model_id', $request->model_id)->where('model_type', $request->model_type)->where('created_by', \Auth::id())->get()->isEmpty() !== true)
@@ -56,13 +56,13 @@ class BookingController extends ApiController {
                 $input = $request->only('model_type', 'model_id');
 
             $model = Mymodel::create($input);
-            if (\Auth::user()->role->id == '8'):
-                if ($request->model_type == 'class_schedules'):
-                    $user = \App\User::findOrFail(\Auth::id());
-                    $user->guest_sessions = $user->guest_sessions - $request->session;
-                    $user->save();
-                endif;
+//            if (\Auth::user()->role->id == '8'):
+            if ($request->model_type == 'class_schedules'):
+                $user = \App\User::findOrFail(\Auth::id());
+                $user->my_sessions = $user->my_sessions - $request->session;
+                $user->save();
             endif;
+//            endif;
 //            dd($model['created_by']);
             //Send to the artist
 //            parent::pushNotifications(['title' => 'Confirmed', 'body' => 'Booking confirmation', 'data' => ['target_id' => $model['created_by'], 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);

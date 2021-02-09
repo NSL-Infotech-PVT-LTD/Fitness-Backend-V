@@ -31,8 +31,12 @@
                     <!-- small box -->
                     <div class="small-box one_">
                         <div class="inner">
+                            <h3><?= App\TrainerUser::where('status','1')->count() ?></h3>
+                            <p>Approved Personal Trainer</p>
+                        </div>
+                        <div class="inner">
                             <h3><?= App\TrainerUser::count() ?></h3>
-                            <p>Personal Trainer Registrations</p>
+                            <p>Total Personal Trainer</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
@@ -58,9 +62,14 @@
                     <!-- small box -->
                     <div class="small-box three_">
                         <div class="inner">
-                            <h3>{{$service = DB::table('services')->count()}}</h3>
+                            <h3>{{DB::table('users')->where('status','1')->count()}}</h3>
 
-                            <p>Total Services</p>
+                            <p>Approved Members</p>
+                        </div>
+                        <div class="inner">
+                            <h3>{{DB::table('users')->count()}}</h3>
+
+                            <p>Total Members</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -74,6 +83,10 @@
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box four_">
+                        <div class="inner">
+                            <h3>{{DB::table('classes')->where('status','1')->count()}}</h3>
+                            <p>Approved Classes</p>
+                        </div>
                         <div class="inner">
                             <h3>{{$class = DB::table('classes')->count()}}</h3>
 
@@ -90,6 +103,10 @@
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box five_">
+                        <div class="inner">
+                            <h3>{{DB::table('events')->where('status','1')->count()}}</h3>
+                            <p>Approved Events</p>
+                        </div>
                         <div class="inner">
                             <h3>{{$events = DB::table('events')->count()}}</h3>
                             <p>Total Events</p>

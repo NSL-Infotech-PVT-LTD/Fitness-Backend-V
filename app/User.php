@@ -7,8 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
-
 use Carbon;
+
 class User extends Authenticatable {
 
     use HasApiTokens,
@@ -23,7 +23,7 @@ class User extends Authenticatable {
 //    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'trainer_id', 'trainer_slot', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us', 'workplace', 'hotel_room_no', 'duration_of_stay', 'check_in', 'check_out', 'guest_sessions'
+        'first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'trainer_id', 'trainer_slot', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us', 'workplace', 'hotel_room_no', 'duration_of_stay', 'check_in', 'check_out', 'my_sessions'
     ];
 
     /**
@@ -73,8 +73,9 @@ class User extends Authenticatable {
                     break;
             endswitch;
 //                                dd($subscription_endDate);
-            $subscription_end = new Carbon\Carbon($subscription_endDate);
-            return $subscription_end->diffForHumans();
+            return $subscription_endDate;
+//            $subscription_end = new Carbon\Carbon($subscription_endDate);
+//            return $subscription_end->diffForHumans();
         } catch (\Exception $ex) {
             return '';
         }

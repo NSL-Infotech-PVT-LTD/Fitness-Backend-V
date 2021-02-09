@@ -10,6 +10,8 @@ class ClassScheduleController extends ApiController {
 
     public function getItems(Request $request) {
         $rules = ['search' => '', 'limit' => ''];
+        if ($request->date != '')
+            $rules += ['date' => 'required|date_format:Y-m-d'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -19,11 +21,17 @@ class ClassScheduleController extends ApiController {
             $genderType = ['both'];
             if (User::whereId(\Auth::id())->first()->gender != null)
                 $gen = [User::whereId(\Auth::id())->first()->gender];
-            $gender = array_merge($genderType,$gen);
+            $gender = array_merge($genderType, $gen);
             $model = MyModel::where('status', '1');
             $model = $model->select('id', 'class_type', 'start_date', 'end_date', 'repeat_on', 'start_time', 'duration', 'class_id', 'trainer_id', 'cp_spots', 'capacity', 'location_id', 'gender_type');
             $model = $model->whereIn('gender_type', $gender);
-            $model = $model->whereDate('start_date','>', today()->format('Y-m-d'));
+            $model = $model->where('class_type', 'one-time');
+
+            if ($request->date == '')
+                $model = $model->whereDate('start_date', '=', today()->format('Y-m-d'));
+            else
+                $model = $model->whereDate('start_date', '=', $request->date);
+
             $model = $model->with(['locationDetail', 'trainer', 'classDetail']);
             $perPage = isset($request->limit) ? $request->limit : 20;
             if (isset($request->search)) {

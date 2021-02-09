@@ -28,7 +28,11 @@ if (isset($events->image))
     {!! Form::date('end_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
     {!! $errors->first('end_date', '<p class="help-block">:message</p>') !!}
 </div>
-
+<div class="form-group{{ $errors->has('capacity') ? 'has-error' : ''}}">
+    {!! Form::label('capacity', 'Capacity', ['class' => 'control-label']) !!}
+    {!! Form::number('capacity', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('capacity', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group{{ $errors->has('location_id') ? 'has-error' : ''}}">
     {!! Form::label('location_id', 'Location ', ['class' => 'control-label']) !!}
     {!! Form::select('location_id', \App\Location::where('status','1')->get()->pluck('name','id'), isset($event->location_id) ? $event->location_id : '', ['class' => 'form-control', 'multiple' => false]) !!}

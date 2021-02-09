@@ -15,11 +15,12 @@ class CreateEventsTable extends Migration {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('image')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->integer('location_id')->unsigned()->index();
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->string('capacity')->nullable();
             $table->enum('special', [0, 1])->default(0)->comment('1->special');
             \App\Helpers\DbExtender::defaultParams($table);
         });

@@ -326,7 +326,7 @@ class AuthController extends ApiController {
         endif;
         try {
             $model = \App\User::where('id', \Auth::id());
-//            $model = \App\User::select('id', 'first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us','guest_sessions')->where('id', \Auth::id());
+//            $model = \App\User::select('id', 'first_name', 'middle_name', 'last_name', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us','my_sessions')->where('id', \Auth::id());
             return parent::success(['user' => $model->first()]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());

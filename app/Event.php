@@ -28,7 +28,7 @@ class Event extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id'];
+    protected $fillable = ['name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id','capacity'];
     protected $appends = array('is_booked_by_me','is_booked_by_me_booking_id');
 
     public function getIsBookedByMeAttribute() {
