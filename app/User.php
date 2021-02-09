@@ -73,9 +73,9 @@ class User extends Authenticatable {
                     break;
             endswitch;
 //                                dd($subscription_endDate);
-            return $subscription_endDate;
-//            $subscription_end = new Carbon\Carbon($subscription_endDate);
-//            return $subscription_end->diffForHumans();
+//            return $subscription_endDate;
+            $subscription_end = new Carbon\Carbon($subscription_endDate);
+            return $subscription_end->format('Y-m-d');
         } catch (\Exception $ex) {
             return '';
         }
