@@ -45,6 +45,10 @@ class User extends Authenticatable {
     ];
     protected $appends = array('role', 'full_name', 'role_expired_on');
 
+    public function getTrainerSlotAttribute($value) {
+        return ($value == null) ? 0 : $value;
+    }
+
     public function getFullNameAttribute() {
         $name = '';
         $name .= $this->first_name;
