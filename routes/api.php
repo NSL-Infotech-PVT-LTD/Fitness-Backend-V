@@ -39,6 +39,7 @@ Route::group(['prefix' => 'trainer', 'middleware' => 'auth:trainer-api', 'namesp
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('update', 'AuthController@Update');
+    Route::post('update/role', 'AuthController@upgradePlan');
     Route::post('get-profile', 'AuthController@getProfile');
     Route::post('events', 'EventController@getItems');
     Route::post('event', 'EventController@getItem');

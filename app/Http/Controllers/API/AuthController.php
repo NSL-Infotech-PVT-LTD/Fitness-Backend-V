@@ -393,4 +393,29 @@ class AuthController extends ApiController {
         }
     }
 
+    public function upgradePlan(Request $request) {
+        $rules = ['role_plan_id' => 'required'];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+//            dd(\Auth::user()->role->id);
+            $role_id = \Auth::user()->role->id;
+//            dd($role_id);
+            $role_plan_id = \App\RolePlans::where('role_id', $role_id)->get()->pluck('id')->toArray();
+//            dd($role_plan_id);
+            if (!in_array($request->role_plan_id, $role_plan_id))
+                return parent::error('Choose valid role plan id, it must be under current role plan');
+
+            \App\RoleUser::where('role_id', $role_id)->where('user_id', \Auth::id())->update(['role_plan_id' => $request->role_plan_id]);
+            $user = \App\User::findOrFail(\Auth::id());
+            $user->status = 0;
+            $user->save();
+            return parent::successCreated(['message' => 'Updated Successfully wait let admin approve']);
+        } catch (\Exception $ex) {
+            return parent::error($ex->getMessage());
+        }
+    }
+
 }
