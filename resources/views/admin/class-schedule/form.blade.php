@@ -18,29 +18,37 @@
                 </div>
             </div>
         </div>
-        <div class="form-group{{ $errors->has('class_type') ? 'has-error' : ''}}">
-            {!! Form::radio('class_type', 'recurring', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-            {!! Form::label('class_type', 'Recurring', ['class' => 'control-label']) !!}
-            {!! Form::radio('class_type', 'one-time', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-            {!! Form::label('class_type', 'One Time', ['class' => 'control-label']) !!}
-            {!! $errors->first('class_type', '<p class="help-block">:message</p>') !!}
-
-        </div>
+        <!--        <div class="form-group{{ $errors->has('class_type') ? 'has-error' : ''}}">
+                    {!! Form::radio('class_type', 'recurring', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                    {!! Form::label('class_type', 'Recurring', ['class' => 'control-label']) !!}
+                    {!! Form::radio('class_type', 'one-time', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                    {!! Form::label('class_type', 'One Time', ['class' => 'control-label']) !!}
+                    {!! $errors->first('class_type', '<p class="help-block">:message</p>') !!}
+        
+                </div>-->
+        <input type="hidden" value="one-time" name="class_type">
         <div class="row">
             <div class="col-md-6 col-sm-6">
-                <div class="form-group{{ $errors->has('start_date') ? 'has-error' : ''}}">
-                    {!! Form::label('start_date', 'Start Date', ['class' => 'control-label']) !!}
+                <div class="form-group{{ $errors->has('Date') ? 'has-error' : ''}}">
+                    {!! Form::label('start_date', 'Date', ['class' => 'control-label']) !!}
                     {!! Form::date('start_date', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
                     {!! $errors->first('start_date', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group{{ $errors->has('end_date') ? 'has-error' : ''}}">
-                    {!! Form::label('end_date', 'End Date', ['class' => 'control-label']) !!}
-                    {!! Form::date('end_date', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('end_date', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
+            <!--            <div class="col-md-6 col-sm-6">
+                            <div class="form-group{{ $errors->has('start_date') ? 'has-error' : ''}}">
+                                {!! Form::label('start_date', 'Start Date', ['class' => 'control-label']) !!}
+                                {!! Form::date('start_date', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                                {!! $errors->first('start_date', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group{{ $errors->has('end_date') ? 'has-error' : ''}}">
+                                {!! Form::label('end_date', 'End Date', ['class' => 'control-label']) !!}
+                                {!! Form::date('end_date', null, ['class' => 'form-control']) !!}
+                                {!! $errors->first('end_date', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>-->
         </div>
         <div class="col-md-12 col-sm-12">
             <div class="form-group" style="overflow: hidden;">
