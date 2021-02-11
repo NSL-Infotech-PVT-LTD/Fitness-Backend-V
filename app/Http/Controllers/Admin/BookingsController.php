@@ -180,6 +180,13 @@ class BookingsController extends Controller {
                 $user->my_sessions = $user->my_sessions + $model->session;
                 $user->save();
             endif;
+            if ($model->model_type == 'trainer_users'):
+                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Your Sessions is been approved', 'body' => 'Now you can have PT with trainer you booked', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
+                $user = \App\User::findOrFail($model->created_by);
+                $user->trainer_slot = $user->trainer_slot + $model->session;
+                $user->trainer_id = $user->model_id;
+                $user->save();
+            endif;
         endif;
         $modelBookedBy = $model->created_by;
 //        if ($model->model_type == 'class_schedules') {
