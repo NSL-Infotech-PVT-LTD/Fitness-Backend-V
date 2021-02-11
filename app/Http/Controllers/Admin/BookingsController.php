@@ -177,7 +177,7 @@ class BookingsController extends Controller {
             if ($model->model_type == 'sessions'):
                 \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Your Sessions is been approved', 'body' => 'Now you can book class schedule', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
                 $user = \App\User::findOrFail($model->created_by);
-                $user->guest_sessions = $user->guest_sessions + $model->session;
+                $user->my_sessions = $user->my_sessions + $model->session;
                 $user->save();
             endif;
         endif;
