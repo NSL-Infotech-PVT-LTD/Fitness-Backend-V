@@ -178,7 +178,7 @@ class BookingsController extends Controller {
                 \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking Received', 'body' => 'Kindly Schdeule slots for customer', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->model_id, TRUE, ['template_name' => 'notify', 'subject' => 'Kindly Schdeule slots for customer', 'customData' => ['notifyMessage' => 'Booking has been approved by Admin, Kindly Schdeule slots for customer.']]);
                 $user = \App\User::findOrFail($model->created_by);
                 $user->trainer_slot = (int) $user->trainer_slot + $model->hours;
-                $user->trainer_id = $user->model_id;
+                $user->trainer_id = $model->model_id;
                 $user->save();
             endif;
             if ($model->model_type == 'sessions'):
