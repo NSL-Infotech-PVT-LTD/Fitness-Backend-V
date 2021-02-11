@@ -37,14 +37,14 @@ class BookingController extends ApiController {
                 if (\App\User::whereId(\Auth::id())->first()->my_sessions < $request->session)
                     return parent::error('Please buy more session to book your booking, your current session count is ' . \App\User::whereId(\Auth::id())->first()->my_sessions);
 
-            if ($request->model_type != 'sessions'):
+            if ($request->model_type != 'sessions')
                 if (Mymodel::where('model_id', $request->model_id)->where('model_type', $request->model_type)->where('created_by', \Auth::id())->get()->isEmpty() !== true)
                     return parent::error('Booking already in place');
 
-                if ($request->model_type == 'trainer_users')
-                    if (Mymodel::where('model_type', 'trainer_users')->where('created_by', \Auth::id())->get()->count() >= 1)
-                        return parent::error('You can book one trainer at one time');
-            endif;
+            if ($request->model_type == 'trainer_users')
+                if (Mymodel::where('model_type', 'trainer_users')->where('created_by', \Auth::id())->get()->count() >= 1)
+                    return parent::error('You can book one trainer at one time');
+//            endif;
             $input = [];
             if ($request->model_type == 'class_schedules')
                 $input = $request->only('model_type', 'model_id', 'session');

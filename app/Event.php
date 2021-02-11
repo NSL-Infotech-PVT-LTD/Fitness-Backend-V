@@ -29,7 +29,7 @@ class Event extends Model {
      * @var array
      */
     protected $fillable = ['name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id','capacity'];
-    protected $appends = array('is_booked_by_me','is_booked_by_me_booking_id');
+    protected $appends = array('is_booked_by_me','is_booked_by_me_booking_id','available_capacity');
 
     public function getIsBookedByMeAttribute() {
         return (((\App\Booking::where('model_type', 'events')->where('model_id', $this->id)->where('created_by', \Auth::id())->count()) > 0) ? true : false);
@@ -40,6 +40,10 @@ class Event extends Model {
         return ((($booking->count()) > 0) ? $booking->first()->id : 0);
     }
 
+    public function getAvailableCapacityAttribute() {
+        $bookedTickets = \App\Booking::where('model_type', 'events')->where('model_id', $this->id)->get()->count();
+        return $this->capacity - $bookedTickets;
+    }
     /**
      * Change activity log event description
      *
