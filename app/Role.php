@@ -15,7 +15,7 @@ class Role extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'label', 'category', 'image', 'type', 'status','member'];
+    protected $fillable = ['name', 'label', 'category', 'image', 'type', 'status', 'member'];
 
     /**
      * A role may be given various permissions.
@@ -57,7 +57,15 @@ class Role extends Model {
         return __CLASS__ . " model has been {$eventName}";
     }
 
-    protected $appends = array('plans', 'price_label_monthly', 'price_label_quarterly', 'price_label_half_yearly', 'price_label_yearly');
+    protected $appends = array('name_filter', 'plans', 'price_label_monthly', 'price_label_quarterly', 'price_label_half_yearly', 'price_label_yearly');
+
+    public function getNameFilterAttribute() {
+        try {
+            return ($this->name != '') ? str_replace(' ', '_', strtolower($this->name)) : '';
+        } catch (\Exception $ex) {
+            return '';
+        }
+    }
 
     public function getPriceLabelMonthlyAttribute() {
         try {
