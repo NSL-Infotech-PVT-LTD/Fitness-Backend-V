@@ -61,9 +61,11 @@ class UsersController extends Controller {
                                         return "Parent Will Pay subscription";
 
                                     if ($item->payment_status == '')
-                                        return 'Not Paid Yet ' . "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
-                                    else
+                                        return 'Not Paid Yet ';
+                                    else if ($item->payment_status == 'AUTHORISED')
                                         return $item->payment_status;
+                                    else
+                                        return $item->payment_status . " <button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
 
 //                                              if ($item->payment_status == 'accepted'):
 //                                            return "Payment Transaction Date: 240920";
