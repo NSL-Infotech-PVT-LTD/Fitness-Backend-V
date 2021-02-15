@@ -61,7 +61,7 @@ class UsersController extends Controller {
                                         return "Parent Will Pay subscription";
 
                                     if ($item->payment_status == '')
-                                        return 'Not Paid Yet';
+                                        return 'Not Paid Yet ' . "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
                                     else
                                         return $item->payment_status;
 
