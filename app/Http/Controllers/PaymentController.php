@@ -77,7 +77,7 @@ class PaymentController extends Controller {
             $order = json_decode($order);
             $user = User::where('email', $order->order->emailAddress);
             if ($user->count() > 0)
-                dd($user->first()->id);
+                dd($user->first()->id, $order->eventName, $order);
             dd($order, $order->order->emailAddress, $user->count(), $user->get());
             file_put_contents("webhook_response.txt", $json);
         } catch (PDOException $e) {
