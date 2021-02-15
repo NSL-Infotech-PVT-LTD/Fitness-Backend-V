@@ -57,7 +57,7 @@ class UsersController extends Controller {
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
                                 try {
-                                    if ($item->parent_id != 0):
+                                    if ($item->parent_id != '0'):
                                         if ($item->payment_status == '')
                                             return 'Not Paid Yet';
                                         else
