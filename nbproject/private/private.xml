@@ -3,53 +3,64 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Applications/AMPPS/www/volt/composer.json</file>
             <file>file:/Applications/AMPPS/www/volt/app/Helpers/Nmi3Step.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/roles/index.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/AdminUser.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/UserDevice.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/index.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/app.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/home.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/routes/api.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/BookingsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/TrainerUserController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Exceptions/Handler.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Helpers/NmiExtend.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Booking.php</file>
-            <file>file:/Applications/AMPPS/www/volt/config/auth.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/PaymentController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/UsersController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backendMain.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/migrations/2014_10_12_000000_create_users_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/emails/notify.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthTrainerController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_15_143225_create_trainer_users_table.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/ClassSchedule.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/class-schedule/form.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/.env</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ApiController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/RoleUser.php</file>
             <file>file:/Applications/AMPPS/www/volt/config/app.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Auth/LoginController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/RolePlans.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/emails/send_paymentlink.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/TrainerController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/EventsController.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/emails/notifications.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_05_29_151817_create_events_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/welcome.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backend.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/bookings/index.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_16_153137_create_class_schedules_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/BookingController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_05_17_163415_create_event_locations_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/roles/form.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/User.php</file>
             <file>file:/Applications/AMPPS/www/volt/routes/web.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Helpers/ScapePanel.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/emails/notify_.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/composer.json</file>
+            <file>file:/Applications/AMPPS/www/volt/app/UserDevice.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/index.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/app.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Exceptions/Handler.php</file>
+            <file>file:/Applications/AMPPS/www/volt/config/auth.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/PaymentController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2014_10_12_000000_create_users_table.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ClassScheduleController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthTrainerController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_15_143225_create_trainer_users_table.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/ApiController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/events/form.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Auth/LoginController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Role.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/RolePlans.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/emails/send_paymentlink.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/TrainerController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Event.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/EventsController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/emails/notifications.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/layouts/backend.blade.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/bookings/index.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/EventController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Jobs/BackgroundEMAIL.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/TrainerUser.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/AuthTrainerBookingController.php</file>
             <file>file:/Applications/AMPPS/www/volt/bitbucket-pipelines.yml</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Helpers/ScapePanel.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/dashboard.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/payment/index.blade.php</file>
-            <file>file:/Applications/AMPPS/www/volt/resources/views/emails/notify_.blade.php</file>
         </group>
     </open-files>
 </project-private>
