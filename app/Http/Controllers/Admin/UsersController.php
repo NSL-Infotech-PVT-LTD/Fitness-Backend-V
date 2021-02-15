@@ -57,12 +57,16 @@ class UsersController extends Controller {
                             ->addIndexColumn()
                             ->editColumn('payment_status', function($item)use($role_id) {
                                 try {
-                                    if ($item->parent_id == null):
-                                        if ($item->payment_status == 'accepted'):
-                                            return "Payment Transaction Date: 240920";
-                                        else:
-                                            return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
-                                        endif;
+                                    if ($item->parent_id != 0):
+                                        if ($item->payment_status == '')
+                                            return 'Not Paid Yet';
+                                        else
+                                            return $item->payment_status;
+//                                        if ($item->payment_status == 'accepted'):
+//                                            return "Payment Transaction Date: 240920";
+//                                        else:
+//                                            return "<button class='btn btn-info btn-sm sendPayment' title='send'  data-id=" . $item->id . " data-status='send'>Send Link Customer to Pay </button>";
+//                                        endif;
                                     else:
                                         return "Parent Will Pay subscription";
                                     endif;
