@@ -246,7 +246,7 @@ class AuthController extends ApiController {
                 $user = \App\User::find(Auth::user()->id);
                 if ($user->status == '0')
                     return parent::error("Account is not approved yet, Kindly Contact Admin for more detail.");
-                if ($user->payment_status != 'AUTHORISED' || $user->payment_status != 'CAPTURED')
+                if (!in_array($user->payment_status, ['AUTHORISED', 'CAPTURED']))
                     return parent::error("Account is Approved but the payment is not authorized  or captured yet !");
 
                 $token = $user->createToken('netscape')->accessToken;
