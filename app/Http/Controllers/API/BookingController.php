@@ -65,11 +65,11 @@ class BookingController extends ApiController {
             endif;
             if ($request->model_type == 'sessions'):
                 $user = \App\User::find(\Auth::id());
-                \App\Helpers\ScapePanel::paymentFunction($user, $model->id, self::$__session[$request->session]);
+                \App\Helpers\ScapePanel::paymentFunction($user, $model->id, (self::$__session[$request->session] * 100));
             endif;
             if ($request->model_type == 'trainer_users'):
                 $user = \App\User::find(\Auth::id());
-                \App\Helpers\ScapePanel::paymentFunction($user, $model->id, self::$__trainer[$request->hours]);
+                \App\Helpers\ScapePanel::paymentFunction($user, $model->id, (self::$__trainer[$request->hours] * 100));
             endif;
 //            endif;
 //            dd($model['created_by']);
