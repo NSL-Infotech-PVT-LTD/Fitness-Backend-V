@@ -55,6 +55,7 @@ class BookingController extends ApiController {
             else
                 $input = $request->only('model_type', 'model_id');
 
+
             $model = Mymodel::create($input);
 //            if (\Auth::user()->role->id == '8'):
             if ($request->model_type == 'class_schedules'):
@@ -62,6 +63,16 @@ class BookingController extends ApiController {
                 $user->my_sessions = $user->my_sessions - $request->session;
                 $user->save();
             endif;
+           
+            
+            if ($request->model_type == 'sessions'):
+                $user = \App\User::find(\Auth::id());
+                \App\Helpers\ScapePanel::paymentFunction($user, $model->id, $price);
+            endif;
+            
+            
+            
+            
 //            endif;
 //            dd($model['created_by']);
             //Send to the artist

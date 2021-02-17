@@ -356,7 +356,8 @@ class UsersController extends Controller {
         $user = User::findOrFail($request->id);
 //        dd(User::whereId($user->id)->first()->role->current_plan->value('fee'));
         //Payment function start
-        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user);
+        $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id]);
+        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user, $booking->id);
         if ($paymentFunction == false)
             return response()->json(["success" => true, 'message' => 'Something went wrong while sending payment link']);
         \App\Http\Controllers\Admin\UsersController::mailSend(array_merge(User::whereId($user->id)->first()->toArray(), ['payment_href' => $paymentFunction]), $request);

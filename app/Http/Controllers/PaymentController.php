@@ -74,17 +74,29 @@ class PaymentController extends Controller {
             $json = file_get_contents("php://input");
 //            $json = '{"eventId":"0827cb99-994e-4afe-9150-19288d3ba491","eventName":"CAPTURED","order":{"_id":"urn:order:cf374a9c-5d8b-44d1-90cb-fbe1a0f3c1b9","_links":{"self":{"href":"http://transaction-service/transactions/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/orders/cf374a9c-5d8b-44d1-90cb-fbe1a0f3c1b9"},"tenant-brand":{"href":"http://config-service/config/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/configs/tenant-brand"},"merchant-brand":{"href":"http://config-service/config/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/configs/merchant-brand"}},"type":"SINGLE","merchantDefinedData":{},"action":"SALE","amount":{"currencyCode":"AED","value":2000},"language":"en","merchantAttributes":{},"emailAddress":"gaurav@netscapelabs.com","reference":"cf374a9c-5d8b-44d1-90cb-fbe1a0f3c1b9","outletId":"bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00","createDateTime":"2021-02-15T06:54:09.115Z","paymentMethods":{"card":["MASTERCARD","VISA"]},"orderSummary":{"items":[{"description":"663","totalPrice":{"currencyCode":"AED","value":200000},"quantity":1}],"total":{"currencyCode":"AED","value":2000}},"billingAddress":{"firstName":"Yyy","lastName":"Yyyyy"},"referrer":"urn:invoice:1acb8f57-c522-4aae-b66f-7c33f91001f2","formattedAmount":"Ø¯.Ø¥.â€ 20","formattedOrderSummary":{"total":"Ø¯.Ø¥.â€ 20","items":["663 x 1              Ø¯.Ø¥.â€ 2,000"]},"_embedded":{"payment":[{"_id":"urn:payment:a3ebe51f-3fe6-4f9b-b24b-b5f0f3e20846","_links":{"self":{"href":"http://transaction-service/transactions/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/orders/cf374a9c-5d8b-44d1-90cb-fbe1a0f3c1b9/payments/a3ebe51f-3fe6-4f9b-b24b-b5f0f3e20846"},"curies":[{"name":"cnp","href":"http://transaction-service/docs/rels/{rel}","templated":true}]},"paymentMethod":{"expiry":"2021-02","cardholderName":"ram lal","name":"VISA","pan":"401200******1112"},"state":"CAPTURED","amount":{"currencyCode":"AED","value":2000},"updateDateTime":"2021-02-15T07:00:58.213Z","outletId":"bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00","orderReference":"cf374a9c-5d8b-44d1-90cb-fbe1a0f3c1b9","authResponse":{"authorizationCode":"AB0012","success":true,"resultCode":"00","resultMessage":"Successful approval/completion or that VIP PIN verification is valid","mid":"200200000564","rrn":"104507830452"},"3ds":{"status":"SUCCESS","eci":"06","eciDescription":"Not enrolled","summaryText":"Authentication was attempted but was not or could not be completed; possible reasons being either the card or its Issuing Bank has yet to participate in 3DS."},"_embedded":{"cnp:capture":[{"_links":{"self":{"href":"http://transaction-service/transactions/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/orders/cf374a9c-5d8b-44d1-90cb-fbe1a0f3c1b9/payments/a3ebe51f-3fe6-4f9b-b24b-b5f0f3e20846/captures/46ed6cde-cd99-43e2-a9ed-39f8626c0952"}},"amount":{"currencyCode":"AED","value":2000},"createdTime":"2021-02-15T07:00:58.213Z","state":"SUCCESS"}]}}]}}}';
             $order = json_decode($json);
-            if (!isset($order->order->emailAddress))
-                dd('no email id found', file_put_contents("webhook_response_failure.txt", "No Response"));
-            $user = User::where('email', $order->order->emailAddress);
-            if ($user->count() > 0):
-                $user->update(['payment_status' => $order->eventName, 'payment_params' => json_encode($order)]);
-                dd($user->first()->id, $order->eventName, $order);
+//            dd();
+            if (!isset($order->order->orderSummary->items[0]->description))
+                dd('no booking id found', file_put_contents("webhook_response_failure.txt", "No booking id found"));
+            $bookingId = $order->order->orderSummary->items[0]->description;
+            $booking = \App\Booking::where('id', $bookingId);
+            if ($booking->count() > 0):
+                $booking = $booking->first();
+                if ($booking->model_type == 'users'):
+                    $user = User::where('id', $booking->model_id);
+                    if ($user->count() > 0):
+                        $user->update(['payment_status' => $order->eventName, 'payment_params' => json_encode($order)]);
+//                    dd($user->first()->id, $order->eventName, $order);
+                    endif;
+                endif;
+                $bookingUpdate = \App\Booking::where('id', $bookingId);
+                if ($bookingUpdate->count() > 0):
+                    $bookingUpdate->update(['payment_status' => $order->eventName, 'payment_params' => json_encode($order)]);
+                    dd($bookingUpdate->first()->id, $order->eventName, $order);
+                endif;
             endif;
-            dd($order, $order->order->emailAddress, $user->count(), $user->get());
+            dd($order, $bookingId, $booking->count(), $booking->get());
             file_put_contents("webhook_response.txt", $json);
         } catch (PDOException $e) {
-
             file_put_contents("webhook_response_failure.txt", "No Response");
         }
         dd('process doone');
