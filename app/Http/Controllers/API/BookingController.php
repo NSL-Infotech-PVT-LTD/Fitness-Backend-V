@@ -69,7 +69,7 @@ class BookingController extends ApiController {
             endif;
             if ($request->model_type == 'trainer_users'):
                 $user = \App\User::find(\Auth::id());
-                \App\Helpers\ScapePanel::paymentFunction($user, $model->id, self::$__session[$request->hours]);
+                \App\Helpers\ScapePanel::paymentFunction($user, $model->id, self::$__trainer[$request->hours]);
             endif;
 //            endif;
 //            dd($model['created_by']);
@@ -82,8 +82,8 @@ class BookingController extends ApiController {
         }
     }
 
-    private static $__session = ['1' => '60', '2' => '340', '3' => '660'];
-    private static $__trainer = ['1' => '250', '2' => '1400', '3' => '2600', '4' => '5000'];
+    private static $__session = ['1' => '60', '6' => '340', '12' => '660'];
+    private static $__trainer = ['1' => '250', '6' => '1400', '12' => '2600', '24' => '5000'];
 
     public function getitems(Request $request) {
         $rules = ['limit' => '', 'model_type' => 'required|in:class_schedules,trainer_users,events,sessions,all'];
