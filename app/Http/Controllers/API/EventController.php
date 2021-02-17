@@ -48,7 +48,7 @@ class EventController extends ApiController {
         try {
             $model = new Mymodel;
             $model = $model->where('id', $request->id)->with('locationDetail');
-            $model = $model->select('id', 'name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id');
+            $model = $model->select('id', 'name', 'image', 'description', 'status', 'start_date', 'end_date', 'special', 'location_id','capacity');
             return parent::success($model->first());
         } catch (\Exception $ex) {
 
