@@ -75,7 +75,7 @@ class BookingController extends ApiController {
 //            dd($model['created_by']);
             //Send to the artist
 //            parent::pushNotifications(['title' => 'Confirmed', 'body' => 'Booking confirmation', 'data' => ['target_id' => $model['created_by'], 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
-            parent::pushNotifications(['title' => 'Booking Requested', 'body' => 'Booking Requested Successfully', 'data' => ['target_id' => $model->id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is Requested', 'customData' => ['notifyMessage' => "Your booking has been in request status Kindly Pay if you're not registered as GYM member!."]]);
+            parent::pushNotifications(['title' => 'Booking Requested', 'body' => 'Booking Requested Successfully', 'data' => ['target_id' => $model->id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is Requested', 'customData' => ['notifyMessage' => "Your booking has been in request status "]]);
             return parent::successCreated(['message' => 'Created Successfully', 'booking' => $model]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
