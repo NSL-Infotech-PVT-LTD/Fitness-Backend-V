@@ -363,7 +363,7 @@ class ApiController extends \App\Http\Controllers\Controller {
         endforeach;
         //dd($tokens);
         if (count($tokensAndroid) > 0)
-            self::pushNotoficationRaw($data, $tokensAndroid);
+            self::pushNotofication($data, $tokensAndroid);
 
         $tokensiOS = [];
         foreach (\App\UserDevice::where('type', 'ios')->whereUserId($userId)->get() as $userDevice):
