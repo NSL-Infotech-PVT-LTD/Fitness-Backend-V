@@ -74,7 +74,7 @@ class ScapePanel {
       ],
       "total":{
         "currencyCode":"AED",
-        "value":' . $price . '
+        "value":' . (int) $price * 100  . '
       },
       "message":"Thank you for shopping with VOLT Services LLC. Please visit the link provided below to pay your bill."
     }',
