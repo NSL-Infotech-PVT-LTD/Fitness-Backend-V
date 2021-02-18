@@ -357,7 +357,12 @@ class UsersController extends Controller {
 //        dd(User::whereId($user->id)->first()->role->current_plan->value('fee'));
         //Payment function start
         $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id]);
-        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user, $booking->id);
+        $userGet = \App\User::whereId($user->id)->first();
+        $price = $userGet->role->current_plan->fee;
+        if ($userGet->trainer_id != '')
+            $price += \App\Http\Controllers\API\BookingController::$__trainer[$userGet->trainer_slot];
+
+        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user, $booking->id, $price);
         if ($paymentFunction == false)
             return response()->json(["success" => true, 'message' => 'Something went wrong while sending payment link']);
         \App\Http\Controllers\Admin\UsersController::mailSend(array_merge(User::whereId($user->id)->first()->toArray(), ['payment_href' => $paymentFunction]), $request);

@@ -41,7 +41,7 @@ class ScapePanel {
         if ($bookingID == null)
             $bookingID = $user->id;
         if ($price == null)
-            $price = \App\User::whereId($user->id)->first()->role->current_plan->value('fee');
+            $price = \App\User::whereId($user->id)->first()->role->current_plan->fee;
         $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
         $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
 //        dd($response, $response->access_token);
