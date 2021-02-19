@@ -42,6 +42,10 @@ class Booking extends Model {
         return __CLASS__ . " model has been {$eventName}";
     }
 
+    public function getPaymentStatusAttribute($value) {
+        return $value == null ? 'pending' : $value;
+    }
+
     public static $__AuthID = 0;
 
     public static function boot() {
