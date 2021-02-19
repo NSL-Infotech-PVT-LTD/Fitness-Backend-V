@@ -33,9 +33,14 @@ class BookingController extends ApiController {
         endif;
         try {
 //            if (\Auth::user()->role->id == '8')
-            if ($request->model_type == 'class_schedules')
-                if (\App\User::whereId(\Auth::id())->first()->my_sessions < $request->session)
-                    return parent::error('Please buy more session to book your booking, your current session count is ' . \App\User::whereId(\Auth::id())->first()->my_sessions);
+            if ($request->model_type == 'class_schedules'):
+                if (\App\User::whereId(\Auth::id())->first()->my_sessions < $request->session):
+                    $input['status'] = 0;
+                else:
+                    $input['status'] = 1;
+                endif;
+            endif;
+//                    return parent::error('Please buy more session to book your booking, your current session count is ' . \App\User::whereId(\Auth::id())->first()->my_sessions);
 
             if ($request->model_type != 'sessions')
                 if (Mymodel::where('model_id', $request->model_id)->where('model_type', $request->model_type)->where('created_by', \Auth::id())->get()->isEmpty() !== true)
@@ -59,9 +64,14 @@ class BookingController extends ApiController {
             $model = Mymodel::create($input);
 //            if (\Auth::user()->role->id == '8'):
             if ($request->model_type == 'class_schedules'):
-                $user = \App\User::findOrFail(\Auth::id());
-                $user->my_sessions = $user->my_sessions - $request->session;
-                $user->save();
+                if (\App\User::whereId(\Auth::id())->first()->my_sessions < $request->session):
+                    \App\Helpers\ScapePanel::paymentFunction(\App\User::findOrFail(\Auth::id()), $model->id, (self::$__session[1]));
+                    $input['status'] = 1;
+                else:
+                    $user = \App\User::findOrFail(\Auth::id());
+                    $user->my_sessions = $user->my_sessions - $request->session;
+                    $user->save();
+                endif;
             endif;
             if ($request->model_type == 'sessions'):
                 $user = \App\User::find(\Auth::id());
