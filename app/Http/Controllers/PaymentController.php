@@ -96,7 +96,7 @@ class PaymentController extends Controller {
                         if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
                             if ($bookingUpdate->model_type == 'sessions'):
                                 $user = \App\User::findOrFail($bookingUpdate->created_by);
-                                $user->my_sessions = (int) $user->my_sessions + User::whereId($bookingUpdate->created_by)->first()->session;
+                                $user->my_sessions = (int) User::whereId($bookingUpdate->created_by)->first()->my_sessions + $bookingUpdate->session;
                                 $user->save();
                                 $titleNotification = 'We have received payment of your Group classes';
                                 $bodyNotification = 'Now you can book class schedule';
@@ -104,8 +104,8 @@ class PaymentController extends Controller {
                             if ($bookingUpdate->model_type == 'trainer_users'):
                                 $user = \App\User::findOrFail($bookingUpdate->created_by);
                                 $userGet = User::whereId($bookingUpdate->created_by)->first();
-                                $user->trainer_slot = (int) $user->trainer_slot + $userGet->hours;
-                                $user->trainer_id = $userGet->model_id;
+                                $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdate->hours;
+                                $user->trainer_id = $bookingUpdate->model_id;
                                 $user->save();
                                 $titleNotification = 'We have received payment of your PT';
                                 $bodyNotification = 'Now you can have PT with trainer you booked';
