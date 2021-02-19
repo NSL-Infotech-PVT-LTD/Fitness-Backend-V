@@ -33,7 +33,7 @@ class ClassSchedule extends Model {
 
     public function getStartTimeAttribute($value) {
         try {
-            return ucfirst(date("g:i a", strtotime($value)));
+            return strtoupper(date("g:i a", strtotime($value)));
         } catch (Exception $ex) {
             return $value;
         }
