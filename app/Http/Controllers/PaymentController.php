@@ -91,11 +91,12 @@ class PaymentController extends Controller {
                 $bookingUpdate = \App\Booking::where('id', $bookingId);
                 if ($bookingUpdate->count() > 0):
                     $bookingUpdate->update(['payment_status' => $order->eventName, 'payment_params' => json_encode($order)]);
+                    $bookingUpdate = $bookingUpdate->first();
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
                         if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
                             if ($bookingUpdate->model_type == 'sessions'):
                                 $user = \App\User::findOrFail($bookingUpdate->created_by);
-                                $user->my_sessions = (int) ($user->my_sessions + User::whereId($bookingUpdate->created_by)->first()->session);
+                                $user->my_sessions = (int) $user->my_sessions + User::whereId($bookingUpdate->created_by)->first()->session;
                                 $user->save();
                                 $titleNotification = 'We have received payment of your Group classes';
                                 $bodyNotification = 'Now you can book class schedule';
@@ -112,7 +113,7 @@ class PaymentController extends Controller {
                             \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdate->created_by, TRUE);
                         endif;
                     endif;
-                    dd($bookingUpdate->first()->id, $order->eventName, $order);
+                    dd($bookingUpdate->id, $order->eventName, $order);
                 endif;
             endif;
             dd($order, $bookingId, $booking->count(), $booking->get());
