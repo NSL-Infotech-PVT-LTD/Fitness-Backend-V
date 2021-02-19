@@ -17,7 +17,7 @@ class BookingsController extends Controller {
      * @return \Illuminate\View\View
      */
 //    protected $__rulesforindex = ['model_type' => 'required', 'model_id' => 'required', 'created_by' => 'required', 'created_at' => 'required'];
-    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required', 'payment_status' => 'required', 'type' => '', 'created_by' => ''];
+    protected $__rulesforindex = ['model_type' => 'required', 'created_by' => 'required', 'created_at' => 'required', 'sessions' => 'required', 'payment_status' => 'required', 'type' => '', 'created_by' => ''];
 
     public function index(Request $request) {
         if ($request->ajax()) {
@@ -54,6 +54,13 @@ class BookingsController extends Controller {
                             ->addColumn('type', function($item) {
                                 $user = \App\User::where('id', $item->created_by)->first();
                                 return isset($user->role->name) ? $user->role->name : 'NAN';
+                            })
+                            ->addColumn('sessions', function($item) {
+                                if ($item->model_type == 'sessions')
+                                    return $item->session;
+                                if ($item->model_type == 'trainer_users')
+                                    return $item->hours;
+                                return 'N-A';
                             })
                             ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
