@@ -24,6 +24,7 @@ class BookingsController extends Controller {
             $bookings = new Booking();
             if ($request->created_by != '')
                 $bookings = $bookings->where('created_by', $request->created_by);
+            $bookings = $bookings->where('model_type', '!=', 'users');
             $bookings = $bookings->latest();
 
 //            dd($request->created_by);
@@ -174,19 +175,20 @@ class BookingsController extends Controller {
             $statusMSG = 'Accepted';
 
             if ($model->model_type == 'trainer_users'):
-                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Your Trainer Sessions is been approved', 'body' => 'Now you can have PT with trainer you booked', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
+//                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Your Trainer Sessions is been approved', 'body' => 'Now you can have PT with trainer you booked', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
                 \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Booking Received', 'body' => 'Kindly Schdeule slots for customer', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->model_id, TRUE, ['template_name' => 'notify', 'subject' => 'Kindly Schdeule slots for customer', 'customData' => ['notifyMessage' => 'Booking has been approved by Admin, Kindly Schdeule slots for customer.']]);
-                $user = \App\User::findOrFail($model->created_by);
-                $user->trainer_slot = (int) $user->trainer_slot + $model->hours;
-                $user->trainer_id = $model->model_id;
-                $user->save();
+//                $user = \App\User::findOrFail($model->created_by);
+//                $user->trainer_slot = (int) $user->trainer_slot + $model->hours;
+//                $user->trainer_id = $model->model_id;
+//                $user->save();
             endif;
-            if ($model->model_type == 'sessions'):
-                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Your Sessions is been approved', 'body' => 'Now you can book class schedule', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
-                $user = \App\User::findOrFail($model->created_by);
-                $user->my_sessions = $user->my_sessions + $model->session;
-                $user->save();
-            endif;
+        //Done under payment approved
+//            if ($model->model_type == 'sessions'):
+//                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => 'Your Sessions is been approved', 'body' => 'Now you can book class schedule', 'data' => ['target_id' => $id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
+//                $user = \App\User::findOrFail($model->created_by);
+//                $user->my_sessions = $user->my_sessions + $model->session;
+//                $user->save();
+//            endif;
         endif;
         $modelBookedBy = $model->created_by;
 //        if ($model->model_type == 'class_schedules') {

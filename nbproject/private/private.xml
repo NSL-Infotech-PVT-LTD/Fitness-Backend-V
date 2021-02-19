@@ -8,7 +8,6 @@
             <file>file:/Applications/AMPPS/www/volt/app/AdminUser.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/home.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/routes/api.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/BookingsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/TrainerUserController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Helpers/NmiExtend.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Booking.php</file>
@@ -23,8 +22,8 @@
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_05_29_151817_create_events_table.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/welcome.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_06_16_153137_create_class_schedules_table.php</file>
-            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/BookingController.php</file>
             <file>file:/Applications/AMPPS/www/volt/database/migrations/2020_05_17_163415_create_event_locations_table.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/BookingController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/admin/roles/form.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/User.php</file>
             <file>file:/Applications/AMPPS/www/volt/routes/web.php</file>
@@ -48,6 +47,7 @@
             <file>file:/Applications/AMPPS/www/volt/app/RolePlans.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/emails/send_paymentlink.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/API/TrainerController.php</file>
+            <file>file:/Applications/AMPPS/www/volt/resources/views/admin/users/show/customer.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Event.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/EventsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/emails/notifications.blade.php</file>

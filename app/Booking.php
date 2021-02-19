@@ -22,6 +22,7 @@ class Booking extends Model {
      * @var string
      */
     protected $primaryKey = 'id';
+    public static $_BookingApprovedStatus = ['AUTHORISED', 'CAPTURED'];
 
     /**
      * Attributes that should be mass-assignable.

@@ -251,7 +251,7 @@ class AuthController extends ApiController {
 //            dd($role_id);
                 $role_plan_id = \App\RolePlans::where('role_id', $role_id)->get()->pluck('id')->toArray();
                 if (count($role_plan_id) > 0)
-                    if (!in_array($user->payment_status, ['AUTHORISED', 'CAPTURED']))
+                    if (!in_array($user->payment_status, \App\Booking::$_BookingApprovedStatus))
                         return parent::error("Account is Approved but the payment is not authorized  or captured yet !");
 
                 $token = $user->createToken('netscape')->accessToken;
