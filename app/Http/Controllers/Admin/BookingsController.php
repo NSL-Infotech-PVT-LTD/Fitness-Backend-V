@@ -60,6 +60,8 @@ class BookingsController extends Controller {
                                     return $item->session;
                                 if ($item->model_type == 'trainer_users')
                                     return $item->hours;
+                                if ($item->model_type == 'session')
+                                    return $item->session;
                                 return 'N-A';
                             })
                             ->addColumn('action', function($item) {
