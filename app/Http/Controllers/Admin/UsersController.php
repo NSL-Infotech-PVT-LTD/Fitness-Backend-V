@@ -356,19 +356,33 @@ class UsersController extends Controller {
         $user = User::findOrFail($request->id);
 //        dd(User::whereId($user->id)->first()->role->current_plan->value('fee'));
         //Payment function start
-        $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id]);
         $userGet = \App\User::whereId($user->id)->first();
-        $price = $userGet->role->current_plan->fee;
-        if ($userGet->trainer_id != '')
-            $price += \App\Http\Controllers\API\BookingController::$__trainer[$userGet->trainer_slot];
-
-        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user, $booking->id, $price);
-        if ($paymentFunction == false)
-            return response()->json(["success" => true, 'message' => 'Something went wrong while sending payment link']);
-        \App\Http\Controllers\Admin\UsersController::mailSend(array_merge(User::whereId($user->id)->first()->toArray(), ['payment_href' => $paymentFunction]), $request);
-        //Payment function end
-//        if ($user->payment_status != 'accepted')
-//            return response()->json(["success" => false, 'message' => 'Customer has not paid Subscription yet, Kindly send link again as customer not paid yet.']);
+        if ($user->parent_id == '0'):
+            $price = $userGet->role->current_plan->fee;
+            if (!in_array($userGet->payment_status, \App\Booking::$_BookingApprovedStatus)):
+                $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id]);
+                if ($userGet->trainer_id != '')
+                    $price += \App\Http\Controllers\API\BookingController::$__trainer[$userGet->trainer_slot];
+                \App\Helpers\ScapePanel::paymentFunction($user, $booking->id, $price);
+            endif;
+            if (in_array($userGet->payment_status, \App\Booking::$_BookingApprovedStatus)):
+                $to = \Carbon\Carbon::createFromFormat('Y-m-d', $user->role_expired_on);
+                $from = \Carbon\Carbon::now();
+                $diff_in_days = $to->diffInDays($from);
+                if ($diff_in_days > 7):
+                    $user->payment_status = 'PENDING';
+                    $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id]);
+                    \App\Helpers\ScapePanel::paymentFunction($user, $booking->id, $price);
+                endif;
+            endif;
+        endif;
+//        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction($user, $booking->id, $price);
+//        if ($paymentFunction == false)
+//            return response()->json(["success" => true, 'message' => 'Something went wrong while sending payment link']);
+//        \App\Http\Controllers\Admin\UsersController::mailSend(array_merge(User::whereId($user->id)->first()->toArray(), ['payment_href' => $paymentFunction]), $request);
+//        //Payment function end
+////        if ($user->payment_status != 'accepted')
+////            return response()->json(["success" => false, 'message' => 'Customer has not paid Subscription yet, Kindly send link again as customer not paid yet.']);
         $user->status = $request->status == 'Block' ? '0' : '1';
         $user->save();
 

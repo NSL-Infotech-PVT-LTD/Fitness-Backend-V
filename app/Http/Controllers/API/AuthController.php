@@ -418,7 +418,7 @@ class AuthController extends ApiController {
 
             \App\RoleUser::where('role_id', $role_id)->where('user_id', \Auth::id())->update(['role_plan_id' => $request->role_plan_id]);
             $user = \App\User::findOrFail(\Auth::id());
-            $user->status = 0;
+            $user->status = '0';
             $user->save();
             return parent::successCreated(['message' => 'Updated Successfully wait let admin approve']);
         } catch (\Exception $ex) {
