@@ -118,7 +118,7 @@ class PaymentController extends Controller {
                     endif;
                     $bookingUpdate = \App\Booking::where('id', $bookingId);
                     $updateD = [];
-                    $updateD += ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
+                    $updateD = ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
                         $updateD += ['status' => '1'];
                     endif;
