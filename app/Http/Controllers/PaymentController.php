@@ -95,7 +95,7 @@ class PaymentController extends Controller {
                         if (in_array($bookingUpdateData->model_type, ['sessions', 'trainer_users'])):
                             $userGet = User::whereId($bookingUpdateData->created_by)->first();
 //                            if ($userGet->remember_token == 1):
-                            if (!in_array($bookingUpdateData->payment_status, \App\Booking::$_BookingApprovedStatus)):
+                            if ($bookingUpdate->status != '1'):
                                 if ($bookingUpdateData->model_type == 'sessions'):
                                     $user = \App\User::findOrFail($bookingUpdateData->created_by);
                                     $user->my_sessions = $userGet->my_sessions + $bookingUpdateData->session;
