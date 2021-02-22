@@ -94,32 +94,30 @@ class PaymentController extends Controller {
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
                         $updateD += ['status' => '1'];
                     endif;
-                    $bookingUpdateData = \App\Booking::where('id', $bookingId)->first();
+                    $bookingUpdate->update($updateD);
+                    $bookingUpdate = $bookingUpdate->first();
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
-                        if (in_array($bookingUpdateData->model_type, ['sessions', 'trainer_users'])):
-                            if (!in_array($bookingUpdateData->payment_status, \App\Booking::$_BookingApprovedStatus)):
-                                if ($bookingUpdateData->model_type == 'sessions'):
-                                    $user = \App\User::findOrFail($bookingUpdateData->created_by);
-                                    $user->my_sessions = (int) User::whereId($bookingUpdateData->created_by)->first()->my_sessions + $bookingUpdateData->session;
-                                    $user->save();
-                                    $titleNotification = 'We have received payment of your Group classes';
-                                    $bodyNotification = 'Now You Can Book Your Classes.';
-                                endif;
-                                if ($bookingUpdateData->model_type == 'trainer_users'):
-                                    $user = \App\User::findOrFail($bookingUpdateData->created_by);
-                                    $userGet = User::whereId($bookingUpdateData->created_by)->first();
-                                    $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdateData->hours;
-                                    $user->trainer_id = $bookingUpdateData->model_id;
-                                    $user->save();
-                                    $titleNotification = 'We have received payment of your PT';
-                                    $bodyNotification = 'Now Your Training Session Can Go Ahead';
-                                endif;
-                                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdateData->created_by, TRUE);
+                        if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
+                            if ($bookingUpdate->model_type == 'sessions'):
+                                $user = \App\User::findOrFail($bookingUpdate->created_by);
+                                $user->my_sessions = (int) 1 + $bookingUpdate->session;
+                                $user->save();
+                                $titleNotification = 'We have received payment of your Group classes';
+                                $bodyNotification = 'Now You Can Book Your Classes.';
                             endif;
+                            if ($bookingUpdate->model_type == 'trainer_users'):
+                                $user = \App\User::findOrFail($bookingUpdate->created_by);
+                                $userGet = User::whereId($bookingUpdate->created_by)->first();
+                                $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdate->hours;
+                                $user->trainer_id = $bookingUpdate->model_id;
+                                $user->save();
+                                $titleNotification = 'We have received payment of your PT';
+                                $bodyNotification = 'Now Your Training Session Can Go Ahead';
+                            endif;
+                            \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdate->created_by, TRUE);
                         endif;
                     endif;
-                    $bookingUpdate->update($updateD);
-                    dd($bookingUpdateData->id, $order->eventName, $order);
+                    dd($bookingUpdate->id, $order->eventName, $order);
                 endif;
             endif;
             dd($order, $bookingId, $booking->count(), $booking->get());
