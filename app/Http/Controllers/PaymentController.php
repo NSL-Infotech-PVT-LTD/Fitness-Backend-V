@@ -100,7 +100,9 @@ class PaymentController extends Controller {
                         if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
                             if ($bookingUpdate->model_type == 'sessions'):
                                 $user = \App\User::findOrFail($bookingUpdate->created_by);
-                                $user->my_sessions = (int) 1 + $bookingUpdate->session;
+                                $a = (int) User::whereId($bookingUpdate->created_by)->first()->my_sessions + $bookingUpdate->session;
+                                $user->my_sessions = $a;
+                                $user->remember_token = $a;
                                 $user->save();
                                 $titleNotification = 'We have received payment of your Group classes';
                                 $bodyNotification = 'Now You Can Book Your Classes.';
