@@ -90,11 +90,6 @@ class PaymentController extends Controller {
                 endif;
                 $bookingUpdate = \App\Booking::where('id', $bookingId);
                 if ($bookingUpdate->count() > 0):
-                    $updateD = [];
-                    $updateD = ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
-                    if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus))
-                        $updateD += ['status' => '1'];
-                    $bookingUpdate->update($updateD);
                     $bookingUpdate = $bookingUpdate->first();
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
                         if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
@@ -117,6 +112,11 @@ class PaymentController extends Controller {
                             \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdate->created_by, TRUE);
                         endif;
                     endif;
+                    $updateD = [];
+                    $updateD = ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
+                    if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus))
+                        $updateD += ['status' => '1'];
+                    \App\Booking::where('id', $bookingId)->update($updateD);
                     dd($bookingUpdate->id, $order->eventName, $order);
                 endif;
             endif;
