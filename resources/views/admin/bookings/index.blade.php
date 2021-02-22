@@ -51,6 +51,8 @@
                                                 $rule = 'Booked By';
                                             else if ($rule == 'created_at')
                                                 $rule = 'Booked On';
+                                            else if ($rule == 'sessions')
+                                                $rule = 'Session / Hours';
                                             ?>
                                             <th>{{ucfirst($rule)}}</th>
                                         <?php endforeach; ?>
