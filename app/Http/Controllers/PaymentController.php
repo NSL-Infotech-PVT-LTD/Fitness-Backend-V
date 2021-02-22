@@ -90,36 +90,37 @@ class PaymentController extends Controller {
                 endif;
                 $bookingUpdate = \App\Booking::where('id', $bookingId);
                 if ($bookingUpdate->count() > 0):
-                    $updateD = ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
+                    $bookingUpdateData = \App\Booking::where('id', $bookingId)->first();
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
-                        $updateD += ['status' => '1'];
-                    endif;
-                    $bookingUpdate->update($updateD);
-                    $bookingUpdate = $bookingUpdate->first();
-                    if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
-                        if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
-                            $userGet = User::whereId($bookingUpdate->created_by)->first();
-                            if ($userGet->remember_token == 1):
-                                if ($bookingUpdate->model_type == 'sessions'):
-                                    $user = \App\User::findOrFail($bookingUpdate->created_by);
-                                    $user->my_sessions = $userGet->my_sessions + $bookingUpdate->session;
+                        if (in_array($bookingUpdateData->model_type, ['sessions', 'trainer_users'])):
+                            $userGet = User::whereId($bookingUpdateData->created_by)->first();
+//                            if ($userGet->remember_token == 1):
+                            if (!in_array($bookingUpdateData->payment_status, \App\Booking::$_BookingApprovedStatus)):
+                                if ($bookingUpdateData->model_type == 'sessions'):
+                                    $user = \App\User::findOrFail($bookingUpdateData->created_by);
+                                    $user->my_sessions = $userGet->my_sessions + $bookingUpdateData->session;
                                     $user->remember_token = $userGet->remember_token + 1;
                                     $user->save();
                                     $titleNotification = 'We have received payment of your Group classes';
                                     $bodyNotification = 'Now You Can Book Your Classes.';
                                 endif;
-                                if ($bookingUpdate->model_type == 'trainer_users'):
-                                    $user = \App\User::findOrFail($bookingUpdate->created_by);
-                                    $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdate->hours;
-                                    $user->trainer_id = $bookingUpdate->model_id;
+                                if ($bookingUpdateData->model_type == 'trainer_users'):
+                                    $user = \App\User::findOrFail($bookingUpdateData->created_by);
+                                    $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdateData->hours;
+                                    $user->trainer_id = $bookingUpdateData->model_id;
                                     $user->save();
                                     $titleNotification = 'We have received payment of your PT';
                                     $bodyNotification = 'Now Your Training Session Can Go Ahead';
                                 endif;
-                                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdate->created_by, TRUE);
+                                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdateData->created_by, TRUE);
                             endif;
                         endif;
                     endif;
+                    $updateD = ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
+                    if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
+                        $updateD += ['status' => '1'];
+                    endif;
+                    $bookingUpdate->update($updateD);
                     dd($bookingUpdate->id, $order->eventName, $order);
                 endif;
             endif;
