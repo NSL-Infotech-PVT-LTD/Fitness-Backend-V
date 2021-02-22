@@ -103,7 +103,7 @@ class PaymentController extends Controller {
                                 $user->my_sessions = (int) User::whereId($bookingUpdate->created_by)->first()->my_sessions + $bookingUpdate->session;
                                 $user->save();
                                 $titleNotification = 'We have received payment of your Group classes';
-                                $bodyNotification = 'Now you can book class schedule';
+                                $bodyNotification = 'Now You Can Book Your Classes.';
                             endif;
                             if ($bookingUpdate->model_type == 'trainer_users'):
                                 $user = \App\User::findOrFail($bookingUpdate->created_by);
@@ -112,7 +112,7 @@ class PaymentController extends Controller {
                                 $user->trainer_id = $bookingUpdate->model_id;
                                 $user->save();
                                 $titleNotification = 'We have received payment of your PT';
-                                $bodyNotification = 'Now you can have PT with trainer you booked';
+                                $bodyNotification = 'Now Your Training Session Can Go Ahead';
                             endif;
                             \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdate->created_by, TRUE);
                         endif;
