@@ -198,7 +198,7 @@ class AuthController extends ApiController {
             $token = $user->createToken('netscape')->accessToken;
 
             if ($request->trainer_id != '' && $request->trainer_slot != '')
-                self::bookTrainer($request->trainer_id, $request->trainer_id, $user->id);
+                self::bookTrainer($request->trainer_id, $request->trainer_slot, $user->id);
 //            testing comment
             // Add user device details for firbase
             parent::addUserDeviceData($user, $request);
