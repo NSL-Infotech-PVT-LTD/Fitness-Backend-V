@@ -95,25 +95,25 @@ class PaymentController extends Controller {
                         if (in_array($bookingUpdateData->model_type, ['sessions', 'trainer_users'])):
                             $userGet = User::whereId($bookingUpdateData->created_by)->first();
 //                            if ($userGet->remember_token == 1):
-                            if ($bookingUpdate->status != '1'):
-                                if ($bookingUpdateData->model_type == 'sessions'):
-                                    $user = \App\User::findOrFail($bookingUpdateData->created_by);
-                                    $user->my_sessions = $userGet->my_sessions + $bookingUpdateData->session;
-                                    $user->remember_token = $userGet->remember_token + 1;
-                                    $user->save();
-                                    $titleNotification = 'We have received payment of your Group classes';
-                                    $bodyNotification = 'Now You Can Book Your Classes.';
-                                endif;
-                                if ($bookingUpdateData->model_type == 'trainer_users'):
-                                    $user = \App\User::findOrFail($bookingUpdateData->created_by);
-                                    $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdateData->hours;
-                                    $user->trainer_id = $bookingUpdateData->model_id;
-                                    $user->save();
-                                    $titleNotification = 'We have received payment of your PT';
-                                    $bodyNotification = 'Now Your Training Session Can Go Ahead';
-                                endif;
-                                \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdateData->created_by, TRUE);
+//                            if ($bookingUpdate->status != '1'):
+                            if ($bookingUpdateData->model_type == 'sessions'):
+                                $user = \App\User::findOrFail($bookingUpdateData->created_by);
+                                $user->my_sessions = $userGet->my_sessions + $bookingUpdateData->session;
+                                $user->remember_token = $userGet->remember_token + 1;
+                                $user->save();
+                                $titleNotification = 'We have received payment of your Group classes';
+                                $bodyNotification = 'Now You Can Book Your Classes.';
                             endif;
+                            if ($bookingUpdateData->model_type == 'trainer_users'):
+                                $user = \App\User::findOrFail($bookingUpdateData->created_by);
+                                $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdateData->hours;
+                                $user->trainer_id = $bookingUpdateData->model_id;
+                                $user->save();
+                                $titleNotification = 'We have received payment of your PT';
+                                $bodyNotification = 'Now Your Training Session Can Go Ahead';
+                            endif;
+                            \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdateData->created_by, TRUE);
+//                            endif;
                         endif;
                     endif;
                     $updateD = ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
