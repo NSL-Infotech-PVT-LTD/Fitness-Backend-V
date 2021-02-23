@@ -63,7 +63,7 @@ class BookingController extends ApiController {
 
             $model = Mymodel::create($input);
 //            if (\Auth::user()->role->id == '8'):
-            $modelTypeName .= $request->model_type;
+            $modelTypeName .= $request->model_type . ' ';
             if ($request->model_type == 'class_schedules'):
                 if (\App\User::whereId(\Auth::id())->first()->my_sessions < $request->session):
                     \App\Helpers\ScapePanel::paymentFunction(\App\User::findOrFail(\Auth::id()), $model->id, (self::$__session[1]));
