@@ -85,6 +85,10 @@ class PaymentController extends Controller {
                     $user = User::where('id', $booking->model_id);
                     if ($user->count() > 0):
                         $user->update(['payment_status' => $order->eventName, 'payment_params' => json_encode($order)]);
+                        $userChildUpdate = ['payment_status' => $order->eventName];
+                        if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus))
+                            $userChildUpdate += ['status' => '1'];
+                        User::where('parent_id', $booking->model_id)->update($userChildUpdate);
 //                    dd($user->first()->id, $order->eventName, $order);
                     endif;
                 endif;
