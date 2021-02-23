@@ -80,7 +80,7 @@ class BookingController extends ApiController {
                 \App\Helpers\ScapePanel::paymentFunction($user, $model->id, (self::$__session[$request->session]));
 
             endif;
-            if ($request->model_type == 'trainer_users'):
+            if ($request->model_type == 'events'):
                 $modelTypeName = \App\Event::whereId($request->model_id)->first()->name;
             endif;
             if ($request->model_type == 'trainer_users'):
