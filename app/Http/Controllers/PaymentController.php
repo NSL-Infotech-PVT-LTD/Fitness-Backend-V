@@ -92,7 +92,7 @@ class PaymentController extends Controller {
 //                    dd($user->first()->id, $order->eventName, $order);
                     endif;
                 endif;
-                $bookingUpdate = \App\Booking::where('id', $bookingId)->where('status', '0');
+                $bookingUpdate = \App\Booking::where('id', $bookingId)->where('status', 0);
                 if ($bookingUpdate->count() > 0):
                     $updateD = [];
                     $updateD = ['payment_status' => $order->eventName, 'payment_params' => json_encode($order)];
