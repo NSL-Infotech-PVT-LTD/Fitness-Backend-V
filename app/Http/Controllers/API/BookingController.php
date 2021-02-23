@@ -63,6 +63,7 @@ class BookingController extends ApiController {
 
             $model = Mymodel::create($input);
 //            if (\Auth::user()->role->id == '8'):
+            $modelTypeName = $request->model_type;
             if ($request->model_type == 'class_schedules'):
                 if (\App\User::whereId(\Auth::id())->first()->my_sessions < $request->session):
                     \App\Helpers\ScapePanel::paymentFunction(\App\User::findOrFail(\Auth::id()), $model->id, (self::$__session[1]));
@@ -72,20 +73,27 @@ class BookingController extends ApiController {
                     $user->my_sessions = $user->my_sessions - $request->session;
                     $user->save();
                 endif;
+                $modelTypeName = \App\ClassSchedule::whereId($request->model_id)->with('classDetail')->first()->classDetail->name;
             endif;
             if ($request->model_type == 'sessions'):
                 $user = \App\User::find(\Auth::id());
                 \App\Helpers\ScapePanel::paymentFunction($user, $model->id, (self::$__session[$request->session]));
+
+            endif;
+            if ($request->model_type == 'trainer_users'):
+                $modelTypeName = \App\Event::whereId($request->model_id)->first()->name;
             endif;
             if ($request->model_type == 'trainer_users'):
                 $user = \App\User::find(\Auth::id());
                 \App\Helpers\ScapePanel::paymentFunction($user, $model->id, (self::$__trainer[$request->hours]));
+                $modelTypeName = \App\TrainerUser::whereId($request->model_id)->first()->full_name;
             endif;
+
 //            endif;
 //            dd($model['created_by']);
             //Send to the artist
 //            parent::pushNotifications(['title' => 'Confirmed', 'body' => 'Booking confirmation', 'data' => ['target_id' => $model['created_by'], 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
-            parent::pushNotifications(['title' => 'Booking Requested', 'body' => 'Booking Requested Successfully', 'data' => ['target_id' => $model->id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is Requested', 'customData' => ['notifyMessage' => "Your booking has been in request status "]]);
+            parent::pushNotifications(['title' => 'Booking Requested', 'body' => 'Booking Requested Successfully', 'data' => ['target_id' => $model->id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is Requested', 'customData' => ['notifyMessage' => "Your " . $modelTypeName . " booking has been in request status "]]);
             return parent::successCreated(['message' => 'Created Successfully', 'booking' => $model]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
