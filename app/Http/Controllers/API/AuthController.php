@@ -390,6 +390,7 @@ class AuthController extends ApiController {
 //            $user = \App\User::findOrFail(\Auth::id());
 //            $user->is_login = '0';
 //            $user->save();
+            dd(\App\UserDevice::where('user_id', \Auth::id())->where('token', $request->device_token)->count());
             \App\UserDevice::where('user_id', \Auth::id())->where('token', $request->device_token)->delete();
 
             return parent::successCreated('Logout Successfully');
