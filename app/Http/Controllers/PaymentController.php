@@ -99,7 +99,7 @@ class PaymentController extends Controller {
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus))
                         $updateD += ['status' => '1'];
                     \App\Booking::where('id', $bookingId)->update($updateD);
-                    $bookingUpdate = $bookingUpdate->first();
+                    $bookingUpdate = \App\Booking::where('id', $bookingId)->first();
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
                         if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
                             if ($bookingUpdate->model_type == 'sessions'):
