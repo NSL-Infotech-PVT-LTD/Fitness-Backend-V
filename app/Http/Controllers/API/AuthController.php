@@ -390,10 +390,10 @@ class AuthController extends ApiController {
             $user = \App\User::findOrFail(\Auth::id());
 //            $user->is_login = '0';
 //            $user->save();
-            $device = \App\UserDevice::where('user_id', \Auth::id())->where('token',$request->device_token)->get();
+            $userDevice = \App\UserDevice::where('user_id', \Auth::id())->where('token', $request->device_token);
 //            dd($device);
-            if ($device->isEmpty() === false)
-                \App\UserDevice::destroy($device->first()->id);
+            if ($userDevice->count() > 0)
+                $userDevice->delete();
 
             return parent::successCreated('Logout Successfully');
         } catch (\Exception $ex) {
