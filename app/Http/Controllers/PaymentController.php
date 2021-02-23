@@ -102,16 +102,16 @@ class PaymentController extends Controller {
                     $bookingUpdate = \App\Booking::where('id', $bookingId)->first();
                     if (in_array($order->eventName, \App\Booking::$_BookingApprovedStatus)):
                         if (in_array($bookingUpdate->model_type, ['sessions', 'trainer_users'])):
+                            $userGet = User::whereId($bookingUpdate->created_by)->first();
                             if ($bookingUpdate->model_type == 'sessions'):
                                 $user = \App\User::findOrFail($bookingUpdate->created_by);
-                                $user->my_sessions = $bookingUpdate->session;
+                                $user->my_sessions = $userGet->my_sessions + $bookingUpdate->session;
                                 $user->save();
                                 $titleNotification = 'We have received payment of your Group classes';
                                 $bodyNotification = 'Now You Can Book Your Classes.';
                             endif;
                             if ($bookingUpdate->model_type == 'trainer_users'):
                                 $user = \App\User::findOrFail($bookingUpdate->created_by);
-                                $userGet = User::whereId($bookingUpdate->created_by)->first();
                                 $user->trainer_slot = (int) $userGet->trainer_slot + $bookingUpdate->hours;
                                 $user->trainer_id = $bookingUpdate->model_id;
                                 $user->save();
