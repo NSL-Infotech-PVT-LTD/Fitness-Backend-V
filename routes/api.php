@@ -19,7 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('login', 'API\AuthController@Login');
 Route::post('register', 'API\AuthController@Register');
-Route::post('logout', 'API\AuthController@logout');
 Route::post('reset-password', 'API\AuthController@resetPassword');
 Route::post('roles-type', 'API\AuthController@getRolesByType');
 Route::post('roles', 'API\AuthController@getRoles');
@@ -38,6 +37,7 @@ Route::group(['prefix' => 'trainer', 'middleware' => 'auth:trainer-api', 'namesp
 });
 
 Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
+    Route::post('logout', 'API\AuthController@logout');
     Route::post('update', 'AuthController@Update');
     Route::post('update/role', 'AuthController@upgradePlan');
     Route::post('get-profile', 'AuthController@getProfile');
