@@ -380,8 +380,8 @@ class AuthController extends ApiController {
 
     public function logout(Request $request) {
         $rules = [];
-
-        $validateAttributes = parent::validateAttributes($request, 'GET', $rules, array_keys($rules), false);
+        $rules = array_merge($this->requiredParams, $rules);
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
         endif;
@@ -390,7 +390,7 @@ class AuthController extends ApiController {
             $user = \App\User::findOrFail(\Auth::id());
 //            $user->is_login = '0';
 //            $user->save();
-            $device = \App\UserDevice::where('user_id', \Auth::id())->get();
+            $device = \App\UserDevice::where('user_id', \Auth::id())->where('token',$request->token)->get();
 //            dd($device);
             if ($device->isEmpty() === false)
                 \App\UserDevice::destroy($device->first()->id);
