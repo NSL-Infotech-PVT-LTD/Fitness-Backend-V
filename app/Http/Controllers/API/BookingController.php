@@ -86,7 +86,7 @@ class BookingController extends ApiController {
             if ($request->model_type == 'trainer_users'):
                 $user = \App\User::find(\Auth::id());
                 \App\Helpers\ScapePanel::paymentFunction($user, $model->id, (self::$__trainer[$request->hours]));
-                $modelTypeName = \App\TrainerUser::whereId($request->model_id)->first()->full_name;
+                $modelTypeName = \App\TrainerUser::whereId($request->model_id)->first()->first_name;
             endif;
 
 //            endif;
