@@ -20,7 +20,7 @@ class AuthTrainerBookingController extends ApiController {
         endif;
         try {
             $model = new Mymodel;
-            $model = $model->with(['booking_schedule'])->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours', 'created_at', \DB::raw("(SELECT count(id) FROM booking_schedules where booking_id=bookings.id) as book_count"))->where('model_id', \Auth::id())->orderBy('book_count', 'asc');
+            $model = $model->with(['booking_schedule','createdByDetail'])->select('id', 'model_type', 'model_id', 'payment_status', 'created_by', 'session', 'hours', 'created_at', \DB::raw("(SELECT count(id) FROM booking_schedules where booking_id=bookings.id) as book_count"))->where('model_id', \Auth::id())->orderBy('book_count', 'asc');
 //            if ($request->model_type != 'all')
             $model = $model->where('model_type', 'trainer_users');
 //            unset($model['password']);
