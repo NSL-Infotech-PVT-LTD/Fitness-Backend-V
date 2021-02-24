@@ -121,7 +121,7 @@ class PaymentController extends Controller {
                             endif;
                             \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdate->created_by, TRUE);
                         endif;
-                    else:
+                    elseif (in_array($order->eventName, ['FAILED'])):
                         \App\Helpers\ScapePanel::paymentFunction(\App\User::whereId($bookingUpdate->created_by)->first(), $booking->id, $bookingPrice);
                     endif;
                     dd($bookingUpdate->id, $order->eventName, $order);
