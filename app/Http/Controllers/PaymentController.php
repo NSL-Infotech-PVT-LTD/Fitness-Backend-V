@@ -78,6 +78,7 @@ class PaymentController extends Controller {
             if (!isset($order->order->orderSummary->items[0]->description))
                 dd('no booking id found', file_put_contents("webhook_response_failure.txt", "No booking id found"));
             $bookingId = $order->order->orderSummary->items[0]->description;
+            $bookingPrice = $order->order->orderSummary->total->value;
             $booking = \App\Booking::where('id', $bookingId);
             if ($booking->count() > 0):
                 $booking = $booking->first();
@@ -120,6 +121,8 @@ class PaymentController extends Controller {
                             endif;
                             \App\Http\Controllers\API\ApiController::pushNotifications(['title' => $titleNotification, 'body' => $bodyNotification, 'data' => ['target_id' => $bookingId, 'target_model' => 'Booking', 'data_type' => 'Booking']], $bookingUpdate->created_by, TRUE);
                         endif;
+                    else:
+                        \App\Helpers\ScapePanel::paymentFunction(\App\User::whereId($bookingUpdate->created_by)->first(), $booking->id, $bookingPrice);
                     endif;
                     dd($bookingUpdate->id, $order->eventName, $order);
                 endif;
