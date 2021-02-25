@@ -59,10 +59,10 @@ class AuthTrainerBookingController extends ApiController {
         try {
             $model = new \App\BookingSchedule();
             $model = $model->where('trainer_user_id', \Auth::id())->pluck('schedule_date');
-
-            if (count($model) > 0)
-                return parent::success($model);
-            return parent::success([]);
+//
+//            if (count($model) > 0)
+//                return parent::success(['model' => $model]);
+            return parent::success(['model' => $model]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
         }
