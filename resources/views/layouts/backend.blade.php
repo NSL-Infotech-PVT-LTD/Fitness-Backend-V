@@ -205,7 +205,7 @@
                 <!-- Brand Logo -->
                 <a href="{{ url('admin/home') }}" class="brand-link">
 
-                    <span class="brand-text font-weight-light"><img src="/volt/public/logo_black.png"style="max-width:100px"></span>
+                    <span class="brand-text font-weight-light"><img src="{{ asset('logo_black.png') }}"style="max-width:100px"></span>
                 </a>
 
                 <!-- Sidebar -->

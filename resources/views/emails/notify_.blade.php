@@ -34,7 +34,7 @@
                             <table style="margin: auto;">
                                 <tr>
                                 <a href="#">
-                                    <img src="https://dev.netscapelabs.com/volt/public/logo.png" style="width:70px;"></a>
+                                    <img src="{{ asset('logo.png') }}" style="width:70px;"></a>
                                 </tr>
                             </table>
                         </td>
