@@ -54,7 +54,8 @@ class Booking extends Model {
 //            $model->updated_by = isset(auth()->user()->id) ? auth()->user()->id : $model->updated_by;
 //        });
         static::creating(function($model) {
-            $model->created_by = \Auth::id() == '' ? self::$__AuthID : \Auth::id();
+            if ($model->created_by == '')
+                $model->created_by = \Auth::id() == '' ? self::$__AuthID : \Auth::id();
         });
 
 //        static::deleting(function($model) {

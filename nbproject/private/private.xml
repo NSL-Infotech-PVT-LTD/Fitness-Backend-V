@@ -8,6 +8,7 @@
             <file>file:/Applications/AMPPS/www/volt/app/AdminUser.php</file>
             <file>file:/Applications/AMPPS/www/volt/resources/views/home.blade.php</file>
             <file>file:/Applications/AMPPS/www/volt/routes/api.php</file>
+            <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/BookingsController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Http/Controllers/Admin/TrainerUserController.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Helpers/NmiExtend.php</file>
             <file>file:/Applications/AMPPS/www/volt/app/Booking.php</file>

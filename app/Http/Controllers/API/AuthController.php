@@ -258,7 +258,7 @@ class AuthController extends ApiController {
                 parent::addUserDeviceData($user, $request);
                 return parent::success(['message' => 'Login Successfully', 'token' => $token, 'user' => $user]);
             } else {
-                return parent::error("User credentials doesn't matched");
+                return parent::error("User credentials doesn't match");
             }
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());

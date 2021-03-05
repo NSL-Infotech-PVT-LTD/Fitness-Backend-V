@@ -360,18 +360,19 @@ class UsersController extends Controller {
         if ($user->parent_id == '0'):
             $price = $userGet->role->current_plan->fee;
             if (!in_array($userGet->payment_status, \App\Booking::$_BookingApprovedStatus)):
-                $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id]);
+                $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id, 'created_by' => $user->id]);
                 if ($userGet->trainer_id != '')
                     $price += \App\Http\Controllers\API\BookingController::$__trainer[$userGet->trainer_slot];
                 \App\Helpers\ScapePanel::paymentFunction($user, $booking->id, $price);
-            endif;
-            if (in_array($userGet->payment_status, \App\Booking::$_BookingApprovedStatus)):
+            else:
+//            endif;
+//            if (in_array($userGet->payment_status, \App\Booking::$_BookingApprovedStatus)):
                 $to = \Carbon\Carbon::createFromFormat('Y-m-d', $user->role_expired_on);
                 $from = \Carbon\Carbon::now();
                 $diff_in_days = $to->diffInDays($from);
                 if ($diff_in_days > 7):
                     $user->payment_status = 'PENDING';
-                    $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id]);
+                    $booking = \App\Booking::create(['model_type' => 'users', 'model_id' => $request->id, 'created_by' => $user->id]);
                     \App\Helpers\ScapePanel::paymentFunction($user, $booking->id, $price);
                 endif;
             endif;
