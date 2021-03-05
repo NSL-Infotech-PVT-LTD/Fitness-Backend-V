@@ -18,7 +18,7 @@
                 <h2>Welcome To</h2>
 
 
-                <img src="/volt/public/logo_black.png">
+                <img src="{{ asset('logo_black.png') }}">
                     <p>      Your free account is 
 only 2 seconds away!</p>
                 </div>

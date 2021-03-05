@@ -91,7 +91,7 @@ class AuthTrainerBookingController extends ApiController {
                     \App\BookingSchedule::insert($data);
                 }
             } else {
-                return parent::successCreatedNoData(['message' => 'Please select ' . $slot . ' slots!']);
+                return parent::error('Please select ' . $slot . ' slots!');
             }
             return parent::successCreated(['message' => 'Created Successfully']);
         } catch (\Exception $ex) {

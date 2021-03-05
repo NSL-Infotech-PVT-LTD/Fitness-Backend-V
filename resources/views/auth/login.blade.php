@@ -16,8 +16,8 @@
                 <h2>Welcome To</h2>
 
 
-                <img src="/volt/public/logo_black.png">
-                    <p>To Keep Conntect With us Please <br>
+                <img src="{{ asset('logo_black.png') }} ">
+                    <p>To Keep connect With us Please <br>
 log in Your Info</p>
                 </div>
                 @if($errors->any())

@@ -380,7 +380,7 @@ input#remember {
 }
 
 .left_img {
-    background-image: url(/volt/public/login_img.jpg);
+    background-image: url(/../../login_img.jpg);
     padding: 54% 30%;
     background-size: cover;
     background-position: center center;
@@ -537,7 +537,7 @@ a.brand-link {
  
 .dashboard_img {
     width: 100%;
-    background-image:url(/volt/public/dashboard_back.jpg);
+    background-image:url(/../../dashboard_back.jpg);
     padding:80px 50px 27px;
     background-position: center;
     background-size: cover;
@@ -623,7 +623,7 @@ span.badge.badge-warning.navbar-badge {
 @media(max-width:768px) and (max-width: 1024px){
 
 .left_img {
-    background-image: url(/volt/public/login_img.jpg);
+    background-image: url(/../../login_img.jpg);
     padding: 79% 30%;
     background-size: cover;
     background-position: center center;
