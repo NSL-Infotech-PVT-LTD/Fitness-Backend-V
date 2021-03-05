@@ -352,7 +352,7 @@ class UsersController extends Controller {
     }
 
     public function changeStatus(Request $request) {
-//        dd('dd');
+//       dd('dd');
         $user = User::findOrFail($request->id);
 //        dd(User::whereId($user->id)->first()->role->current_plan->value('fee'));
         //Payment function start
