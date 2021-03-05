@@ -88,12 +88,12 @@ class BookingController extends ApiController {
                 \App\Helpers\ScapePanel::paymentFunction($user, $model->id, (self::$__trainer[$request->hours]));
                 $modelTypeName = \App\TrainerUser::whereId($request->model_id)->first()->first_name;
             endif;
-
+            $modelType = ucfirst(str_replace('_', ' ', $request->model_type));
 //            endif;
 //            dd($model['created_by']);
             //Send to the artist
 //            parent::pushNotifications(['title' => 'Confirmed', 'body' => 'Booking confirmation', 'data' => ['target_id' => $model['created_by'], 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
-            parent::pushNotifications(['title' => 'Booking Requested', 'body' => "Your " . $modelTypeName . " booking has been in request status", 'data' => ['target_id' => $model->id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is Requested', 'customData' => ['notifyMessage' => "Your " . $modelTypeName . " booking has been in request status "]]);
+            parent::pushNotifications(['title' => $modelType . 'Booking Requested', 'body' => "Your " . $modelTypeName . " booking has been in request status", 'data' => ['target_id' => $model->id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is Requested', 'customData' => ['notifyMessage' => "Your " . $modelTypeName . " booking has been in request status "]]);
             return parent::successCreated(['message' => 'Created Successfully', 'booking' => $model]);
         } catch (\Exception $ex) {
             return parent::error($ex->getMessage());
@@ -127,9 +127,9 @@ class BookingController extends ApiController {
         $rules = ['id' => [
                 'required',
                 \Illuminate\Validation\Rule::exists('bookings')->where(function ($query)use($request) {
-                            $query->where('id', $request->id);
-                            $query->where('created_by', \Auth::id());
-                        }),
+                    $query->where('id', $request->id);
+                    $query->where('created_by', \Auth::id());
+                }),
         ]];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
