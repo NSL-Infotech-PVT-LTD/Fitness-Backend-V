@@ -43,11 +43,13 @@ class ScapePanel {
         if ($price == null)
             $price = \App\User::whereId($user->id)->first()->role->current_plan->fee;
         $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
-        $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
+        $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
+//        $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
 //        dd($response, $response->access_token);
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api-gateway.sandbox.ngenius-payments.com//invoices/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/invoice',
+            CURLOPT_URL => 'https://api-gateway.ngenius-payments.com/invoices/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/invoice',
+//            CURLOPT_URL => 'https://api-gateway.sandbox.ngenius-payments.com//invoices/outlets/bc0cfc35-f3a7-4cbc-8b47-eddaa0559b00/invoice',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -74,7 +76,7 @@ class ScapePanel {
       ],
       "total":{
         "currencyCode":"AED",
-        "value":' . (int) $price * 100  . '
+        "value":' . (int) $price * 100 . '
       },
       "message":"Thank you for shopping with VOLT Services LLC. Please visit the link provided below to pay your bill."
     }',
