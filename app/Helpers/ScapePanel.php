@@ -47,7 +47,7 @@ class ScapePanel {
         $NPItoken = 'ZjQ1N2JjMjAtMmQ3Yi00YTNlLTg0NTItOGFkOGFmNTYxMWQ5OjJkZTdiNzdjLWNlZDQtNGU0OC1hM2Q5LTQ3NjQ4ZjBmMGE0ZQ==';
         $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
 //        $response = \App\Http\Controllers\API\ApiController::CURL_API('POST', 'https://api-gateway.sandbox.ngenius-payments.com/identity/auth/access-token', [], ['Content-Length: 0', 'Content-Type: application/vnd.ni-identity.v1+json', 'Authorization: Basic ' . $NPItoken], true);
-        dd($response);
+//        dd($response);
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api-gateway.ngenius-payments.com/invoices/outlets/e70039f6-ad05-40a5-9a78-79e89d21f563/invoice',
