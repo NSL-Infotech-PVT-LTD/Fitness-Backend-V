@@ -92,7 +92,7 @@ class ScapePanel {
 
         curl_close($curl);
         $response = json_decode($response);
-        dd($response);
+//        dd($response);
 //        dd($response, $response->_links->payment->href);
         if (isset($response->_links->payment->href))
             return $response->_links->payment->href;
