@@ -200,6 +200,8 @@ class AuthController extends ApiController {
             if ($request->trainer_id != '' && $request->trainer_slot != '')
                 self::bookTrainer($request->trainer_id, $request->trainer_slot, $user->id);
 //            testing comment
+            // Send Push Notification
+            parent::emailSend('register', 'Your application has been submitted for approval', $user->id, ['msg' => 'you will receive email for further process and payment']);
             // Add user device details for firbase
             parent::addUserDeviceData($user, $request);
             return parent::successCreated(['message' => 'Created Successfully', 'token' => $token, 'user' => $user]);

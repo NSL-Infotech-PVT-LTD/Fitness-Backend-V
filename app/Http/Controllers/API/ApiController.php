@@ -312,7 +312,7 @@ class ApiController extends \App\Http\Controllers\Controller {
         }
     }
 
-    private static function emailSend($templateName, $subject, $userId, $customData = []) {
+    public static function emailSend($templateName, $subject, $userId, $customData = []) {
         $user = User::whereId($userId)->first();
         //send mail to user as a feedback    
 //        $dataM = ['subject' => 'Register Notification', 'name' => $request->name, 'to' => $request->email];

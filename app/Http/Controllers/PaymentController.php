@@ -132,6 +132,7 @@ class PaymentController extends Controller {
         } catch (PDOException $e) {
             file_put_contents("webhook_response_failure.txt", "No Response");
         }
+        parent::emailSend('register_complete', 'Your application has been approved', $userGet->id, []);
         dd('process doone');
     }
 
