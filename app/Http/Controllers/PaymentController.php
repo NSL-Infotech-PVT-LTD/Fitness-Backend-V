@@ -77,7 +77,8 @@ class PaymentController extends Controller {
 //            dd();
             if (!isset($order->order->orderSummary->items[0]->description))
                 dd('no booking id found', file_put_contents("webhook_response_failure.txt", "No booking id found"));
-            $bookingId = $order->order->orderSummary->items[0]->description;
+//            $bookingId = $order->order->orderSummary->items[0]->description;
+            $bookingId = \App\Booking::where('payment_params', $order->order->reference)->value('id');
             $bookingPrice = $order->order->orderSummary->total->value;
             $booking = \App\Booking::where('id', $bookingId);
             if ($booking->count() > 0):

@@ -35,13 +35,18 @@ class ScapePanel {
      * @return boolean
      */
 //    public static function paymentFunction(\App\User $user, $bookingID, $price) {
-    public static function paymentFunction(\App\User $user, $bookingID = null, $price = null) {
+    public static function paymentFunction(\App\User $user, $bookingID = null, $price = null, $description = null) {
 //        dd($userDetails,$planName,$price);
 //        dd($user->first_name,$user->last_name);
         if ($bookingID == null)
             $bookingID = $user->id;
         if ($price == null)
             $price = \App\User::whereId($user->id)->first()->role->current_plan->fee;
+        if ($description == null)
+            $description = \App\User::whereId($user->id)->first()->role->name;
+
+        //5 % VAT
+        $tax = (\App\Http\Controllers\API\ApiController::getPercentOfAmmount($price, 5));
 //        $NPItoken = 'NmJjZDc3NzktMWYwMS00MDdhLWI4YzMtMjI5NmVhNDFjZTdmOjY5ZmE3MjI4LTE4NDEtNDdhZS05MDgzLWNmYzJlY2EyM2U5NQ==';
 //        $NPItoken = 'YTA5OWI1YjUtYjRkNy00ZDIzLTlmYzgtMGU5OTM4ZWVlMDQ5OjNlMTE4NzVmLWZmZWYtNGE4OC1hMGJkLTFiZWE5ZTU4MDc3YQ==';
         $NPItoken = 'ZjQ1N2JjMjAtMmQ3Yi00YTNlLTg0NTItOGFkOGFmNTYxMWQ5OjJkZTdiNzdjLWNlZDQtNGU0OC1hM2Q5LTQ3NjQ4ZjBmMGE0ZQ==';
@@ -64,23 +69,31 @@ class ScapePanel {
       "lastName":"' . $user->last_name . '",
       "email":"' . $user->email . '",
       "transactionType":"SALE",
-      "emailSubject": "Invoice from VOLT Services LLC",
+      "emailSubject": "Invoice from Volt Fitness LLC",
       "invoiceExpiryDate": "' . \Carbon\Carbon::now()->addDays(2)->format('Y-m-d') . '",
       "items":[
         {
-          "description":"' . $bookingID . '",
+          "description":"' . $description . '",
           "totalPrice":{
             "currencyCode":"AED",
             "value":' . (int) $price * 100 . '
+          },
+          "quantity": 1
+        },
+        {
+          "description":"Vat",
+          "totalPrice":{
+            "currencyCode":"AED",
+            "value":' . $tax * 100 . '
           },
           "quantity": 1
         }
       ],
       "total":{
         "currencyCode":"AED",
-        "value":' . (int) $price * 100 . '
+        "value":' . ($price + $tax) * 100 . '
       },
-      "message":"Thank you for shopping with VOLT Services LLC. Please visit the link provided below to pay your bill."
+      "message":"Thank you for shopping with Volt Fitness LLC. Please visit the link provided below to pay your bill."
     }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/vnd.ni-invoice.v1+json',
@@ -93,6 +106,7 @@ class ScapePanel {
         curl_close($curl);
         $response = json_decode($response);
 //        dd($response);
+        \App\Booking::whereId($bookingID)->update(['payment_params' => $response->orderReference]);
 //        dd($response, $response->_links->payment->href);
         if (isset($response->_links->payment->href))
             return $response->_links->payment->href;

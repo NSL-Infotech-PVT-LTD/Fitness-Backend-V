@@ -575,4 +575,14 @@ class ApiController extends \App\Http\Controllers\Controller {
         return true;
     }
 
+    /**
+     * @author Gaurav Sethi Gaurav@netscapelabs.com
+     * @param integer $ammount
+     * @param integer $percent
+     * @return integer
+     */
+    public static function getPercentOfAmmount($ammount, $percent) {
+        return ($percent / 100) * $ammount;
+    }
+
 }
