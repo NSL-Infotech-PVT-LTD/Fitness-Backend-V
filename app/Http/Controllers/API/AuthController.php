@@ -32,7 +32,6 @@ class AuthController extends ApiController {
         $inputNew['type'] = $type;
         $inputNew['size'] = $size;
 
-
         return $inputNew;
     }
 
