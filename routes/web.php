@@ -83,4 +83,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::post('activity-plan/change-status', 'Admin\ActivityPlanController@changeStatus')->name('activity-plan.changeStatus');
     Route::get('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
     Route::post('generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
+    
+    Route::get('export', 'Admin\TrainerUserController@export')->name('export');
+    Route::get('importExportView', 'Admin\TrainerUserController@importExportView');
+    Route::post('import', 'Admin\TrainerUserController@import')->name('import');
 });
+ 
