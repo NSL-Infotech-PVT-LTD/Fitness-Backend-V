@@ -44,7 +44,7 @@ class RolePlans extends Model {
     protected $appends = array('role_plan');
 
     public function getRolePlanAttribute() {
-        return $this->fee_type . ': ';
+        return ucfirst($this->fee_type) . ' ';
         // return $this->fee_type . ': AED ' . $this->fee;
     }
 
