@@ -44,8 +44,7 @@ class RolePlans extends Model {
     protected $appends = array('role_plan');
 
     public function getRolePlanAttribute() {
-        return $this->fee_type;
-        // return $this->fee_type . ': AED ' . $this->fee;
+        return $this->fee_type . ': AED ' . $this->fee;
     }
 
 //    public function getFeeTypeAttribute($value) {
