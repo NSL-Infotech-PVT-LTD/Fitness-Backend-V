@@ -48,6 +48,8 @@ class RolePlans extends Model {
         // return $this->fee_type . ': AED ' . $this->fee;
     }
 
+
+
 //    public function getFeeTypeAttribute($value) {
 //        return ucfirst(str_replace('_', ' ', $value));
 //    }
