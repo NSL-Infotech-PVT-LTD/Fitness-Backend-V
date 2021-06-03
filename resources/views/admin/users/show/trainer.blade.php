@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-
+<?php dd('fgf');?>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->

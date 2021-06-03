@@ -41,7 +41,7 @@ class TrainerUser extends Authenticatable {
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode', 'expirence', 'certifications', 'specialities','type'];
+    protected $fillable = ['first_name', 'middle_name', 'last_name', 'mobile_prefix', 'mobile', 'emergency_contact_no_prefix', 'emergency_contact_no', 'email', 'password', 'birth_date', 'emirates_id', 'about', 'services', 'image', 'address_house', 'address_street', 'address_city', 'address_country', 'address_postcode', 'expirence', 'certifications', 'specialities','type','emirate_image1','emirate_image2'];
     protected $appends = array('full_name', 'booking_cnt', 'booking_reviewed_cnt', 'rating_avg', 'is_booked_by_me', 'is_booked_by_me_booking_id', 'date_duration');
 
     public function getIsBookedByMeAttribute() {

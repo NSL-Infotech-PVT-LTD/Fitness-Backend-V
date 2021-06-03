@@ -20,16 +20,34 @@
 	{!! Form::text('mobile', null, ['class' => 'form-control col-md-10', 'required' => 'required']) !!}
 	{!! $errors->first('mobile', '<p class="help-block">:message</p>') !!}
     </div>
-
-    <div class="form-group col-md-4{{ $errors->has('email') ? ' has-error' : ''}}">
-	{!! Form::label('email', 'Email: ', ['class' => 'control-label']) !!}
-	{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
-	{!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+    <div class="col-md-6 form-group{{ $errors->has('emergency_contact_no') ? ' has-error' : ''}}">
+	{!! Form::label('emergency_contact_no', 'Emergency contact no: ', ['class' => 'control-label']) !!}
+	{!! Form::text('emergency_contact_no_prefix', null, ['class' => 'form-control col-md-2','placeholder'=>'Prefix']) !!}
+	{!! Form::text('emergency_contact_no', null, ['class' => 'form-control col-md-10']) !!}
+	{!! $errors->first('emergency_contact_no', '<p class="help-block">:message</p>') !!}
     </div>
+
+   
     <div class="form-group col-md-4{{ $errors->has('emirates_id') ? ' has-error' : ''}}">
 	{!! Form::label('emirates_id', 'Emirates Id/Passport: ', ['class' => 'control-label']) !!}
 	{!! Form::text('emirates_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
 	{!! $errors->first('emirates_id', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="form-group col-md-4{{ $errors->has('emirate_image1') ? 'has-error' : ''}}">
+    {!! Form::label('emirate_image1', 'Emirate Copy1', ['class' => 'control-label']) !!}
+    {!! Form::file('emirate_image1', null,  ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('emirate_image1', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group col-md-4{{ $errors->has('emirate_image2') ? ' has-error' : ''}}">
+    {!! Form::label('emirate_image2', 'Emirate Copy2: ', ['class' => 'control-label']) !!}
+    {!! Form::file('emirate_image2', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('emirate_image2', '<p class="help-block">:message</p>') !!}
+</div>
+     <div class="form-group col-md-4{{ $errors->has('email') ? ' has-error' : ''}}">
+	{!! Form::label('email', 'Email: ', ['class' => 'control-label']) !!}
+	{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
+	{!! $errors->first('email', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group col-md-8{{ $errors->has('password') ? ' has-error' : ''}}">
 	{!! Form::label('password', 'Password:', ['class' => 'control-label']) !!}
@@ -43,6 +61,14 @@
 	{!! Form::password('password', $passwordOptions) !!}
 	{!! $errors->first('password', '<p class="help-block">:message</p>') !!}
     </div>
+    
+     <div class="form-group col-md-4{{ $errors->has('birth_date') ? ' has-error' : ''}}">
+	{!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}
+	{!! Form::date('birth_date', null, ['class' => 'form-control']) !!}
+	{!! $errors->first('birth_date', '<p class="help-block">:message</p>') !!}
+    </div>
+
+    
 </div>
 <br>
 {!! Form::submit($formMode === 'edit' ? 'Update' : 'See More...', ['class'=>'btn btn-primary pull-right', 'id' => 'type_select']) !!}
@@ -67,37 +93,26 @@
 	{!! $errors->first('specialities', '<p class="help-block">:message</p>') !!}
     </div>
 
-    <div class="form-group col-md-4{{ $errors->has('birth_date') ? ' has-error' : ''}}">
-	{!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}
-	{!! Form::date('birth_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
-	{!! $errors->first('birth_date', '<p class="help-block">:message</p>') !!}
-    </div>
-
-    <div class="col-md-4 form-group{{ $errors->has('emergency_contact_no') ? ' has-error' : ''}}">
-	{!! Form::label('emergency_contact_no', 'Emergency contact no: ', ['class' => 'control-label']) !!}
-	{!! Form::text('emergency_contact_no_prefix', null, ['class' => 'form-control col-md-2', 'required' => 'required','placeholder'=>'Prefix']) !!}
-	{!! Form::text('emergency_contact_no', null, ['class' => 'form-control col-md-10', 'required' => 'required']) !!}
-	{!! $errors->first('emergency_contact_no', '<p class="help-block">:message</p>') !!}
-    </div>
+   
     <div class="form-group col-md-4{{ $errors->has('address_house') ? ' has-error' : ''}}">
 	{!! Form::label('address_house', 'Building/ House No.  : ', ['class' => 'control-label']) !!}
-	{!! Form::text('address_house', null, ['class' => 'form-control', 'required' => 'required']) !!}
+	{!! Form::text('address_house', null, ['class' => 'form-control']) !!}
 	{!! $errors->first('address_house', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="col-md-12">
 	<div class="col-md-3 form-group col-md-4{{ $errors->has('address_street') ? ' has-error' : ''}}">
 	    {!! Form::label('address_street', 'Street: ', ['class' => 'control-label']) !!}
-	    {!! Form::text('address_street', null, ['class' => 'form-control', 'required' => 'required']) !!}
+	    {!! Form::text('address_street', null, ['class' => 'form-control']) !!}
 	    {!! $errors->first('address_street', '<p class="help-block">:message</p>') !!}
 	</div>
 	<div class="col-md-3 form-group col-md-4{{ $errors->has('address_city') ? ' has-error' : ''}}">
 	    {!! Form::label('address_city', 'City: ', ['class' => 'control-label']) !!}
-	    {!! Form::text('address_city', null, ['class' => 'form-control', 'required' => 'required']) !!}
+	    {!! Form::text('address_city', null, ['class' => 'form-control']) !!}
 	    {!! $errors->first('address_city', '<p class="help-block">:message</p>') !!}
 	</div>
 	<div class="col-md-3 form-group col-md-4{{ $errors->has('address_country') ? ' has-error' : ''}}">
 	    {!! Form::label('address_country', 'Country: ', ['class' => 'control-label']) !!}
-	    {!! Form::text('address_country', null, ['class' => 'form-control', 'required' => 'required']) !!}
+	    {!! Form::text('address_country', null, ['class' => 'form-control']) !!}
 	    {!! $errors->first('address_country', '<p class="help-block">:message</p>') !!}
 	</div>
 	<!--    <div class="col-md-3 form-group{{ $errors->has('address_postcode') ? ' has-error' : ''}}">
@@ -112,7 +127,7 @@
     ?>
     <div class="form-group  col-md-4{{ $errors->has('image') ? 'has-error' : ''}}">
 	{!! Form::label('image', 'Profile Image (360 X 450)', ['class' => 'control-label']) !!}
-	{!! Form::file('image', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+	{!! Form::file('image', null, ['class' => 'form-control']) !!}
 	{!! $errors->first('image', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group col-md-8{{ $errors->has('type') ? 'has-error' : ''}}">
@@ -127,7 +142,7 @@
 
     <div class="form-group  col-md-12{{ $errors->has('about') ? ' has-error' : ''}}">
 	{!! Form::label('about', 'About: ', ['class' => 'control-label']) !!}
-	{!! Form::textarea('about', null, ['class' => 'form-control', 'required' => 'required']) !!}
+	{!! Form::textarea('about', null, ['class' => 'form-control']) !!}
 	{!! $errors->first('about', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

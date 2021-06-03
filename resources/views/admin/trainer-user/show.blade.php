@@ -1,5 +1,6 @@
 @extends('layouts.backend')
 @section('content')
+<?php // dd($traineruser);?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -47,7 +48,24 @@
                                     <tr><th>Image</th><td>NAN</td></tr>
                                 <?php else: ?>
                                     <tr><th>Image</th><td><img width="150" src="{{url('uploads/trainer-user/'.$traineruser->image)}}"> </td></tr>
-                                <?php endif; ?>
+				       <?php endif; ?>
+				    <tr><th>Emirates Image1</th> 
+			    <td>
+				<?php if (!empty($traineruser->emirate_image1)) { ?>
+				<img src=" {{ $traineruser->emirate_image1 }}" width="100"; ></td>
+				<?php } else { ?>
+    			    <td>NA</td>
+			    <?php } ?>
+			   </tr>
+			    <tr><th>Emirates Image2</th> 
+			    <td>
+				<?php if (!empty($traineruser->emirate_image2)) { ?>
+				<img src=" {{ $traineruser->emirate_image2 }}" width="100"; ></td>
+				<?php } else { ?>
+    			    <td>NA</td>
+			    <?php } ?>
+			   </tr>
+                             
                             </tbody>
                         </table>
                     </div>

@@ -115,14 +115,15 @@ class TrainerUserController extends Controller {
 	    'email' => 'required|string|max:255|email|unique:trainer_users',
 	    'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/',
 	    'mobile' => 'required|numeric',
-	    'birth_date' => 'required|date_format:Y-m-d|before:today',
 	    'emergency_contact_no' => 'required|numeric',
 	    'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
+		     'emirate_image1' => 'required|mimes:jpg,jpeg,png',
+		     'emirate_image2' => 'required|mimes:jpg,jpeg,png',
 //            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
+		    'birth_date' => 'required|date_format:Y-m-d|before:today',
 		]
 	);
 	$data = $request->all();
-//        dd($data);
 	$data['password'] = bcrypt($data['password']);
 	if (isset($data['services']))
 	    $data['services'] = json_encode($data['services']);
@@ -130,6 +131,16 @@ class TrainerUserController extends Controller {
 	    $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
 	    $request->file('image')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
 	    $data['image'] = $imageName;
+	}
+	if ($request->hasfile('emirate_image1')) {
+	    $imageName = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
+	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
+	    $data['emirate_image1'] = $imageName;
+	}
+	if ($request->hasfile('emirate_image2')) {
+	    $imageName = uniqid() . '.' . $request->file('emirate_image2')->getClientOriginalExtension();
+	    $request->file('emirate_image2')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
+	    $data['emirate_image2'] = $imageName;
 	}
 //        dd($request->role_id);
 	TrainerUser::create($data);
@@ -145,6 +156,7 @@ class TrainerUserController extends Controller {
      */
     public function show($id) {
 	$traineruser = TrainerUser::findOrFail($id);
+//	dd($traineruser);
 	return view('admin.trainer-user.show', compact('traineruser'));
     }
 
