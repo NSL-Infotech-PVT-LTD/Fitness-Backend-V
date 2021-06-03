@@ -23,7 +23,7 @@ class User extends Authenticatable {
 //    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id','first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'trainer_id', 'trainer_slot', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us', 'workplace', 'hotel_room_no', 'duration_of_stay', 'check_in', 'check_out', 'my_sessions','payment_params','payment_status'
+        'id','first_name', 'middle_name', 'last_name', 'child', 'mobile', 'emergency_contact_no', 'email', 'password', 'birth_date', 'marital_status', 'designation', 'emirates_id', 'trainer_id', 'trainer_slot', 'address', 'status', 'image', 'parent_id', 'gender', 'city', 'nationality', 'about_us', 'workplace', 'hotel_room_no', 'duration_of_stay', 'check_in', 'check_out', 'my_sessions','payment_params','payment_status','emirate_image1','emirate_image2'
     ];
 
     /**
@@ -44,6 +44,8 @@ class User extends Authenticatable {
         'email_verified_at' => 'datetime',
     ];
     protected $appends = array('role', 'full_name', 'role_expired_on');
+     public static $_imagePublicPath = 'uploads/emirateimages';
+   
 
     public function getTrainerSlotAttribute($value) {
         return ($value == null) ? 0 : $value;
@@ -57,6 +59,24 @@ class User extends Authenticatable {
 
         return $name;
     }
+     public function getEmirateImage1Attribute($value) {
+	try {
+	    if ($value === null || $value == '')
+		return $value;
+	    return env('APP_URL') . '/' . self::$_imagePublicPath . '/' . $value;
+	} catch (\Exception $ex) {
+	    return $value;
+	}
+    } 
+    public function getEmirateImage2Attribute($value) {
+	try {
+	    if ($value === null || $value == '')
+		return $value;
+	    return env('APP_URL') . '/' . self::$_imagePublicPath . '/' . $value;
+	} catch (\Exception $ex) {
+	    return $value;
+	}
+    } 
 
     public function getRoleExpiredOnAttribute() {
 
@@ -76,8 +96,6 @@ class User extends Authenticatable {
                     $subscription_endDate = $subscription_endDate->addMonths(12);
                     break;
             endswitch;
-//                                dd($subscription_endDate);
-//            return $subscription_endDate;
             $subscription_end = new Carbon\Carbon($subscription_endDate);
             return $subscription_end->format('Y-m-d');
         } catch (\Exception $ex) {

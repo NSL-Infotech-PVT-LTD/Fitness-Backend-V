@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-<?php // dd($user->role->name,$user->role->current_plan->toArray(),$user->role->current_plan->fee_type,$user->role->action_date)?>
+<?php // dd($user)?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -57,6 +57,22 @@
                                 <tr><th>Marital Status</th><td> {{ $user->marital_status }} </td></tr>
                                 <tr><th>Designation</th><td> {{ $user->designation }} </td></tr>
                                 <tr><th>Emirates Id</th><td> {{ $user->emirates_id }} </td></tr>
+				<tr><th>Emirates Image1</th> 
+			    <td>
+				<?php if (!empty($user->emirate_image1)) { ?>
+				<img src=" {{ $user->emirate_image1 }}" width="100"; ></td>
+				<?php } else { ?>
+    			    <td>NA</td>
+			    <?php } ?>
+			   </tr>
+			    <tr><th>Emirates Image2</th> 
+			    <td>
+				<?php if (!empty($user->emirate_image2)) { ?>
+				<img src=" {{ $user->emirate_image2 }}" width="100"; ></td>
+				<?php } else { ?>
+    			    <td>NA</td>
+			    <?php } ?>
+			   </tr>
                                 <tr><th>Address</th><td> {{ $user->address }} </td></tr>
                                 <tr><th>Approved Action Date</th><td>{{$user->roles['0']['created_at'] }} </td></tr>
                                 <?php

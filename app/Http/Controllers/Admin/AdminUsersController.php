@@ -38,7 +38,7 @@ class AdminUsersController extends Controller {
         return view('admin.adminusers.index', ['rules' => array_keys($this->__rulesforindex)]);
     }
 
-    /**
+    /**           
      * Show the form for creating a new resource.
      *
      * @return void

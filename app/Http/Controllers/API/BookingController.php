@@ -90,7 +90,6 @@ class BookingController extends ApiController {
             endif;
             $modelType = ucfirst(str_replace('_', ' ', $request->model_type));
 //            endif;
-//            dd($model['created_by']);
             //Send to the artist
 //            parent::pushNotifications(['title' => 'Confirmed', 'body' => 'Booking confirmation', 'data' => ['target_id' => $model['created_by'], 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE);
             parent::pushNotifications(['title' => $modelType . 'Booking Requested', 'body' => "Your " . $modelTypeName . " booking has been in request status", 'data' => ['target_id' => $model->id, 'target_model' => 'Booking', 'data_type' => 'Booking']], $model->created_by, TRUE, ['template_name' => 'notify', 'subject' => 'Your Booking is Requested', 'customData' => ['notifyMessage' => "Your " . $modelTypeName . " booking has been in request status "]]);

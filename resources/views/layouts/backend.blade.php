@@ -458,6 +458,27 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item has-treeview">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-book"></i>
+                                    <p>
+                                        Expired Members
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/bookings') }}" class="nav-link">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>View All Bookings</p>
+                                            <?php $count = \App\Booking::where('status', '0')->count() ?>
+                                            <?php if ($count): ?>
+                                                <b class="badge badge-danger"><?= $count ?></b>
+                                            <?php endif; ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
                         </ul>
                     </nav>

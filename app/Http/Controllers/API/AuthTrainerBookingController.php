@@ -11,8 +11,6 @@ use App\Booking as Mymodel;
 class AuthTrainerBookingController extends ApiController {
 
     public function getitems(Request $request) {
-
-//        dd(\Auth::id());
         $rules = ['limit' => ''];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):

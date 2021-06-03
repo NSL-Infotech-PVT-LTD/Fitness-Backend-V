@@ -4,6 +4,7 @@
             <div class="col-md-12">
                 <div class="form-group{{ $errors->has('class_id') ? 'has-error' : ''}}">
                     {!! Form::label('class_id', 'Choose Your Class', ['class' => 'control-label']) !!}
+		    	<a class="float-right" href="{{ url('/admin/class/create') }}" title="Back" target="_blank">If not found Create New ?</a>
                     {!! Form::select('class_id', \App\Classes::where('status','1')->get()->pluck('name','id'), isset($classschedule->class_id) ? $classschedule->class_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
                     {!! $errors->first('class_id', '<p class="help-block">:message</p>') !!}
                 </div>
@@ -12,7 +13,7 @@
 
             <div class="col-md-12">
                 <div class="form-group{{ $errors->has('trainer_id') ? 'has-error' : ''}}">
-                    {!! Form::label('trainer_id', 'Choose Your Trainer', ['class' => 'control-label']) !!}
+                    {!! Form::label('trainer_id', 'Choose Your Trainer', ['class' => 'control-label']) !!}			<a class="float-right" href="{{ url('/admin/trainer-user/create') }}" title="Back" target="_blank">If not found Create New ?</a>
                     {!! Form::select('trainer_id', \App\TrainerUser::where('status','1')->get()->pluck('first_name','id'), isset($classschedule->trainer_id) ? $classschedule->trainer_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
                     {!! $errors->first('trainer_id', '<p class="help-block">:message</p>') !!}
                 </div>
@@ -24,7 +25,7 @@
                     {!! Form::radio('class_type', 'one-time', ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
                     {!! Form::label('class_type', 'One Time', ['class' => 'control-label']) !!}
                     {!! $errors->first('class_type', '<p class="help-block">:message</p>') !!}
-        
+	
                 </div>-->
         <input type="hidden" value="one-time" name="class_type">
         <div class="row">
@@ -53,21 +54,21 @@
         <div class="col-md-12 col-sm-12">
             <div class="form-group" style="overflow: hidden;">
                 <div id="checkboxes">
-                    <?php foreach (['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as $day): ?>
-                        <div class="checkbox">
+		    <?php foreach (['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as $day): ?>
+    		    <div class="checkbox">
 
-                            <input type="checkbox" id="{{$day}}}" name="repeat_on[]" value="{{$day}}" <?= isset($classschedule->repeat_on) ? (in_array($day, $classschedule->repeat_on) ? 'checked=""' : '') : '' ?>>
-                            <label for="{{$day}}"></label>
-                            <span>{{$day}}</span>
-                        </div>
-                    <?php endforeach; ?>
+    			<input type="checkbox" id="{{$day}}}" name="repeat_on[]" value="{{$day}}" <?= isset($classschedule->repeat_on) ? (in_array($day, $classschedule->repeat_on) ? 'checked=""' : '') : '' ?>>
+    			<label for="{{$day}}"></label>
+    			<span>{{$day}}</span>
+    		    </div>
+		    <?php endforeach; ?>
 
                 </div>
             </div>
         </div>
 
         <!--        <div class="row" style="width:100%;">
-                   
+		   
                 </div>-->
     </div>
 
@@ -102,6 +103,7 @@
 
                 <div class="form-group{{ $errors->has('location_id') ? 'has-error' : ''}}">
                     {!! Form::label('location_id', 'Location ', ['class' => 'control-label']) !!}
+		   	<a class="float-right" href="{{ url('/admin/location/create') }}" title="Back" target="_blank">Create New ?</a>
                     {!! Form::select('location_id', \App\Location::where('status','1')->get()->pluck('name','id'), isset($event->location_id) ? $event->location_id : '', ['class' => 'form-control', 'multiple' => false]) !!}
                     {!! $errors->first('location_id', '<p class="help-block">:message</p>') !!}
                 </div>
@@ -132,7 +134,3 @@
     </div>
 
 </div>
-
-
-
-

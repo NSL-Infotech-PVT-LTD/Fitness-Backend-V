@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -31,8 +28,8 @@
                     <!-- small box -->
                     <div class="small-box one_">
                         <div class="inner">
-                            <h3><?= App\TrainerUser::where('status','1')->count() ?></h3>
-                            <p>Approved Personal Trainer</p>
+                            <h3><?= App\TrainerUser::where('type','=','freelancer')->where('status','1')->count() ?></h3>
+                            <p>Total freelancer Trainer</p>
                         </div>
                         <div class="inner">
                             <h3><?= App\TrainerUser::count() ?></h3>
@@ -84,8 +81,10 @@
                     <!-- small box -->
                     <div class="small-box four_">
                         <div class="inner">
-                            <h3>{{DB::table('classes')->where('status','1')->count()}}</h3>
-                            <p>Approved Classes</p>
+                            <h3>4</h3>
+                            <p>Total active PT Packages</p>
+<!--                            <h3>{{DB::table('classes')->where('status','1')->count()}}</h3>
+                            <p>Approved Classes</p>-->
                         </div>
                         <div class="inner">
                             <h3>{{$class = DB::table('classes')->count()}}</h3>

@@ -9,6 +9,7 @@ use Validator;
 use App\User;
 use DB;
 use Auth;
+use App\User as MyModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\Factory;
 use Illuminate\Support\Facades\Password;
@@ -53,16 +54,12 @@ class AuthController extends ApiController {
     }
 
     public function Register(Request $request) {
-//        dd(\Carbon\Carbon::now()->addDays(2)->format('Y-m-d'));
-//        dd(implode(',',\App\Currency::get()->pluck('id')->toArray()));
-//dd(\App\Role::where('id',$request->role_id)->value('member'));
         $emails = [];
 
-//        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => 'required', 'nationality' => 'required', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
         if (isset($request->role_plan_id))
-            $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'image' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => ''];
+            $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'child' => '', 'mobile' => 'required|numeric', 'emergency_contact_no' => '', 'image' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => 'required', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => 'required', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => 'required|in:male,female', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => '','emirate_image1'=>'required|mimes:jpg,png,jpeg,pdf','emirate_image2'=>'required|mimes:jpg,png,jpeg,pdf'];
         else
-            $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => '', 'birth_date' => '', 'designation' => '', 'emirates_id' => '', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => '', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => '', 'hotel_room_no' => '', 'duration_of_stay' => '', 'check_in' => '', 'check_out' => ''];
+            $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'email' => 'required|string|max:255|email|unique:users', 'password' => '', 'birth_date' => '', 'designation' => '', 'emirates_id' => 'required', 'address' => '', 'role_id' => 'required|exists:roles,id', 'role_plan_id' => '', 'gender' => '', 'city' => '', 'nationality' => '', 'about_us' => '', 'workplace' => '', 'marital_status' => '', 'hotel_room_no' => '', 'duration_of_stay' => '', 'check_in' => '', 'check_out' => '','emirate_image1'=>'required|mimes:jpg,png,jpeg,pdf','emirate_image2'=>'required|mimes:jpg,png,jpeg,pdf'];
 
 
         $rules = array_merge($this->requiredParams, $rules);
@@ -74,10 +71,8 @@ class AuthController extends ApiController {
 //      $role = \App\Role::whereId($request->role_id)->first();
         $checkRole = \DB::table('roles')->whereId($request->role_id)->first();
         $roleMember = (int) $checkRole->member;
-//        dd($checkRole, $roleMember);
 //        if ($checkRole->type == 'user'):
         if (in_array($checkRole->type, ['user', 'user_with_child'])):
-//            dd($checkRole->category);            
             $rules = ['first_name' => 'required', 'middle_name' => '', 'last_name' => 'required', 'mobile' => 'required|numeric', 'email' => 'required|string|max:255|email|unique:users,email', 'gender' => 'required|in:male,female', 'trainer_id' => '', 'trainer_slot' => ''];
             $finalRules = [];
             foreach ($rules as $key => $rule):
@@ -85,7 +80,6 @@ class AuthController extends ApiController {
                     $finalRules[$key . '_' . $i] = $rule;
                 endfor;
             endforeach;
-//                dd($finalRules);
 //                foreach ($rules as $key => $rule):
 //                    $finalRules[$key . '_1'] = $rule;
 //                    if ($checkRole->category == 'family_with_1')
@@ -118,19 +112,23 @@ class AuthController extends ApiController {
         if (count($emails) > 0)
             return parent::error([array_key_first($emails) => 'The ' . array_key_first($emails) . ' has already been taken.'], 422, false);
 //        self::getRequestByRK($request->all(), '_1');
-//        dd(array_merge(self::getRequestByRK($request->all(), '_1'), ['parent_id' => 121]));
 //        $roleplan = \App\RolePlans::whereId($request->role_plan_id);
 //
 //        $paymentFunction = \App\Helpers\ScapePanel::paymentFunction(['firstName' => $request->first_name, 'lastName' => $request->last_name, 'email' => $request->email], $roleplan->value('fee_type'), $roleplan->value('fee'));
-//        dd('ss');
         try {
             $input = $request->all();
             $input['password'] = Hash::make($request->password);
             if (isset($request->image))
                 if (!empty($request->file('image')))
                     $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'));
-//            dd(\App\Role::whereId($request->role_id)->first()->name);
+//            if (isset($request->emirate_image1))
+                if (!empty($request->file('emirate_image1')))
+                    $input['emirate_image1'] = parent::__uploadImage($request->file('emirate_image1'), public_path(MyModel::$_imagePublicPath),true);
+//            if (isset($request->emirate_image2))
+                if (!empty($request->file('emirate_image2')))
+                    $input['emirate_image2'] = parent::__uploadImage($request->file('emirate_image2'), public_path(MyModel::$_imagePublicPath),true);
             $user = \App\User::create($input);
+	    
             //Assign role to created user
             $user->assignRole($request->role_id, 'id');
             if (isset($request->role_plan_id)):
@@ -212,7 +210,11 @@ class AuthController extends ApiController {
 
     public function Update(Request $request) {
 
-        $rules = ['first_name' => 'required|alpha', 'middle_name' => '', 'last_name' => 'required|alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'birth_date' => 'required|date_format:Y-m-d|before:today', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => '', 'city' => '', 'nationality' => 'required', 'about_us' => ''];
+        $rules = ['first_name' => 'alpha', 'middle_name' => '', 'last_name' => 'alpha', 'child' => '', 'mobile' => '', 'emergency_contact_no' => '', 'birth_date' => '', 'designation' => '', 'emirates_id' => '', 'address' => '', 'image' => '', 'city' => '', 'nationality' => '', 'about_us' => '','emirate_image1'=>'','emirate_image2'=>''];
+	
+	if (isset($request->birth_date))
+                if (!empty($request->birth_date != null))
+                    $rules+= ['image' => 'required|date_format:Y-m-d|before:today'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
         if ($validateAttributes):
             return $validateAttributes;
@@ -224,7 +226,6 @@ class AuthController extends ApiController {
             if (isset($request->image))
                 if (!empty($request->file('image')))
                     $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
-
             $user = \App\User::findOrFail(\Auth::id());
             $user->fill($input);
             $user->save();
