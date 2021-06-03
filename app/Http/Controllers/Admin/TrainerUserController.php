@@ -132,17 +132,15 @@ class TrainerUserController extends Controller {
 	    $request->file('image')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
 	    $data['image'] = $imageName;
 	}
+	
 	if ($request->hasfile('emirate_image1')) {
-	    $imageName = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
-	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
-	    $data['emirate_image1'] = $imageName;
+	    
+	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
+	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateid/', $imageName1);
+	    $data['emirate_image1'] = $imageName1;
 	}
-	if ($request->hasfile('emirate_image2')) {
-	    $imageName = uniqid() . '.' . $request->file('emirate_image2')->getClientOriginalExtension();
-	    $request->file('emirate_image2')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
-	    $data['emirate_image2'] = $imageName;
-	}
-//        dd($request->role_id);
+                if (!empty($request->file('emirate_image2')))
+                    $data['emirate_image2'] =  \App\Http\Controllers\API\ApiController::__uploadImage($request->file('emirate_image2'), public_path(TrainerUser::$_imagePublicPath),true);
 	TrainerUser::create($data);
 	return redirect('admin/trainer-user/')->with('flash_message', 'Trainer Added!');
     }
@@ -207,6 +205,15 @@ class TrainerUserController extends Controller {
 	    $request->file('image')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
 	    $data['image'] = $imageName;
 	}
+	if ($request->hasfile('emirate_image1')) {
+	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
+	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateid/', $imageName1);
+	    $data['emirate_image1'] = $imageName1;
+	}
+                if (!empty($request->file('emirate_image2')))
+
+                    $data['emirate_image2'] =  \App\Http\Controllers\API\ApiController::__uploadImage($request->file('emirate_image2'), public_path(TrainerUser::$_imagePublicPath),true);
+
 	$traineruser = TrainerUser::findOrFail($id);
 	$traineruser->update($data);
 	return redirect('admin/trainer-user/')->with('flash_message', 'Trainer updated!');

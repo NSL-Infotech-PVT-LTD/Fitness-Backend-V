@@ -40,17 +40,7 @@
 </div>
 
 
-<div class="form-group col-md-4{{ $errors->has('emirate_image1') ? 'has-error' : ''}}">
-    {!! Form::label('emirate_image1', 'Emirate Copy1', ['class' => 'control-label']) !!}
-    {!! Form::file('emirate_image1', null,  ['class' => 'form-control', 'required' => 'required']) !!}
-    {!! $errors->first('emirate_image1', '<p class="help-block">:message</p>') !!}
-</div>
 
-<div class="form-group col-md-4{{ $errors->has('emirate_image2') ? ' has-error' : ''}}">
-    {!! Form::label('emirate_image2', 'Emirate Copy2: ', ['class' => 'control-label']) !!}
-    {!! Form::file('emirate_image2', null, ['class' => 'form-control', 'required' => 'required']) !!}
-    {!! $errors->first('emirate_image2', '<p class="help-block">:message</p>') !!}
-</div>
 <?php
 //dd($formMode);
 if ($formMode == 'create'):
@@ -71,10 +61,21 @@ if ($formMode == 'create'):
         {!! Form::password('password', $passwordOptions) !!}
         {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
     </div>
+<div class="form-group col-md-4{{ $errors->has('emirate_image1') ? 'has-error' : ''}}">
+    {!! Form::label('emirate_image1', 'Emirate Copy1', ['class' => 'control-label']) !!}
+    {!! Form::file('emirate_image1', null,  ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('emirate_image1', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group col-md-4{{ $errors->has('emirate_image2') ? ' has-error' : ''}}">
+    {!! Form::label('emirate_image2', 'Emirate Copy2: ', ['class' => 'control-label']) !!}
+    {!! Form::file('emirate_image2', null, ['class' => 'form-control', 'required' => 'required']) !!}
+    {!! $errors->first('emirate_image2', '<p class="help-block">:message</p>') !!}
+</div>
 <?php endif; ?>
 </div>
 
-    {!! Form::submit($formMode === 'edit' ? 'Update' : 'See More...', ['class'=>'btn btn-primary pull-right', 'id' => 'type_select']) !!}
+    {!! Form::button( 'See More...', ['class'=>'btn btn-primary pull-right', 'id' => 'type_select']) !!}
     <div class="row" id="other">
 <div class="form-group col-md-4{{ $errors->has('birth_date') ? ' has-error' : ''}}">
     {!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}

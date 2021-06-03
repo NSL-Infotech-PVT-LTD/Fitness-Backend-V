@@ -38,9 +38,10 @@ class UsersController extends Controller {
     }
 
     public function indexByRoleId(Request $request, $role_id) {
-
+	 $TotalCount=0;
 	if ($request->ajax()) {
 	    $roleusers = \DB::table('role_user')->where('role_id', $role_id)->pluck('user_id')->toArray();
+	    $TotalCount = count($roleusers);
 	    if (!empty($request->status)) {
 		$users = [];
 		if (strtolower($request->status) == "expired" || strtolower($request->status) == "active") {
@@ -77,11 +78,15 @@ class UsersController extends Controller {
 			}
 		    }
 		    if (strtolower($request->status) == "expired") {
+			$TotalCount = count($users);
 			$roleusers = $users;
 		    }
 // 
 		    if (strtolower($request->status) == "active") {
+			
 			$roleusers = array_diff($roleusers, $users);
+			$TotalCount= count($roleusers);
+			
 		    }
 		} elseif (strtolower($request->status) == "abouttoexpire") {
 
@@ -115,6 +120,8 @@ class UsersController extends Controller {
 			}
 		    }
 		    $roleusers = $users;
+		    $TotalCount = count($roleusers);
+		    
 		}
 	    }
 	    $users = User::wherein('id', $roleusers)->latest();
@@ -262,8 +269,7 @@ class UsersController extends Controller {
 	if (isset($role_id))
 	    if ($role_id != 1)
 		$this->__rulesforindex += ['parent_id' => 'required'];
-
-	return view('admin.users.index', ['rules' => array_keys($this->__rulesforindex), 'role_id' => $role_id]);
+	return view('admin.users.index', ['rules' => array_keys($this->__rulesforindex), 'role_id' => $role_id,'total'=>$TotalCount]);
     }
 
     /**
@@ -321,6 +327,14 @@ class UsersController extends Controller {
 	    $request->file('image')->move(base_path() . '/public/uploads/users/', $imageName);
 	    $data['image'] = $imageName;
 	}
+	if ($request->hasfile('emirate_image1')) {
+
+	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
+	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateid/', $imageName1);
+	    $data['emirate_image1'] = $imageName1;
+	}
+	if (!empty($request->file('emirate_image2')))
+	    $data['emirate_image2'] = \App\Http\Controllers\API\ApiController::__uploadImage($request->file('emirate_image2'), public_path(User::$_imagePublicPath), true);
 //        dd($request->role_id);
 	$user = User::create($data);
 	$user->assignRole($request->role_id, 'id');

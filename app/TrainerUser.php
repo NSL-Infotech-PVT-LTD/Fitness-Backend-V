@@ -20,7 +20,7 @@ class TrainerUser extends Authenticatable {
      * @var string
      */
     protected $table = 'trainer_users';
-
+ public static $_imagePublicPath = 'uploads/emirateimages';
     /**
      * The database primary key value.
      *
@@ -66,6 +66,24 @@ class TrainerUser extends Authenticatable {
         return $classschedule;
 //        return $model->avg('rating');
     }
+     public function getEmirateImage1Attribute($value) {
+	try {
+	    if ($value === null || $value == '')
+		return $value;
+	    return env('APP_URL') . '/' . self::$_imagePublicPath . '/' . $value;
+	} catch (\Exception $ex) {
+	    return $value;
+	}
+    } 
+     public function getEmirateImage2Attribute($value) {
+	try {
+	    if ($value === null || $value == '')
+		return $value;
+	    return env('APP_URL') . '/' . self::$_imagePublicPath . '/' . $value;
+	} catch (\Exception $ex) {
+	    return $value;
+	}
+    } 
 
     public function getBookingReviewedCntAttribute() {
         $classschedule = \App\ClassSchedule::where('trainer_id', $this->id)->get()->pluck('id');

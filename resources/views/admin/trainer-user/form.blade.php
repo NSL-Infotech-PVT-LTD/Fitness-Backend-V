@@ -71,7 +71,7 @@
     
 </div>
 <br>
-{!! Form::submit($formMode === 'edit' ? 'Update' : 'See More...', ['class'=>'btn btn-primary pull-right', 'id' => 'type_select']) !!}
+{!! Form::button( 'See More...', ['class'=>'btn btn-primary pull-right', 'id' => 'type_select']) !!}
 <br>
 <br>
 
@@ -125,6 +125,15 @@
     if (isset($traineruser->image))
 	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->image) . ">";
     ?>
+    //<?php
+//    if (isset($traineruser->emirate_image1))
+//	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image1) . ">";
+//    ?>
+    //<?php
+//    if (isset($traineruser->emirate_image2))
+//	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image2) . ">";
+//    ?>
+    
     <div class="form-group  col-md-4{{ $errors->has('image') ? 'has-error' : ''}}">
 	{!! Form::label('image', 'Profile Image (360 X 450)', ['class' => 'control-label']) !!}
 	{!! Form::file('image', null, ['class' => 'form-control']) !!}
