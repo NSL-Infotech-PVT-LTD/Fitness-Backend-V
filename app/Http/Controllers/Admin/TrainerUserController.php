@@ -65,9 +65,15 @@ class TrainerUserController extends Controller {
     protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'email' => 'required'];
 
     public function index(Request $request) {
+//	dd($request->all());
 	if ($request->ajax()) {
-	    $models = TrainerUser::latest();
-	    return Datatables::of($models)
+	    $model= new TrainerUser;
+	    if (isset($request->status))
+		$model = $model->where('type', $request->status);
+	    else
+		$model = $model->select('id','first_name','middle_name','last_name','mobile','email');
+	    $model = $model->latest();
+	    return Datatables::of($model)
 			    ->addIndexColumn()
 			    ->addColumn('action', function($item) {
 //                                $return = 'return confirm("Confirm delete?")';
@@ -117,10 +123,10 @@ class TrainerUserController extends Controller {
 	    'mobile' => 'required|numeric',
 	    'emergency_contact_no' => 'required|numeric',
 	    'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
-		     'emirate_image1' => 'required|mimes:jpg,jpeg,png',
-		     'emirate_image2' => 'required|mimes:jpg,jpeg,png',
+	    'emirate_image1' => 'required|mimes:jpg,jpeg,png',
+	    'emirate_image2' => 'required|mimes:jpg,jpeg,png',
 //            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
-		    'birth_date' => 'required|date_format:Y-m-d|before:today',
+	    'birth_date' => 'required|date_format:Y-m-d|before:today',
 		]
 	);
 	$data = $request->all();
@@ -132,15 +138,15 @@ class TrainerUserController extends Controller {
 	    $request->file('image')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
 	    $data['image'] = $imageName;
 	}
-	
+
 	if ($request->hasfile('emirate_image1')) {
-	    
+
 	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
 	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateimages/', $imageName1);
 	    $data['emirate_image1'] = $imageName1;
 	}
-                if (!empty($request->file('emirate_image2')))
-                    $data['emirate_image2'] =  \App\Http\Controllers\API\ApiController::__uploadImage($request->file('emirate_image2'), public_path(TrainerUser::$_imagePublicPath),true);
+	if (!empty($request->file('emirate_image2')))
+	    $data['emirate_image2'] = \App\Http\Controllers\API\ApiController::__uploadImage($request->file('emirate_image2'), public_path(TrainerUser::$_imagePublicPath), true);
 	TrainerUser::create($data);
 	return redirect('admin/trainer-user/')->with('flash_message', 'Trainer Added!');
     }
@@ -210,9 +216,8 @@ class TrainerUserController extends Controller {
 	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateimages/', $imageName1);
 	    $data['emirate_image1'] = $imageName1;
 	}
-                if (!empty($request->file('emirate_image2')))
-
-                    $data['emirate_image2'] =  \App\Http\Controllers\API\ApiController::__uploadImage($request->file('emirate_image2'), public_path(TrainerUser::$_imagePublicPath),true);
+	if (!empty($request->file('emirate_image2')))
+	    $data['emirate_image2'] = \App\Http\Controllers\API\ApiController::__uploadImage($request->file('emirate_image2'), public_path(TrainerUser::$_imagePublicPath), true);
 
 	$traineruser = TrainerUser::findOrFail($id);
 	$traineruser->update($data);

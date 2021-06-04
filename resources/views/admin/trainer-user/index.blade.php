@@ -25,6 +25,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+			<div class="col-md-2">
+			    Filter Status:<select id="status" type="dropdown-toggle" class="form-control drop" name="status">
+				<option class="status" value="{{url('admin/trainer-user')}}">Select status</option>
+				<option class="status"  value="{{url('admin/trainer-user?status=freelancer')}}">Freelancer</option>
+				<option class="status" value="{{url('admin/trainer-user?status=permanent')}}">Personal Trainer</option>
+			    </select></div>
                         <div class="card-header">
 
                             <div class="card-body">
@@ -68,6 +74,17 @@
 
 <script type="text/javascript">
     $(function () {
+	var url = "{{ route('trainer-user.index') }}";
+<?php if (request()->status != ''): ?>
+    	url += "?status=" + "{{request()->status}}";
+<?php endif; ?>
+    
+    $('select').on('change', function (e) {
+	    var link = $("option:selected", this).val();
+	    if (link) {
+		location.href = link;
+	    }
+	});
         var table = $('.data-table').DataTable({
         language: {
         lengthMenu: "_MENU_",
@@ -83,7 +100,7 @@
         },
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('trainer-user.index') }}",
+                ajax: url,
                 columns: [
                 {data: 'id', name: 'id'},
 <?php foreach ($rules as $rule): ?>

@@ -82,19 +82,21 @@
                     <div class="small-box four_">
                         <div class="inner">
                             <h3>4</h3>
-                            <p>Total active PT Packages</p>
+                            <!--<p>Total active PT Packages</p>-->
+			    <a href="{{ url('admin/roles') }}" class="small-box-footer">Total active PT Packages</a>
 			    <!--                            <h3>{{DB::table('classes')->where('status','1')->count()}}</h3>
 							<p>Approved Classes</p>-->
                         </div>
                         <div class="inner">
                             <h3>{{$class = DB::table('classes')->count()}}</h3>
 
-                            <p>Total Classes</p>
+                            <!--<p>Total Classes</p>-->
+			    <a href="{{ url('admin/class') }}" class="small-box-footer">Total Classes</a>
                         </div>
-                        <div class="icon">
+<!--                        <div class="icon">
                             <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="{{ url('admin/class') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>-->
+                        <!--<a href="{{ url('admin/class') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
 
@@ -123,6 +125,7 @@
                         <div class="inner">
                             <h3>{{$TotalActive}}</h3>
                             <p>Total Active Users</p>
+			    
                         </div>
 			<div class="inner">
                             <h3>{{$TotalExpired}}</h3>
@@ -131,7 +134,7 @@
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="{{ url('admin/events') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('admin/users/role/1') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
