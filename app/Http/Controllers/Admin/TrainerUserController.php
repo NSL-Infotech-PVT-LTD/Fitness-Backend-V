@@ -136,7 +136,7 @@ class TrainerUserController extends Controller {
 	if ($request->hasfile('emirate_image1')) {
 	    
 	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
-	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateid/', $imageName1);
+	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateimages/', $imageName1);
 	    $data['emirate_image1'] = $imageName1;
 	}
                 if (!empty($request->file('emirate_image2')))
@@ -207,7 +207,7 @@ class TrainerUserController extends Controller {
 	}
 	if ($request->hasfile('emirate_image1')) {
 	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
-	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateid/', $imageName1);
+	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateimages/', $imageName1);
 	    $data['emirate_image1'] = $imageName1;
 	}
                 if (!empty($request->file('emirate_image2')))

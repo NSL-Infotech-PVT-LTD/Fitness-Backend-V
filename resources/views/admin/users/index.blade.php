@@ -32,7 +32,7 @@
 				<option class="status"  value="expired">expired plan</option>
 				<option class="status" value="aboutToExpire">About to Expire</option>
 				<option class="status" value="Active">Active plans</option>
-			    </select><span>{{$total}}</span></div>
+			    </select></div>
                         <div class="card-header">
 
                             <div class="card-body">

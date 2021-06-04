@@ -38,15 +38,15 @@ class UsersController extends Controller {
     }
 
     public function indexByRoleId(Request $request, $role_id) {
-	 $TotalCount=0;
+	
 	if ($request->ajax()) {
-	    $roleusers = \DB::table('role_user')->where('role_id', $role_id)->pluck('user_id')->toArray();
-	    $TotalCount = count($roleusers);
+	    $roleusers = \DB::table('role_user')->where('role_id', $role_id)->where('role_plan_id','<>',"null")->pluck('user_id')->toArray();
+	   
 	    if (!empty($request->status)) {
 		$users = [];
 		if (strtolower($request->status) == "expired" || strtolower($request->status) == "active") {
 
-		    $data = \App\RoleUser::Where('role_id', $role_id)->select('user_id', 'role_plan_id', 'created_at')->get();
+		    $data = \App\RoleUser::Where('role_id', $role_id)->where('role_plan_id','<>',"null")->select('user_id', 'role_plan_id', 'created_at')->get();
 		    $plans = \App\RolePlans::Where('role_id', $role_id)->pluck('fee_type', 'id');
 //		    dd($plans);
 		    $data = collect($data->toArray())->flatten()->all();
@@ -78,14 +78,14 @@ class UsersController extends Controller {
 			}
 		    }
 		    if (strtolower($request->status) == "expired") {
-			$TotalCount = count($users);
+			
 			$roleusers = $users;
 		    }
 // 
 		    if (strtolower($request->status) == "active") {
 			
 			$roleusers = array_diff($roleusers, $users);
-			$TotalCount= count($roleusers);
+			
 			
 		    }
 		} elseif (strtolower($request->status) == "abouttoexpire") {
@@ -120,7 +120,7 @@ class UsersController extends Controller {
 			}
 		    }
 		    $roleusers = $users;
-		    $TotalCount = count($roleusers);
+		   
 		    
 		}
 	    }
@@ -269,7 +269,7 @@ class UsersController extends Controller {
 	if (isset($role_id))
 	    if ($role_id != 1)
 		$this->__rulesforindex += ['parent_id' => 'required'];
-	return view('admin.users.index', ['rules' => array_keys($this->__rulesforindex), 'role_id' => $role_id,'total'=>$TotalCount]);
+	return view('admin.users.index', ['rules' => array_keys($this->__rulesforindex), 'role_id' => $role_id]);
     }
 
     /**
@@ -330,7 +330,7 @@ class UsersController extends Controller {
 	if ($request->hasfile('emirate_image1')) {
 
 	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
-	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateid/', $imageName1);
+	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateimages/', $imageName1);
 	    $data['emirate_image1'] = $imageName1;
 	}
 	if (!empty($request->file('emirate_image2')))

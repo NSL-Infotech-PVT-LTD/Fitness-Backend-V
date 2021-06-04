@@ -55,7 +55,7 @@ class HomeController extends Controller {
     public function index() {
 	$TotalCount = 0;
 //	if ($request->ajax()) {
-	$roleusers = \DB::table('role_user')->pluck('user_id')->toArray();
+	$roleusers = \DB::table('role_user')->where('role_plan_id','<>',"null")->pluck('user_id')->toArray();
 	$TotalCount = count($roleusers);
 //	    if (!empty($request->status)) {
 	$users = [];
