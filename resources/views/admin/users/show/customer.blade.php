@@ -50,12 +50,37 @@
                                 <tr><th>Last Name</th><td> {{ $user->last_name }} </td></tr>
                                 <!--<tr><th>Child</th><td> {{ $user->child }} </td></tr>-->
                                 <tr><th>Mobile</th><td> {{ $user->mobile }} </td></tr>
-                                <tr><th>Emergency Contact No</th><td> {{ $user->emergency_contact_no }} </td></tr>
+				<?php if (!empty($user->emergency_contact_no)) { ?>
+    				<tr><th> Emergency Contact No	  </th><td> {{ $user->emergency_contact_no	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Emergency Contact No	  </th><td> NA </td></tr>
+				<?php } ?>
+                                <!--<tr><th>Emergency Contact No</th><td> {{ $user->emergency_contact_no }} </td></tr>-->
                                 <tr><th>Email</th><td> {{ $user->email }} </td></tr>
-                                <tr><th>Birth Date</th><td> {{ $user->birth_date }} </td></tr>
-                                <tr><th>City</th><td> {{ $user->city }} </td></tr>
-                                <tr><th>Marital Status</th><td> {{ $user->marital_status }} </td></tr>
-                                <tr><th>Designation</th><td> {{ $user->designation }} </td></tr>
+				<?php if (!empty($user->birth_date)) { ?>
+    				<tr><th> Birth Date	  </th><td> {{ $user->birth_date	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Birth Date	  </th><td> NA </td></tr>
+				<?php } ?>
+                                <!--<tr><th>Birth Date</th><td> {{ $user->birth_date }} </td></tr>-->
+				<?php if (!empty($user->city)) { ?>
+    				<tr><th> City </th><td> {{ $user->city	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> City </th><td> NA </td></tr>
+				<?php } ?>
+                                <!--<tr><th>City</th><td> {{ $user->city }} </td></tr>-->
+				<?php if (!empty($user->marital_status)) { ?>
+    				<tr><th> Marital Status	  </th><td> {{ $user->marital_status	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Marital Status	  </th><td> NA </td></tr>
+				<?php } ?>
+                                <!--<tr><th>Marital Status</th><td> {{ $user->marital_status }} </td></tr>-->
+				<?php if (!empty($user->designation)) { ?>
+    				<tr><th> Designation	  </th><td> {{ $user->designation	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Designation  </th><td> NA </td></tr>
+				<?php } ?>
+                                <!--<tr><th>Designation</th><td> {{ $user->designation }} </td></tr>-->
                                 <tr><th>Emirates Id</th><td> {{ $user->emirates_id }} </td></tr>
 				<tr><th>Emirates Image1</th> 
 			    <td>
@@ -73,7 +98,12 @@
     			    <td>NA</td>
 			    <?php } ?>
 			   </tr>
-                                <tr><th>Address</th><td> {{ $user->address }} </td></tr>
+			   <?php if (!empty($user->address)) { ?>
+    				<tr><th>Address  </th><td> {{ $user->address	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Address  </th><td> NA </td></tr>
+				<?php } ?>
+                                <!--<tr><th>Address</th><td> {{ $user->address }} </td></tr>-->
                                 <tr><th>Approved Action Date</th><td>{{$user->roles['0']['created_at'] }} </td></tr>
                                 <?php
 //                                dd($user->role->current_plan->fee_type);

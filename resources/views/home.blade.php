@@ -28,17 +28,17 @@
                     <!-- small box -->
                     <div class="small-box one_">
                         <div class="inner">
-                            <h3><?= App\TrainerUser::where('type', '=', 'freelancer')->where('status', '1')->count() ?></h3>
-                            <p>Total freelancer Trainer</p>
+                            <h3><?= App\TrainerUser::where('type', '=', 'freelancer')->count() ?></h3>
+			    <a href="{{ url('admin/trainer-user?status=freelancer') }}" class="small-box-footer">Total freelancer Trainer</a>
                         </div>
                         <div class="inner">
                             <h3><?= App\TrainerUser::count() ?></h3>
-                            <p>Total Personal Trainer</p>
+			    <a href="{{ url('admin/trainer-user?status=permanent') }}" class="small-box-footer">Total  Personal Trainer</a>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{ url('admin/trainer-user') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <!--<a href="{{ url('admin/trainer-user') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
 		<!--                <div class="col mx-1">
@@ -83,27 +83,25 @@
                         <div class="inner">
                             <h3>4</h3>
                             <!--<p>Total active PT Packages</p>-->
-			    <a href="{{ url('admin/roles') }}" class="small-box-footer">Total active PT Packages</a>
+			    <a href="{{ url('admin/roles') }}" class="small-box-footer">Total active PT Packages </a>
 			    <!--                            <h3>{{DB::table('classes')->where('status','1')->count()}}</h3>
 							<p>Approved Classes</p>-->
                         </div>
                         <div class="inner">
                             <h3>{{$class = DB::table('classes')->count()}}</h3>
-
-                            <!--<p>Total Classes</p>-->
 			    <a href="{{ url('admin/class') }}" class="small-box-footer">Total Classes</a>
                         </div>
-<!--                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>-->
-                        <!--<a href="{{ url('admin/class') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
+			<div class="icon">
+			    <i class="ion ion-pie-graph"></i>
+			</div>
+			<!--<a href="{{ url('admin/class') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
 
 
                 <div class="col mx-1">
                     <!-- small box -->
-                    <div class="small-box five_">
+                    <div class="small-box two_">
                         <div class="inner">
                             <h3>{{DB::table('events')->where('status','1')->count()}}</h3>
                             <p>Approved Events</p>
@@ -120,12 +118,12 @@
                 </div>
                 <div class="col mx-1">
                     <!-- small box -->
-                    <div class="small-box five_">
+                    <div class="small-box one_">
 
                         <div class="inner">
                             <h3>{{$TotalActive}}</h3>
                             <p>Total Active Users</p>
-			    
+
                         </div>
 			<div class="inner">
                             <h3>{{$TotalExpired}}</h3>

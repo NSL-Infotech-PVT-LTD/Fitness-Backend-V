@@ -37,35 +37,57 @@
                                 <tr><th> Middle Name </th><td> {{ $traineruser->middle_name }} </td></tr>
                                 <tr><th> Last Name </th><td> {{ $traineruser->last_name }} </td></tr>
                                 <tr><th> email </th><td> {{ $traineruser->email }} </td></tr>
-                                <tr><th> Experience </th><td> {{ $traineruser->expirence }} </td></tr>
-                                <tr><th> Certifications </th><td> {{ $traineruser->certifications }} </td></tr>
-                                <tr><th> Specialty  </th><td> {{ $traineruser->specialities }} </td></tr>
+				<?php if (!empty($traineruser->expirence)) { ?>
+    				<tr><th> Experience	  </th><td> {{ $traineruser->expirence	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Experience	  </th><td> NA </td></tr>
+				<?php } ?>
+				<?php if (!empty($traineruser->certifications)) { ?>
+    				<tr><th> Certifications	  </th><td> {{ $traineruser->certifications	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Certifications	  </th><td> NA </td></tr>
+				<?php } ?>
+				<?php if (!empty($traineruser->specialities)) { ?>
+    				<tr><th> Specialty	  </th><td> {{ $traineruser->specialities	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Specialty	  </th><td> NA </td></tr>
+				<?php } ?>
                                 <tr><th> Birth Date	  </th><td> {{ $traineruser->birth_date	 }} </td></tr>
-                                <tr><th> About	  </th><td> {{ $traineruser->about	 }} </td></tr>
-                                <tr><th> Address	  </th><td> {{ $traineruser->address_house }} </td></tr>
+				<?php if (!empty($traineruser->about)) { ?>
+    				<tr><th> About	  </th><td> {{ $traineruser->about	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> About	  </th><td> NA </td></tr>
+				<?php } ?>
+				<?php if (!empty($traineruser->address_house)) { ?>
+
+    				<tr><th> Address	  </th><td> {{ $traineruser->address_house	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Address	  </th><td> NA </td></tr>
+				<?php } ?>
+
                                 <tr><th> Emergency Contact No </th><td> {{ $traineruser->emergency_contact_no }} </td></tr>
-                                <?php if ($traineruser->image == ''): ?>
-                                    <tr><th>Image</th><td>NAN</td></tr>
-                                <?php else: ?>
-                                    <tr><th>Image</th><td><img width="150" src="{{url('uploads/trainer-user/'.$traineruser->image)}}"> </td></tr>
-				       <?php endif; ?>
-				    <tr><th>Emirates Image1</th> 
-			    <td>
-				<?php if (!empty($traineruser->emirate_image1)) { ?>
-				<img src=" {{ $traineruser->emirate_image1 }}" width="100"; ></td>
-				<?php } else { ?>
-    			    <td>NA</td>
-			    <?php } ?>
-			   </tr>
-			    <tr><th>Emirates Image2</th> 
-			    <td>
-				<?php if (!empty($traineruser->emirate_image2)) { ?>
-				<img src=" {{ $traineruser->emirate_image2 }}" width="100"; ></td>
-				<?php } else { ?>
-    			    <td>NA</td>
-			    <?php } ?>
-			   </tr>
-                             
+				<?php if ($traineruser->image == ''): ?>
+    				<tr><th>Image</th><td>NAN</td></tr>
+				<?php else: ?>
+    				<tr><th>Image</th><td><img width="150" src="{{url('uploads/trainer-user/'.$traineruser->image)}}"> </td></tr>
+				<?php endif; ?>
+				<tr><th>Emirates Image1</th> 
+				    <td>
+					<?php if (!empty($traineruser->emirate_image1)) { ?>
+    					<img src=" {{ $traineruser->emirate_image1 }}" width="100"; ></td>
+				    <?php } else { ?>
+    				    <td>NA</td>
+				    <?php } ?>
+				</tr>
+				<tr><th>Emirates Image2</th> 
+				    <td>
+					<?php if (!empty($traineruser->emirate_image2)) { ?>
+    					<img src=" {{ $traineruser->emirate_image2 }}" width="100"; ></td>
+				    <?php } else { ?>
+    				    <td>NA</td>
+				    <?php } ?>
+				</tr>
+
                             </tbody>
                         </table>
                     </div>

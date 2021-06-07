@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-<?php dd('fgf');?>
+<?php // dd('fgf'); ?>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -48,9 +48,14 @@
                                 <tr><th>Marital Status</th><td> {{ $user->marital_status }} </td></tr>
                                 <tr><th>Designation</th><td> {{ $user->designation }} </td></tr>
                                 <tr><th>Emirates Id</th><td> {{ $user->emirates_id }} </td></tr>
-                                <tr><th>Address</th><td> {{ $user->address }} </td></tr>
-                                <tr><th>Status</th><td> {{ $user->status }} </td></tr>
-                                <tr><th>Created At</th><td> {{ $user->created_at }} </td></tr>
+                                <tr><th>Address</th>
+				    <? php if(!empty( $user->address)){?>
+				    <td> {{ $user->address }} </td>
+				<? php } else{?>
+			    <td> NA </td></tr>
+			    <? php } ?>
+			    <tr><th>Status</th><td> {{ $user->status }} </td></tr>
+			    <tr><th>Created At</th><td> {{ $user->created_at }} </td></tr>
                             </tbody>
                         </table>
                     </div>
