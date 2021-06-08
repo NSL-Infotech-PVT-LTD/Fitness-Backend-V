@@ -81,9 +81,11 @@
                     <!-- small box -->
                     <div class="small-box four_">
                         <div class="inner">
-                            <h3>4</h3>
+                            <!--<h3>4</h3>-->
+			    <h3>{{DB::table('bookings')->where('model_type','trainer_users')->count()}}</h3>
+							
                             <!--<p>Total active PT Packages</p>-->
-			    <a href="{{ url('admin/roles') }}" class="small-box-footer">Total active PT Packages </a>
+			    <a href="{{ url('admin/bookings?status=trainer_users') }}" class="small-box-footer">Total active PT Packages </a>
 			    <!--                            <h3>{{DB::table('classes')->where('status','1')->count()}}</h3>
 							<p>Approved Classes</p>-->
                         </div>

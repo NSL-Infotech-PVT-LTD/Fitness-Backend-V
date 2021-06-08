@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
+<?php // dd('jjj');?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -26,14 +27,23 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+			<div class="col-md-2">
+			    Filter Status:<select id="status" type="dropdown-toggle" class="form-control drop" name="status">
+				<option class="status" value="{{url('admin/bookings')}}">Select status</option>
+				<option class="status"  value="{{url('admin/bookings?status=trainer_users')}}">Trainer Users</option>
+				<option class="status" value="{{url('admin/bookings?status=events')}}">Events</option>
+				<option class="status" value="{{url('admin/bookings?status=sessions')}}">Sessions</option>
+				<option class="status" value="{{url('admin/bookings?status=users')}}">Users</option>
+				<option class="status" value="{{url('admin/bookings?status=class_schedules')}}">Class Schedule</option>
+			    </select></div>
                         <div class="card-header">
 
                             <!--                <div class="card-body">
-                                              
+					      
                                                         <a href="{{ url('/admin/bookings/create') }}" class="btn btn-success btn-sm" title="Add New">
                                                         <i class="fa fa-plus" aria-hidden="true"></i> Add New
                                                     </a>
-                            
+			    
                                             </div>-->
 
                         </div>
@@ -43,19 +53,19 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <?php
-                                        foreach ($rules as $rule):
-                                            if ($rule == 'model_type')
-                                                $rule = 'Module Name';
-                                            else if ($rule == 'created_by')
-                                                $rule = 'Booked By';
-                                            else if ($rule == 'created_at')
-                                                $rule = 'Booked On';
-                                            else if ($rule == 'sessions')
-                                                $rule = 'Session / Hours';
-                                            ?>
-                                            <th>{{ucfirst($rule)}}</th>
-                                        <?php endforeach; ?>
+					<?php
+					foreach ($rules as $rule):
+					    if ($rule == 'model_type')
+						$rule = 'Module Name';
+					    else if ($rule == 'created_by')
+						$rule = 'Booked By';
+					    else if ($rule == 'created_at')
+						$rule = 'Booked On';
+					    else if ($rule == 'sessions')
+						$rule = 'Session / Hours';
+					    ?>
+    					<th>{{ucfirst($rule)}}</th>
+					<?php endforeach; ?>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -79,62 +89,76 @@
 
 <script type="text/javascript">
     $(function () {
+	var url = "{{ route('bookings.index') }}";
+<?php if (request()->status != ''): ?>
+    	url += "?status=" + "{{request()->status}}";
+<?php endif; ?>
+<?php if (request()->created_by != ''): ?>
+    	url += "?created_by=" + "{{request()->created_by}}";
+<?php endif; ?>
+	$('select').on('change', function (e) {
+	    var link = $("option:selected", this).val();
+	    if (link) {
+		location.href = link;
+	    }
+	});
+	
     var table = $('.data-table').DataTable({
     language: {
     lengthMenu: "_MENU_",
-            search: "_INPUT_",
-            searchPlaceholder: "Search..",
-            info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
-            paginate: {
-            first: '<i class="fa fa-angle-double-left"></i>',
-                    previous: '<i class="fa fa-angle-left"></i>',
-                    next: '<i class="fa fa-angle-right"></i>',
-                    last: '<i class="fa fa-angle-double-right"></i>',
-            },
+	    search: "_INPUT_",
+	    searchPlaceholder: "Search..",
+	    info: "Page <strong>_PAGE_</strong> of <strong>_PAGES_</strong>",
+	    paginate: {
+	    first: '<i class="fa fa-angle-double-left"></i>',
+		    previous: '<i class="fa fa-angle-left"></i>',
+		    next: '<i class="fa fa-angle-right"></i>',
+		    last: '<i class="fa fa-angle-double-right"></i>',
+	    },
     },
-            processing: true,
-            serverSide: true,
-            ajax: "<?= (request()->get('created_by') != '') ? route('bookings.index') . "?created_by=" . request()->get('created_by') : route('bookings.index') ?>",
-            columns: [
-            {data: 'id', name: 'id'},
+	    processing: true,
+	    serverSide: true,
+	    ajax: url,
+	    columns: [
+	    {data: 'id', name: 'id'},
 <?php foreach ($rules as $rule): ?>
     <?php if ($rule == 'email'): ?>
-                    {data: 'email', name: 'email', orderable: false, searchable: false},
+		    {data: 'email', name: 'email', orderable: false, searchable: false},
     <?php else: ?>
-                    {data: "{{$rule}}", name: "{{$rule}}"},
+		    {data: "{{$rule}}", name: "{{$rule}}"},
     <?php endif; ?>
 <?php endforeach; ?>
-            {data: 'action', name: 'action', orderable: false, searchable: false
-            }
-            ,
-            ]
+	    {data: 'action', name: 'action', orderable: false, searchable: false
+	    }
+	    ,
+	    ]
     });
     $('.data-table').on('click', '.changeStatus', function (e) {
     e.preventDefault();
     var url = $(this).attr('traget-href');
     swal.fire({
     title: "Are you sure want to update status of booking?",
-            text: "Status change can't be revoked !",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Confirm",
-            cancelButtonText: "Cancel",
+	    text: "Status change can't be revoked !",
+	    type: "warning",
+	    showCancelButton: true,
+	    confirmButtonClass: "btn-danger",
+	    confirmButtonText: "Confirm",
+	    cancelButtonText: "Cancel",
     }).then((result) => {
     Swal.showLoading();
     if (result.value) {
     $.ajax({
     url: url,
-            type: 'POST',
-            dataType: 'json',
-            data: {method: '_POST', submit: true, _token: '{{csrf_token()}}'},
-            success: function (data) {
-            if (data.success) {
-            swal.fire("Changed!", data.message, "success");
+	    type: 'POST',
+	    dataType: 'json',
+	    data: {method: '_POST', submit: true, _token: '{{csrf_token()}}'},
+	    success: function (data) {
+	    if (data.success) {
+	    swal.fire("Changed!", data.message, "success");
 //            table.ajax.reload(null, false);
-            location.reload();
-            }
-            }
+	    location.reload();
+	    }
+	    }
     });
     }
     });
@@ -145,26 +169,26 @@
     var url = $(this).data('remove');
     swal.fire({
     title: "Are you sure want to remove this item?",
-            text: "Data will be Temporary Deleted!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Confirm",
-            cancelButtonText: "Cancel",
+	    text: "Data will be Temporary Deleted!",
+	    type: "warning",
+	    showCancelButton: true,
+	    confirmButtonClass: "btn-danger",
+	    confirmButtonText: "Confirm",
+	    cancelButtonText: "Cancel",
     }).then((result) => {
     Swal.showLoading();
     if (result.value) {
     $.ajax({
     url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
-            success: function (data) {
-            if (data == 'Success') {
-            swal.fire("Deleted!", "Event has been deleted", "success");
-            table.ajax.reload(null, false);
-            }
-            }
+	    type: 'DELETE',
+	    dataType: 'json',
+	    data: {method: '_DELETE', submit: true, _token: '{{csrf_token()}}'},
+	    success: function (data) {
+	    if (data == 'Success') {
+	    swal.fire("Deleted!", "Event has been deleted", "success");
+	    table.ajax.reload(null, false);
+	    }
+	    }
     });
     }
     });

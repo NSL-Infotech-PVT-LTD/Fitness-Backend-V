@@ -141,6 +141,11 @@
                                 </tr>
                                 <tr><th>Role Plan</th><td> {{ $user->roles['0']->name }}  </td></tr>
                                 <tr><th>Created At</th><td> {{ $user->created_at }} </td></tr>
+				<?php if (!empty($user->city)) { ?>
+    				<tr><th> City </th><td> {{ $user->city	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> City </th><td> NA </td></tr>
+				<?php } ?>
                                 <tr><th>Nationality</th><td> {{ $user->nationality }} </td></tr>
                                 <tr><th>Work Place</th><td> {{ $user->workplace }} </td></tr>
                                 <tr><th>How did you hear about us</th><td> {{ $user->about_us }} </td></tr>

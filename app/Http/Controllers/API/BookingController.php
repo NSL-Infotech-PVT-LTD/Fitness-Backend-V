@@ -99,7 +99,8 @@ class BookingController extends ApiController {
         }
     }
 
-    public static $__session = ['1' => '60', '6' => '340', '12' => '660'];
+//    public static $__session = ['1' => '60', '6' => '340', '12' => '660'];
+    public static $__session = ['1' => '90', '6' => '340', '12' => '660'];
     public static $__trainer = ['1' => '250', '6' => '1400', '12' => '2600', '24' => '5000'];
 
     public function getitems(Request $request) {
