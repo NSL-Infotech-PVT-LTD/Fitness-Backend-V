@@ -37,7 +37,7 @@
                                 <tr>
                                     <td>
                                         <?php if ($user->image != null) { ?>
-                                            <img width="100" src="{{ url('uploads/image/'.$user->image)}}">
+                                            <img width="100" src="{{ url('uploads/users/'.$user->image)}}">
                                         <?php } else { ?>
                                             <div class='country-img'>NA</div>
                                         <?php } ?>
@@ -146,9 +146,9 @@
 				<?php } else { ?>
     				<tr><th> City </th><td> NA </td></tr>
 				<?php } ?>
-                                <tr><th>Nationality</th><td> {{ $user->nationality }} </td></tr>
+<!--                                <tr><th>Nationality</th><td> {{ $user->nationality }} </td></tr>
                                 <tr><th>Work Place</th><td> {{ $user->workplace }} </td></tr>
-                                <tr><th>How did you hear about us</th><td> {{ $user->about_us }} </td></tr>
+                                <tr><th>How did you hear about us</th><td> {{ $user->about_us }} </td></tr>-->
                                 <tr><th></th><td> </td></tr>
                             </tbody>
                         </table>

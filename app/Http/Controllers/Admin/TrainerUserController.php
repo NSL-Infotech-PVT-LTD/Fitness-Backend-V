@@ -146,7 +146,6 @@ class TrainerUserController extends Controller {
 	}
 
 	if ($request->hasfile('emirate_image1')) {
-
 	    $imageName1 = uniqid() . '.' . $request->file('emirate_image1')->getClientOriginalExtension();
 	    $request->file('emirate_image1')->move(base_path() . '/public/uploads/emirateimages/', $imageName1);
 	    $data['emirate_image1'] = $imageName1;

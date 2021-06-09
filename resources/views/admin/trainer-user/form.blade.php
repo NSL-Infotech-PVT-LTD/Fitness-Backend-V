@@ -64,7 +64,7 @@
     </div>
       <?php
     if (isset($traineruser->emirate_image1))
-	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image1) . ">";
+	echo "<img width='100' src=" . url('uploads/emirateimages/' . $traineruser->emirate_image1) . ">";
     ?>
     <div class="form-group col-md-6{{ $errors->has('emirate_image1') ? 'has-error' : ''}}">
     {!! Form::label('emirate_image1', 'Emirate Copy1', ['class' => 'control-label']) !!}
@@ -73,7 +73,7 @@
 </div>
   <?php
     if (isset($traineruser->emirate_image2))
-	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image2) . ">";
+	echo "<img width='100' src=" . url('uploads/emirateimages/' . $traineruser->emirate_image2) . ">";
     ?>
 <div class="form-group col-md-4{{ $errors->has('emirate_image2') ? ' has-error' : ''}}">
     {!! Form::label('emirate_image2', 'Emirate Copy2: ', ['class' => 'control-label']) !!}
