@@ -313,7 +313,7 @@ class UsersController extends Controller {
 //	    'emergency_contact_no' => 'required|numeric',
 //            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
 	    'emirate_image1' => 'required|mimes:jpg,jpeg,png',
-//            'emirate_image1' => 'required|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
+//            'image' => 'required|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
 	    'emirate_image2' => 'required|mimes:jpg,jpeg,png',
 		]
 	);
@@ -396,6 +396,8 @@ class UsersController extends Controller {
 //        $rules = ['first_name' => 'required', 'email' => 'required|string|max:255|email|unique:users,email,' . $id,];
 //        if ($request->has('image'))
 //            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
+	
+	
 	if ($request->has('password'))
 	    $rules += ['password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/'];
 	$this->validate($request, $rules);
@@ -403,6 +405,11 @@ class UsersController extends Controller {
 	if ($request->has('password')) {
 	    if (!empty($request->password))
 		$data['password'] = bcrypt($request->password);
+	}
+	if ($request->hasfile('image')) {
+	    $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+	    $request->file('image')->move(base_path() . '/public/uploads/users/', $imageName);
+	    $data['image'] = $imageName;
 	}
 	if (isset($data['trainer_services']))
 	    $data['trainer_services'] = json_encode($data['trainer_services']);

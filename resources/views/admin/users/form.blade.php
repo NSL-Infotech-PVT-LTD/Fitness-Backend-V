@@ -77,6 +77,12 @@ if ($formMode == 'create'):
 
     {!! Form::button( 'See More...', ['class'=>'btn btn-primary pull-right', 'id' => 'type_select']) !!}
     <div class="row" id="other">
+	
+	 <div class="form-group  col-md-4{{ $errors->has('image') ? 'has-error' : ''}}">
+	{!! Form::label('image', 'Profile Image (360 X 450)', ['class' => 'control-label']) !!}
+	{!! Form::file('image', null, ['class' => 'form-control']) !!}
+	{!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+    </div>
 <div class="form-group col-md-4{{ $errors->has('birth_date') ? ' has-error' : ''}}">
     {!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}
     {!! Form::date('birth_date', null, ['class' => 'form-control']) !!}

@@ -90,8 +90,8 @@
 							<p>Approved Classes</p>-->
                         </div>
                         <div class="inner">
-                            <h3>{{$class = DB::table('classes')->count()}}</h3>
-			    <a href="{{ url('admin/class') }}" class="small-box-footer">Total Classes</a>
+                            <h3>{{$class = DB::table('bookings')->where('model_type','sessions')->count()}}</h3>
+			    <a href="{{ url('admin/bookings?status=sessions') }}" class="small-box-footer">Total Classes</a>
                         </div>
 			<div class="icon">
 			    <i class="ion ion-pie-graph"></i>

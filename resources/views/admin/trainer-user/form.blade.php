@@ -1,4 +1,13 @@
 <div class="front row" >
+    <div class="form-group col-md-12{{ $errors->has('type') ? 'has-error' : ''}}">
+	{!! Form::label('type', 'Type: ', ['class' => 'control-label']) !!}
+        {!! Form::radio('type', 'freelancer',  ['class' => 'form-control']) !!}Freelancer
+        <!--{!! Form::label('type', 'Freelancer', ['class' => 'control-label']) !!}-->
+        {!! Form::radio('type', 'permanent', ['class' => 'form-control']) !!}Permanent
+        <!--{!! Form::label('type', 'Permanent', ['class' => 'control-label']) !!}-->
+   
+    {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+    </div>
     <div class="form-group col-md-4{{ $errors->has('first_name') ? ' has-error' : ''}}">
 	{!! Form::label('first_name', 'First Name: ', ['class' => 'control-label']) !!}
 	{!! Form::text('first_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -20,30 +29,6 @@
 	{!! Form::text('mobile', null, ['class' => 'form-control col-md-10', 'required' => 'required']) !!}
 	{!! $errors->first('mobile', '<p class="help-block">:message</p>') !!}
     </div>
-    <div class="col-md-6 form-group{{ $errors->has('emergency_contact_no') ? ' has-error' : ''}}">
-	{!! Form::label('emergency_contact_no', 'Emergency contact no: ', ['class' => 'control-label']) !!}
-	{!! Form::text('emergency_contact_no_prefix', null, ['class' => 'form-control col-md-2','placeholder'=>'Prefix']) !!}
-	{!! Form::text('emergency_contact_no', null, ['class' => 'form-control col-md-10']) !!}
-	{!! $errors->first('emergency_contact_no', '<p class="help-block">:message</p>') !!}
-    </div>
-
-   
-    <div class="form-group col-md-4{{ $errors->has('emirates_id') ? ' has-error' : ''}}">
-	{!! Form::label('emirates_id', 'Emirates Id/Passport: ', ['class' => 'control-label']) !!}
-	{!! Form::text('emirates_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
-	{!! $errors->first('emirates_id', '<p class="help-block">:message</p>') !!}
-    </div>
-    <div class="form-group col-md-4{{ $errors->has('emirate_image1') ? 'has-error' : ''}}">
-    {!! Form::label('emirate_image1', 'Emirate Copy1', ['class' => 'control-label']) !!}
-    {!! Form::file('emirate_image1', null,  ['class' => 'form-control', 'required' => 'required']) !!}
-    {!! $errors->first('emirate_image1', '<p class="help-block">:message</p>') !!}
-</div>
-
-<div class="form-group col-md-4{{ $errors->has('emirate_image2') ? ' has-error' : ''}}">
-    {!! Form::label('emirate_image2', 'Emirate Copy2: ', ['class' => 'control-label']) !!}
-    {!! Form::file('emirate_image2', null, ['class' => 'form-control', 'required' => 'required']) !!}
-    {!! $errors->first('emirate_image2', '<p class="help-block">:message</p>') !!}
-</div>
      <div class="form-group col-md-4{{ $errors->has('email') ? ' has-error' : ''}}">
 	{!! Form::label('email', 'Email: ', ['class' => 'control-label']) !!}
 	{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
@@ -62,11 +47,7 @@
 	{!! $errors->first('password', '<p class="help-block">:message</p>') !!}
     </div>
     
-     <div class="form-group col-md-4{{ $errors->has('birth_date') ? ' has-error' : ''}}">
-	{!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}
-	{!! Form::date('birth_date', null, ['class' => 'form-control']) !!}
-	{!! $errors->first('birth_date', '<p class="help-block">:message</p>') !!}
-    </div>
+    
 
     
 </div>
@@ -76,6 +57,40 @@
 <br>
 
 <div class="row" id="other">
+     <div class="form-group col-md-4{{ $errors->has('emirates_id') ? ' has-error' : ''}}">
+	{!! Form::label('emirates_id', 'Emirates Id/Passport: ', ['class' => 'control-label']) !!}
+	{!! Form::text('emirates_id', null, ['class' => 'form-control']) !!}
+	{!! $errors->first('emirates_id', '<p class="help-block">:message</p>') !!}
+    </div>
+      <?php
+    if (isset($traineruser->emirate_image1))
+	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image1) . ">";
+    ?>
+    <div class="form-group col-md-6{{ $errors->has('emirate_image1') ? 'has-error' : ''}}">
+    {!! Form::label('emirate_image1', 'Emirate Copy1', ['class' => 'control-label']) !!}
+    {!! Form::file('emirate_image1', null,  ['class' => 'form-control']) !!}
+    {!! $errors->first('emirate_image1', '<p class="help-block">:message</p>') !!}
+</div>
+  <?php
+    if (isset($traineruser->emirate_image2))
+	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image2) . ">";
+    ?>
+<div class="form-group col-md-4{{ $errors->has('emirate_image2') ? ' has-error' : ''}}">
+    {!! Form::label('emirate_image2', 'Emirate Copy2: ', ['class' => 'control-label']) !!}
+    {!! Form::file('emirate_image2', null, ['class' => 'form-control']) !!}
+    {!! $errors->first('emirate_image2', '<p class="help-block">:message</p>') !!}
+</div>
+     <div class="form-group col-md-4{{ $errors->has('birth_date') ? ' has-error' : ''}}">
+	{!! Form::label('birth_date', 'Birth Date: ', ['class' => 'control-label']) !!}
+	{!! Form::date('birth_date', null, ['class' => 'form-control']) !!}
+	{!! $errors->first('birth_date', '<p class="help-block">:message</p>') !!}
+    </div>
+     <div class="col-md-6 form-group{{ $errors->has('emergency_contact_no') ? ' has-error' : ''}}">
+	{!! Form::label('emergency_contact_no', 'Emergency contact no: ', ['class' => 'control-label']) !!}
+	{!! Form::text('emergency_contact_no_prefix', null, ['class' => 'form-control col-md-2','placeholder'=>'Prefix']) !!}
+	{!! Form::text('emergency_contact_no', null, ['class' => 'form-control col-md-10']) !!}
+	{!! $errors->first('emergency_contact_no', '<p class="help-block">:message</p>') !!}
+    </div>
     <div class="form-group col-md-4{{ $errors->has('expirence') ? ' has-error' : ''}}">
 	{!! Form::label('expirence', 'Years Of Experience: ', ['class' => 'control-label']) !!}
 	{!! Form::text('expirence', null, ['class' => 'form-control']) !!}
@@ -125,29 +140,12 @@
     if (isset($traineruser->image))
 	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->image) . ">";
     ?>
-    <?php
-//    if (isset($traineruser->emirate_image1))
-//	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image1) . ">";
-//    ?>
-    <?php
-//    if (isset($traineruser->emirate_image2))
-//	echo "<img width='100' src=" . url('uploads/trainer-user/' . $traineruser->emirate_image2) . ">";
-//    ?>
-    
     <div class="form-group  col-md-4{{ $errors->has('image') ? 'has-error' : ''}}">
 	{!! Form::label('image', 'Profile Image (360 X 450)', ['class' => 'control-label']) !!}
 	{!! Form::file('image', null, ['class' => 'form-control']) !!}
 	{!! $errors->first('image', '<p class="help-block">:message</p>') !!}
     </div>
-    <div class="form-group col-md-8{{ $errors->has('type') ? 'has-error' : ''}}">
-	{!! Form::label('type', 'type: ', ['class' => 'control-label']) !!}
-        {!! Form::radio('type', 'freelancer',  ['class' => 'form-control']) !!}Freelancer
-        <!--{!! Form::label('type', 'Freelancer', ['class' => 'control-label']) !!}-->
-        {!! Form::radio('type', 'permanent', ['class' => 'form-control']) !!}Permanent
-        <!--{!! Form::label('type', 'Permanent', ['class' => 'control-label']) !!}-->
-   
-    {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
-    </div>
+    
 
     <div class="form-group  col-md-12{{ $errors->has('about') ? ' has-error' : ''}}">
 	{!! Form::label('about', 'About: ', ['class' => 'control-label']) !!}

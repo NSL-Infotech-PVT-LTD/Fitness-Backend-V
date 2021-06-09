@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 @section('content')
-<?php // dd($traineruser);?>
+<?php // dd($traineruser); ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -33,10 +33,12 @@
                                 <tr>
                                     <th>ID</th><td>{{ $traineruser->id }}</td>
                                 </tr>
-                                <tr><th> First Name </th><td> {{ $traineruser->first_name }} </td></tr>
+                                <tr><th> Type </th><td> {{ $traineruser->type }} Trainer </td></tr>
+				<tr><th> First Name </th><td> {{ $traineruser->first_name }} </td></tr>
                                 <tr><th> Middle Name </th><td> {{ $traineruser->middle_name }} </td></tr>
                                 <tr><th> Last Name </th><td> {{ $traineruser->last_name }} </td></tr>
-                                <tr><th> email </th><td> {{ $traineruser->email }} </td></tr>
+                                <tr><th> E-mail </th><td> {{ $traineruser->email }} </td></tr>
+                                <tr><th> Mobile </th><td> {{ $traineruser->mobile }} </td></tr>
 				<?php if (!empty($traineruser->expirence)) { ?>
     				<tr><th> Experience	  </th><td> {{ $traineruser->expirence	 }} </td></tr>
 				<?php } else { ?>
@@ -52,7 +54,12 @@
 				<?php } else { ?>
     				<tr><th> Specialty	  </th><td> NA </td></tr>
 				<?php } ?>
-                                <tr><th> Birth Date	  </th><td> {{ $traineruser->birth_date	 }} </td></tr>
+				<?php if (!empty($traineruser->birth_date)) { ?>
+    				<tr><th> Birth Date	  </th><td> {{ $traineruser->birth_date	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Birth Date	  </th><td> NA </td></tr>
+				<?php } ?>
+                                <!--<tr><th> Birth Date	  </th><td> {{ $traineruser->birth_date	 }} </td></tr>-->
 				<?php if (!empty($traineruser->about)) { ?>
     				<tr><th> About	  </th><td> {{ $traineruser->about	 }} </td></tr>
 				<?php } else { ?>
@@ -64,30 +71,36 @@
 				<?php } else { ?>
     				<tr><th> Address	  </th><td> NA </td></tr>
 				<?php } ?>
+				<?php if (!empty($traineruser->emergency_contact_no)) { ?>
 
-                                <tr><th> Emergency Contact No </th><td> {{ $traineruser->emergency_contact_no }} </td></tr>
+    				<tr><th> Emergency Contact No	  </th><td> {{ $traineruser->emergency_contact_no	 }} </td></tr>
+				<?php } else { ?>
+    				<tr><th> Emergency Contact No	  </th><td> NA </td></tr>
+				<?php } ?>
+
+                                <!--<tr><th> Emergency Contact No </th><td> {{ $traineruser->emergency_contact_no }} </td></tr>-->
 				<?php if ($traineruser->image == ''): ?>
     				<tr><th>Image</th><td>NAN</td></tr>
 				<?php else: ?>
     				<tr><th>Image</th><td><img width="150" src="{{url('uploads/trainer-user/'.$traineruser->image)}}"> </td></tr>
 				<?php endif; ?>
-				<tr><th>Emirates Image1</th> 
-				    <td>
-					<?php if (!empty($traineruser->emirate_image1)) { ?>
-    					<img src=" {{ $traineruser->emirate_image1 }}" width="100"; ></td>
-				    <?php } else { ?>
-    				    <td>NA</td>
-				    <?php } ?>
-				</tr>
-				<tr><th>Emirates Image2</th> 
-				    <td>
-					<?php if (!empty($traineruser->emirate_image2)) { ?>
-    					<img src=" {{ $traineruser->emirate_image2 }}" width="100"; ></td>
-				    <?php } else { ?>
-    				    <td>NA</td>
-				    <?php } ?>
-				</tr>
 
+				<tr><th>Emirates Image1</th> 
+			    <td>
+				<?php if (!empty($traineruser->emirate_image1)) { ?>
+				<img src=" {{ $traineruser->emirate_image1 }}" width="100"; ></td>
+				<?php } else { ?>
+    			    <td>NA</td>
+			    <?php } ?>
+			   </tr>
+				<tr><th>Emirates Image2</th> 
+			    <td>
+				<?php if (!empty($traineruser->emirate_image2)) { ?>
+				<img src=" {{ $traineruser->emirate_image2 }}" width="100"; ></td>
+				<?php } else { ?>
+    			    <td>NA</td>
+			    <?php } ?>
+			   </tr>
                             </tbody>
                         </table>
                     </div>

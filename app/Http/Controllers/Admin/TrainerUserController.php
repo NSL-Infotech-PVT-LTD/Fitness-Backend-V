@@ -62,7 +62,7 @@ class TrainerUserController extends Controller {
 	dd('done', $notInstered);
     }
 
-    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'email' => 'required'];
+    protected $__rulesforindex = ['first_name' => 'required', 'last_name' => 'required', 'email' => 'required','type'=>'required'];
 
     public function index(Request $request) {
 //	dd($request->all());
@@ -71,7 +71,7 @@ class TrainerUserController extends Controller {
 	    if (isset($request->status))
 		$model = $model->where('type', $request->status);
 	    else
-		$model = $model->select('id','first_name','middle_name','last_name','mobile','email');
+		$model = $model->select('id','first_name','middle_name','last_name','mobile','email','type');
 	    $model = $model->latest();
 	    return Datatables::of($model)
 			    ->addIndexColumn()
@@ -114,25 +114,31 @@ class TrainerUserController extends Controller {
      * @return void
      */
     public function store(Request $request) {
-	$this->validate(
+	$rules= $this->validate(
 		$request, [
 	    'first_name' => 'required|alpha',
 	    'last_name' => 'required|alpha',
 	    'email' => 'required|string|max:255|email|unique:trainer_users',
 	    'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/',
 	    'mobile' => 'required|numeric',
-	    'emergency_contact_no' => 'required|numeric',
-	    'emirates_id' => 'required|regex:/^[a-zA-Z0-9]+$/u|',
-	    'emirate_image1' => 'required|mimes:jpg,jpeg,png',
-	    'emirate_image2' => 'required|mimes:jpg,jpeg,png',
+//	    'emergency_contact_no' => 'numeric|digits_between:1,10',
+//	    'emirates_id' => 'regex:/^[a-zA-Z0-9]+$/u|',
+//	    'emirate_image1' => 'mimes:jpg,jpeg,png',
+//	    'emirate_image2' => 'mimes:jpg,jpeg,png',
 //            'image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450',
-	    'birth_date' => 'required|date_format:Y-m-d|before:today',
+//	    'birth_date' => ' date_format:Y-m-d|before:today',
 		]
 	);
 	$data = $request->all();
 	$data['password'] = bcrypt($data['password']);
 	if (isset($data['services']))
 	    $data['services'] = json_encode($data['services']);
+	if (isset($request->emergency_contact_no))
+	    $rules +=['emergency_contact_no' =>'numeric|digits_between:1,10'];
+	if (isset($request->emirates_id))
+	    $rules +=['emirates_id' =>'regex:/^[a-zA-Z0-9]+$/u|'];
+	if (isset($request->birth_date))
+	    $rules +=['birth_date' =>'date_format:Y-m-d|before:today'];
 	if ($request->hasfile('image')) {
 	    $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
 	    $request->file('image')->move(base_path() . '/public/uploads/trainer-user/', $imageName);
