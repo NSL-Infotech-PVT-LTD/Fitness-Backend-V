@@ -44,6 +44,7 @@ class User extends Authenticatable {
         'email_verified_at' => 'datetime',
     ];
     protected $appends = array('role', 'full_name', 'role_expired_on','mb_id');
+     public static $_imagePublicPath1 = 'uploads/users';
      public static $_imagePublicPath = 'uploads/emirateimages';
    
 
@@ -63,6 +64,15 @@ class User extends Authenticatable {
 
         return $name;
     }
+     public function getImageAttribute($value) {
+	try {
+	    if ($value === null || $value == '')
+		return $value;
+	    return env('APP_URL') . '/' . self::$_imagePublicPath1 . '/' . $value;
+	} catch (\Exception $ex) {
+	    return $value;
+	}
+    } 
      public function getEmirateImage1Attribute($value) {
 	try {
 	    if ($value === null || $value == '')

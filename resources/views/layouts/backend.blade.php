@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="{{ asset('/template/css/table.dataTable.css') }}">
         <link rel="stylesheet" href="{{ asset('/template/css/new_style.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 
