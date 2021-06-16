@@ -69,4 +69,5 @@ Route::group(['middleware' => ['auth:api', 'roles'], 'namespace' => 'API'], func
 //    Route::post('notification/status', 'AuthController@updateNotifyStatus');
 });
 Route::get('config/{column}', 'API\ConfigurationController@getConfigurationByColumn');
-    Route::post('booking/getPrice', 'BookingController@getPrice');
+    Route::post('booking/getPrice', 'API\BookingController@getPrice');
+
