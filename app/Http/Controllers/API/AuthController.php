@@ -120,7 +120,7 @@ class AuthController extends ApiController {
             $input['password'] = Hash::make($request->password);
             if (isset($request->image))
                 if (!empty($request->file('image')))
-                    $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'));
+                    $input['image'] = parent::__uploadImage($request->file('image'), public_path(MyModel::$_imagePublicPath1),true);
 //            if (isset($request->emirate_image1))
                 if (!empty($request->file('emirate_image1')))
                     $input['emirate_image1'] = parent::__uploadImage($request->file('emirate_image1'), public_path(MyModel::$_imagePublicPath),true);
@@ -225,7 +225,7 @@ class AuthController extends ApiController {
 //            $input['sport_id']= json_encode($request->sport_id);
             if (isset($request->image))
                 if (!empty($request->file('image')))
-                    $input['image'] = parent::__uploadImage($request->file('image'), public_path('uploads/image'), true);
+                    $input['image'] = parent::__uploadImage($request->file('image'), public_path(MyModel::$_imagePublicPath1),true);
             $user = \App\User::findOrFail(\Auth::id());
             $user->fill($input);
             $user->save();

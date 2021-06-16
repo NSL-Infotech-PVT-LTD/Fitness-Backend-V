@@ -28,12 +28,12 @@ class ApiController extends \App\Http\Controllers\Controller {
     }
 
     private function _headers() {
-        return getallheaders();
+	return getallheaders();
     }
 
     protected function __allowedUsers() {
-        $userRole = \App\User::find($this->_headers()['user_id'])->getRoleNames()['0'];
-        return \App\User::role($userRole)->get()->pluck('id')->toArray();
+	$userRole = \App\User::find($this->_headers()['user_id'])->getRoleNames()['0'];
+	return \App\User::role($userRole)->get()->pluck('id')->toArray();
     }
 
     public $successStatus = 200;
@@ -44,186 +44,190 @@ class ApiController extends \App\Http\Controllers\Controller {
     protected static $_allowedURIwithoutAuth = ['api/login', 'api/customer/login', 'api/configuration/{type}', 'api/customer/verify-login', 'api/customer/registeration', 'api/customer/resend-otp', 'api/salon/register', 'api/salon/{id}', 'api/customer/register', 'api/customer/{id}'];
 
     public static function validateClientSecret() {
-        $headers = getallheaders();
-        if (!isset($headers['client_id']) || !isset($headers['client_secret'])):
-            return self::error('Client Id and Secret not found.', 422);
-        endif;
-        $response = self::validateClient($headers['client_id'], $headers['client_secret']);
-        if ($response === false) :
-            return self::error('Client Id and Secret mismatched.', 409);
-        endif;
+	$headers = getallheaders();
+	if (!isset($headers['client_id']) || !isset($headers['client_secret'])):
+	    return self::error('Client Id and Secret not found.', 422);
+	endif;
+	$response = self::validateClient($headers['client_id'], $headers['client_secret']);
+	if ($response === false) :
+	    return self::error('Client Id and Secret mismatched.', 409);
+	endif;
 //        dd(\Request::route()->uri());
-        if (!in_array(\Request::route()->uri(), self::$_allowedURIwithoutAuth)):
-            if (!isset($headers['user_id'])):
-                return self::error('Loged in User Id is required', 422);
-            else:
-                $user = User::find($headers['user_id']);
-                if ($user === null)
-                    return self::error('Loged in User Not found', 401);
+	if (!in_array(\Request::route()->uri(), self::$_allowedURIwithoutAuth)):
+	    if (!isset($headers['user_id'])):
+		return self::error('Loged in User Id is required', 422);
+	    else:
+		$user = User::find($headers['user_id']);
+		if ($user === null)
+		    return self::error('Loged in User Not found', 401);
 //                dd($user->hasAnyRole('super admin'));
-                if ($user->hasPermissionTo(\Request::route()->uri()) === false):
-                    return self::error("You're not authorized to do, Please contact administrator", 403);
-                endif;
-            endif;
-        endif;
-        if (isset($headers['locale'])):
-            if (!in_array($headers['locale'], ['', 'kr', 'ar'])):
-                return self::error('Please use valid language.', 422);
-            endif;
-            self::$locale = $headers['locale'];
-        endif;
-        return false;
+		if ($user->hasPermissionTo(\Request::route()->uri()) === false):
+		    return self::error("You're not authorized to do, Please contact administrator", 403);
+		endif;
+	    endif;
+	endif;
+	if (isset($headers['locale'])):
+	    if (!in_array($headers['locale'], ['', 'kr', 'ar'])):
+		return self::error('Please use valid language.', 422);
+	    endif;
+	    self::$locale = $headers['locale'];
+	endif;
+	return false;
     }
 
     protected static function validateClient($client_id, $client_secret) {
-        $check = \App\Models\OauthClients::where(["id" => $client_id, "secret" => $client_secret]);
-        if ($check->exists())
-            return true;
-        else
-            return false;
+	$check = \App\Models\OauthClients::where(["id" => $client_id, "secret" => $client_secret]);
+	if ($check->exists())
+	    return true;
+	else
+	    return false;
     }
 
     protected static function validateHeadersOnly($request, $formType = 'GET', $attributeValidate = []) {
-        $headers = getallheaders();
-        if ($request->method() != $formType) {
-            return self::error('This method is not allowed.', 409);
-        }
-        if (isset($headers['client_id']) && isset($headers['client_secret'])):
-            $params['client_id'] = $headers['client_id'];
-            $params['client_secret'] = $headers['client_secret'];
-        endif;
+	$headers = getallheaders();
+	if ($request->method() != $formType) {
+	    return self::error('This method is not allowed.', 409);
+	}
+	if (isset($headers['client_id']) && isset($headers['client_secret'])):
+	    $params['client_id'] = $headers['client_id'];
+	    $params['client_secret'] = $headers['client_secret'];
+	endif;
 //        if (isset($headers['device_id']) && isset($headers['device_token']) && isset($headers['device_type'])):
-        if (isset($headers['device_id']) && isset($headers['device_type'])):
-            $params['device_id'] = $headers['device_id'];
+	if (isset($headers['device_id']) && isset($headers['device_type'])):
+	    $params['device_id'] = $headers['device_id'];
 //            $params['device_token'] = $headers['device_token'];
-            $params['device_type'] = $headers['device_type'];
-        endif;
-        $validator = Validator::make($params, $attributeValidate);
-        if ($validator->fails()) {
-            $errors = [];
-            $messages = $validator->getMessageBag();
-            foreach ($messages->keys() as $key) {
-                $errors[] = $messages->get($key)['0'];
-            }
-            return self::error($errors, 422, false);
-        }
-        return false;
+	    $params['device_type'] = $headers['device_type'];
+	endif;
+	$validator = Validator::make($params, $attributeValidate);
+	if ($validator->fails()) {
+	    $errors = [];
+	    $messages = $validator->getMessageBag();
+	    foreach ($messages->keys() as $key) {
+		$errors[] = $messages->get($key)['0'];
+	    }
+	    return self::error($errors, 422, false);
+	}
+	return false;
     }
 
     public static function validateAttributes($request, $formType = 'GET', $attributeValidate = [], $attributes = [], $checkVariableCount = true) {
-        $headers = getallheaders();
-        if ($request->method() != $formType) {
-            return self::error('This method is not allowed.', 409);
-        }
-        $params = [];
-        if (isset($headers['client_id']) && isset($headers['client_secret'])):
-            $params['client_id'] = $headers['client_id'];
-            $params['client_secret'] = $headers['client_secret'];
-        endif;
+	$headers = getallheaders();
+	if ($request->method() != $formType) {
+	    return self::error('This method is not allowed.', 409);
+	}
+	$params = [];
+	if (isset($headers['client_id']) && isset($headers['client_secret'])):
+	    $params['client_id'] = $headers['client_id'];
+	    $params['client_secret'] = $headers['client_secret'];
+	endif;
 //        if (isset($headers['device_id']) && isset($headers['device_token']) && isset($headers['device_type'])):
 //        if (isset($headers['device_id']) && isset($headers['device_type'])):
 //            $params['device_id'] = $headers['device_id'];
 ////            $params['device_token'] = $headers['device_token'];
 //            $params['device_type'] = $headers['device_type'];
 //        endif;
-        foreach ($attributes as $attribute):
-            $params[$attribute] = $request->$attribute;
-        endforeach;
-        if ($checkVariableCount === true):
-            if (count($attributes) != count($request->all())):
-                return self::error('Please fill required parameters only.', 409);
-            endif;
+	foreach ($attributes as $attribute):
+	    $params[$attribute] = $request->$attribute;
+	endforeach;
+	if ($checkVariableCount === true):
+	    if (count($attributes) != count($request->all())):
+		return self::error('Please fill required parameters only.', 409);
+	    endif;
 //        else:
 //            if (count($request->all()) == 0):
 //                return self::error('Please select one of the paramter.', 409);
 //            endif;
-        endif;
+	endif;
 //        dd($params);
-        $validator = Validator::make($params, $attributeValidate);
-        if ($validator->fails()) {
+	$validator = Validator::make($params, $attributeValidate);
+	if ($validator->fails()) {
 //            $errors = [];
-            $messages = $validator->getMessageBag();
-            foreach ($messages->keys() as $k => $key) {
-                $errors[$key] = $messages->get($key)['0'];
-            }
-            return self::error($errors, 422, false);
-        }
-        return false;
+	    $messages = $validator->getMessageBag();
+	    foreach ($messages->keys() as $k => $key) {
+		$errors[$key] = $messages->get($key)['0'];
+	    }
+	    return self::error($errors, 422, false);
+	}
+	return false;
     }
 
-    public static function error($message, $errorCode = 422, $messageIndex = false) {
-
+//    public static function error($message, $errorCode = 422, $messageIndex = false) {
+//
 //        dd($message);
-//        $message = (object) $message;
-//        echo json_encode(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], JSON_FORCE_OBJECT);
-//        die();
-        if (is_string($message))
-            $return = ['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message, 'errors' => null];
-        else
-            $return = ['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => null, 'errors' => $message];
-        return response()->json($return, $errorCode);
-//        return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message, 'errors' => null], $errorCode);
+////        $message = (object) $message;
+////        echo json_encode(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], JSON_FORCE_OBJECT);
+////        die();
+//        if (is_string($message))
+//            $return = ['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message, 'errors' => null];
+//        else
+//            $return = ['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => null, 'errors' => $message];
+//        return response()->json($return, $errorCode);
+////        return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message, 'errors' => null], $errorCode);
+//    }
+    public static function error($message, $errorCode = 422, $messageIndex = false) {
+//	dd($message);
+	return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => $message], $errorCode);
     }
 
     public static function success($data, $code = 200, $returnType = 'object') {
 //        print_r($data);die;
-        if ($returnType == 'array')
-            $data = (array) $data;
-        elseif ($returnType == 'data')
-            $data = $data;
-        else
-            $data = (object) $data;
-        return response()->json(['status' => true, 'code' => $code, 'data' => $data], $code);
+	if ($returnType == 'array')
+	    $data = (array) $data;
+	elseif ($returnType == 'data')
+	    $data = $data;
+	else
+	    $data = (object) $data;
+	return response()->json(['status' => true, 'code' => $code, 'data' => $data], $code);
     }
 
     public static function successCreated($data, $code = 201) {
-        if (!is_array($data))
-            $data = ['message' => $data];
-        return response()->json(['status' => true, 'code' => $code, 'data' => (object) $data], $code);
+	if (!is_array($data))
+	    $data = ['message' => $data];
+	return response()->json(['status' => true, 'code' => $code, 'data' => (object) $data], $code);
     }
 
     public static function successCreatedNoData($data, $code = 403) {
-        if (!is_array($data))
-            $data = ['message' => $data];
-        return response()->json(['status' => true, 'code' => $code, 'data' => (object) $data], $code);
+	if (!is_array($data))
+	    $data = ['message' => $data];
+	return response()->json(['status' => true, 'code' => $code, 'data' => (object) $data], $code);
     }
 
     protected static function sendOTPUser(User $user) {
-        $otp = mt_rand(1000, 9999);
-        $user->otp = $otp;
-        $user->save();
-        return self::sendTextMessage('Your ' . config('app.name') . ' Verification code is ' . $otp, $user->phone);
+	$otp = mt_rand(1000, 9999);
+	$user->otp = $otp;
+	$user->save();
+	return self::sendTextMessage('Your ' . config('app.name') . ' Verification code is ' . $otp, $user->phone);
     }
 
     protected static function sendOTP($number) {
-        $otp = mt_rand(1000, 9999);
-        self::sendTextMessage('Your ' . config('app.name') . ' Verification code is ' . $otp, $number);
-        return $otp;
+	$otp = mt_rand(1000, 9999);
+	self::sendTextMessage('Your ' . config('app.name') . ' Verification code is ' . $otp, $number);
+	return $otp;
     }
 
     protected static function sendTextMessage($message, $to = '9646848501') {
-        try {
-            $sid = env('TWILIO_SID');
-            $token = env('TWILIO_TOKEN');
-            $twilio = new Client($sid, $token);
-            //$return = $twilio->messages->create("" . $to, ["body" => $message, "from" => env('TWILIO_FROM')]);
-            $return = $twilio->messages->create("+91" . $to, ["body" => $message, "from" => env('TWILIO_FROM')]);
-            return $return;
-        } catch (\Twilio\Exceptions\TwilioException $ex) {
-            return true;
-        }
+	try {
+	    $sid = env('TWILIO_SID');
+	    $token = env('TWILIO_TOKEN');
+	    $twilio = new Client($sid, $token);
+	    //$return = $twilio->messages->create("" . $to, ["body" => $message, "from" => env('TWILIO_FROM')]);
+	    $return = $twilio->messages->create("+91" . $to, ["body" => $message, "from" => env('TWILIO_FROM')]);
+	    return $return;
+	} catch (\Twilio\Exceptions\TwilioException $ex) {
+	    return true;
+	}
     }
 
     public static function pushNotoficationRaw($data = [], $deviceToken) {
-        try {
-            $url = "https://fcm.googleapis.com/fcm/send";
-            $token = is_array($deviceToken) ? $deviceToken : [$deviceToken];
-            $serverKey = env('FCM_SERVER_KEY');
-            $dataToSend = array_merge(['priority' => 'high'], $data);
-            $arrayToSend = ['registration_ids' => $token, 'data' => $dataToSend, ['notification' => ['title' => $data['title'], 'body' => $data['body']]]];
-            $headers = array();
-            $headers[] = 'Authorization: key=' . $serverKey;
-            self::CURL_API('POST', $url, $arrayToSend, $headers, true);
+	try {
+	    $url = "https://fcm.googleapis.com/fcm/send";
+	    $token = is_array($deviceToken) ? $deviceToken : [$deviceToken];
+	    $serverKey = env('FCM_SERVER_KEY');
+	    $dataToSend = array_merge(['priority' => 'high'], $data);
+	    $arrayToSend = ['registration_ids' => $token, 'data' => $dataToSend, ['notification' => ['title' => $data['title'], 'body' => $data['body']]]];
+	    $headers = array();
+	    $headers[] = 'Authorization: key=' . $serverKey;
+	    self::CURL_API('POST', $url, $arrayToSend, $headers, true);
 //            
 //            
 //            $json = json_encode($arrayToSend);
@@ -244,31 +248,31 @@ class ApiController extends \App\Http\Controllers\Controller {
 //                return true;
 //            }
 //            curl_close($ch);
-            return true;
-        } catch (\Exception $ex) {
-            return true;
-        }
+	    return true;
+	} catch (\Exception $ex) {
+	    return true;
+	}
     }
 
     public static function pushNotofication($data = [], $deviceToken) {
-        // FCM
-        $optionBuilder = new OptionsBuilder();
-        $optionBuilder->setTimeToLive(60 * 20);
-        $notificationBuilder = new PayloadNotificationBuilder($data['title']);
-        $notificationBuilder->setBody($data['body'])->setSound('default');
+	// FCM
+	$optionBuilder = new OptionsBuilder();
+	$optionBuilder->setTimeToLive(60 * 20);
+	$notificationBuilder = new PayloadNotificationBuilder($data['title']);
+	$notificationBuilder->setBody($data['body'])->setSound('default');
 
-        $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData(['a_data' => 'my_data']);
+	$dataBuilder = new PayloadDataBuilder();
+	$dataBuilder->addData(['a_data' => 'my_data']);
 
-        $option = $optionBuilder->build();
-        $notification = $notificationBuilder->build();
-        $data = $dataBuilder->build();
+	$option = $optionBuilder->build();
+	$notification = $notificationBuilder->build();
+	$data = $dataBuilder->build();
 
 //        $deviceToken = "dRyHOgfdDMA:APA91bFr-dj3_sDe3z7R3d30X12k6n4NnFWuyvbsh4xGRr-s0j2RfpKplfrc0rms5ZZ0aZu6taho3ZbGn_xvtSPdq0QBTcXTRjo94g2L5X5snSuJUW4yt-TfH5WRbEqYoKAktSkLPN5X";
 
-        $downstreamResponse = FCM::sendTo($deviceToken, $option, $notification, $data);
+	$downstreamResponse = FCM::sendTo($deviceToken, $option, $notification, $data);
 //        $downstreamResponse->numberFailure();
-        return $downstreamResponse->numberSuccess() == '1' ? true : false;
+	return $downstreamResponse->numberSuccess() == '1' ? true : false;
     }
 
 //    public function pushNotificationiOS($data, $devicetokens, $customData = null) {
@@ -279,50 +283,50 @@ class ApiController extends \App\Http\Controllers\Controller {
 //    }
 
     public static function pushNotificationiOSMultipleUsers($data = [], $userIds, $customData = null) {
-        foreach ($userIds as $userId):
-            self::pushNotificationiOS($data, $userId, $customData);
-        endforeach;
-        return true;
+	foreach ($userIds as $userId):
+	    self::pushNotificationiOS($data, $userId, $customData);
+	endforeach;
+	return true;
     }
 
     public static function pushNotificationiOS($data = [], $userId, $customData = null) {
-        foreach (\App\UserDevice::whereUserId($userId)->get() as $userDevice):
-            self::pushNotifyiOS($data, $userDevice->token);
-        endforeach;
-        return true;
+	foreach (\App\UserDevice::whereUserId($userId)->get() as $userDevice):
+	    self::pushNotifyiOS($data, $userDevice->token);
+	endforeach;
+	return true;
     }
 
     public static $_AuthId = 0;
 
     private static function savePushNotification($data, $userId) {
-        try {
+	try {
 
-            if (isset($data['data']))
-                $data['message'] = json_encode($data['data']);
-            $data += ['target_id' => $userId];
-            if (\Auth::id() != '')
-                $data += ['created_by' => \Auth::id()];
-            else
-                $data += ['created_by' => self::$_AuthId];
+	    if (isset($data['data']))
+		$data['message'] = json_encode($data['data']);
+	    $data += ['target_id' => $userId];
+	    if (\Auth::id() != '')
+		$data += ['created_by' => \Auth::id()];
+	    else
+		$data += ['created_by' => self::$_AuthId];
 
-            \App\Notification::create($data);
-            return true;
-        } catch (Exception $ex) {
-            
-        }
+	    \App\Notification::create($data);
+	    return true;
+	} catch (Exception $ex) {
+	    
+	}
     }
 
     public static function emailSend($templateName, $subject, $userId, $customData = []) {
-        $user = User::whereId($userId)->first();
-        //send mail to user as a feedback    
+	$user = User::whereId($userId)->first();
+	//send mail to user as a feedback    
 //        $dataM = ['subject' => 'Register Notification', 'name' => $request->name, 'to' => $request->email];
-        $dataM = ['subject' => $subject, 'name' => $user->name, 'to' => $user->email];
-        if (count($customData) > 0)
-            $dataM += $customData;
+	$dataM = ['subject' => $subject, 'name' => $user->name, 'to' => $user->email];
+	if (count($customData) > 0)
+	    $dataM += $customData;
 //        dd($dataM,$templateName,$subject);
-        //ENDS      
-        dispatch(new \App\Jobs\BackgroundEMAIL($templateName, $dataM));
-        return true;
+	//ENDS      
+	dispatch(new \App\Jobs\BackgroundEMAIL($templateName, $dataM));
+	return true;
     }
 
     /**
@@ -335,11 +339,11 @@ class ApiController extends \App\Http\Controllers\Controller {
      */
     public static function pushNotifications($data = [], $userId, $saveNotification = true, $emailTemplate = false) {
 
-        if ($saveNotification)
-            self::savePushNotification($data, $userId);
-        if ($emailTemplate != false):
-            self::emailSend($emailTemplate['template_name'], $emailTemplate['subject'], $userId, $emailTemplate['customData']);
-        endif;
+	if ($saveNotification)
+	    self::savePushNotification($data, $userId);
+	if ($emailTemplate != false):
+	    self::emailSend($emailTemplate['template_name'], $emailTemplate['subject'], $userId, $emailTemplate['customData']);
+	endif;
 
 // echo $userId;
 // dd(User::whereId($userId)->where('is_notify', '1')->get()->isEmpty());
@@ -357,222 +361,222 @@ class ApiController extends \App\Http\Controllers\Controller {
 //            self::pushNotofication($data, $tokens);
 //        return true;
 
-        $tokensAndroid = [];
-        foreach (\App\UserDevice::where('type', 'android')->whereUserId($userId)->get() as $userDevice):
-            $tokensAndroid[] = $userDevice->token;
-        endforeach;
-        //dd($tokens);
-        if (count($tokensAndroid) > 0)
-            self::pushNotofication($data, $tokensAndroid);
+	$tokensAndroid = [];
+	foreach (\App\UserDevice::where('type', 'android')->whereUserId($userId)->get() as $userDevice):
+	    $tokensAndroid[] = $userDevice->token;
+	endforeach;
+	//dd($tokens);
+	if (count($tokensAndroid) > 0)
+	    self::pushNotofication($data, $tokensAndroid);
 
-        $tokensiOS = [];
-        foreach (\App\UserDevice::where('type', 'ios')->whereUserId($userId)->get() as $userDevice):
-            $tokensiOS[] = $userDevice->token;
-        endforeach;
-        if (count($tokensiOS) > 0)
-            self::pushNotofication($data, $tokensiOS);
-        return true;
+	$tokensiOS = [];
+	foreach (\App\UserDevice::where('type', 'ios')->whereUserId($userId)->get() as $userDevice):
+	    $tokensiOS[] = $userDevice->token;
+	endforeach;
+	if (count($tokensiOS) > 0)
+	    self::pushNotofication($data, $tokensiOS);
+	return true;
     }
 
     private static function pushNotifyiOS($data, $devicetoken, $customData = null) {
-        //return true;
-        $deviceToken = $devicetoken;
-        $ctx = stream_context_create();
-        // ck.pem is your certificate file
-        stream_context_set_option($ctx, 'ssl', 'local_cert', public_path('apn/key.pem'));
-        stream_context_set_option($ctx, 'ssl', 'passphrase', '');
-        // Open a connection to the APNS server
-        $fp = stream_socket_client(
-                'ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT, $ctx);
-        if (!$fp)
-            exit("Failed to connect: $err $errstr" . PHP_EOL);
-        // Create the payload body
-        $body['aps'] = ['alert' => ['title' => $data['title'], 'body' => $data['body']], 'sound' => 'default'];
-        if ($customData !== null)
-            $body['extraPayLoad'] = ['custom' => $customData];
-        // Encode the payload as JSON
-        $payload = json_encode($body);
-        // Build the binary notification
-        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+	//return true;
+	$deviceToken = $devicetoken;
+	$ctx = stream_context_create();
+	// ck.pem is your certificate file
+	stream_context_set_option($ctx, 'ssl', 'local_cert', public_path('apn/key.pem'));
+	stream_context_set_option($ctx, 'ssl', 'passphrase', '');
+	// Open a connection to the APNS server
+	$fp = stream_socket_client(
+		'ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT, $ctx);
+	if (!$fp)
+	    exit("Failed to connect: $err $errstr" . PHP_EOL);
+	// Create the payload body
+	$body['aps'] = ['alert' => ['title' => $data['title'], 'body' => $data['body']], 'sound' => 'default'];
+	if ($customData !== null)
+	    $body['extraPayLoad'] = ['custom' => $customData];
+	// Encode the payload as JSON
+	$payload = json_encode($body);
+	// Build the binary notification
+	$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
 //        pack("H*", "2133")
-        // Send it to the server
-        $result = fwrite($fp, $msg, strlen($msg));
+	// Send it to the server
+	$result = fwrite($fp, $msg, strlen($msg));
 
-        // Close the connection to the server
-        // $this->saveNotification($data);
-        fclose($fp);
+	// Close the connection to the server
+	// $this->saveNotification($data);
+	fclose($fp);
 
-        if (!$result)
-            return 'Message not delivered' . PHP_EOL;
-        else
-            return 'Message successfully delivered' . PHP_EOL;
-        //die();
+	if (!$result)
+	    return 'Message not delivered' . PHP_EOL;
+	else
+	    return 'Message successfully delivered' . PHP_EOL;
+	//die();
     }
 
     protected static function __uploadImageBase64($baseEncodeImage, $path = null) {
-        $image = $baseEncodeImage;  // your base64 encoded
-        $fileExtension = 'png';
-        if (strpos($image, 'png') !== false):
-            $image = str_replace('data:image/png;base64,', '', $image);
-            $fileExtension = 'png';
-        endif;
-        if (strpos($image, 'jpeg') !== false):
-            $image = str_replace('data:image/jpeg;base64,', '', $image);
-            $fileExtension = 'jpeg';
-        endif;
-        $image = str_replace(' ', '+', $image);
-        $imageName = str_random(10) . '.' . $fileExtension;
-        if ($path === null)
-            $path = public_path('uploads');
-        \File::put($path . '/' . $imageName, base64_decode($image));
-        return $imageName;
+	$image = $baseEncodeImage;  // your base64 encoded
+	$fileExtension = 'png';
+	if (strpos($image, 'png') !== false):
+	    $image = str_replace('data:image/png;base64,', '', $image);
+	    $fileExtension = 'png';
+	endif;
+	if (strpos($image, 'jpeg') !== false):
+	    $image = str_replace('data:image/jpeg;base64,', '', $image);
+	    $fileExtension = 'jpeg';
+	endif;
+	$image = str_replace(' ', '+', $image);
+	$imageName = str_random(10) . '.' . $fileExtension;
+	if ($path === null)
+	    $path = public_path('uploads');
+	\File::put($path . '/' . $imageName, base64_decode($image));
+	return $imageName;
     }
 
     public static function __uploadImage($image, $path = null) {
-        if ($path === null)
-            $path = public_path('uploads');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move($path, $imageName);
-        return $imageName;
+	if ($path === null)
+	    $path = public_path('uploads');
+	$imageName = time() . '.' . $image->getClientOriginalExtension();
+	$image->move($path, $imageName);
+	return $imageName;
     }
 
     public static function getDistanceByTable($lat, $lng, $distance, $tableName) {
-        $latKey = 'latitude';
-        $lngKey = 'longitude';
-        $results = \DB::select(\DB::raw('SELECT id, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( ' . $latKey . ' ) ) * cos( radians( ' . $lngKey . ' ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians(' . $latKey . ') ) ) ) AS distance FROM ' . $tableName . ' HAVING distance < ' . $distance . ' ORDER BY distance'));
+	$latKey = 'latitude';
+	$lngKey = 'longitude';
+	$results = \DB::select(\DB::raw('SELECT id, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( ' . $latKey . ' ) ) * cos( radians( ' . $lngKey . ' ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians(' . $latKey . ') ) ) ) AS distance FROM ' . $tableName . ' HAVING distance < ' . $distance . ' ORDER BY distance'));
 //        dd($results);
-        return $results;
+	return $results;
     }
 
     public static function CURL_API($method, $url, $data, $httpHeaders = [], $contentTypejson = true, $curlOptionUserPWD = [], $debug = false) {
-        $curl = curl_init();
+	$curl = curl_init();
 //        dd($data);
-        switch ($method) {
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
-                if ($data):
-                    if ($contentTypejson)
-                        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-                    else
-                        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-                endif;
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            default:
-                if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
-        if ($contentTypejson)
-            $headers = $httpHeaders;
+	switch ($method) {
+	    case "POST":
+		curl_setopt($curl, CURLOPT_POST, 1);
+		if ($data):
+		    if ($contentTypejson)
+			curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+		    else
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+		endif;
+		break;
+	    case "PUT":
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+		if ($data)
+		    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+		break;
+	    default:
+		if ($data)
+		    $url = sprintf("%s?%s", $url, http_build_query($data));
+	}
+	if ($contentTypejson)
+	    $headers = $httpHeaders;
 //            $headers = array_merge(['Content-Type: application/json'], $httpHeaders);
-        else
-            $headers = array_merge(['Content-Type: application/x-www-form-urlencoded'], $httpHeaders);
+	else
+	    $headers = array_merge(['Content-Type: application/x-www-form-urlencoded'], $httpHeaders);
 //        $headers = $httpHeaders;
 // OPTIONS:
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        if (count($curlOptionUserPWD) > 0)
-            curl_setopt($curl, CURLOPT_USERPWD, $curlOptionUserPWD['0'] . ":" . $curlOptionUserPWD['1']);
+	curl_setopt($curl, CURLOPT_URL, $url);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+	if (count($curlOptionUserPWD) > 0)
+	    curl_setopt($curl, CURLOPT_USERPWD, $curlOptionUserPWD['0'] . ":" . $curlOptionUserPWD['1']);
 //        dd($data, $headers);
 // EXECUTE:
-        $result = curl_exec($curl);
-        if (!$result) {
-            die("Connection Failure");
-        }
-        curl_close($curl);
-        if ($debug == true):
-            dd($data, $headers, $result);
-        endif;
-        return json_decode($result);
+	$result = curl_exec($curl);
+	if (!$result) {
+	    die("Connection Failure");
+	}
+	curl_close($curl);
+	if ($debug == true):
+	    dd($data, $headers, $result);
+	endif;
+	return json_decode($result);
     }
 
     protected function getTokenQuickBlox() {
-        // Application credentials - change to yours (found in QB Dashboard)
-        DEFINE('APPLICATION_ID', 77979);
-        DEFINE('AUTH_KEY', "xtvZ6Y3P7Sp4Z-Y");
-        DEFINE('AUTH_SECRET', "N6KyLPtvWUqAyCn");
-        // User credentials
-        DEFINE('USER_LOGIN', "emma");
-        DEFINE('USER_PASSWORD', "emma");
-        // Quickblox endpoints
-        DEFINE('QB_API_ENDPOINT', "https://api.quickblox.com");
-        DEFINE('QB_PATH_SESSION', "session.json");
-        // Generate signature
-        $nonce = rand();
-        $timestamp = time(); // time() method must return current timestamp in UTC but seems like hi is return timestamp in current time zone
-        $signature_string = "application_id=" . APPLICATION_ID . "&auth_key=" . AUTH_KEY . "&nonce=" . $nonce . "&timestamp=" . $timestamp;
+	// Application credentials - change to yours (found in QB Dashboard)
+	DEFINE('APPLICATION_ID', 77979);
+	DEFINE('AUTH_KEY', "xtvZ6Y3P7Sp4Z-Y");
+	DEFINE('AUTH_SECRET', "N6KyLPtvWUqAyCn");
+	// User credentials
+	DEFINE('USER_LOGIN', "emma");
+	DEFINE('USER_PASSWORD', "emma");
+	// Quickblox endpoints
+	DEFINE('QB_API_ENDPOINT', "https://api.quickblox.com");
+	DEFINE('QB_PATH_SESSION', "session.json");
+	// Generate signature
+	$nonce = rand();
+	$timestamp = time(); // time() method must return current timestamp in UTC but seems like hi is return timestamp in current time zone
+	$signature_string = "application_id=" . APPLICATION_ID . "&auth_key=" . AUTH_KEY . "&nonce=" . $nonce . "&timestamp=" . $timestamp;
 //        echo "stringForSignature: " . $signature_string . "<br><br>";
-        $signature = hash_hmac('sha1', $signature_string, AUTH_SECRET);
-        // Build post body
-        $post_body = http_build_query(array(
-            'application_id' => APPLICATION_ID,
-            'auth_key' => AUTH_KEY,
-            'timestamp' => $timestamp,
-            'nonce' => $nonce,
-            'signature' => $signature
-        ));
-        // $post_body = "application_id=" . APPLICATION_ID . "&auth_key=" . AUTH_KEY . "&timestamp=" . $timestamp . "&nonce=" . $nonce . "&signature=" . $signature . "&user[login]=" . USER_LOGIN . "&user[password]=" . USER_PASSWORD;
+	$signature = hash_hmac('sha1', $signature_string, AUTH_SECRET);
+	// Build post body
+	$post_body = http_build_query(array(
+	    'application_id' => APPLICATION_ID,
+	    'auth_key' => AUTH_KEY,
+	    'timestamp' => $timestamp,
+	    'nonce' => $nonce,
+	    'signature' => $signature
+	));
+	// $post_body = "application_id=" . APPLICATION_ID . "&auth_key=" . AUTH_KEY . "&timestamp=" . $timestamp . "&nonce=" . $nonce . "&signature=" . $signature . "&user[login]=" . USER_LOGIN . "&user[password]=" . USER_PASSWORD;
 //        echo "postBody: " . $post_body . "<br><br>";
 // Configure cURL
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, QB_API_ENDPOINT . '/' . QB_PATH_SESSION); // Full path is - https://api.quickblox.com/session.json
-        curl_setopt($curl, CURLOPT_POST, true); // Use POST
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_body); // Setup post body
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Receive server response
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_POSTREDIR, true);
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, QB_API_ENDPOINT . '/' . QB_PATH_SESSION); // Full path is - https://api.quickblox.com/session.json
+	curl_setopt($curl, CURLOPT_POST, true); // Use POST
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $post_body); // Setup post body
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Receive server response
+	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($curl, CURLOPT_POSTREDIR, true);
 
-        // Execute request and read response
-        $response = curl_exec($curl);
+	// Execute request and read response
+	$response = curl_exec($curl);
 
-        // Check errors
-        if ($response) {
-            
-        } else {
-            $error = curl_error($curl) . '(' . curl_errno($curl) . ')';
-            echo $error . "\n";
-        }
+	// Check errors
+	if ($response) {
+	    
+	} else {
+	    $error = curl_error($curl) . '(' . curl_errno($curl) . ')';
+	    echo $error . "\n";
+	}
 
-        // Close connection
-        curl_close($curl);
-        return json_decode($response);
+	// Close connection
+	curl_close($curl);
+	return json_decode($response);
     }
 
     protected function registerUserQuickBlox($email, $name = null) {
-        $response = self::getTokenQuickBlox();
-        $data = self::CURL_API('POST', 'https://api.quickblox.com/users.json', ['user' => ['login' => $email, 'password' => $email, 'email' => $email, 'full_name' => $name]], ['QuickBlox-REST-API-Version: 0.1.0', 'QB-Token: ' . $response->session->token]);
+	$response = self::getTokenQuickBlox();
+	$data = self::CURL_API('POST', 'https://api.quickblox.com/users.json', ['user' => ['login' => $email, 'password' => $email, 'email' => $email, 'full_name' => $name]], ['QuickBlox-REST-API-Version: 0.1.0', 'QB-Token: ' . $response->session->token]);
 //        dd($data->user->id);
 
-        return $data;
+	return $data;
     }
 
     protected function addTrainerUserDeviceData(\App\TrainerUser $user, $request) {
-        if (\App\TrainerUserDevice::where('token', $request->device_token)->get()->isEmpty() === true):
-            $userDevice = new \App\TrainerUserDevice;
-            $userDevice->trainer_user_id = $user->id;
-            $userDevice->type = $request->device_type;
-            $userDevice->token = $request->device_token;
-            $userDevice->save();
-        endif;
-        return true;
+	if (\App\TrainerUserDevice::where('token', $request->device_token)->get()->isEmpty() === true):
+	    $userDevice = new \App\TrainerUserDevice;
+	    $userDevice->trainer_user_id = $user->id;
+	    $userDevice->type = $request->device_type;
+	    $userDevice->token = $request->device_token;
+	    $userDevice->save();
+	endif;
+	return true;
     }
 
     protected function addUserDeviceData(User $user, $request) {
-        if (\App\UserDevice::where('token', $request->device_token)->where('user_id', $user->id)->get()->isEmpty() === true):
-            \App\UserDevice::where('token', $request->device_token)->delete();
-            $userDevice = new \App\UserDevice;
-            $userDevice->user_id = $user->id;
-            $userDevice->type = $request->device_type;
-            $userDevice->token = $request->device_token;
-            $userDevice->save();
-        endif;
-        return true;
+	if (\App\UserDevice::where('token', $request->device_token)->where('user_id', $user->id)->get()->isEmpty() === true):
+	    \App\UserDevice::where('token', $request->device_token)->delete();
+	    $userDevice = new \App\UserDevice;
+	    $userDevice->user_id = $user->id;
+	    $userDevice->type = $request->device_type;
+	    $userDevice->token = $request->device_token;
+	    $userDevice->save();
+	endif;
+	return true;
     }
 
     /**
@@ -582,7 +586,7 @@ class ApiController extends \App\Http\Controllers\Controller {
      * @return integer
      */
     public static function getPercentOfAmmount($ammount, $percent) {
-        return ($percent / 100) * $ammount;
+	return ($percent / 100) * $ammount;
     }
 
 }

@@ -40,13 +40,13 @@ class UsersController extends Controller {
     public function indexByRoleId(Request $request, $role_id) {
 	
 	if ($request->ajax()) {
-	    $roleusers = \DB::table('role_user')->where('role_id', $role_id)->where('role_plan_id','<>',"null")->pluck('user_id')->toArray();
+	    $roleusers = \DB::table('role_user')->where('role_id', $role_id)->pluck('user_id')->toArray();
 	   
 	    if (!empty($request->status)) {
 		$users = [];
 		if (strtolower($request->status) == "expired" || strtolower($request->status) == "active") {
 
-		    $data = \App\RoleUser::Where('role_id', $role_id)->where('role_plan_id','<>',"null")->select('user_id', 'role_plan_id', 'created_at')->get();
+		    $data = \App\RoleUser::Where('role_id', $role_id)->select('user_id', 'role_plan_id', 'created_at')->get();
 		    $plans = \App\RolePlans::Where('role_id', $role_id)->pluck('fee_type', 'id');
 //		    dd($plans);
 		    $data = collect($data->toArray())->flatten()->all();
