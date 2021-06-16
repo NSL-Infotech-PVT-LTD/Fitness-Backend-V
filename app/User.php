@@ -43,12 +43,16 @@ class User extends Authenticatable {
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $appends = array('role', 'full_name', 'role_expired_on');
+    protected $appends = array('role', 'full_name', 'role_expired_on','mb_id');
      public static $_imagePublicPath = 'uploads/emirateimages';
    
 
     public function getTrainerSlotAttribute($value) {
         return ($value == null) ? 0 : $value;
+    }
+
+    public function getMbIdAttribute() {
+        return $this->id;
     }
 
     public function getFullNameAttribute() {
