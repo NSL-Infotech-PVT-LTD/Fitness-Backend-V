@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'API'], function() {
     Route::post('bookings/store', 'BookingController@store');
     Route::post('bookings', 'BookingController@getitems');
     Route::post('booking/delete', 'BookingController@deleteItem');
+    Route::post('booking/getPrice', 'BookingController@getPrice');
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'register', 'namespace' => 'API'], function() {

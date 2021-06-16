@@ -37,7 +37,8 @@
                                 <tr>
                                     <td>
                                         <?php if ($user->image != null) { ?>
-                                            <img width="100" src="{{ url('uploads/users/'.$user->image)}}">
+					<div class="imgdiv"> <img width="100" class='imgthumb' data="1" src="{{ url('uploads/users/'.$user->image)}}" id="imgA"></div>
+					<div id="Imagediv1"></div>
                                         <?php } else { ?>
                                             <div class='country-img'>NA</div>
                                         <?php } ?>
@@ -164,3 +165,15 @@
 </div>
 
 @endsection
+     <script type="text/javascript">
+         $(function() {
+	     var id= $(this).attr("data");
+             $("img.imgthumb").click(function(e) {
+                 var newImg = '<img src='
+                                + $(this).attr("src") + '></img>';
+                 $('#ladiv')
+                    .html($(newImg)
+                    .animate({ height: '300', width: '450' }, 1500));
+             });
+         });    
+     </script>

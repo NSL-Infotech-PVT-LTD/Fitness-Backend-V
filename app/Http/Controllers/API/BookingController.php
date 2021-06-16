@@ -103,6 +103,24 @@ class BookingController extends ApiController {
     public static $__session = ['1' => '90', '6' => '340', '12' => '660'];
     public static $__trainer = ['1' => '250', '6' => '1400', '12' => '2600', '24' => '5000'];
 
+
+    public function getPrice(Request $request) {
+//	dd($request->all());
+        $rules = ['type' => 'required|in:session,trainer'];
+        $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
+        if ($validateAttributes):
+            return $validateAttributes;
+        endif;
+        try {
+	    if($request->type=='trainer')
+            return parent::success(self::$__trainer);
+	    else
+            return parent::success(self::$__session);
+        } catch (\Exception $ex) {
+            return parent::error($ex->getMessage());
+        }
+    }
+
     public function getitems(Request $request) {
         $rules = ['limit' => '', 'model_type' => 'required|in:class_schedules,trainer_users,events,sessions,all'];
         $validateAttributes = parent::validateAttributes($request, 'POST', $rules, array_keys($rules), false);
@@ -122,7 +140,6 @@ class BookingController extends ApiController {
             return parent::error($ex->getMessage());
         }
     }
-
     public function deleteItem(Request $request) {
         $rules = ['id' => [
                 'required',
