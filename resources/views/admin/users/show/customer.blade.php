@@ -38,7 +38,7 @@
                                 <tr>
 			    <td>
 				<?php if ($user->image != null) { ?>
-				<img  class="imageEnlarge" id="imageresource" src="{{ $user->image}}"  width="50px;" title="Click to Enlarge">
+				<img  class="imageEnlarge" id="imageresource" src="{{ $user->image}}"  width="50px;" title="Click to Enlarge" style="width:150px !important; cursor:pointer";>
 				<?php } else { ?>
     				<div class='country-img'>NA</div>
 				<?php } ?>
@@ -85,7 +85,7 @@
 			    <tr><th>Emirates Image1</th> 
 				<td>
 				    <?php if (!empty($user->emirate_image1)) { ?>
-    				    <img class="imageEnlarge"  src=" {{ $user->emirate_image1 }}" width="100"; ></td>
+    				    <img class="imageEnlarge"  src=" {{ $user->emirate_image1 }}" style="width:150px !important; cursor:pointer"; title="Click to Enlarge"  ></td>
 				<?php } else { ?>
     				<td>NA</td>
 				<?php } ?>
@@ -93,7 +93,7 @@
 			    <tr><th>Emirates Image2</th> 
 				<td>
 				    <?php if (!empty($user->emirate_image2)) { ?>
-    				    <img class="imageEnlarge" src=" {{ $user->emirate_image2 }}" width="100"; ></td>
+    				    <img class="imageEnlarge" src=" {{ $user->emirate_image2 }}" style="width:150px !important; cursor:pointer"; title="Click to Enlarge" ></td>
 				<?php } else { ?>
     				<td>NA</td>
 				<?php } ?>

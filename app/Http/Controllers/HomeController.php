@@ -54,13 +54,9 @@ class HomeController extends Controller {
 
     public function index() {
 	$TotalCount = 0;
-//	if ($request->ajax()) {
 	$roleusers = \DB::table('role_user')->where('role_plan_id','<>',"null")->pluck('user_id')->toArray();
 	$TotalCount = count($roleusers);
-//	    if (!empty($request->status)) {
 	$users = [];
-//		if (strtolower($request->status) == "expired" || strtolower($request->status) == "active") {
-
 	$data = \App\RoleUser::select('user_id', 'role_plan_id', 'created_at')->where('role_plan_id','<>',"null")->get();
 	$plans = \App\RolePlans::pluck('fee_type', 'id');
 //		    dd($plans);
@@ -82,11 +78,9 @@ class HomeController extends Controller {
 		}
 //			    dd($plans[$data[$i + 1]]);
 	    } elseif (strtolower($plans[$data[$i + 1]]) == 'halfyearly') {
-		dd('jhj');
 		if (intval($days / 2) < intval(abs(strtotime($date) - strtotime($today)) / 86400)) {
 		    array_push($users, $data[$i]);
 		}
-		dd('jhj');
 	    } elseif (strtolower($plans[$data[$i + 1]]) == 'quarterly') {
 		if (intval($days / 4) < intval(abs(strtotime($date) - strtotime($today)) / 86400)) {
 		    array_push($users, $data[$i]);
