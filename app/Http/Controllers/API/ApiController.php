@@ -166,7 +166,12 @@ class ApiController extends \App\Http\Controllers\Controller {
 //    }
     public static function error($message, $errorCode = 422, $messageIndex = false) {
 //	dd($message);
-	return response()->json(['status' => false, 'code' => $errorCode, 'data' => (object) [], 'error' => '', 'errors' => $message], $errorCode);
+	$data = ['status' => false, 'code' => $errorCode, 'data' => (object) []];
+	if(is_array($message))
+	    $data+=['error'=>'','errors'=>$message];
+	else
+	    $data+=['error'=>$message,'errors'=>''];
+	return response()->json($data, $errorCode);
     }
 
     public static function success($data, $code = 200, $returnType = 'object') {
