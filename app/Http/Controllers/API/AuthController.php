@@ -123,10 +123,10 @@ class AuthController extends ApiController {
                     $input['image'] = parent::__uploadImage($request->file('image'), public_path(MyModel::$_imagePublicPath1),true);
 //            if (isset($request->emirate_image1))
                 if (!empty($request->file('emirate_image1')))
-                    $input['emirate_image1'] = parent::__uploadImage($request->file('emirate_image1'), public_path(MyModel::$_imagePublicPath),true);
+                    $input['emirate_image1'] = parent::___uploadImage($request->file('emirate_image1'), public_path(MyModel::$_imagePublicPath),'em1');
 //            if (isset($request->emirate_image2))
                 if (!empty($request->file('emirate_image2')))
-                    $input['emirate_image2'] = parent::__uploadImage($request->file('emirate_image2'), public_path(MyModel::$_imagePublicPath),true);
+                    $input['emirate_image2'] = parent::___uploadImage($request->file('emirate_image2'), public_path(MyModel::$_imagePublicPath),'em2');
             $user = \App\User::create($input);
 	    
             //Assign role to created user

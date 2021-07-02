@@ -167,10 +167,10 @@ class ApiController extends \App\Http\Controllers\Controller {
     public static function error($message, $errorCode = 422, $messageIndex = false) {
 //	dd($message);
 	$data = ['status' => false, 'code' => $errorCode, 'data' => (object) []];
-	if(is_array($message))
-	    $data+=['error'=>'','errors'=>$message];
+	if (is_array($message))
+	    $data += ['error' => '', 'errors' => $message];
 	else
-	    $data+=['error'=>$message,'errors'=>''];
+	    $data += ['error' => $message, 'errors' => ''];
 	return response()->json($data, $errorCode);
     }
 
@@ -441,6 +441,14 @@ class ApiController extends \App\Http\Controllers\Controller {
 	if ($path === null)
 	    $path = public_path('uploads');
 	$imageName = time() . '.' . $image->getClientOriginalExtension();
+	$image->move($path, $imageName);
+	return $imageName;
+    }
+
+    public static function ___uploadImage($image, $path = null, $prefix = null) {
+	if ($path === null)
+	    $path = public_path('uploads');
+	$imageName = $prefix . time() . '.' . $image->getClientOriginalExtension();
 	$image->move($path, $imageName);
 	return $imageName;
     }
