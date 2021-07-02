@@ -70,10 +70,12 @@ class ClassController extends Controller {
 //            $rules += ['image' => 'image|mimes:jpg,jpeg,png|dimensions:width=360,height=450'];
         $this->validate($request, $rules);
         $requestData = $request->all();
+	if($request->image != null ):
         $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(base_path() . '/public/uploads/class/', $imageName);
         $requestData['image'] = $imageName;
-
+	endif;
+	  
         Classes::create($requestData);
 
         return redirect('admin/class')->with('flash_message', 'Class added!');

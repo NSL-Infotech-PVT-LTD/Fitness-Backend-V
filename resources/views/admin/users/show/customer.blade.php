@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-<?php // dd($user)?>
+<?php // dd($user->roles['0'])?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
